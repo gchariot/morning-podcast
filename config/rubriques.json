@@ -186,5 +186,25 @@
   },
   "documentaire": {
     "sujet": ""
+  },
+  "sorties": {
+    "recherche": [
+      "Ville de Genève",
+      "Genève",
+      "Pays de Gex",
+      "Ferney-Voltaire",
+      "Divonne"
+    ],
+    "agendas": [],
+    "zone": {
+      "sudOuest": {
+        "lat": 46.1,
+        "lng": 5.95
+      },
+      "nordEst": {
+        "lat": 46.4,
+        "lng": 6.35
+      }
+    }
   }
 }

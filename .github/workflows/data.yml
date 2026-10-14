@@ -27,6 +27,7 @@ jobs:
       - run: npm run data
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          OPENAGENDA_KEY: ${{ secrets.OPENAGENDA_KEY }}
       - name: Commit des données
         run: |
           git config user.name "matinale-bot"

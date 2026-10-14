@@ -161,11 +161,72 @@ async function weather(date: string) {
   };
 }
 
+/* ---------- Sorties du week-end (OpenAgenda, le samedi, si OPENAGENDA_KEY est défini) ---------- */
+
+async function sorties(date: string) {
+  const key = process.env.OPENAGENDA_KEY;
+  if (!key) return { error: 'OPENAGENDA_KEY absent : sorties trouvées par recherche web' };
+  const cfg = (loadConfig() as any).sorties ?? {};
+  const headers = { key };
+  const api = 'https://api.openagenda.com/v2';
+  const fr = (v: any) => (typeof v === 'string' ? v : v?.fr ?? v?.en ?? (v ? Object.values(v)[0] : '')) as string;
+
+  // 1. Agendas : ceux de la config + ceux trouvés par recherche (Genève, pays de Gex…).
+  const uids = new Map<number, string>();
+  for (const uid of cfg.agendas ?? []) uids.set(Number(uid), String(uid));
+  const errors: string[] = [];
+  for (const q of cfg.recherche ?? ['Genève']) {
+    const r = await fetch(`${api}/agendas?search=${encodeURIComponent(q)}&size=50`, { headers });
+    if (!r.ok) { errors.push(`agendas « ${q} » : ${r.status}`); continue; }
+    const j: any = await r.json();
+    for (const a of j.agendas ?? []) if (a?.uid && !a.private) uids.set(Number(a.uid), a.title ?? String(a.uid));
+  }
+
+  // 2. Événements du samedi et du dimanche dans la zone (Genève + pays de Gex).
+  const z = cfg.zone ?? { sudOuest: { lat: 46.1, lng: 5.95 }, nordEst: { lat: 46.4, lng: 6.35 } };
+  // Décalage horaire de Genève ce jour-là (+02:00 l'été, +01:00 l'hiver).
+  const off = new Intl.DateTimeFormat('en', { timeZone: 'Europe/Zurich', timeZoneName: 'longOffset' })
+    .formatToParts(new Date(`${date}T12:00:00Z`)).find(p => p.type === 'timeZoneName')?.value.replace('GMT', '') || '+01:00';
+  const start = new Date(`${date}T00:00:00${off}`), end = new Date(`${shiftDate(date, 1)}T23:59:59${off}`);
+  const qs = new URLSearchParams({
+    'timings[gte]': start.toISOString(), 'timings[lte]': end.toISOString(),
+    'geo[northEast][lat]': String(z.nordEst.lat), 'geo[northEast][lng]': String(z.nordEst.lng),
+    'geo[southWest][lat]': String(z.sudOuest.lat), 'geo[southWest][lng]': String(z.sudOuest.lng),
+    size: '40', detailed: '1', monolingual: 'fr',
+  });
+  const seen = new Set<string>();
+  const events: any[] = [];
+  for (const [uid, agendaTitle] of [...uids].slice(0, 40)) {
+    const r = await fetch(`${api}/agendas/${uid}/events?${qs}`, { headers });
+    if (!r.ok) { errors.push(`agenda ${uid} : ${r.status}`); continue; }
+    const j: any = await r.json();
+    for (const e of j.events ?? []) {
+      const id = `${e.uid}`;
+      if (seen.has(id)) continue;
+      seen.add(id);
+      const inWindow = (e.timings ?? []).filter((t: any) => { const b = new Date(t.begin); return b >= start && b <= end; });
+      if (!inWindow.length) continue;
+      events.push({
+        titre: fr(e.title), resume: fr(e.description).slice(0, 300),
+        lieu: e.location?.name, ville: e.location?.city, adresse: e.location?.address,
+        horaires: inWindow.slice(0, 4).map((t: any) => ({ debut: t.begin, fin: t.end })),
+        prix: fr(e.conditions).slice(0, 160) || undefined,
+        url: e.slug ? `https://openagenda.com/agendas/${uid}/events/${e.slug}` : undefined,
+        agenda: agendaTitle,
+      });
+    }
+  }
+  events.sort((a, b) => String(a.horaires[0]?.debut ?? '').localeCompare(String(b.horaires[0]?.debut ?? '')));
+  return { source: 'OpenAgenda', agendas: uids.size, evenements: events.slice(0, 60), ...(errors.length ? { erreurs: errors.slice(0, 10) } : {}) };
+}
+
 const date = dateFromArgs();
-const [foot, wiki, meteo] = await Promise.all([
+const isSaturday = new Date(`${date}T12:00:00Z`).getUTCDay() === 6;
+const [foot, wiki, meteo, sortiesWe] = await Promise.all([
   football(date), wikimedia(date), weather(date).catch(e => ({ error: String(e) })),
+  isSaturday ? sorties(date).catch(e => ({ error: String(e) })) : Promise.resolve(undefined),
 ]);
-const out = { date, generatedAt: new Date().toISOString(), football: foot, wikipedia: wiki, meteo };
+const out = { date, generatedAt: new Date().toISOString(), football: foot, wikipedia: wiki, meteo, ...(sortiesWe ? { sorties: sortiesWe } : {}) };
 
 ensureDir(resolve(ROOT, 'data'));
 const file = resolve(ROOT, `data/${date}.json`);
