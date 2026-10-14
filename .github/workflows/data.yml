@@ -4,7 +4,11 @@ name: 1 · Données du jour
 on:
   schedule:
     - cron: '0 3 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date à préparer (AAAA-MM-JJ), vide = aujourd''hui. Ex. un samedi pour tester les sorties.'
+        required: false
 
 permissions:
   contents: write
@@ -24,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run data
+      - run: npm run data -- ${{ inputs.date && format('--date={0}', inputs.date) || '' }}
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           OPENAGENDA_KEY: ${{ secrets.OPENAGENDA_KEY }}
@@ -33,5 +37,6 @@ jobs:
           git config user.name "matinale-bot"
           git config user.email "matinale-bot@users.noreply.github.com"
           git add data/
-          git diff --cached --quiet || git commit -m "data: $(TZ=Europe/Zurich date +%F)"
+          D="${{ inputs.date }}"; [ -n "$D" ] || D=$(TZ=Europe/Zurich date +%F)
+          git diff --cached --quiet || git commit -m "data: $D"
           git push
