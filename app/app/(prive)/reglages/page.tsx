@@ -5,9 +5,9 @@ import { logout, updateSettings } from '../actions';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { monthCost, pricePerMillion, usd } from '@/lib/costs';
 
+// Le dimanche a son propre format (le documentaire) : seul le samedi garde les réglages d'édition courte.
 const DAYS = [
   { id: 'samedi', label: 'Samedi' },
-  { id: 'dimanche', label: 'Dimanche' },
 ];
 
 export default async function ReglagesPage({ searchParams }: { searchParams: FlashParams }) {
@@ -16,6 +16,7 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
   const cost = monthCost(episodes, month);
   const monthName = new Intl.DateTimeFormat('fr-CH', { month: 'long', timeZone: 'UTC' }).format(new Date(`${month}-15T12:00:00Z`));
   const editions = config.editions ?? {};
+  const docSubject = String((config as { documentaire?: { sujet?: string } }).documentaire?.sujet ?? '');
 
   return (
     <>
@@ -68,6 +69,25 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
             </section>
           );
         })}
+
+        <section className="section" style={{ marginTop: 28 }}>
+          <h2>Dimanche : le documentaire</h2>
+          <p className="hint">Un seul sujet de culture générale, raconté en plusieurs actes, puis la météo. Pas d&apos;actualité ce jour-là.</p>
+          <fieldset className="group">
+            <legend className="sr">Documentaire du dimanche</legend>
+            <div className="item">
+              <label htmlFor="dimanche_minutes" className="grow" style={{ margin: 0, color: 'var(--ink)', fontWeight: 500 }}>Durée</label>
+              <input id="dimanche_minutes" name="dimanche_minutes" type="number" min={5} max={30} defaultValue={editions.dimanche?.targetMinutes ?? 10} style={{ width: 80 }} />
+              <span className="muted small">min</span>
+            </div>
+            <div className="pad">
+              <label htmlFor="dimanche_sujet">Sujet souhaité (facultatif)</label>
+              <input id="dimanche_sujet" name="dimanche_sujet" type="text" maxLength={200} defaultValue={docSubject}
+                placeholder="Ex. : le percement du tunnel du Gothard" />
+              <p className="field-hint">Vide : la rédaction choisit. Un sujet déjà traité un dimanche précédent n&apos;est pas refait.</p>
+            </div>
+          </fieldset>
+        </section>
 
         <button className="btn primary block" type="submit" style={{ marginTop: 24 }}>Enregistrer</button>
       </form>

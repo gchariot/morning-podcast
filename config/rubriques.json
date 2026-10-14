@@ -29,9 +29,7 @@
     "dimanche": {
       "targetMinutes": 10,
       "minutesFactor": 0.6,
-      "skip": [
-        "politique"
-      ]
+      "skip": []
     }
   },
   "rubriques": [
@@ -185,5 +183,8 @@
       "samedi": "ferney",
       "dimanche": "ferney"
     }
+  },
+  "documentaire": {
+    "sujet": ""
   }
 }

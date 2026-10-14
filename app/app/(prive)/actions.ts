@@ -198,15 +198,17 @@ export async function updateSettings(formData: FormData) {
     const { config, sha } = await loadConfig(true);
     config.show.targetMinutes = num(formData, 'targetMinutes');
     const editions: NonNullable<typeof config.editions> = {};
-    for (const day of ['samedi', 'dimanche']) {
-      if (formData.get(`${day}_on`) !== 'on') continue;
-      editions[day] = {
-        targetMinutes: num(formData, `${day}_minutes`),
-        minutesFactor: Math.round((num(formData, `${day}_minutes`) / config.show.targetMinutes) * 100) / 100,
-        skip: formData.getAll(`${day}_skip`).map(String),
-      };
+    const factor = (m: number) => Math.min(1.5, Math.max(0.2, Math.round((m / config.show.targetMinutes) * 100) / 100));
+    if (formData.get('samedi_on') === 'on') {
+      const m = num(formData, 'samedi_minutes');
+      editions.samedi = { targetMinutes: m, minutesFactor: factor(m), skip: formData.getAll('samedi_skip').map(String) };
     }
+    // Dimanche : toujours le documentaire ; seule sa durée se règle (les thèmes ne s'appliquent pas ce jour-là).
+    const dm = num(formData, 'dimanche_minutes');
+    editions.dimanche = { targetMinutes: dm, minutesFactor: factor(dm), skip: [] };
     config.editions = editions;
+    const sujet = str(formData, 'dimanche_sujet').slice(0, 200);
+    (config as Record<string, unknown>).documentaire = { sujet };
     await saveConfig(config, sha, 'réglages: durée et éditions du week-end (app)');
     return 'Réglages enregistrés : effet dès le prochain épisode.';
   });
