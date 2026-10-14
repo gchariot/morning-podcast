@@ -119,11 +119,12 @@
     {
       "id": "culture",
       "title": "Culture générale",
-      "minutes": 2,
+      "minutes": 3,
       "brief": "Raconter une histoire tirée de l'éphéméride ou de l'article du jour Wikipédia (fichier de données), comme une anecdote. Finir l'épisode sur une question-quiz dont la réponse est donnée juste après.",
       "domains": [
         "fr.wikipedia.org"
-      ]
+      ],
+      "enabled": true
     }
   ],
   "football": {
