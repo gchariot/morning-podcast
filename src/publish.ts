@@ -1,8 +1,9 @@
 /**
  * Publication sur un stockage compatible S3 : Cloudflare R2 (recommandé) ou Supabase Storage.
  * Tout est rangé sous un préfixe secret pour que l'URL du flux soit impossible à deviner :
- *   <FEED_SECRET>/feed.xml, episodes.json, cover.jpg, episodes/<date>.mp3, episodes/<date>.chapters.json
+ *   <FEED_SECRET>/feed.xml, episodes.json, cover-<hash>.jpg, episodes/<date>.mp3, episodes/<date>.chapters.json
  */
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
@@ -23,6 +24,15 @@ export type EpisodeEntry = {
 };
 
 const KEEP = 30; // épisodes conservés dans le flux
+
+/** Pochette : nom versionné par son contenu, pour que les applis rechargent l'image quand elle change. */
+function coverAsset(): { key: string; body: Buffer } | null {
+  const file = resolve(ROOT, 'assets/cover.jpg');
+  if (!existsSync(file)) return null;
+  const body = readFileSync(file);
+  const hash = createHash('sha1').update(body).digest('hex').slice(0, 8);
+  return { key: `cover-${hash}.jpg`, body };
+}
 
 function client() {
   return new S3Client({
@@ -55,7 +65,8 @@ export function buildFeed(episodes: EpisodeEntry[], base: string, coverUrl: stri
       <pubDate>${new Date(`${e.date}T05:00:00+02:00`).toUTCString()}</pubDate>
       <guid isPermaLink="false">matinale-${e.date}</guid>
       <enclosure url="${esc(e.url)}" length="${e.bytes}" type="audio/mpeg"/>
-      <itunes:duration>${hms(e.seconds)}</itunes:duration>${e.chaptersUrl ? `
+      <itunes:duration>${hms(e.seconds)}</itunes:duration>${coverUrl ? `
+      <itunes:image href="${esc(coverUrl)}"/>` : ''}${e.chaptersUrl ? `
       <podcast:chapters url="${esc(e.chaptersUrl)}" type="application/json+chapters"/>` : ''}
     </item>`;
     })
@@ -99,11 +110,11 @@ export async function publish(date: string, mp3: string, seconds: number, script
   }
 
   // Pochette : envoyée à chaque publication (petit fichier, et ça garde le flux à jour si elle change).
-  const coverFile = resolve(ROOT, 'assets/cover.jpg');
+  const cover = coverAsset();
   let coverUrl: string | null = null;
-  if (existsSync(coverFile)) {
-    await put('cover.jpg', readFileSync(coverFile), 'image/jpeg', 'max-age=86400');
-    coverUrl = `${base}/cover.jpg`;
+  if (cover) {
+    await put(cover.key, cover.body, 'image/jpeg', 'max-age=31536000');
+    coverUrl = `${base}/${cover.key}`;
   }
 
   let episodes: EpisodeEntry[] = [];
@@ -139,11 +150,11 @@ export async function regenerateFeed() {
   const base = `${requireEnv('PUBLIC_BASE_URL').replace(/\/$/, '')}/${prefix}`;
   const got = await s3.send(new GetObjectCommand({ Bucket, Key: `${prefix}/episodes.json` }));
   const episodes: EpisodeEntry[] = JSON.parse(await got.Body!.transformToString());
-  const coverFile = resolve(ROOT, 'assets/cover.jpg');
+  const cover = coverAsset();
   let coverUrl: string | null = null;
-  if (existsSync(coverFile)) {
-    await s3.send(new PutObjectCommand({ Bucket, Key: `${prefix}/cover.jpg`, Body: readFileSync(coverFile), ContentType: 'image/jpeg', CacheControl: 'max-age=86400' }));
-    coverUrl = `${base}/cover.jpg`;
+  if (cover) {
+    await s3.send(new PutObjectCommand({ Bucket, Key: `${prefix}/${cover.key}`, Body: cover.body, ContentType: 'image/jpeg', CacheControl: 'max-age=31536000' }));
+    coverUrl = `${base}/${cover.key}`;
   }
   await s3.send(new PutObjectCommand({
     Bucket, Key: `${prefix}/feed.xml`, Body: buildFeed(episodes, base, coverUrl),
