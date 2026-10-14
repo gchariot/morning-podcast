@@ -1,0 +1,496 @@
+{
+  "date": "2026-10-14",
+  "title": "Gemini 4 Argon, le budget passe l'obstacle, Roma–Real ce soir",
+  "summary": "Google lance Gemini 4 Argon et Meta répond avec Muse Wonder. À l'Assemblée, la motion de rejet du budget 2027 tombe ; en Ukraine, nouvelle frappe massive sur l'énergie. Côté foot, Openda blessé à l'OL et soirée Roma–Real Madrid, avant les sorties ciné du mercredi et Molière à Chambord.",
+  "segments": [
+    {
+      "rubrique": "ouverture",
+      "titre": "Ouverture",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "style": "enjouée",
+          "text": "Bonjour Huxxley, nous sommes le mercredi quatorze octobre, et c'est La Matinale ! Au programme : un nouveau modèle phare chez Google, le budget à l'Assemblée, et un gros mercredi de Ligue des champions."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Et puisque c'est mercredi, on passe aussi par les salles obscures. Ceinture bouclée ? On y va."
+        }
+      ],
+      "sources": []
+    },
+    {
+      "rubrique": "ia",
+      "titre": "Nouveautés IA",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "On commence par l'IA, et la grosse annonce d'hier vient de Google. Hugo, c'est quoi, Gemini 4 Argon ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "posé",
+          "text": "C'est le nouveau modèle de pointe de Google, sorti hier, mardi. Il est déjà dispo pour les développeurs via l'API payante dans AI Studio, dans l'appli Gemini pour les abonnés Pro et Ultra, et dans Antigravity, leur environnement de code, pour les abonnés Ultra."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et qu'est-ce qu'il apporte concrètement ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Google met en avant le travail en plusieurs étapes : code, finance, juridique, sciences. Côté API, il y a une limite unique d'un million de tokens, entrée et sortie confondues, et un nouveau protocole de continuation pour les très longues réponses. Google annonce aussi de bons scores sur ses benchmarks, mais ce sont ses propres chiffres, à prendre comme tels."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le prix ? Parce que c'est souvent là que ça se joue pour toi."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Prix de lancement : deux dollars le million de tokens en entrée, dix dollars en sortie, avec l'entrée en cache à moins quatre-vingt-quinze pour cent. Mais attention, c'est temporaire : après le trente novembre, ça double, quatre et vingt dollars."
+        },
+        {
+          "speaker": "Léa",
+          "style": "amusée",
+          "text": "Donc si on veut tester, c'est maintenant."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Exactement. Simon Willison l'a déjà branché dans son outil en ligne de commande, et il note qu'Artificial Analysis a fait tourner toute sa batterie de tests pour environ deux mille quatre cents dollars, moins cher que la plupart des modèles comparables."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Deuxième annonce, chez Meta, dès lundi."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Meta sort deux modèles propriétaires : Muse Wonder et Muse Wonder Full. Pas de poids téléchargeables, donc pas d'auto-hébergement. Ils lisent texte, image, audio et vidéo, avec environ un million de tokens de contexte."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et on peut les appeler en API ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Seulement le petit, Muse Wonder, à quatre dollars en entrée et vingt en sortie. Le grand, Wonder Full, n'est accessible que via les abonnements Muse Code, à cinquante ou deux cents dollars par mois. Et détail important : sur ces abonnements, le mode par défaut autorise Meta à utiliser ce que tu envoies pour améliorer ses modèles."
+        },
+        {
+          "speaker": "Léa",
+          "style": "posé",
+          "text": "Bon réflexe à avoir, donc : vérifier ce réglage avant d'y coller du code client."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Voilà. Côté classement, Artificial Analysis donne cinquante-six à Wonder Full, à égalité avec Claude Sonnet cinq point cinq, et Claude Opus cinq point cinq reste devant, à cinquante-huit."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un dernier sujet, plus coulisses, qui devrait te parler."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Anthropic a raconté pourquoi il a fini par construire son propre système de gestion de versions, baptisé Scion. Avec les agents de code, le nombre de merges est passé d'environ deux mille cinq cents par jour en mai à plus de trente mille en septembre. Git a fini par crier grâce, en quelque sorte."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Trente mille merges par jour… Et la migration a pris combien de temps ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Cinq mois, avec une équipe de sept personnes. Et pour les pythonistes, Python trois point quinze est sorti ; Simon Willison en profite pour lâcher le support de la trois point dix."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Gemini 4 Argon — Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        },
+        {
+          "title": "Meta's new Muse Wonder and Muse Wonder Full models — VentureBeat",
+          "url": "https://venturebeat.com/technology/metas-new-muse-wonder-and-muse-wonder-full-models-achieve-frontier-performance-but-only-the-weaker-one-is-available-via-api"
+        },
+        {
+          "title": "Simon Willison's Weblog (12-13 octobre 2026)",
+          "url": "https://simonwillison.net/"
+        }
+      ]
+    },
+    {
+      "rubrique": "foot",
+      "titre": "Football",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Place au foot, et on commence par l'OL, avec une mauvaise nouvelle."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "posé",
+          "text": "Oui : Loïs Openda a une fissure du péroné droit, touché vendredi soir contre Lens. Il est absent au moins un mois, donc pas avant la prochaine trêve internationale au mieux. Le club a fait savoir qu'il trouvait que son attaquant avait été très peu protégé par l'arbitrage."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et au classement, où en est Lyon ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Quatrième de Ligue un avec onze points après six journées. Monaco mène avec quatorze, devant Lille et Rennes à treize. Et derrière l'OL, à égalité de points, on trouve le Paris FC et le PSG."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Passons à la Ligue des champions. Hier soir, soirée compliquée pour les clubs français."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Lens s'est incliné à domicile, zéro-deux contre le Sporting Portugal. Et Lille a pris l'eau à Londres : trois-zéro pour Arsenal."
+        },
+        {
+          "speaker": "Léa",
+          "style": "amusée",
+          "text": "Et il paraît qu'il y a eu un festival à Milan ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Sept buts à San Siro : l'Inter battue trois-quatre par Bruges. Et en Norvège, Viking a tenu le Bayern en échec, trois partout. Pour le reste : l'Atlético bat Manchester United deux-zéro, le Barça s'impose quatre-un à Galatasaray, Villarreal bat Naples trois-un, et Leipzig s'en sort un-zéro contre le PSV."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ce soir, c'est le Real Madrid qui est sur le pont."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Roma–Real Madrid, coup d'envoi à vingt-et-une heures au Stadio Olimpico. C'est le premier déplacement du Real dans cette phase de ligue, après une victoire à la première journée. Sur le banc madrilène, José Mourinho, qui retrouve Rome face à Gasperini."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et la Roma, elle est en forme ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Selon le site du Real, la Roma est invaincue en match officiel cette saison, et elle compte sur Donyell Malen, le meilleur buteur de Serie A. Petit point d'attention côté Real : c'est leur deuxième match en trois jours, avec un Clásico qui arrive ce mois-ci."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Les autres affiches de la soirée ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "À vingt-et-une heures aussi, le gros choc : Manchester City reçoit le PSG. On aura aussi Aston Villa–Fenerbahçe, Betis–Porto, et Bodø Glimt contre Dortmund. Et plus tôt, à dix-huit heures quarante-cinq, Liverpool se déplace à Linz, et Feyenoord reçoit Côme."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Arrêtons-nous un instant sur City–PSG, l'affiche de la soirée."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le PSG arrive en double tenant du titre. Il lui manque Senny Mayulu, blessé à la cuisse jusqu'à fin octobre. En face, City a tout son effectif disponible et a gagné ses six premiers matchs de Premier League."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et les hommes à surveiller ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Erling Haaland, huit buts toutes compétitions confondues, et Rayan Cherki, cinq buts. Côté parisien, Ferran Torres, sept buts, dont un triplé lors de la première journée. Le superordinateur d'Opta donne un léger avantage à City, mais tu sais ce qu'on dit des pronostics."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Bref, soirée chargée pour le foot anglais : City, Villa et Liverpool, tous sur le terrain."
+        }
+      ],
+      "sources": [
+        {
+          "title": "OL : fissure du péroné pour Loïs Openda — Lyonfoot",
+          "url": "https://www.lyonfoot.com/article/14464/ol-fissure-du-perone-pour-lois-openda-le-joueur-indisponible-au-moins-un-mois"
+        },
+        {
+          "title": "Roma-Real Madrid : en quête d'une deuxième victoire — realmadrid.com",
+          "url": "https://www.realmadrid.com/fr-FR/actualites/football/equipe-premiere/preliminaires/roma-real-madrid-regresa-la-champions-en-roma-14-10-2026"
+        },
+        {
+          "title": "Man City vs PSG: Champions League preview — Al Jazeera",
+          "url": "https://www.aljazeera.com/sports/2026/10/13/manchester-city-psg-champions-league-haaland-torres-predictions-teams"
+        }
+      ]
+    },
+    {
+      "rubrique": "politique",
+      "titre": "Politique",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "La politique, maintenant, en trois volets. D'abord la France, où le budget deux mille vingt-sept a franchi un premier obstacle hier soir."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "posé",
+          "text": "Oui. Les socialistes avaient déposé une motion de rejet préalable, qui aurait envoyé le texte directement au Sénat sans débat à l'Assemblée. Elle a été repoussée par deux cent trente-six voix contre cent quarante-neuf. Le bloc central et le Rassemblement national ont voté contre ; la gauche a voté pour."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Quels arguments de chaque côté ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Pour le PS, la députée Estelle Mercier a parlé d'une « sommation » et reproche au gouvernement de refuser de taxer les plus riches. Le ministre de l'Économie, Roland Lescure, dit aborder les discussions « dans un esprit de compromis ». Et David Amiel, côté gouvernement, défend un « budget de sauvegarde » : ouvert sur le comment, mais pas sur le combien."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le RN, qui a fait pencher la balance ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La députée Sophie-Laurence Roy juge ce budget mauvais pour les comptes publics et pour les travailleurs, et annonce que le RN défendra ses propres priorités pendant le débat. Elle accuse aussi les socialistes d'offrir au gouvernement l'opposition qu'il souhaitait."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Sur le fond, que contient le texte ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Environ quarante-trois milliards d'euros d'économies supplémentaires, avec un objectif de déficit à cinq pour cent du PIB l'an prochain. Roland Lescure veut un budget voté d'ici la fin de l'année. Et la directrice du FMI, Kristalina Georgieva, estime qu'il faudra du temps à la France pour regagner l'entière confiance des marchés. Le volet recettes est débattu jusqu'à lundi."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Deuxième volet : la Suisse romande."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Calme plat ce matin dans nos sources pour Genève et Vaud : rien de neuf de vérifiable sur les dernières quarante-huit heures. On y revient demain."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Troisième volet, le monde, avec l'Ukraine, frappée cette nuit."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "posé",
+          "text": "Une attaque russe massive, selon les deux camps. Au moins neuf morts, dont trois à Kiev, et plus d'un demi-million de personnes privées de courant, selon Al Jazeera. Moscou dit avoir visé des installations énergétiques et de communication. Volodymyr Zelensky, lui, accuse la Russie de violer la trêve énergétique annoncée il y a quelques jours par Donald Trump."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et côté russe, il y a aussi eu des attaques ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le ministère russe de la Défense affirme avoir abattu plus de neuf cents drones ukrainiens dans la nuit, et rapporte un mort dans la région de Saratov."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Enfin, la mer Noire, au large de la Bulgarie."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux cargos ont été frappés par des drones ; l'un a coulé, l'autre, à capitaux ukrainiens, a été évacué. Le Premier ministre bulgare, Roumen Radev, parle d'une attaque « absolument inacceptable ». Il dit ne pas avoir de preuve solide pour accuser qui que ce soit, mais que la logique suggère que cela profite à la Russie. Sofia convoque l'ambassadrice russe. Pas de réaction de Moscou à ce stade."
+        }
+      ],
+      "sources": [
+        {
+          "title": "La motion de rejet des socialistes n'ayant pas été adoptée, l'examen du budget 2027 aura bien lieu — LCP",
+          "url": "https://lcp.fr/actualites/la-motion-de-rejet-des-socialistes-n-ayant-pas-ete-adoptee-l-examen-du-budget-2027-aura"
+        },
+        {
+          "title": "Budget 2027 : le débat s'est ouvert à l'Assemblée nationale — France 24",
+          "url": "https://www.france24.com/fr/france/20261013-budget-2027-debat-ouvert-assemblee-nationale-deficit-dette-retraites"
+        },
+        {
+          "title": "L'essentiel de l'actu — 14 octobre 2026 — Presse Évasion",
+          "url": "https://www.presse-evasion.fr/article/revue-presse-14-10-2026"
+        },
+        {
+          "title": "'Massive' Russian attack on Ukraine kills at least 9 — Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/10/14/massive-russian-attack-on-ukraine-kills-at-least-six-cuts-power-in-kyiv"
+        },
+        {
+          "title": "Drones attack two cargo ships off Bulgaria's coast — Meduza",
+          "url": "https://meduza.io/en/news/2026/10/13/drones-attack-two-cargo-ships-off-bulgaria-s-coast-one-ukrainian-owned-sofia-plans-to-summon-russian-ambassador"
+        }
+      ]
+    },
+    {
+      "rubrique": "jeux",
+      "titre": "Jeux vidéo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "style": "enjouée",
+          "text": "Les jeux vidéo, maintenant. Semaine chargée, Hugo ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Plutôt, oui. Hier sont sortis Planet Zoo deux, de Frontier, et Valor Mortis, un jeu d'action plus sombre. Aujourd'hui, Warhammer quarante mille Boltgun deux, pour du tir rétro bien nerveux. Et vendredi, Tenebris Somnia. Tout ça sur PC, PS5 et Xbox Series."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Planet Zoo deux, qu'est-ce qui change par rapport au premier ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux grosses nouveautés : des espèces entièrement aquatiques et des espèces volantes, et la possibilité de gérer soit un zoo commercial, soit une réserve naturelle. De quoi passer des heures à dessiner des volières."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et demain, il y a le gros morceau."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "enjoué",
+          "text": "Castlevania : Belmont's Curse, jeudi. Développé par Evil Empire et Motion Twin, le studio derrière Dead Cells, et édité par Konami. On y incarne une nouvelle héroïne, Rose Belmont."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Les premiers avis sont tombés ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le premier test vient du magazine japonais Famitsu : quatre critiques, quatre fois huit sur dix, soit trente-deux sur quarante. Un départ respectable. Le jeu sort aussi sur Switch, à un prix plutôt doux, autour de trente dollars."
+        },
+        {
+          "speaker": "Léa",
+          "style": "amusée",
+          "text": "Les créateurs de Dead Cells sur un Castlevania, ça sent les soirées qui finissent tard."
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Un chasseur de vampires qui t'empêche de dormir, c'est presque ironique."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et une date à noter pour la semaine prochaine ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Mardi vingt octobre, à dix-neuf heures chez nous, l'ID@Xbox Showcase, organisé avec IGN : dix-huit jeux indépendants, dont beaucoup de premières mondiales. Un seul titre confirmé pour l'instant : The Wolf Among Us Remastered."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Sorties de jeux vidéo d'octobre 2026 — jeuxvideo.com",
+          "url": "https://www.jeuxvideo.com/jeux/sorties/annee-2026/mois-10/"
+        },
+        {
+          "title": "The first review for Castlevania: Belmont's Curse is in — Nintendo Life",
+          "url": "https://www.nintendolife.com/news/2026/10/the-first-review-for-castlevania-belmonts-curse-is-in"
+        },
+        {
+          "title": "Planet Zoo 2 — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Planet_Zoo_2"
+        },
+        {
+          "title": "Xbox Indie Showcase to highlight 18 games this month — Pure Xbox",
+          "url": "https://purexbox.com/news/2026/10/xbox-indie-showcase-to-highlight-18-games-this-month-including-tons-of-world-premieres"
+        }
+      ]
+    },
+    {
+      "rubrique": "cinema",
+      "titre": "Cinéma et séries",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "On est mercredi, donc place aux sorties en salle. Et l'événement, c'est un classique."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Les Misérables, nouvelle adaptation signée Fred Cavayé, avec Vincent Lindon, Tahar Rahim et Camille Cottin. Un ancien forçat qui tente de refaire sa vie sous un faux nom, et un passé qui le rattrape. Pas besoin d'en dire plus, tout le monde connaît au moins le début."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et pour ceux qui préfèrent l'action ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Street Fighter, en prises de vue réelles, réalisé par Kitao Sakurai, avec Noah Centineo et Andrew Koji. Deux anciens amis replongent dans un tournoi de combat, recrutés par Chun-Li. Ça devrait parler à ta manette."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Il y a aussi de quoi se faire peur."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Malfaisante, de Rob Savage, avec Jessica Chastain : une présence malveillante qui s'installe dans une maison de famille. Et dans un autre genre de frisson, Englouti, de Brian Duffield, avec Josh Brolin : un plongeur avalé par une baleine, avec une réserve d'oxygène limitée."
+        },
+        {
+          "speaker": "Léa",
+          "style": "amusée",
+          "text": "Jonas version film de survie, en somme."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "C'est l'idée. Côté cinéma d'auteur, Minotaure, le nouveau film du Russe Andreï Zviaguintsev, sur un homme d'affaires de province qui voit son monde se fissurer. Et Le Corset, de Louis Clichy, un garçon de onze ans dans une ferme de la Beauce, obligé de porter un corset pour se redresser le dos."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et pour les plus jeunes ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Mochy, un film d'animation familial sur un petit chien au physique peu conventionnel qui rêve de gagner un concours canin. À noter aussi : Petite Casbah, drame historique à Alger en mille neuf cent cinquante-cinq, et Où vont les âmes, de la Québécoise Brigitte Poupart, avec Monia Chokri."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Au cinéma le 14 octobre, ce sont les films à voir — AlloCiné",
+          "url": "https://www.allocine.fr/article/fichearticle_gen_carticle=1000226063.html"
+        }
+      ]
+    },
+    {
+      "rubrique": "culture",
+      "titre": "Culture générale",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "style": "enjouée",
+          "text": "Pour finir, la culture générale. Hugo, on remonte à quel jour ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Au quatorze octobre mille six cent soixante-dix, au château de Chambord. Ce soir-là, la troupe de Molière joue pour la première fois Le Bourgeois gentilhomme, devant Louis XIV et toute la cour."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Avec une drôle d'origine, cette pièce, non ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Une histoire d'ego royal. Un an plus tôt, un envoyé du sultan ottoman, Soliman Aga, est reçu en grande pompe à la cour. Et il aurait lâché que le cheval du sultan était plus richement paré que l'habit du roi. Louis XIV n'a pas apprécié, et il a voulu un spectacle qui se moque des « Turcs »."
+        },
+        {
+          "speaker": "Léa",
+          "text": "D'où la fameuse cérémonie turque où Monsieur Jourdain est fait « Mamamouchi »."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Exactement. Molière joue lui-même Monsieur Jourdain, ce bourgeois qui veut à tout prix devenir gentilhomme. C'est lui qui découvre, émerveillé, qu'il fait de la prose depuis plus de quarante ans sans le savoir. Une comédie-ballet complète : ballets, costumes à la turque, et une musique écrite exprès."
+        },
+        {
+          "speaker": "Léa",
+          "style": "joueuse",
+          "text": "Alors voilà la question du jour : qui a composé la musique du Bourgeois gentilhomme ?"
+        },
+        {
+          "speaker": "Hugo",
+          "style": "amusé",
+          "text": "Indice : c'était le compositeur préféré du roi, et il régnait sur toute la musique de la cour."
+        },
+        {
+          "speaker": "Léa",
+          "text": "La réponse : Jean-Baptiste Lully ! Merci Hugo, et bonne route, Huxxley : on se retrouve demain matin pour La Matinale."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Le Bourgeois gentilhomme — Wikipédia",
+          "url": "https://fr.wikipedia.org/wiki/Le_Bourgeois_gentilhomme"
+        }
+      ]
+    }
+  ]
+}
