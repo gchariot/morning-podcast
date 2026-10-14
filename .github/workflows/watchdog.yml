@@ -1,0 +1,40 @@
+name: 4 · Chien de garde
+
+# 04:30 UTC = 6h30 l'été, 5h30 l'hiver à Genève. Vérifie que l'épisode du jour est rédigé ET publié.
+# En cas de problème : notification push (ntfy) + run en rouge (mail GitHub).
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Vérifier l'épisode du jour
+        id: check
+        env:
+          PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
+          FEED_SECRET: ${{ secrets.FEED_SECRET }}
+        run: |
+          d=$(TZ=Europe/Zurich date +%F)
+          echo "date=$d" >> "$GITHUB_OUTPUT"
+          problems=""
+          [ -f "data/$d.json" ] || problems="$problems données absentes ;"
+          [ -f "episodes/$d/script.json" ] || problems="$problems script non rédigé (tâche Claude) ;"
+          feed=$(curl -fsS "${PUBLIC_BASE_URL%/}/$FEED_SECRET/feed.xml" || true)
+          echo "$feed" | grep -q "matinale-$d" || problems="$problems épisode absent du flux ;"
+          echo "problems=$problems" >> "$GITHUB_OUTPUT"
+          if [ -n "$problems" ]; then echo "::error::$problems"; exit 1; fi
+          echo "Épisode du $d : OK"
+      - name: Notification push
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          curl -fsS -H "Title: La Matinale - pas d'episode ce matin" -H "Priority: high" -H "Tags: warning" \
+            -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions" \
+            -d "${{ steps.check.outputs.date }} :${{ steps.check.outputs.problems }}" "https://ntfy.sh/$NTFY_TOPIC"

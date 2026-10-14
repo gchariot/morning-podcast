@@ -28,6 +28,12 @@ Deux fichiers dans `episodes/<DATE>/` :
 }
 ```
 
+## Avant de chercher : mémoire, retours, édition du jour
+
+1. **Mémoire** : lis `episodes/<veille>/notes.md` et les `title`/`summary` des `script.json` des 3 jours précédents (s'ils existent). Un sujet déjà traité n'est repris **que s'il y a du nouveau**, et alors présenté comme une suite (« on vous en parlait hier… »). Jamais deux fois la même info comme une nouveauté.
+2. **Retours de l'auditeur** : lis `retours.md`. Les « consignes permanentes » s'appliquent toujours ; les « retours récents » des 14 derniers jours aussi. Ils priment sur les durées et consignes de `config/rubriques.json` en cas de conflit (sauf les règles de neutralité politique et d'exactitude).
+3. **Édition du jour** : regarde le jour de la semaine à Genève (`TZ=Europe/Zurich date +%u` : 6 = samedi, 7 = dimanche). Si `config/rubriques.json` → `editions` contient ce jour (samedi, dimanche) : vise `targetMinutes`, multiplie la durée de chaque rubrique par `minutesFactor` et supprime les rubriques listées dans `skip`. Annonce-le en ouverture (« édition du week-end, version courte »).
+
 ## Règles de recherche
 
 - Lis d'abord `config/rubriques.json` (rubriques, durées, consignes, sites de référence) et `data/<DATE>.json` (scores de foot, classement, éphéméride Wikipédia).

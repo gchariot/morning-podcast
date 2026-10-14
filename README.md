@@ -47,7 +47,8 @@ flowchart LR
 |---|---|---|---|
 | **5 h 00** | Scores, classement, derniers et prochains matchs de l'OL et du Real, éphéméride | GitHub Actions · [`data.yml`](.github/workflows/data.yml) | `data/<date>.json` |
 | **5 h 37** | Recherche web par rubrique, écriture du dialogue, vérification du format | Tâche planifiée Claude · consigne [`prompts/redaction.md`](prompts/redaction.md) | `episodes/<date>/script.json` + `notes.md` |
-| **~5 h 50** | Voix, montage, publication du MP3 et du flux | GitHub Actions · [`episode.yml`](.github/workflows/episode.yml), déclenché par le push du script | MP3 sur R2 + `feed.xml` |
+| **~5 h 50** | Voix, montage avec chapitres, publication du MP3 et du flux | GitHub Actions · [`episode.yml`](.github/workflows/episode.yml), déclenché par le push du script | MP3 sur R2 + `feed.xml` |
+| **6 h 30** | Chien de garde : l'épisode du jour est-il rédigé et publié ? Sinon, notification push | GitHub Actions · [`watchdog.yml`](.github/workflows/watchdog.yml) | — |
 
 > L'hiver, tout part une heure plus tôt : les crons GitHub sont en UTC.
 
@@ -79,9 +80,11 @@ Le flux est privé : son adresse contient une clé secrète (`FEED_SECRET`) et n
 
 | Je veux… | Je modifie… |
 |---|---|
+| **Donner mon avis** (« plus de mercato », « trop long ») | [`retours.md`](retours.md) — lu chaque matin par la rédaction |
 | Changer une rubrique, sa durée ou ses sources | [`config/rubriques.json`](config/rubriques.json) |
+| Régler l'édition du week-end (10 min, sans politique le dimanche) | `editions` dans [`config/rubriques.json`](config/rubriques.json) |
 | Changer le ton, le format, les règles éditoriales | [`prompts/redaction.md`](prompts/redaction.md) |
-| Changer de jingle | Remplacer [`assets/jingle.mp3`](assets/) (5 à 6 s idéalement) |
+| Changer de jingle ou de pochette | Remplacer [`assets/jingle.mp3`](assets/) (5 à 6 s) ou `assets/cover.jpg` (3000×3000) |
 | Essayer d'autres voix | Actions → **0 · Test de voix**, puis les variables `VOICE_LEA` / `VOICE_HUGO` |
 | Passer sur ElevenLabs | Variable `TTS_PROVIDER=elevenlabs` + secret `ELEVENLABS_API_KEY` + variables d'ID de voix |
 | Ajouter une équipe suivie | `football.favouriteTeamIds` dans la config (ID football-data.org) |
@@ -97,6 +100,7 @@ Voix Gemini à tester : Léa → `Kore`, `Aoede`, `Leda`, `Zephyr` · Hugo → `
 | **0 · Test de voix** | Écouter un extrait de 20 s avec d'autres voix, sans rien publier |
 | **1 · Données du jour** | Relancer la récupération des scores si elle a échoué |
 | **3 · Voix et publication** | Republier un épisode (champ `date` facultatif) |
+| **4 · Chien de garde** | Vérifier à la main que l'épisode du jour est bien en ligne |
 
 Pour relancer la **rédaction** hors horaire, déclenche la tâche planifiée « La Matinale — rédaction » depuis Claude.
 
@@ -106,7 +110,13 @@ Pour relancer la **rédaction** hors horaire, déclenche la tâche planifiée «
 
 Chaque `episodes/<date>/notes.md` se termine par un journal **« Trous et échecs »** : recherches sans résultat, sites inaccessibles, infos trop anciennes, rubriques maigres. C'est l'endroit à lire pour améliorer les sources.
 
-Une rubrique qui échoue à la synthèse vocale est sautée : l'épisode sort quand même, le run passe en rouge et GitHub envoie un mail.
+Une rubrique qui échoue à la synthèse vocale est sautée : l'épisode sort quand même, le run passe en rouge et une notification part.
+
+**Alertes** : avec l'appli gratuite **ntfy** abonnée au sujet `NTFY_TOPIC`, tu reçois un push si la voix échoue ou si, à 6 h 30, l'épisode du jour manque.
+
+**Continuité** : la rédaction relit les notes de la veille et des 3 jours précédents ; un sujet déjà traité ne revient que s'il y a du nouveau.
+
+**Chapitres** : chaque épisode a un chapitre par rubrique (dans le MP3 et dans le flux), pour sauter directement au foot ou au ciné.
 
 ---
 
@@ -124,6 +134,7 @@ Une rubrique qui échoue à la synthèse vocale est sautée : l'épisode sort qu
 | `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | Jeton R2 « Lecture/écriture objet » limité au bucket |
 | `PUBLIC_BASE_URL` | URL publique `https://pub-….r2.dev` |
 | `FEED_SECRET` | Chaîne aléatoire qui rend l'URL du flux impossible à deviner |
+| `NTFY_TOPIC` | Nom de sujet ntfy privé pour les alertes push (facultatif) |
 
 </details>
 
@@ -155,6 +166,8 @@ src/assemble.ts           montage ffmpeg + normalisation du volume
 src/publish.ts            envoi sur R2 + flux RSS
 src/episode.ts            enchaîne voix → montage → publication
 assets/jingle.mp3         jingle d'ouverture
+assets/cover.jpg          pochette de l'émission
+retours.md                mes retours, lus chaque matin par la rédaction
 data/                     données du jour (commitées par GitHub Actions)
 episodes/                 scripts et notes (commités par Claude)
 ```

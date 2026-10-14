@@ -10,6 +10,10 @@
     "targetMinutes": 20,
     "wordsPerMinute": 150
   },
+  "editions": {
+    "samedi": { "targetMinutes": 10, "minutesFactor": 0.5, "skip": [] },
+    "dimanche": { "targetMinutes": 10, "minutesFactor": 0.6, "skip": ["politique"] }
+  },
   "rubriques": [
     {
       "id": "ia",
