@@ -1,0 +1,50 @@
+name: 0 · Test de voix
+
+# Génère un extrait d'environ 20 secondes (Léa + Hugo) et le met en artefact téléchargeable.
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: 'Fournisseur de voix'
+        type: choice
+        options: [gemini, elevenlabs]
+        default: gemini
+      voice_lea:
+        description: 'Voix de Léa (Gemini : Kore, Aoede, Leda, Zephyr…) — vide = défaut'
+        required: false
+      voice_hugo:
+        description: 'Voix de Hugo (Gemini : Puck, Charon, Orus, Fenrir…) — vide = défaut'
+        required: false
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run tts:test
+        env:
+          TTS_PROVIDER: ${{ inputs.provider }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VOICE_LEA: ${{ inputs.voice_lea || vars.VOICE_LEA }}
+          VOICE_HUGO: ${{ inputs.voice_hugo || vars.VOICE_HUGO }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
+          ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
+      - name: Assemblage en un seul MP3
+        run: |
+          ls out/test-* > /dev/null
+          args=""; n=0
+          for f in out/test-*; do args="$args -i $f"; n=$((n+1)); done
+          filter=""; for i in $(seq 0 $((n-1))); do filter="$filter[$i:a]"; done
+          ffmpeg -y -loglevel error $args -filter_complex "${filter}concat=n=$n:v=0:a=1[out]" -map "[out]" -ac 1 -b:a 96k out/extrait.mp3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: extrait-${{ inputs.provider }}-${{ inputs.voice_lea || 'defaut' }}-${{ inputs.voice_hugo || 'defaut' }}
+          path: out/extrait.mp3
+          retention-days: 7
