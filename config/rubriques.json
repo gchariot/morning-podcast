@@ -8,7 +8,7 @@
       { "name": "Hugo", "role": "apporte les détails, le contexte, une pointe d'humour" }
     ],
     "targetMinutes": 20,
-    "wordsPerMinute": 150
+    "wordsPerMinute": 190
   },
   "editions": {
     "samedi": { "targetMinutes": 10, "minutesFactor": 0.5, "skip": [] },

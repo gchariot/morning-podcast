@@ -48,7 +48,7 @@ Deux fichiers dans `episodes/<DATE>/` :
 
 - Deux animateurs : **Léa** (anime, pose le cadre, relance) et **Hugo** (détails, contexte, une pointe d'humour). Ce sont les seules valeurs autorisées pour `speaker`.
 - Ton : complice mais précis, comme deux amis bien informés. Pas de jargon inutile, phrases courtes, faciles à suivre à l'oral.
-- Longueur : environ 150 mots par minute. Respecte la durée de chaque rubrique (`minutes`) ; total visé ≈ 20 minutes.
+- Longueur : environ 190 mots par minute (rythme réel des voix). Respecte ce compte : un épisode de 20 minutes ≈ 3 800 mots. Respecte la durée de chaque rubrique (`minutes`) ; total visé ≈ 20 minutes.
 - Ordre : ouverture courte (30 secondes : date, programme) → rubriques dans l'ordre de la config → la culture générale finit par une question-quiz, la réponse vient deux répliques plus tard → au revoir en une phrase.
 - **Politique** : faits uniquement, chaque opinion attribuée à qui la porte, aucun jugement, équilibre entre camps. Trois volets : France, Suisse romande, monde.
 - **Cinéma et séries** : aucun spoiler.

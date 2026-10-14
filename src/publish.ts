@@ -73,7 +73,6 @@ export function buildFeed(episodes: EpisodeEntry[], base: string, coverUrl: stri
     <description>${esc(show.description)}</description>
     <language>${show.language}</language>
     <itunes:author>La Matinale</itunes:author>
-    <itunes:block>Yes</itunes:block>
     <itunes:explicit>false</itunes:explicit>${image}
 ${items}
   </channel>
@@ -130,4 +129,25 @@ export async function publish(date: string, mp3: string, seconds: number, script
   await put('episodes.json', JSON.stringify(episodes, null, 2), 'application/json');
   await put('feed.xml', buildFeed(episodes, base, coverUrl), 'application/rss+xml; charset=utf-8', 'max-age=300');
   return { feedUrl: `${base}/feed.xml`, episodeUrl: entry.url };
+}
+
+/** Régénère feed.xml à partir de episodes.json, sans refaire l'audio (après un changement de format du flux). */
+export async function regenerateFeed() {
+  const s3 = client();
+  const Bucket = requireEnv('S3_BUCKET');
+  const prefix = requireEnv('FEED_SECRET');
+  const base = `${requireEnv('PUBLIC_BASE_URL').replace(/\/$/, '')}/${prefix}`;
+  const got = await s3.send(new GetObjectCommand({ Bucket, Key: `${prefix}/episodes.json` }));
+  const episodes: EpisodeEntry[] = JSON.parse(await got.Body!.transformToString());
+  const coverFile = resolve(ROOT, 'assets/cover.jpg');
+  let coverUrl: string | null = null;
+  if (existsSync(coverFile)) {
+    await s3.send(new PutObjectCommand({ Bucket, Key: `${prefix}/cover.jpg`, Body: readFileSync(coverFile), ContentType: 'image/jpeg', CacheControl: 'max-age=86400' }));
+    coverUrl = `${base}/cover.jpg`;
+  }
+  await s3.send(new PutObjectCommand({
+    Bucket, Key: `${prefix}/feed.xml`, Body: buildFeed(episodes, base, coverUrl),
+    ContentType: 'application/rss+xml; charset=utf-8', CacheControl: 'max-age=300',
+  }));
+  return { feedUrl: `${base}/feed.xml`, count: episodes.length };
 }
