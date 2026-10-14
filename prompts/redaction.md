@@ -34,15 +34,17 @@ Deux fichiers dans `episodes/<DATE>/` :
 
 1. **Mémoire** : lis `episodes/<veille>/notes.md` et les `title`/`summary` des `script.json` des 3 jours précédents (s'ils existent). Un sujet déjà traité n'est repris **que s'il y a du nouveau**, et alors présenté comme une suite (« on vous en parlait hier… »). Jamais deux fois la même info comme une nouveauté.
 2. **Retours de l'auditeur** : lis `retours.md`. Les « consignes permanentes » s'appliquent toujours ; les « retours récents » des 14 derniers jours aussi. Ils priment sur les durées et consignes de `config/rubriques.json` en cas de conflit (sauf les règles de neutralité politique et d'exactitude).
-3. **Édition du jour** : regarde le jour de la semaine à Genève (`TZ=Europe/Zurich date +%u` : 6 = samedi, 7 = dimanche). Si `config/rubriques.json` → `editions` contient ce jour (samedi, dimanche) : vise `targetMinutes`, multiplie la durée de chaque rubrique par `minutesFactor` et supprime les rubriques listées dans `skip`. Annonce-le en ouverture (« édition du week-end, version courte »).
+3. **Édition du jour** : regarde le jour de la semaine à Genève (`TZ=Europe/Zurich date +%u` : 6 = samedi, 7 = dimanche). Si `config/rubriques.json` → `editions` contient ce jour (samedi, dimanche) : vise `targetMinutes`, multiplie la durée de chaque rubrique par `minutesFactor` et supprime les rubriques listées dans `skip`. Annonce-le en ouverture (« édition du week-end, version courte »). Le dimanche, seule la durée visée compte : le contenu suit « Le dimanche : le documentaire ».
 
-## Le dimanche : le récap de la semaine
+## Le dimanche : le documentaire
 
-Le dimanche (`+%u` = 7), l'épisode change de forme, dans la durée de l'édition du dimanche :
-1. **Les histoires de la semaine** : à partir des `script.json` et `notes.md` des six jours précédents, choisis les 3 ou 4 sujets qui ont **le plus bougé** au fil de la semaine, toutes rubriques confondues. Pour chacun : où on en était lundi, ce qui s'est passé, où on en est ce dimanche (vérifie les derniers développements par une recherche). Pas une liste de tout ce qui a été dit.
-2. **La semaine qui vient** : sorties ciné et jeux vidéo, gros matchs (OL, Real, Ligue des champions) avec date et diffuseur en France, rendez-vous politiques connus (votes, élections, sommets).
-3. **La météo de Zoé** termine l'épisode, comme chaque jour.
-Les rubriques habituelles ne sont pas traitées une par une ce jour-là ; une vraie actualité du jour (résultat du samedi soir de l'OL, événement majeur) a sa place en ouverture du récap. Chaque histoire du récap est un segment avec `rubrique: "recap"` et un titre court ; la semaine qui vient a `rubrique: "semaine"`.
+Le dimanche (`+%u` = 7), pas d'actualité : l'épisode est **un documentaire de culture générale d'environ 9 minutes sur un seul sujet**, suivi de la météo de Zoé. Il remplace toutes les rubriques ce jour-là (environ 1 700 mots pour le documentaire, la validation compte la durée de l'édition du dimanche).
+
+- **Le sujet** : une histoire vraie, riche et surprenante (un événement historique, une invention, un lieu, un phénomène scientifique, une œuvre, un personnage, une énigme résolue). Varie les domaines d'une semaine à l'autre : lis les titres des `script.json` des huit dimanches précédents et ne reprends jamais un sujet ni le même domaine que le dimanche précédent. Si `retours.md` propose un sujet de documentaire (« doc : … »), il passe en priorité.
+- **La construction** : une accroche forte (une scène, un détail intrigant), puis 3 ou 4 actes qui racontent l'histoire dans l'ordre, avec des personnes, des lieux, des dates, des chiffres et des anecdotes peu connues ; un retournement ou une révélation ; et ce qu'il en reste aujourd'hui. Hugo raconte, Léa relance, s'étonne et fait les liens, comme dans un bon documentaire radio.
+- **L'exactitude** : appuie-toi sur au moins trois sources sérieuses (encyclopédies, musées, universités, presse de référence), cite-les dans les `sources` des segments, et distingue clairement ce qui est établi de ce qui relève de la légende.
+- **Dans `script.json`** : chaque acte est un segment `rubrique: "doc"` avec un titre d'acte évocateur (ils deviennent les chapitres), puis le segment `meteo` en dernier.
+- **Le quiz** : le premier acte s'ouvre par la réponse au quiz de la veille (20 secondes), et le dernier acte se termine par une question sur le documentaire, selon les règles du quiz ci-dessous.
 
 ## Règles de recherche
 
@@ -69,7 +71,7 @@ Les rubriques habituelles ne sont pas traitées une par une ce jour-là ; une vr
 - Une réplique = 1 à 4 phrases. Alterner souvent les voix.
 - Les `sources` de chaque segment reprennent les URL réellement utilisées.
 
-## Le quiz (rubrique culture générale)
+## Le quiz (rubrique culture générale, et le documentaire du dimanche)
 
 La réponse n'est **jamais** donnée le jour même : l'auditeur répond dans l'appli et entend la réponse le lendemain.
 

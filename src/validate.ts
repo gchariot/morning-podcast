@@ -28,7 +28,7 @@ export function loadScript(date: string, strict = false) {
       }
     }
   }
-  if (script.segments.some(sg => sg.rubrique === 'culture') && !script.quiz) {
+  if (script.segments.some(sg => sg.rubrique === 'culture' || sg.rubrique === 'doc') && !script.quiz) {
     problems.push('La culture générale pose le quiz du jour : remplis `quiz` (question, 3 ou 4 choix, index de la bonne réponse, explication).');
   }
   const meteoIdx = script.segments.findIndex(sg => sg.rubrique === 'meteo');
