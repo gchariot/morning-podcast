@@ -97,8 +97,67 @@ async function synthChunk(turns: Turn[]): Promise<Buffer> {
   }
 }
 
-/** Écrit un ou plusieurs WAV pour une rubrique et renvoie le chemin du premier (les suivants sont suffixés). */
+/** Lit la fréquence d'échantillonnage d'un WAV (octets 24-27), 24 kHz par défaut. */
+function sampleRateOf(wav: Buffer): number {
+  return wav.length > 28 && wav.toString('ascii', 0, 4) === 'RIFF' ? wav.readUInt32LE(24) : 24000;
+}
+
+/** WAV de silence (mono 16 bits) : le petit temps entre deux répliques. */
+function silenceWav(ms: number, rate: number): Buffer {
+  const samples = Math.round((rate * ms) / 1000);
+  const data = Buffer.alloc(samples * 2);
+  const h = Buffer.alloc(44);
+  h.write('RIFF', 0); h.writeUInt32LE(36 + data.length, 4); h.write('WAVE', 8);
+  h.write('fmt ', 12); h.writeUInt32LE(16, 16); h.writeUInt16LE(1, 20); h.writeUInt16LE(1, 22);
+  h.writeUInt32LE(rate, 24); h.writeUInt32LE(rate * 2, 28); h.writeUInt16LE(2, 32); h.writeUInt16LE(16, 34);
+  h.write('data', 36); h.writeUInt32LE(data.length, 40);
+  return Buffer.concat([h, data]);
+}
+
+/** Exécute des tâches avec au plus `limit` en parallèle, en gardant l'ordre des résultats. */
+async function pool<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]> {
+  const out: T[] = new Array(tasks.length);
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+    while (next < tasks.length) { const i = next++; out[i] = await tasks[i](); }
+  }));
+  return out;
+}
+
+const PER_TURN = process.env.TTS_PER_TURN !== '0';
+const GAP_MS = Number(process.env.TTS_TURN_GAP_MS || 350);
+
+/**
+ * Écrit les WAV d'une rubrique et renvoie leurs chemins, dans l'ordre.
+ * Par défaut une réplique par appel, avec un court silence (≈ 0,35 s, légèrement variable) à chaque
+ * changement de voix : sinon le modèle enchaîne les deux voix sans respirer. TTS_PER_TURN=0 revient
+ * à l'ancien mode (plusieurs répliques par appel). Si l'API refuse le mode réplique par réplique,
+ * on bascule automatiquement sur l'ancien mode pour la rubrique.
+ */
 export async function geminiSegment(turns: Turn[], outBase: string): Promise<string[]> {
+  if (PER_TURN) {
+    try {
+      const audios = await pool(turns.map(t => () => synthChunk([t])), 3);
+      const files: string[] = [];
+      const rate = sampleRateOf(audios[0]);
+      audios.forEach((audio, i) => {
+        if (i > 0) {
+          const changed = turns[i].speaker !== turns[i - 1].speaker;
+          const ms = changed ? GAP_MS + Math.round((Math.random() - 0.5) * 120) : Math.round(GAP_MS / 2);
+          const gap = `${outBase}-${String(i).padStart(3, '0')}-pause.wav`;
+          writeFileSync(gap, silenceWav(ms, rate));
+          files.push(gap);
+        }
+        const file = `${outBase}-${String(i).padStart(3, '0')}.wav`;
+        writeFileSync(file, audio);
+        files.push(file);
+      });
+      return files;
+    } catch (err) {
+      if (err instanceof RetryableError) throw err;
+      console.warn(`  ⚠️ Mode réplique par réplique refusé (${(err as Error).message.slice(0, 160)}) : retour au mode groupé.`);
+    }
+  }
   const chunks = chunkTurns(turns);
   const files: string[] = [];
   for (const [i, chunk] of chunks.entries()) {
