@@ -44,3 +44,21 @@ Données : `data/2026-10-14.json` présent (scores LdC du 13/10, affiches du 14/
 
 - Éphéméride (fichier) : 14 octobre 1670, première du Bourgeois gentilhomme de Molière à Chambord devant Louis XIV. Musique de Lully, ballets de Pierre Beauchamp, costumes turcs du chevalier d'Arvieux. Origine : l'envoyé du sultan Mehmed IV, Soliman Aga, aurait jugé le cheval du sultan plus richement paré que l'habit du roi ; Louis XIV voulait se moquer des « Turcs ». Molière jouait M. Jourdain ; réplique sur la prose « sans que j'en susse rien ». — [Wikipédia](https://fr.wikipedia.org/wiki/Le_Bourgeois_gentilhomme)
 - Quiz : qui a composé la musique ? → Jean-Baptiste Lully.
+
+## Trous et échecs
+
+- [ia] site inaccessible : la dépêche Reuters sur Gemini 4 Argon n'a pas été retrouvée par la recherche ; seul le billet officiel Google a été lu
+- [foot] données manquantes : pas de match de l'OL dans data/2026-10-14.json (ni Ligue 1 ni coupe d'Europe sur la fenêtre)
+- [foot] données manquantes : aucun match de Premier League ni de Liga dans la fenêtre du fichier ; le résultat du Real à la J1 n'est cité que comme « victoire », sans score
+- [foot] site inaccessible : ol.fr (communiqué médical Openda) renvoie une page vide ; info reprise de Lyonfoot (source unique)
+- [foot] site inaccessible : lequipe.fr / rmcsport / footmercato — recherche restreinte à ces domaines rejetée par le proxy (HTTP 400)
+- [politique] site inaccessible : franceinfo.fr (robots), france24.com (robots) ; lemonde.fr non interrogeable (recherche restreinte rejetée)
+- [politique] site inaccessible : rts.ch, tdg.ch, 24heures.ch, letemps.ch et ge.ch (communiqué du Conseil d'État du 14/10) en erreur au fetch ; la page tdg.ch/geneve servie était une ancienne version
+- [politique] info trop ancienne : enquête sur le département de Pierre Maudet (début octobre), budget genevois 2027, motion vaudoise de destitution (juin) — écartés
+- [politique] rubrique maigre : volet Suisse romande réduit à une réplique « calme plat »
+- [politique] site inaccessible : reuters.com et apnews.com — recherche restreinte rejetée ; volet monde fondé sur Al Jazeera et Meduza
+- [jeux] site inaccessible : gamekult / gameblog / ign / eurogamer — recherche restreinte rejetée ; next-stage.fr bloqué (robots)
+- [jeux] source unique : premier test de Castlevania (Famitsu) connu via Nintendo Life uniquement
+- [cinema] source unique : sorties du 14/10 uniquement via AlloCiné ; dates de sortie en Suisse non vérifiées
+- [culture] données manquantes : articleDuJour = null dans le fichier de données ; éphéméride utilisée
+- [global] rubrique maigre : épisode à ~15 min pour 20 visées (Suisse romande vide, foot sans OL)
