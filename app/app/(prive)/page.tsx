@@ -54,10 +54,10 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
         </div>
       </div>
 
-      <Player
-        src={episode.url} title={episode.title} chapters={episode.chapters ?? []}
-        storageKey={`matinale_pos_${episode.date}`} fallbackSeconds={episode.seconds}
-      />
+      <Player track={{
+        date: episode.date, src: episode.url, title: episode.title, cover,
+        seconds: episode.seconds, chapters: episode.chapters ?? [],
+      }} />
 
       {episode.summary && <p className="summary">{episode.summary}</p>}
       <Link className="btn primary block cta" href="/avis">
