@@ -1,65 +1,168 @@
-# La Matinale — podcast quotidien perso
+<div align="center">
 
-Chaque matin, un épisode d'environ 20 minutes à deux voix (Léa et Hugo) : nouveautés IA, football, politique, jeux vidéo, cinéma et séries, culture générale. Il arrive dans ton appli de podcast via un flux RSS privé.
+# 🎙️ La Matinale
 
-## Comment ça tourne
+**Mon podcast d'actualité privé, fabriqué chaque nuit par l'IA, prêt à 6 h dans ma voiture.**
 
-| Heure (Genève, été) | Étape | Où | Coût |
+Léa et Hugo, deux voix françaises, racontent en ~20 minutes l'actu IA, le foot, la politique, le jeu vidéo, le cinéma… et finissent sur une question de culture générale.
+
+![Planifié](https://img.shields.io/badge/chaque_matin-5h37-1f6feb)
+![Coût](https://img.shields.io/badge/co%C3%BBt-0_%E2%82%AC%2Fmois-2ea043)
+![Voix](https://img.shields.io/badge/voix-Gemini_TTS-8250df)
+![Rédaction](https://img.shields.io/badge/r%C3%A9daction-Claude-d97757)
+
+</div>
+
+---
+
+## Au programme
+
+| | Rubrique | Durée | Ce qu'on y trouve |
 |---|---|---|---|
-| 5h00 | **1 · Données** : scores et classement (football-data.org), éphéméride Wikipédia → `data/<date>.json` | GitHub Actions (`data.yml`) | 0 |
-| 5h37 | **2 · Rédaction** : recherche web par rubrique + dialogue → `episodes/<date>/script.json`, puis push | Tâche planifiée Claude (abonnement Pro), consigne : `prompts/redaction.md` | inclus dans Pro |
-| ~5h50 | **3 · Voix et publication** : TTS par rubrique → MP3 → stockage S3 → `feed.xml` | GitHub Actions (`episode.yml`), déclenché par le push | ~0,27 $ / épisode (Gemini) |
+| 🤖 | **Nouveautés IA** | 4 min | Modèles, outils, API sortis dans les dernières 24 h, et ce que ça change pour un dev |
+| ⚽ | **Football** | 4 min | L'OL d'abord, puis le Real Madrid, la Ligue 1, la Ligue des champions et la Premier League |
+| 🏛️ | **Politique** | 4 min | France, Suisse romande, monde — des faits, chaque opinion attribuée |
+| 🎮 | **Jeux vidéo** | 3 min | Sorties, annonces, tests marquants |
+| 🎬 | **Cinéma et séries** | 3 min | Les sorties du mercredi, la série du moment, sans spoiler |
+| 📚 | **Culture générale** | 2 min | Une histoire tirée de l'éphéméride, et un quiz pour finir |
 
-L'hiver, tout part une heure plus tôt (cron GitHub en UTC).
+Tout se règle dans [`config/rubriques.json`](config/rubriques.json) : durées, consignes, sites de référence, équipes suivies.
 
-## Mise en route
+---
 
-### 1. Secrets GitHub (Settings → Secrets and variables → Actions)
+## Comment ça marche
 
-**Secrets**
-
-| Nom | Où le trouver |
-|---|---|
-| `FOOTBALL_DATA_TOKEN` | Mail reçu après inscription sur football-data.org (offre gratuite) |
-| `GEMINI_API_KEY` | aistudio.google.com → Get API key |
-| `S3_ENDPOINT` | R2 : `https://<account_id>.r2.cloudflarestorage.com` · Supabase : `https://<ref>.supabase.co/storage/v1/s3` |
-| `S3_BUCKET` | Nom du bucket (ex. `matinale`) |
-| `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | R2 : « Manage API tokens » (Object Read & Write) · Supabase : Storage → S3 access keys |
-| `PUBLIC_BASE_URL` | R2 : URL publique du bucket (`https://pub-xxxx.r2.dev`) · Supabase : `https://<ref>.supabase.co/storage/v1/object/public/<bucket>` |
-| `FEED_SECRET` | Une longue chaîne aléatoire, ex. `openssl rand -hex 16` — elle rend l'URL du flux impossible à deviner |
-
-**Variables** (facultatives)
-
-| Nom | Valeur |
-|---|---|
-| `TTS_PROVIDER` | `gemini` (défaut) ou `elevenlabs` |
-| `VOICE_LEA` / `VOICE_HUGO` | Voix Gemini (défaut : `Kore` / `Puck`) |
-| `ELEVENLABS_VOICE_LEA` / `ELEVENLABS_VOICE_HUGO` | IDs de voix ElevenLabs (+ secret `ELEVENLABS_API_KEY`) |
-
-### 2. Premier test
-
-1. Actions → **1 · Données du jour** → Run workflow : un fichier `data/<date>.json` est commité.
-2. Lance la tâche planifiée Claude une fois à la main : `episodes/<date>/script.json` arrive dans le dépôt.
-3. Le workflow **3 · Voix et publication** part tout seul. Le MP3 est aussi téléchargeable dans les artefacts du run.
-4. Ajoute `PUBLIC_BASE_URL/FEED_SECRET/feed.xml` dans Pocket Casts, Overcast ou Apple Podcasts (« suivre par URL »).
-
-### Tester une voix en local
-
-```bash
-npm ci
-GEMINI_API_KEY=... npm run tts:test            # out/test-gemini-00.wav
-TTS_PROVIDER=elevenlabs ELEVENLABS_API_KEY=... ELEVENLABS_VOICE_LEA=... ELEVENLABS_VOICE_HUGO=... npm run tts:test
+```mermaid
+flowchart LR
+    subgraph nuit["🌙 Chaque nuit"]
+        A["⚽ Données<br/><sub>football-data.org<br/>Wikipédia</sub>"] --> B["✍️ Rédaction<br/><sub>Claude : recherche web<br/>+ dialogue Léa/Hugo</sub>"]
+        B --> C["🗣️ Voix<br/><sub>Gemini TTS<br/>une rubrique à la fois</sub>"]
+        C --> D["🎚️ Montage<br/><sub>jingle + voix<br/>volume -16 LUFS</sub>"]
+    end
+    D --> E["☁️ Cloudflare R2<br/><sub>MP3 + flux RSS privé</sub>"]
+    E --> F["📱 Pocket Casts<br/><sub>CarPlay</sub>"]
 ```
+
+| Heure (Genève, été) | Étape | Qui s'en charge | Fichier produit |
+|---|---|---|---|
+| **5 h 00** | Scores, classement, derniers et prochains matchs de l'OL et du Real, éphéméride | GitHub Actions · [`data.yml`](.github/workflows/data.yml) | `data/<date>.json` |
+| **5 h 37** | Recherche web par rubrique, écriture du dialogue, vérification du format | Tâche planifiée Claude · consigne [`prompts/redaction.md`](prompts/redaction.md) | `episodes/<date>/script.json` + `notes.md` |
+| **~5 h 50** | Voix, montage, publication du MP3 et du flux | GitHub Actions · [`episode.yml`](.github/workflows/episode.yml), déclenché par le push du script | MP3 sur R2 + `feed.xml` |
+
+> L'hiver, tout part une heure plus tôt : les crons GitHub sont en UTC.
+
+---
+
+## Ce que ça coûte
+
+| Poste | Aujourd'hui | Si on passe en payant |
+|---|---|---|
+| Recherche et rédaction (Claude) | inclus dans l'abonnement Pro | — |
+| Voix (Gemini 3.8 Flash TTS) | **0 €** (offre gratuite) | ~0,20 $ par épisode de 15 min, soit ~6 $/mois · ×2 à partir de janvier 2027 |
+| Données foot, GitHub Actions, stockage R2 | 0 € | — |
+
+---
+
+## L'écouter
+
+Le flux est privé : son adresse contient une clé secrète (`FEED_SECRET`) et n'est indexée nulle part.
+
+1. Ouvre **Pocket Casts** → onglet **Découvrir**.
+2. Colle l'adresse `PUBLIC_BASE_URL/FEED_SECRET/feed.xml` dans la barre de recherche.
+3. **S'abonner**, puis active le téléchargement automatique.
+
+Ça marche aussi avec Overcast (« Add URL ») et Apple Podcasts (« Suivre une émission par URL »).
+
+---
 
 ## Régler l'émission
 
-- Rubriques, durées, consignes, sites de référence : `config/rubriques.json`
-- Ton, format, règles éditoriales : `prompts/redaction.md`
-- Jingle d'ouverture : dépose un `assets/jingle.mp3`, il est ajouté automatiquement.
+| Je veux… | Je modifie… |
+|---|---|
+| Changer une rubrique, sa durée ou ses sources | [`config/rubriques.json`](config/rubriques.json) |
+| Changer le ton, le format, les règles éditoriales | [`prompts/redaction.md`](prompts/redaction.md) |
+| Changer de jingle | Remplacer [`assets/jingle.mp3`](assets/) (5 à 6 s idéalement) |
+| Essayer d'autres voix | Actions → **0 · Test de voix**, puis les variables `VOICE_LEA` / `VOICE_HUGO` |
+| Passer sur ElevenLabs | Variable `TTS_PROVIDER=elevenlabs` + secret `ELEVENLABS_API_KEY` + variables d'ID de voix |
+| Ajouter une équipe suivie | `football.favouriteTeamIds` dans la config (ID football-data.org) |
 
-## Points d'attention
+Voix Gemini à tester : Léa → `Kore`, `Aoede`, `Leda`, `Zephyr` · Hugo → `Puck`, `Charon`, `Orus`, `Fenrir`.
 
-- La forme de requête Gemini TTS (`src/tts/gemini.ts`) suit la doc d'octobre 2026 ; si `npm run tts:test` renvoie une erreur de champ, c'est là qu'il faut ajuster.
-- Les prix Gemini TTS doublent au 1er janvier 2027.
-- Flux privé, usage personnel : l'épisode résume la presse, ne le partage pas.
-- Une rubrique qui échoue à la synthèse est sautée ; le run est alors marqué en échec (mail GitHub) mais l'épisode est publié.
+---
+
+## Les boutons utiles (onglet Actions)
+
+| Workflow | Quand l'utiliser |
+|---|---|
+| **0 · Test de voix** | Écouter un extrait de 20 s avec d'autres voix, sans rien publier |
+| **1 · Données du jour** | Relancer la récupération des scores si elle a échoué |
+| **3 · Voix et publication** | Republier un épisode (champ `date` facultatif) |
+
+Pour relancer la **rédaction** hors horaire, déclenche la tâche planifiée « La Matinale — rédaction » depuis Claude.
+
+---
+
+## Suivre la qualité
+
+Chaque `episodes/<date>/notes.md` se termine par un journal **« Trous et échecs »** : recherches sans résultat, sites inaccessibles, infos trop anciennes, rubriques maigres. C'est l'endroit à lire pour améliorer les sources.
+
+Une rubrique qui échoue à la synthèse vocale est sautée : l'épisode sort quand même, le run passe en rouge et GitHub envoie un mail.
+
+---
+
+## Configuration
+
+<details>
+<summary><b>Secrets GitHub</b> (Settings → Secrets and variables → Actions)</summary>
+
+| Secret | Rôle |
+|---|---|
+| `FOOTBALL_DATA_TOKEN` | Jeton football-data.org (offre gratuite) |
+| `GEMINI_API_KEY` | Clé Google AI Studio pour la voix |
+| `S3_ENDPOINT` | Endpoint S3 du compte Cloudflare R2 |
+| `S3_BUCKET` | `matinale` |
+| `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | Jeton R2 « Lecture/écriture objet » limité au bucket |
+| `PUBLIC_BASE_URL` | URL publique `https://pub-….r2.dev` |
+| `FEED_SECRET` | Chaîne aléatoire qui rend l'URL du flux impossible à deviner |
+
+</details>
+
+<details>
+<summary><b>Lancer en local</b></summary>
+
+```bash
+npm ci
+FOOTBALL_DATA_TOKEN=… npm run data                 # data/<date>.json
+npm run validate -- --date=2026-10-14              # vérifie un script
+GEMINI_API_KEY=… npm run tts:test                  # extrait de voix dans out/
+SKIP_PUBLISH=1 GEMINI_API_KEY=… npm run episode -- --date=2026-10-14
+```
+
+Prérequis : Node 22 et ffmpeg.
+
+</details>
+
+<details>
+<summary><b>Structure du dépôt</b></summary>
+
+```text
+config/rubriques.json     rubriques, durées, sources, équipes
+prompts/redaction.md      consigne de la tâche planifiée Claude
+src/data.ts               scores, classements, éphéméride
+src/validate.ts           contrôle du script.json
+src/tts/                  voix : gemini.ts, elevenlabs.ts
+src/assemble.ts           montage ffmpeg + normalisation du volume
+src/publish.ts            envoi sur R2 + flux RSS
+src/episode.ts            enchaîne voix → montage → publication
+assets/jingle.mp3         jingle d'ouverture
+data/                     données du jour (commitées par GitHub Actions)
+episodes/                 scripts et notes (commités par Claude)
+```
+
+</details>
+
+---
+
+<div align="center">
+<sub>Usage strictement personnel : l'épisode résume la presse du jour, le flux reste privé.</sub>
+</div>
