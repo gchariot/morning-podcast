@@ -4,13 +4,11 @@ Ajoute une ligne quand quelque chose te plaît ou t'agace : la rédaction lit ce
 Modifiable depuis le téléphone : github.com → ce fichier → icône crayon → « Commit changes ».
 
 ## Consignes permanentes
-<!-- Ce qui doit toujours s'appliquer. Exemples :
-- Plus de mercato OL, moins de Premier League.
-- Politique monde : 2 sujets maximum.
-- Hugo fait trop de blagues.
--->
 
 ## Retours récents
-<!-- Format : - AAAA-MM-JJ : ton retour. Exemple :
-- 2026-10-15 : la rubrique jeux vidéo était trop longue.
--->
+- 2026-10-14 : [Nouveautés IA] 👎 Trop long (épisode du 2026-10-14)
+- 2026-10-14 : [Football] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-14)
+- 2026-10-14 : [Politique] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-14)
+- 2026-10-14 : [Jeux vidéo] 👍 (épisode du 2026-10-14)
+- 2026-10-14 : [Cinéma et séries] 👍 (épisode du 2026-10-14)
+- 2026-10-14 : [Culture générale] 👍 Drôle, Bien expliqué, Parfait comme ça (épisode du 2026-10-14)
