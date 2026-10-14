@@ -1,0 +1,257 @@
+{
+  "date": "2026-10-14",
+  "generatedAt": "2026-10-14T11:25:34.996Z",
+  "football": {
+    "window": {
+      "from": "2026-10-13",
+      "to": "2026-10-15"
+    },
+    "matches": [
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T16:45:00Z",
+        "status": "FINISHED",
+        "home": "Racing Club de Lens",
+        "away": "Sporting Clube de Portugal",
+        "score": "0-2",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T16:45:00Z",
+        "status": "FINISHED",
+        "home": "Sabah FK",
+        "away": "SK Slavia Praha",
+        "score": "2-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Viking FK",
+        "away": "FC Bayern München",
+        "score": "3-3",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "FC Internazionale Milano",
+        "away": "Club Brugge KV",
+        "score": "3-4",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Villarreal CF",
+        "away": "SSC Napoli",
+        "score": "3-1",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Club Atlético de Madrid",
+        "away": "Manchester United FC",
+        "score": "2-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Arsenal FC",
+        "away": "Lille OSC",
+        "score": "3-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "RB Leipzig",
+        "away": "PSV",
+        "score": "1-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-13T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Galatasaray SK",
+        "away": "FC Barcelona",
+        "score": "1-4",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T16:45:00Z",
+        "status": "TIMED",
+        "home": "Feyenoord Rotterdam",
+        "away": "Como 1907",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T16:45:00Z",
+        "status": "TIMED",
+        "home": "LASK Linz",
+        "away": "Liverpool FC",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "FK Shakhtar Donetsk",
+        "away": "PAE AEK",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "Manchester City FC",
+        "away": "Paris Saint-Germain FC",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "Aston Villa FC",
+        "away": "Fenerbahçe SK",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "Real Betis Balompié",
+        "away": "FC Porto",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "AS Roma",
+        "away": "Real Madrid CF",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "ŠK Slovan Bratislava",
+        "away": "VfB Stuttgart",
+        "score": null,
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "TIMED",
+        "home": "FK Bodø/Glimt",
+        "away": "Borussia Dortmund",
+        "score": null,
+        "matchday": 2
+      }
+    ],
+    "ligue1Standings": [
+      {
+        "position": 1,
+        "team": "AS Monaco FC",
+        "points": 14,
+        "played": 6
+      },
+      {
+        "position": 2,
+        "team": "Lille OSC",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 3,
+        "team": "Stade Rennais FC 1901",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 4,
+        "team": "Olympique Lyonnais",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 5,
+        "team": "Paris FC",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 6,
+        "team": "Paris Saint-Germain FC",
+        "points": 11,
+        "played": 6
+      }
+    ]
+  },
+  "wikipedia": {
+    "articleDuJour": null,
+    "ephemeride": [
+      {
+        "year": 2017,
+        "text": "un attentat à Mogadiscio, le plus meurtrier de l'histoire de l'Afrique avec 587 morts, est perpétré par le Harakat al-Chabab al-Moudjahidin.",
+        "url": "https://fr.wikipedia.org/wiki/Attentats_de_Mogadiscio_du_14_octobre_2017"
+      },
+      {
+        "year": 1985,
+        "text": "Coluche fonde les Restaurants du Cœur.",
+        "url": "https://fr.wikipedia.org/wiki/Coluche"
+      },
+      {
+        "year": 1964,
+        "text": "Martin Luther King reçoit le prix Nobel de la paix, dont il prendra possession le 10 décembre à Oslo.",
+        "url": "https://fr.wikipedia.org/wiki/Martin_Luther_King"
+      },
+      {
+        "year": 1952,
+        "text": "la Cité radieuse de Le Corbusier est inaugurée à Marseille.",
+        "url": "https://fr.wikipedia.org/wiki/Cit%C3%A9_radieuse_de_Marseille"
+      },
+      {
+        "year": 1943,
+        "text": "une révolte éclate au centre d'extermination de Sobibór.",
+        "url": "https://fr.wikipedia.org/wiki/Centre_d'extermination_de_Sobib%C3%B3r"
+      },
+      {
+        "year": 1914,
+        "text": "la Grèce annexe l'Épire du Sud.",
+        "url": "https://fr.wikipedia.org/wiki/Royaume_de_Gr%C3%A8ce"
+      },
+      {
+        "year": 1806,
+        "text": "Napoléon Ier bat les Prussiens à la bataille d'Iéna ; le même jour, le maréchal Davout remporte la bataille d'Auerstaedt.",
+        "url": "https://fr.wikipedia.org/wiki/Napol%C3%A9on_Ier"
+      },
+      {
+        "year": 1670,
+        "text": "première du Bourgeois gentilhomme de Molière à Chambord devant Louis XIV.",
+        "url": "https://fr.wikipedia.org/wiki/Le_Bourgeois_gentilhomme"
+      }
+    ]
+  }
+}
