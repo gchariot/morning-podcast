@@ -197,3 +197,23 @@ export async function updateSettings(formData: FormData) {
     return 'Réglages enregistrés : effet dès le prochain épisode.';
   });
 }
+
+/** Nouvel ordre complet des thèmes (glisser-déposer). Renvoie un message au lieu de rediriger. */
+export async function reorderRubriques(ids: string[]): Promise<{ ok: boolean; message: string }> {
+  await requireLogin();
+  try {
+    const { config, sha } = await loadConfig(true);
+    const current = config.rubriques.map(r => r.id);
+    if (ids.length !== current.length || [...ids].sort().join() !== [...current].sort().join()) {
+      return { ok: false, message: 'La liste a changé entre-temps : recharge la page.' };
+    }
+    if (ids.join() === current.join()) return { ok: true, message: 'Ordre inchangé.' };
+    config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
+    await saveConfig(config, sha, 'thèmes: ordre modifié (app)');
+    updateTag(REPO_TAG);
+    revalidatePath('/themes');
+    return { ok: true, message: 'Ordre enregistré.' };
+  } catch (err) {
+    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}

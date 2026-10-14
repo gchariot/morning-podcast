@@ -269,3 +269,17 @@ details[open] > summary { border-bottom: 1px solid var(--line); }
 .mini-btn:hover { background: var(--surface-2); }
 .wrap { padding-bottom: calc(var(--tabbar) + 112px + env(safe-area-inset-bottom)); }
 .mini-info .grow { flex: 1; min-width: 0; overflow: hidden; }
+
+/* Thèmes réordonnables */
+.sortable { display: flex; align-items: stretch; background: var(--surface); position: relative; }
+.sortable + .sortable { border-top: 1px solid var(--line); }
+.sortable.dragging { z-index: 5; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22); border-radius: var(--radius); }
+.sortable-body { flex: 1; min-width: 0; }
+.handle {
+  flex: none; width: 40px; display: grid; place-items: center; border: 0; background: none;
+  color: var(--ink-3); cursor: grab; touch-action: none; padding: 0 0 0 4px;
+}
+.handle:active { cursor: grabbing; color: var(--accent); }
+.handle:disabled { opacity: 0.4; cursor: progress; }
+.sortable .item { padding-left: 4px; }
+.sortable .pad { padding-left: 4px; }

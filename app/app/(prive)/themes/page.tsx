@@ -1,7 +1,8 @@
 import { loadConfig, type Rubrique } from '@/lib/config';
 import { Flash, type FlashParams } from '@/components/Flash';
 import { Icon } from '@/components/Icon';
-import { addRubrique, deleteRubrique, moveRubrique, toggleRubrique, updateRubrique } from '../actions';
+import { addRubrique, deleteRubrique, toggleRubrique, updateRubrique } from '../actions';
+import { SortableThemes } from '@/components/SortableThemes';
 
 function RubriqueFields({ r }: { r?: Rubrique }) {
   const key = r?.id ?? 'new';
@@ -40,7 +41,6 @@ export default async function ThemesPage({ searchParams }: { searchParams: Flash
   const total = active.reduce((s, r) => s + r.minutes, 0);
   const target = config.show.targetMinutes;
   const over = total > target * 1.15;
-  const last = config.rubriques.length - 1;
 
   return (
     <>
@@ -59,9 +59,8 @@ export default async function ThemesPage({ searchParams }: { searchParams: Flash
         {over && <p className="small" style={{ marginTop: 8, color: 'var(--bad)' }}>Plus long que la durée visée : chaque thème sera raccourci au prorata.</p>}
       </div>
 
-      <div className="group" style={{ marginTop: 16 }}>
-        {config.rubriques.map((r, i) => (
-          <details key={r.id}>
+      <SortableThemes items={config.rubriques.map(r => ({ id: r.id, title: r.title, node: (
+          <details>
             <summary className="item">
               <span className="grow" style={{ opacity: r.enabled === false ? 0.55 : 1 }}>
                 <span className="row" style={{ gap: 8 }}>
@@ -85,19 +84,6 @@ export default async function ThemesPage({ searchParams }: { searchParams: Flash
                   <input type="hidden" name="id" value={r.id} />
                   <button className="btn small" type="submit">{r.enabled === false ? 'Réactiver' : 'Mettre en pause'}</button>
                 </form>
-                <div className="row" style={{ gap: 4 }}>
-                  <span className="small muted" style={{ marginRight: 4 }}>Ordre</span>
-                  <form action={moveRubrique}>
-                    <input type="hidden" name="id" value={r.id} />
-                    <input type="hidden" name="dir" value="up" />
-                    <button className="btn icon" type="submit" disabled={i === 0} aria-label={`Monter ${r.title}`}><Icon name="chevron-up" size={18} /></button>
-                  </form>
-                  <form action={moveRubrique}>
-                    <input type="hidden" name="id" value={r.id} />
-                    <input type="hidden" name="dir" value="down" />
-                    <button className="btn icon" type="submit" disabled={i === last} aria-label={`Descendre ${r.title}`}><Icon name="chevron-down" size={18} /></button>
-                  </form>
-                </div>
               </div>
 
               <form action={deleteRubrique} className="spread" style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
@@ -109,8 +95,7 @@ export default async function ThemesPage({ searchParams }: { searchParams: Flash
               </form>
             </div>
           </details>
-        ))}
-      </div>
+        ) }))} />
 
       <section className="section">
         <details className="group">
