@@ -37,11 +37,16 @@ function findAudioBase64(node: unknown): string | null {
   return null;
 }
 
-async function synthChunk(turns: Turn[]): Promise<Buffer> {
+/** Modèle de secours (quota gratuit séparé) si le modèle principal est saturé (429) ou indisponible (5xx). */
+const FALLBACK_MODEL = process.env.GEMINI_TTS_FALLBACK_MODEL || 'gemini-3.8-flash-lite-tts';
+
+class RetryableError extends Error {}
+
+async function callModel(model: string, turns: Turn[], attempts: number): Promise<Buffer> {
   const key = requireEnv('GEMINI_API_KEY');
   const speakers = [...new Set(turns.map(t => t.speaker))];
   const body = {
-    model: MODEL,
+    model,
     input: [
       {
         type: 'user_input',
@@ -58,7 +63,8 @@ async function synthChunk(turns: Turn[]): Promise<Buffer> {
     },
   };
 
-  for (let attempt = 1; attempt <= 3; attempt++) {
+  let last = '';
+  for (let attempt = 1; attempt <= attempts; attempt++) {
     const res = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
@@ -69,11 +75,25 @@ async function synthChunk(turns: Turn[]): Promise<Buffer> {
       if (!audio) throw new Error('Réponse Gemini sans audio : vérifier le format de requête.');
       return Buffer.from(audio, 'base64');
     }
-    const msg = await res.text();
-    if (res.status < 500 && res.status !== 429) throw new Error(`Gemini TTS ${res.status} : ${msg}`);
-    await new Promise(r => setTimeout(r, 5000 * attempt));
+    last = `${res.status} : ${await res.text()}`;
+    if (res.status < 500 && res.status !== 429) throw new Error(`Gemini TTS (${model}) ${last}`);
+    // 429 = quota (souvent par minute) : attente longue ; 5xx : attente courte.
+    const retryAfter = Number(res.headers.get('retry-after'));
+    const wait = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter * 1000 : res.status === 429 ? 30000 * attempt : 5000 * attempt;
+    console.warn(`  Gemini ${model} ${res.status}, nouvel essai dans ${Math.round(wait / 1000)} s (${attempt}/${attempts})`);
+    await new Promise(r => setTimeout(r, wait));
   }
-  throw new Error('Gemini TTS : 3 échecs consécutifs.');
+  throw new RetryableError(`Gemini TTS (${model}) : ${attempts} échecs, dernier ${last}`);
+}
+
+async function synthChunk(turns: Turn[]): Promise<Buffer> {
+  try {
+    return await callModel(MODEL, turns, 3);
+  } catch (err) {
+    if (!(err instanceof RetryableError) || !FALLBACK_MODEL || FALLBACK_MODEL === MODEL) throw err;
+    console.warn(`  ⚠️ ${MODEL} saturé : bascule sur ${FALLBACK_MODEL}`);
+    return callModel(FALLBACK_MODEL, turns, 3);
+  }
 }
 
 /** Écrit un ou plusieurs WAV pour une rubrique et renvoie le chemin du premier (les suivants sont suffixés). */

@@ -68,7 +68,7 @@ jobs:
             "https://ntfy.sh/$NTFY_TOPIC"
       - name: Garder le MP3 en artefact (7 jours)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: matinale-${{ steps.when.outputs.date }}
           path: out/${{ steps.when.outputs.date }}/*.mp3

@@ -45,7 +45,7 @@ jobs:
           for f in out/test-*; do args="$args -i $f"; n=$((n+1)); done
           filter=""; for i in $(seq 0 $((n-1))); do filter="$filter[$i:a]"; done
           ffmpeg -y -loglevel error $args -filter_complex "${filter}concat=n=$n:v=0:a=1[out]" -map "[out]" -ac 1 -b:a 96k out/extrait.mp3
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: extrait-${{ inputs.provider }}-${{ inputs.voice_lea || 'defaut' }}-${{ inputs.voice_hugo || 'defaut' }}
           path: out/extrait.mp3
