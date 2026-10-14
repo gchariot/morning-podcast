@@ -8,7 +8,7 @@ web
 
 ## Users
 
-Huxxley, a full-stack developer living in Ferney-Voltaire and working in Geneva, plus a few people close to him who also listen to the show. They use the app mostly on a phone, around the morning listen: before or after the car, where the episode itself plays through Pocket Casts (CarPlay).
+Huxxley, a full-stack developer living in Ferney-Voltaire and working in Geneva, plus a few people close to him who also listen to the show. They use the app mostly on a phone, around the morning listen: the episode itself is mostly heard on the train (Geneva ↔ Lausanne), with headphones and no screen, through the app or Pocket Casts.
 
 ## Product Purpose
 
