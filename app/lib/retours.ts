@@ -62,3 +62,13 @@ export async function setPermanent(permanent: string[]) {
   const items = permanent.map(clean).filter(Boolean).slice(0, 40);
   await writeFile(PATH, render(s.head, items, r.recent), 'retours: consignes permanentes mises à jour (app)', r.sha ?? undefined);
 }
+
+/** Retire un retour récent précis (pour corriger un avis envoyé par erreur). */
+export async function removeRecent(line: string) {
+  const r = await loadRetours(true);
+  const s = sections(r.raw) ?? sections(TEMPLATE)!;
+  const i = r.recent.indexOf(line);
+  if (i < 0) throw new Error('Ce retour a déjà été retiré.');
+  const recent = r.recent.filter((_, j) => j !== i);
+  await writeFile(PATH, render(s.head, r.permanent, recent), 'retours: un avis retiré (app)', r.sha ?? undefined);
+}

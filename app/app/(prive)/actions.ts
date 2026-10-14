@@ -1,11 +1,11 @@
 'use server';
 import { redirect } from 'next/navigation';
-import { ZodError } from 'zod';
+import { z, ZodError } from 'zod';
 import { revalidatePath, updateTag } from 'next/cache';
 import { REPO_TAG } from '@/lib/github';
 import { closeSession, requireLogin } from '@/lib/auth';
 import { loadConfig, parseDomains, saveConfig, slugify, type Rubrique } from '@/lib/config';
-import { addRecent, loadRetours, setPermanent } from '@/lib/retours';
+import { addRecent, loadRetours, removeRecent, setPermanent } from '@/lib/retours';
 import { todayInZurich } from '@/lib/episodes';
 
 const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim();
@@ -56,24 +56,37 @@ export async function logout() {
 
 /* ---------- Mon avis ---------- */
 
+const FeedbackItem = z.object({
+  title: z.string().trim().min(1).max(80),
+  vote: z.enum(['up', 'down', '']).default(''),
+  chips: z.array(z.string().trim().max(40)).max(8).default([]),
+  note: z.string().trim().max(300).default(''),
+});
+
 export async function sendFeedback(formData: FormData) {
   return run('/avis', async () => {
-    const { config } = await loadConfig(true);
     const episode = str(formData, 'episode');
     const lines: string[] = [];
-    for (const r of config.rubriques) {
-      const vote = str(formData, `vote_${r.id}`);
-      const note = str(formData, `note_${r.id}`);
-      if (!vote && !note) continue;
-      const icon = vote === 'up' ? '👍' : vote === 'down' ? '👎' : '';
-      lines.push(`[${r.title}] ${icon} ${note}`.replace(/\s+/g, ' ').trim());
+    for (const raw of formData.getAll('item')) {
+      const it = FeedbackItem.parse(JSON.parse(String(raw)));
+      const icon = it.vote === 'up' ? '👍' : it.vote === 'down' ? '👎' : '';
+      const words = [it.chips.join(', '), it.note].filter(Boolean).join(' — ');
+      if (!icon && !words) continue;
+      lines.push(`[${it.title}] ${icon} ${words}`.replace(/\s+/g, ' ').trim());
     }
     const general = str(formData, 'general');
     if (general) lines.push(`[Général] ${general}`);
-    if (!lines.length) throw new Error('Rien à envoyer : choisis un 👍/👎 ou écris un mot.');
+    if (!lines.length) throw new Error('Rien à envoyer : touche un pouce ou écris un mot.');
     const tagged = episode ? lines.map(l => `${l} (épisode du ${episode})`) : lines;
     const n = await addRecent(tagged, todayInZurich());
-    return `${n} retour${n > 1 ? 's' : ''} enregistré${n > 1 ? 's' : ''} : la rédaction en tiendra compte demain matin.`;
+    return `${n} retour${n > 1 ? 's' : ''} envoyé${n > 1 ? 's' : ''} : la rédaction en tiendra compte demain matin.`;
+  });
+}
+
+export async function removeFeedback(formData: FormData) {
+  return run('/avis', async () => {
+    await removeRecent(str(formData, 'line'));
+    return 'Retour retiré.';
   });
 }
 

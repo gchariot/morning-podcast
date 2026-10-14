@@ -1,9 +1,9 @@
 'use client';
 /** Liste des thèmes réordonnable au doigt : on attrape la poignée à gauche et on glisse. */
-import { useState, useTransition } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors, type DragEndEvent,
+  DndContext, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors, type DragEndEvent,
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
@@ -12,25 +12,35 @@ import { reorderRubriques } from '@/app/(prive)/actions';
 
 type Item = { id: string; title: string; node: React.ReactNode };
 
+// Zones où un appui ne doit jamais démarrer un déplacement (formulaire du thème ouvert).
+const NO_DRAG = 'input, textarea, select, button:not(.handle), a, label, .pad';
+
 function Row({ item, saving }: { item: Item; saving: boolean }) {
-  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id, disabled: saving });
+  // Toute la ligne est attrapable, sauf les champs du formulaire.
+  const rowListeners = Object.fromEntries(
+    Object.entries(listeners ?? {}).map(([name, fn]) => [name, (e: React.SyntheticEvent) => {
+      if ((e.target as Element).closest(NO_DRAG)) return;
+      (fn as (ev: React.SyntheticEvent) => void)(e);
+    }]),
+  );
   return (
     <div
       ref={setNodeRef}
       className={`sortable${isDragging ? ' dragging' : ''}`}
       style={{ transform: CSS.Transform.toString(transform), transition }}
+      {...rowListeners}
     >
-      <button
-        type="button" ref={setActivatorNodeRef} className="handle" disabled={saving}
-        aria-label={`Déplacer ${item.title}`} {...attributes} {...listeners}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <span className="handle" aria-hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <circle cx="9" cy="6" r="1.6" /><circle cx="15" cy="6" r="1.6" />
           <circle cx="9" cy="12" r="1.6" /><circle cx="15" cy="12" r="1.6" />
           <circle cx="9" cy="18" r="1.6" /><circle cx="15" cy="18" r="1.6" />
         </svg>
-      </button>
+      </span>
       <div className="sortable-body">{item.node}</div>
+      {/* Clavier : bouton dédié (Espace pour attraper, flèches pour déplacer). */}
+      <button type="button" className="handle sr" aria-label={`Déplacer ${item.title}`} {...attributes} onKeyDown={listeners?.onKeyDown as React.KeyboardEventHandler} />
     </div>
   );
 }
@@ -46,12 +56,16 @@ export function SortableThemes({ items: initial }: { items: Item[] }) {
   if (key !== lastKey) { setLastKey(key); setItems(initial); }
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 120, tolerance: 6 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    // Au doigt : appui long pour attraper, sinon on fait défiler la page normalement.
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
+  const justDragged = useRef(false);
   const onDragEnd = ({ active, over }: DragEndEvent) => {
+    justDragged.current = true;
+    setTimeout(() => { justDragged.current = false; }, 50);
     if (!over || active.id === over.id) return;
     const before = items;
     const next = arrayMove(items, items.findIndex(i => i.id === active.id), items.findIndex(i => i.id === over.id));
@@ -69,13 +83,13 @@ export function SortableThemes({ items: initial }: { items: Item[] }) {
     <>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
         <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
-          <div className="group" style={{ marginTop: 16 }}>
+          <div className="group" style={{ marginTop: 16 }} onClickCapture={e => { if (justDragged.current) { e.preventDefault(); e.stopPropagation(); } }}>
             {items.map(item => <Row key={item.id} item={item} saving={saving} />)}
           </div>
         </SortableContext>
       </DndContext>
       <p className="field-hint" role="status" aria-live="polite" style={{ minHeight: 20, color: status && !status.ok ? 'var(--bad)' : undefined }}>
-        {saving ? 'Enregistrement de l’ordre…' : status ? status.message : 'Pour changer l’ordre, maintiens la poignée à gauche d’un thème et glisse.'}
+        {saving ? 'Enregistrement de l’ordre…' : status ? status.message : 'Pour changer l’ordre, maintiens un thème appuyé puis glisse-le.'}
       </p>
     </>
   );

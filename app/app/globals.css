@@ -277,9 +277,38 @@ details[open] > summary { border-bottom: 1px solid var(--line); }
 .sortable-body { flex: 1; min-width: 0; }
 .handle {
   flex: none; width: 40px; display: grid; place-items: center; border: 0; background: none;
-  color: var(--ink-3); cursor: grab; touch-action: none; padding: 0 0 0 4px;
+  color: var(--ink-3); padding: 0 0 0 4px;
 }
-.handle:active { cursor: grabbing; color: var(--accent); }
-.handle:disabled { opacity: 0.4; cursor: progress; }
+.sortable summary { cursor: grab; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.sortable.dragging { cursor: grabbing; }
+.sortable.dragging .handle { color: var(--accent); }
 .sortable .item { padding-left: 4px; }
 .sortable .pad { padding-left: 4px; }
+
+/* Mon avis : pouces, pastilles, barre d'envoi */
+.thumb {
+  width: 44px; height: 40px; display: grid; place-items: center; border: 0; cursor: pointer;
+  border-radius: 10px; background: var(--surface-2); color: var(--ink-3);
+  transition: background 150ms ease-out, color 150ms ease-out, transform 100ms ease-out;
+}
+.thumb:hover { color: var(--ink); }
+.thumb:active { transform: scale(0.94); }
+.thumb.up[aria-pressed="true"] { background: var(--good-soft); color: var(--good); }
+.thumb.down[aria-pressed="true"] { background: var(--bad-soft); color: var(--bad); }
+.fb-more { padding: 0 16px 14px; animation: flash-in 200ms cubic-bezier(.2,.8,.2,1); }
+.pick {
+  display: inline-flex; align-items: center; gap: 4px; font: inherit; font-size: 0.875rem; font-weight: 500;
+  padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer;
+  transition: background 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
+}
+.pick:hover { color: var(--ink); }
+.pick.ghost { border-style: dashed; }
+.fb-up .pick[aria-pressed="true"] { background: var(--good-soft); color: var(--good); border-color: transparent; }
+.fb-down .pick[aria-pressed="true"] { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
+.sendbar {
+  position: sticky; z-index: 9; margin-top: 16px;
+  bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 12px);
+  animation: flash-in 200ms cubic-bezier(.2,.8,.2,1);
+}
+.sendbar .btn { box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent); }
+body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 80px); }
