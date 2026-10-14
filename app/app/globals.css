@@ -312,3 +312,15 @@ details[open] > summary { border-bottom: 1px solid var(--line); }
 }
 .sendbar .btn { box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent); }
 body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 80px); }
+
+/* Bandeau « nouvelle version » */
+.update {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 8px;
+  margin: 0 auto; max-width: 640px; padding: calc(10px + env(safe-area-inset-top)) 12px 10px 16px;
+  background: var(--accent-soft); color: var(--ink); border-bottom: 1px solid var(--line);
+  animation: flash-in 250ms cubic-bezier(.2,.8,.2,1);
+}
+.update strong { display: block; font-size: 0.9375rem; }
+.update .meta { display: block; color: var(--ink-2); font-size: 0.8125rem; }
+.update .grow { flex: 1; min-width: 0; }
+@media (min-width: 641px) { .update { border-radius: 0 0 12px 12px; } }
