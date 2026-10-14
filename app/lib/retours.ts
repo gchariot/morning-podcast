@@ -31,8 +31,8 @@ function sections(raw: string) {
   return { head: raw.slice(0, p), permanent: raw.slice(p + PERMANENT.length, r), recent: raw.slice(r + RECENT.length) };
 }
 
-export async function loadRetours(): Promise<Retours> {
-  const file = await readFile(PATH);
+export async function loadRetours(fresh = false): Promise<Retours> {
+  const file = await readFile(PATH, fresh);
   const raw = file?.content ?? TEMPLATE;
   const s = sections(raw) ?? sections(TEMPLATE)!;
   return { permanent: bulletsOf(s.permanent), recent: bulletsOf(s.recent), sha: file?.sha ?? null, raw };
@@ -47,7 +47,7 @@ const clean = (s: string) => s.replace(/\s+/g, ' ').trim().slice(0, 400);
 
 /** Ajoute des retours datés en tête des « retours récents » (et garde les 60 derniers). */
 export async function addRecent(lines: string[], date: string) {
-  const r = await loadRetours();
+  const r = await loadRetours(true);
   const s = sections(r.raw) ?? sections(TEMPLATE)!;
   const fresh = lines.map(clean).filter(Boolean).map(l => `${date} : ${l}`);
   if (!fresh.length) return 0;
@@ -57,7 +57,7 @@ export async function addRecent(lines: string[], date: string) {
 }
 
 export async function setPermanent(permanent: string[]) {
-  const r = await loadRetours();
+  const r = await loadRetours(true);
   const s = sections(r.raw) ?? sections(TEMPLATE)!;
   const items = permanent.map(clean).filter(Boolean).slice(0, 40);
   await writeFile(PATH, render(s.head, items, r.recent), 'retours: consignes permanentes mises à jour (app)', r.sha ?? undefined);

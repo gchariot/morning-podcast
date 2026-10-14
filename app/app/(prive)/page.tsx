@@ -6,7 +6,7 @@ import { Icon } from '@/components/Icon';
 async function coverUrl(): Promise<string> {
   try {
     const base = process.env.PUBLIC_BASE_URL!.replace(/\/$/, '');
-    const xml = await (await fetch(`${base}/${process.env.FEED_SECRET}/feed.xml`, { cache: 'no-store' })).text();
+    const xml = await (await fetch(`${base}/${process.env.FEED_SECRET}/feed.xml`, { next: { revalidate: 3600 } })).text();
     return xml.match(/<itunes:image href="([^"]+)"/)?.[1] ?? '/cover.jpg';
   } catch {
     return '/cover.jpg';
@@ -18,14 +18,12 @@ const host = (url: string) => { try { return new URL(url).hostname.replace(/^www
 
 export default async function EcouterPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const { date } = await searchParams;
-  let episodes: Awaited<ReturnType<typeof loadEpisodes>> = [];
+  // Index des épisodes et pochette en parallèle.
   let error = false;
-  try {
-    episodes = await loadEpisodes();
-  } catch {
-    error = true;
-  }
-  const cover = await coverUrl();
+  const [episodes, cover] = await Promise.all([
+    loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
+    coverUrl(),
+  ]);
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
   const isToday = episode?.date === todayInZurich();
 

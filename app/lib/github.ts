@@ -19,8 +19,18 @@ const headers = () => ({
 
 export type RepoFile = { content: string; sha: string };
 
-export async function readFile(path: string): Promise<RepoFile | null> {
-  const res = await fetch(`${api()}/${path}?ref=${branch()}`, { headers: headers(), cache: 'no-store' });
+/** Tag de cache des lectures du dépôt : invalidé après chaque écriture faite par l'app. */
+export const REPO_TAG = 'repo';
+
+/**
+ * Lit un fichier. Par défaut, la lecture est mise en cache 5 min (affichage rapide des pages) ;
+ * `fresh` force une lecture à jour, obligatoire avant d'écrire (le sha doit être le dernier).
+ */
+export async function readFile(path: string, fresh = false): Promise<RepoFile | null> {
+  const res = await fetch(`${api()}/${path}?ref=${branch()}`, {
+    headers: headers(),
+    ...(fresh ? { cache: 'no-store' as const } : { next: { revalidate: 300, tags: [REPO_TAG] } }),
+  });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`GitHub ${res.status} en lisant ${path}`);
   const json = (await res.json()) as { content: string; sha: string };

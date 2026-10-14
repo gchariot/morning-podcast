@@ -1,7 +1,8 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { ZodError } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
+import { REPO_TAG } from '@/lib/github';
 import { closeSession, requireLogin } from '@/lib/auth';
 import { loadConfig, parseDomains, saveConfig, slugify, type Rubrique } from '@/lib/config';
 import { addRecent, loadRetours, setPermanent } from '@/lib/retours';
@@ -38,6 +39,7 @@ async function run(page: string, fn: () => Promise<string>): Promise<never> {
   let target: string;
   try {
     const ok = await fn();
+    updateTag(REPO_TAG);
     revalidatePath(page);
     target = `${page}?ok=${encodeURIComponent(ok)}`;
   } catch (err) {
@@ -56,7 +58,7 @@ export async function logout() {
 
 export async function sendFeedback(formData: FormData) {
   return run('/avis', async () => {
-    const { config } = await loadConfig();
+    const { config } = await loadConfig(true);
     const episode = str(formData, 'episode');
     const lines: string[] = [];
     for (const r of config.rubriques) {
@@ -79,7 +81,7 @@ export async function addPermanentRule(formData: FormData) {
   return run('/avis', async () => {
     const rule = str(formData, 'rule');
     if (rule.length < 3) throw new Error('Consigne trop courte.');
-    const r = await loadRetours();
+    const r = await loadRetours(true);
     await setPermanent([...r.permanent, rule]);
     return 'Consigne permanente ajoutée.';
   });
@@ -88,7 +90,7 @@ export async function addPermanentRule(formData: FormData) {
 export async function removePermanentRule(formData: FormData) {
   return run('/avis', async () => {
     const index = num(formData, 'index');
-    const r = await loadRetours();
+    const r = await loadRetours(true);
     if (!(index >= 0 && index < r.permanent.length)) throw new Error('Consigne introuvable.');
     await setPermanent(r.permanent.filter((_, i) => i !== index));
     return 'Consigne supprimée.';
@@ -111,7 +113,7 @@ function rubriqueFromForm(formData: FormData, id: string, previous?: Rubrique): 
 export async function updateRubrique(formData: FormData) {
   return run('/themes', async () => {
     const id = str(formData, 'id');
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     const i = config.rubriques.findIndex(r => r.id === id);
     if (i < 0) throw new Error('Thème introuvable.');
     config.rubriques[i] = rubriqueFromForm(formData, id, config.rubriques[i]);
@@ -122,7 +124,7 @@ export async function updateRubrique(formData: FormData) {
 
 export async function addRubrique(formData: FormData) {
   return run('/themes', async () => {
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     const title = str(formData, 'title');
     let id = slugify(title);
     while (config.rubriques.some(r => r.id === id)) id = `${id.slice(0, 27)}-${Math.floor(Math.random() * 90 + 10)}`;
@@ -138,7 +140,7 @@ export async function addRubrique(formData: FormData) {
 export async function toggleRubrique(formData: FormData) {
   return run('/themes', async () => {
     const id = str(formData, 'id');
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     const r = config.rubriques.find(x => x.id === id);
     if (!r) throw new Error('Thème introuvable.');
     r.enabled = r.enabled === false;
@@ -152,7 +154,7 @@ export async function moveRubrique(formData: FormData) {
   return run('/themes', async () => {
     const id = str(formData, 'id');
     const dir = str(formData, 'dir') === 'up' ? -1 : 1;
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     const i = config.rubriques.findIndex(r => r.id === id);
     const j = i + dir;
     if (i < 0 || j < 0 || j >= config.rubriques.length) return 'Rien à déplacer.';
@@ -166,7 +168,7 @@ export async function deleteRubrique(formData: FormData) {
   return run('/themes', async () => {
     const id = str(formData, 'id');
     if (str(formData, 'confirm') !== 'oui') throw new Error('Coche la case de confirmation pour supprimer.');
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     const r = config.rubriques.find(x => x.id === id);
     if (!r) throw new Error('Thème introuvable.');
     config.rubriques = config.rubriques.filter(x => x.id !== id);
@@ -179,7 +181,7 @@ export async function deleteRubrique(formData: FormData) {
 
 export async function updateSettings(formData: FormData) {
   return run('/reglages', async () => {
-    const { config, sha } = await loadConfig();
+    const { config, sha } = await loadConfig(true);
     config.show.targetMinutes = num(formData, 'targetMinutes');
     const editions: NonNullable<typeof config.editions> = {};
     for (const day of ['samedi', 'dimanche']) {

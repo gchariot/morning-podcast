@@ -15,7 +15,8 @@ export async function loadEpisodes(): Promise<Episode[]> {
   const base = process.env.PUBLIC_BASE_URL?.replace(/\/$/, '');
   const secret = process.env.FEED_SECRET;
   if (!base || !secret) throw new Error('PUBLIC_BASE_URL ou FEED_SECRET manquant.');
-  const res = await fetch(`${base}/${secret}/episodes.json`, { cache: 'no-store' });
+  // Un épisode par jour : 5 min de cache suffisent et rendent l'écran instantané.
+  const res = await fetch(`${base}/${secret}/episodes.json`, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`Index des épisodes indisponible (${res.status}).`);
   return (await res.json()) as Episode[];
 }

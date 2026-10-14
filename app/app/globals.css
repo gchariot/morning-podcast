@@ -247,3 +247,7 @@ details[open] > summary { border-bottom: 1px solid var(--line); }
 .chip span { display: inline-block; font-size: 0.875rem; font-weight: 500; color: var(--ink-2); background: var(--surface-2); padding: 7px 12px; border-radius: 999px; transition: background 150ms ease-out, color 150ms ease-out; }
 .chip input:checked + span { background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
 .chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Squelette de chargement */
+.sk { background: var(--surface-2); border-radius: 8px; animation: sk 1.2s ease-in-out infinite alternate; }
+@keyframes sk { from { opacity: 0.55; } to { opacity: 1; } }

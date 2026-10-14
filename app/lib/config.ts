@@ -36,8 +36,8 @@ export const Config = z.object({
 }).passthrough();
 export type Config = z.infer<typeof Config>;
 
-export async function loadConfig(): Promise<{ config: Config; sha: string }> {
-  const file = await readFile(CONFIG_PATH);
+export async function loadConfig(fresh = false): Promise<{ config: Config; sha: string }> {
+  const file = await readFile(CONFIG_PATH, fresh);
   if (!file) throw new Error(`${CONFIG_PATH} introuvable dans le dépôt.`);
   return { config: Config.parse(JSON.parse(file.content)), sha: file.sha };
 }
