@@ -30,9 +30,11 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       VOICE_LEA: ${{ inputs.voice_lea || vars.VOICE_LEA }}
       VOICE_HUGO: ${{ inputs.voice_hugo || vars.VOICE_HUGO }}
+      VOICE_ZOE: ${{ vars.VOICE_ZOE }}
       ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
       ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
       ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
+      ELEVENLABS_VOICE_ZOE: ${{ vars.ELEVENLABS_VOICE_ZOE }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

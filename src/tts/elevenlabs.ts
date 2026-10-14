@@ -27,6 +27,7 @@ async function defaultVoices(key: string) {
 async function voiceFor(speaker: string, key: string): Promise<string> {
   if (speaker === 'Léa') return process.env.ELEVENLABS_VOICE_LEA || (await defaultVoices(key)).female;
   if (speaker === 'Hugo') return process.env.ELEVENLABS_VOICE_HUGO || (await defaultVoices(key)).male;
+  if (speaker === 'Zoé') return process.env.ELEVENLABS_VOICE_ZOE || (await defaultVoices(key)).female;
   throw new Error(`Pas de voix ElevenLabs pour ${speaker}`);
 }
 

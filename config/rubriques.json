@@ -11,6 +11,10 @@
       {
         "name": "Hugo",
         "role": "apporte les détails, le contexte, une pointe d'humour"
+      },
+      {
+        "name": "Zoé",
+        "role": "présente la météo, uniquement dans la rubrique météo"
       }
     ],
     "targetMinutes": 20,
@@ -126,6 +130,14 @@
         "fr.wikipedia.org"
       ],
       "enabled": true
+    },
+    {
+      "id": "meteo",
+      "title": "Météo",
+      "minutes": 1,
+      "brief": "Présentée par Zoé, toujours en fin d'épisode (après la culture générale, juste avant l'au revoir) : Léa lui passe la parole en une phrase, Zoé donne la météo du jour pour la ville prévue (Ferney-Voltaire ou Lausanne selon le jour) à partir de data/<DATE>.json uniquement : ciel, températures du matin et maximales, pluie (probabilité et heures), vent s'il est notable, un conseil pratique (parapluie, veste, route glissante). Pas de chiffre inventé. Une touche de légèreté, 30 à 60 secondes.",
+      "domains": [],
+      "enabled": true
     }
   ],
   "football": {
@@ -149,5 +161,29 @@
         "name": "Real Madrid CF"
       }
     ]
+  },
+  "meteo": {
+    "host": "Zoé",
+    "places": {
+      "ferney": {
+        "name": "Ferney-Voltaire",
+        "lat": 46.2558,
+        "lon": 6.1081
+      },
+      "lausanne": {
+        "name": "Lausanne",
+        "lat": 46.5197,
+        "lon": 6.6323
+      }
+    },
+    "schedule": {
+      "lundi": "lausanne",
+      "mardi": "lausanne",
+      "mercredi": "ferney",
+      "jeudi": "lausanne",
+      "vendredi": "ferney",
+      "samedi": "ferney",
+      "dimanche": "ferney"
+    }
   }
 }

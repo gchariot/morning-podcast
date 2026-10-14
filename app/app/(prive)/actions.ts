@@ -222,6 +222,9 @@ export async function reorderRubriques(ids: string[]): Promise<{ ok: boolean; me
     }
     if (ids.join() === current.join()) return { ok: true, message: 'Ordre inchangé.' };
     config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
+    // La météo clôt toujours l'épisode : elle reste en dernier.
+    const meteo = config.rubriques.findIndex(r => r.id === 'meteo');
+    if (meteo >= 0) config.rubriques.push(...config.rubriques.splice(meteo, 1));
     await saveConfig(config, sha, 'thèmes: ordre modifié (app)');
     updateTag(REPO_TAG);
     revalidatePath('/themes');

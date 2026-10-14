@@ -15,13 +15,17 @@ export function getProvider(): { name: string; synth: SegmentWriter } {
   throw new Error(`TTS_PROVIDER inconnu : ${name}`);
 }
 
-/** Découpe une liste de répliques en lots de taille raisonnable (requêtes courtes = moins d'échecs). */
+/**
+ * Découpe une liste de répliques en lots de taille raisonnable (requêtes courtes = moins d'échecs),
+ * avec au plus 2 voix par lot : la synthèse multi-locuteurs de Gemini n'en accepte pas davantage.
+ */
 export function chunkTurns(turns: Turn[], maxChars = 4000): Turn[][] {
   const chunks: Turn[][] = [];
   let cur: Turn[] = [];
   let size = 0;
   for (const t of turns) {
-    if (cur.length && size + t.text.length > maxChars) {
+    const voices = new Set(cur.map(x => x.speaker)).add(t.speaker);
+    if (cur.length && (size + t.text.length > maxChars || voices.size > 2)) {
       chunks.push(cur);
       cur = [];
       size = 0;

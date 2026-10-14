@@ -17,6 +17,7 @@ const MODEL = process.env.GEMINI_TTS_MODEL || 'gemini-3.8-flash-tts';
 const VOICES: Record<string, string> = {
   'Léa': process.env.VOICE_LEA || 'Kore',
   'Hugo': process.env.VOICE_HUGO || 'Puck',
+  'Zoé': process.env.VOICE_ZOE || 'Zephyr',
 };
 
 function findAudioBase64(node: unknown): string | null {

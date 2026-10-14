@@ -46,9 +46,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           VOICE_LEA: ${{ vars.VOICE_LEA }}
           VOICE_HUGO: ${{ vars.VOICE_HUGO }}
+          VOICE_ZOE: ${{ vars.VOICE_ZOE }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
           ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
+          ELEVENLABS_VOICE_ZOE: ${{ vars.ELEVENLABS_VOICE_ZOE }}
           S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
           S3_REGION: ${{ vars.S3_REGION || 'auto' }}
           S3_BUCKET: ${{ secrets.S3_BUCKET }}

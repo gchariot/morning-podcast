@@ -13,10 +13,19 @@ export function loadScript(date: string) {
   const script = parsed.data;
   const { show } = loadConfig();
   const hosts = new Set(show.hosts.map(h => h.name));
+  // La voix météo ne parle que dans la rubrique météo.
+  const meteoHost: string | undefined = (loadConfig() as { meteo?: { host?: string } }).meteo?.host;
   for (const seg of script.segments) {
     for (const t of seg.turns) {
       if (!hosts.has(t.speaker)) throw new Error(`Locuteur inconnu « ${t.speaker} » (attendu : ${[...hosts].join(', ')})`);
+      if (meteoHost && t.speaker === meteoHost && seg.rubrique !== 'meteo') {
+        throw new Error(`${meteoHost} ne parle que dans la rubrique « meteo » (trouvée dans « ${seg.rubrique} »).`);
+      }
     }
+  }
+  const meteoIdx = script.segments.findIndex(sg => sg.rubrique === 'meteo');
+  if (meteoIdx >= 0 && meteoIdx !== script.segments.length - 1) {
+    throw new Error('La rubrique « meteo » doit être la dernière de l\'épisode (Léa dit au revoir à la fin de la météo).');
   }
   const words = script.segments.flatMap(s => s.turns).reduce((n, t) => n + t.text.split(/\s+/).length, 0);
   return { script, words, minutes: words / show.wordsPerMinute };
