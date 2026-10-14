@@ -6,7 +6,8 @@ import { REPO_TAG } from '@/lib/github';
 import { closeSession, requireLogin } from '@/lib/auth';
 import { loadConfig, parseDomains, saveConfig, slugify, type Rubrique } from '@/lib/config';
 import { addRecent, loadRetours, removeRecent, setPermanent } from '@/lib/retours';
-import { todayInZurich } from '@/lib/episodes';
+import { loadEpisodes, todayInZurich } from '@/lib/episodes';
+import { isRevealed, saveAnswer } from '@/lib/quiz';
 
 const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim();
 const num = (f: FormData, k: string) => Number(String(f.get(k) ?? '').replace(',', '.'));
@@ -229,6 +230,26 @@ export async function reorderRubriques(ids: string[]): Promise<{ ok: boolean; me
     updateTag(REPO_TAG);
     revalidatePath('/themes');
     return { ok: true, message: 'Ordre enregistré.' };
+  } catch (err) {
+    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+/* ---------- Quiz ---------- */
+
+/** Enregistre la réponse au quiz d'un épisode (modifiable tant que la réponse n'a pas été donnée). */
+export async function answerQuiz(date: string, choice: number): Promise<{ ok: boolean; message: string }> {
+  await requireLogin();
+  try {
+    const episodes = await loadEpisodes();
+    const ep = episodes.find(e => e.date === date);
+    if (!ep?.quiz) return { ok: false, message: 'Pas de quiz pour cet épisode.' };
+    if (!(Number.isInteger(choice) && choice >= 0 && choice < ep.quiz.choices.length)) return { ok: false, message: 'Choix invalide.' };
+    if (isRevealed(date, episodes)) return { ok: false, message: 'Trop tard : la réponse a déjà été donnée dans l’épisode suivant.' };
+    await saveAnswer(date, choice);
+    updateTag(REPO_TAG);
+    revalidatePath('/');
+    return { ok: true, message: 'Réponse enregistrée : verdict demain matin dans la Matinale.' };
   } catch (err) {
     return { ok: false, message: err instanceof Error ? err.message : String(err) };
   }

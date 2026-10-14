@@ -9,6 +9,9 @@ export type Episode = {
   seconds: number;
   sources: { title: string; url: string }[];
   chapters?: { title: string; startSec: number }[];
+  quiz?: { question: string; choices: string[]; answer: number; explanation?: string };
+  /** Secondes de voix générées (hors jingle), pour le coût. Absent sur les tout premiers épisodes. */
+  ttsSeconds?: number;
 };
 
 export async function loadEpisodes(): Promise<Episode[]> {

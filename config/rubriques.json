@@ -125,7 +125,7 @@
       "id": "culture",
       "title": "Culture générale",
       "minutes": 3,
-      "brief": "Raconter une histoire tirée de l'éphéméride ou de l'article du jour Wikipédia (fichier de données), comme une anecdote. Finir l'épisode sur une question-quiz dont la réponse est donnée juste après.",
+      "brief": "Commencer par la réponse au quiz de la veille (et si l'auditeur avait juste, d'après quiz.json). Puis raconter une histoire tirée de l'éphéméride ou de l'article du jour Wikipédia (fichier de données), comme une anecdote. Finir sur la question-quiz du jour avec 3 ou 4 choix lus à voix haute : la réponse sera donnée demain.",
       "domains": [
         "fr.wikipedia.org"
       ],

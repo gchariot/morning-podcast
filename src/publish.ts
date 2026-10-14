@@ -21,6 +21,10 @@ export type EpisodeEntry = {
   sources: { title: string; url: string }[];
   chaptersUrl?: string;
   chapters?: { title: string; startSec: number }[];
+  /** Quiz du jour (la réponse est révélée par l'app une fois l'épisode suivant publié). */
+  quiz?: { question: string; choices: string[]; answer: number; explanation?: string };
+  /** Secondes de voix réellement générées (pour estimer le coût de synthèse). */
+  ttsSeconds?: number;
 };
 
 const KEEP = 30; // épisodes conservés dans le flux
@@ -91,7 +95,7 @@ ${items}
 `;
 }
 
-export async function publish(date: string, mp3: string, seconds: number, script: Script, chapters: Chapter[] = []) {
+export async function publish(date: string, mp3: string, seconds: number, script: Script, chapters: Chapter[] = [], ttsSeconds?: number) {
   const s3 = client();
   const Bucket = requireEnv('S3_BUCKET');
   const prefix = requireEnv('FEED_SECRET');
@@ -134,6 +138,8 @@ export async function publish(date: string, mp3: string, seconds: number, script
     sources: script.segments.flatMap(s => s.sources),
     chaptersUrl,
     chapters: chapters.map(c => ({ title: c.title, startSec: c.startSec })),
+    ...(script.quiz ? { quiz: script.quiz } : {}),
+    ...(ttsSeconds ? { ttsSeconds } : {}),
   };
   episodes = [entry, ...episodes.filter(e => e.date !== date)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, KEEP);
 

@@ -61,13 +61,23 @@ Les rubriques habituelles ne sont pas traitées une par une ce jour-là ; une vr
 - Trois voix : **Léa** (anime, pose le cadre, relance), **Hugo** (détails, contexte, une pointe d'humour) et **Zoé** (la météo, **uniquement** dans la rubrique `meteo`). Ce sont les seules valeurs autorisées pour `speaker`. Une rubrique ne fait jamais parler plus de deux voix (la météo : Léa et Zoé).
 - Ton : complice mais précis, comme deux amis bien informés. Pas de jargon inutile, phrases courtes, faciles à suivre à l'oral.
 - **Longueur (contrôlée)** : les voix lisent environ 190 mots par minute. Chaque rubrique vise `minutes × 190` mots (4 min ≈ 760 mots, 2 min ≈ 380 mots) ; un épisode de 20 minutes ≈ 3 800 mots. `npm run validate` **refuse un script sous 85 % de la durée visée** (≈ 3 230 mots en semaine) et affiche le compte par rubrique : allonge alors les rubriques trop courtes avec du fond (contexte, enjeux, réactions attribuées, chiffres sourcés, ce qui va suivre), jamais avec du remplissage ni des faits inventés. Si une rubrique est vraiment calme, redistribue ses mots vers les rubriques riches du jour.
-- Ordre : ouverture courte (30 secondes : date, programme) → rubriques dans l'ordre de la config → la culture générale finit par une question-quiz, la réponse vient deux répliques plus tard → **la météo de Zoé clôt toujours l'épisode**, quel que soit l'ordre dans la config (Léa lui passe la parole, Zoé conclut la météo, Léa dit au revoir en une phrase).
+- Ordre : ouverture courte (30 secondes : date, programme) → rubriques dans l'ordre de la config → la culture générale (voir « Le quiz » ci-dessous) → **la météo de Zoé clôt toujours l'épisode**, quel que soit l'ordre dans la config (Léa lui passe la parole, Zoé conclut la météo, Léa dit au revoir en une phrase).
 - **Politique** : faits uniquement, chaque opinion attribuée à qui la porte, aucun jugement, équilibre entre camps. Trois volets : France, Suisse romande, monde.
 - **Cinéma et séries** : aucun spoiler.
 - Nombres, dates et noms propres écrits comme ils se disent (« vingt-deux heures », « l'OL ») quand ça aide la voix.
 - `style` (facultatif, 2-3 mots) : une indication de jeu, ex. « enjouée », « posé », « amusé ». Pas de noms, pas d'âge, pas de genre.
 - Une réplique = 1 à 4 phrases. Alterner souvent les voix.
 - Les `sources` de chaque segment reprennent les URL réellement utilisées.
+
+## Le quiz (rubrique culture générale)
+
+La réponse n'est **jamais** donnée le jour même : l'auditeur répond dans l'appli et entend la réponse le lendemain.
+
+1. **D'abord la réponse d'hier** : ouvre la culture générale avec le dernier quiz posé (le `quiz` du `script.json` le plus récent qui en a un, avant aujourd'hui). Lis `quiz.json` à la racine du dépôt : la clé est la date de cet épisode, `choice` = index choisi par l'auditeur (0 = A). Donne la bonne réponse et son `explanation` en deux ou trois phrases, puis, s'il a répondu : « tu avais dit B : bravo ! » ou « tu avais dit C : raté, mais c'était serré ». S'il n'a pas répondu, donne simplement la réponse. S'il n'y a aucun quiz précédent, passe cette étape.
+2. **Puis la question du jour**, en fin de rubrique : Léa ou Hugo pose la question et lit les 3 ou 4 choix avec leur lettre (« A, … ; B, … ; C, … »), puis rappelle qu'on peut répondre dans l'appli et que la réponse sera donnée demain. Choisis une question liée à l'histoire racontée, ni trop facile ni trop obscure, avec des choix plausibles.
+3. **Remplis `quiz` dans `script.json`** avec exactement la même question et les mêmes choix (sans la lettre), l'index de la bonne réponse (`answer`, 0 = A) et une `explanation` d'une ou deux phrases. Vérifie la bonne réponse par une source. La validation refuse un épisode qui a une culture générale sans `quiz`.
+
+Format : `"quiz": { "question": "…", "choices": ["…", "…", "…"], "answer": 1, "explanation": "…" }`, au même niveau que `segments`.
 
 ## Journal des trous et échecs (obligatoire)
 

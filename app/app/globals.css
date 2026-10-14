@@ -324,3 +324,22 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 .update .meta { display: block; color: var(--ink-2); font-size: 0.8125rem; }
 .update .grow { flex: 1; min-width: 0; }
 @media (min-width: 641px) { .update { border-radius: 0 0 12px 12px; } }
+
+/* Quiz */
+.quiz-choices { display: grid; gap: 8px; margin-top: 14px; }
+.quiz-choice {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; color: var(--ink);
+  background: var(--surface-2); border: 1.5px solid transparent; border-radius: 12px; padding: 12px 14px; min-height: 48px; cursor: pointer;
+  transition: background 150ms ease-out, border-color 150ms ease-out, opacity 150ms ease-out;
+}
+.quiz-choice:hover:not(:disabled) { border-color: var(--line); }
+.quiz-choice:disabled { cursor: default; }
+.quiz-letter { width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--surface); font-weight: 700; font-size: 0.8125rem; color: var(--ink-2); }
+.quiz-choice.picked { border-color: var(--accent); background: var(--accent-soft); }
+.quiz-choice.picked .quiz-letter { background: var(--accent); color: var(--accent-ink); }
+.quiz-choice.right { border-color: var(--good); background: var(--good-soft); }
+.quiz-choice.right .quiz-letter { background: var(--good); color: #fff; }
+.quiz-choice.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.quiz-choice.wrong .quiz-letter { background: var(--bad); color: #fff; }
+.quiz-choice.dim { opacity: 0.55; }
+.quiz-card > * + * { border-top: 0; }

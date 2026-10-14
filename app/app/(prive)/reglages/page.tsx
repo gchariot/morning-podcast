@@ -2,6 +2,8 @@ import { loadConfig } from '@/lib/config';
 import { Flash, type FlashParams } from '@/components/Flash';
 import { Icon } from '@/components/Icon';
 import { logout, updateSettings } from '../actions';
+import { loadEpisodes, todayInZurich } from '@/lib/episodes';
+import { monthCost, pricePerMillion, usd } from '@/lib/costs';
 
 const DAYS = [
   { id: 'samedi', label: 'Samedi' },
@@ -9,7 +11,10 @@ const DAYS = [
 ];
 
 export default async function ReglagesPage({ searchParams }: { searchParams: FlashParams }) {
-  const [{ ok, err }, { config }] = await Promise.all([searchParams, loadConfig()]);
+  const [{ ok, err }, { config }, episodes] = await Promise.all([searchParams, loadConfig(), loadEpisodes().catch(() => [])]);
+  const month = todayInZurich().slice(0, 7);
+  const cost = monthCost(episodes, month);
+  const monthName = new Intl.DateTimeFormat('fr-CH', { month: 'long', timeZone: 'UTC' }).format(new Date(`${month}-15T12:00:00Z`));
   const editions = config.editions ?? {};
 
   return (
@@ -66,6 +71,26 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
 
         <button className="btn primary block" type="submit" style={{ marginTop: 24 }}>Enregistrer</button>
       </form>
+
+      <section className="section">
+        <h2>Coût</h2>
+        <p className="hint">Estimation à partir de la durée de voix générée et du tarif Gemini. La facture exacte est sur Google AI Studio.</p>
+        <div className="group">
+          <div className="item">
+            <span className="grow">Voix Gemini en {monthName}<span className="meta" style={{ display: 'block' }}>{cost.count} épisode{cost.count > 1 ? 's' : ''} · {Math.round(cost.minutes)} min de voix</span></span>
+            <strong className="num">{usd(cost.total)}</strong>
+          </div>
+          <div className="item">
+            <span className="grow">Projection sur 30 jours<span className="meta" style={{ display: 'block' }}>{cost.count ? `${usd(cost.perEpisode)} par épisode en moyenne` : 'Disponible après le premier épisode du mois'}</span></span>
+            <strong className="num">{cost.count ? usd(cost.projection30) : '—'}</strong>
+          </div>
+          <div className="item">
+            <span className="grow">Le reste<span className="meta" style={{ display: 'block' }}>Rédaction : incluse dans Claude Pro. Hébergement (Vercel, Cloudflare R2, GitHub Actions) et données (football-data, Open-Meteo, Wikipédia) : offres gratuites.</span></span>
+            <strong className="num">0 $</strong>
+          </div>
+        </div>
+        <p className="field-hint">Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio{todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
+      </section>
 
       <section className="section">
         <h2>Voix</h2>

@@ -4,7 +4,11 @@ import { resolve } from 'node:path';
 import { ROOT, dateFromArgs, loadConfig } from './lib.js';
 import { Script } from './schema.js';
 
-export function loadScript(date: string) {
+/**
+ * Lit et vérifie le script. `strict` (la validation de la rédaction) refuse aussi les écarts de forme ;
+ * sans `strict` (fabrication de l'épisode) ces écarts sont seulement signalés : mieux vaut un épisode imparfait que pas d'épisode.
+ */
+export function loadScript(date: string, strict = false) {
   const file = resolve(ROOT, `episodes/${date}/script.json`);
   const parsed = Script.safeParse(JSON.parse(readFileSync(file, 'utf8')));
   if (!parsed.success) {
@@ -13,19 +17,27 @@ export function loadScript(date: string) {
   const script = parsed.data;
   const { show } = loadConfig();
   const hosts = new Set(show.hosts.map(h => h.name));
+  const problems: string[] = [];
   // La voix météo ne parle que dans la rubrique météo.
   const meteoHost: string | undefined = (loadConfig() as { meteo?: { host?: string } }).meteo?.host;
   for (const seg of script.segments) {
     for (const t of seg.turns) {
       if (!hosts.has(t.speaker)) throw new Error(`Locuteur inconnu « ${t.speaker} » (attendu : ${[...hosts].join(', ')})`);
       if (meteoHost && t.speaker === meteoHost && seg.rubrique !== 'meteo') {
-        throw new Error(`${meteoHost} ne parle que dans la rubrique « meteo » (trouvée dans « ${seg.rubrique} »).`);
+        problems.push(`${meteoHost} ne parle que dans la rubrique « meteo » (trouvée dans « ${seg.rubrique} »).`);
       }
     }
   }
+  if (script.segments.some(sg => sg.rubrique === 'culture') && !script.quiz) {
+    problems.push('La culture générale pose le quiz du jour : remplis `quiz` (question, 3 ou 4 choix, index de la bonne réponse, explication).');
+  }
   const meteoIdx = script.segments.findIndex(sg => sg.rubrique === 'meteo');
   if (meteoIdx >= 0 && meteoIdx !== script.segments.length - 1) {
-    throw new Error('La rubrique « meteo » doit être la dernière de l\'épisode (Léa dit au revoir à la fin de la météo).');
+    problems.push('La rubrique « meteo » doit être la dernière de l\'épisode (Léa dit au revoir à la fin de la météo).');
+  }
+  if (problems.length) {
+    if (strict) throw new Error(problems.join('\n'));
+    for (const p of [...new Set(problems)]) console.warn(`⚠️ ${p}`);
   }
   const words = script.segments.flatMap(s => s.turns).reduce((n, t) => n + t.text.split(/\s+/).length, 0);
   return { script, words, minutes: words / show.wordsPerMinute };
@@ -46,7 +58,7 @@ export const MAX_RATIO = 1.25;
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const date = dateFromArgs();
-  const { script, words, minutes } = loadScript(date);
+  const { script, words, minutes } = loadScript(date, true);
   const { show } = loadConfig();
   const target = targetFor(date);
   const minWords = Math.round(target.minutes * MIN_RATIO * show.wordsPerMinute);

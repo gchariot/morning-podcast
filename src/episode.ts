@@ -36,12 +36,14 @@ const chapters = computeChapters(segments);
 const mp3 = resolve(outDir, `matinale-${date}.mp3`);
 assemble(segments.flatMap(s => s.files), mp3, { title: script.title, chapters });
 const seconds = Math.round(durationSeconds(mp3));
+// Voix réellement générée (hors jingle) : sert à estimer le coût de synthèse dans l'app.
+const ttsSeconds = Math.round(segments.flatMap(s => s.files).reduce((n, f) => n + durationSeconds(f), 0));
 console.log(`MP3 : ${mp3} (${Math.round(seconds / 60)} min, ${chapters.length} chapitres)`);
 
 if (process.env.SKIP_PUBLISH === '1') {
   console.log('SKIP_PUBLISH=1 : publication ignorée.');
 } else {
-  const { feedUrl, episodeUrl } = await publish(date, mp3, seconds, script, chapters);
+  const { feedUrl, episodeUrl } = await publish(date, mp3, seconds, script, chapters, ttsSeconds);
   console.log(`Publié : ${episodeUrl}\nFlux : ${feedUrl}`);
 }
 if (skipped.length) {

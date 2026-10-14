@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { formatDate, loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { Player } from '@/components/Player';
 import { Icon } from '@/components/Icon';
+import { QuizCard } from '@/components/QuizCard';
+import { isRevealed, loadAnswers, quizStats } from '@/lib/quiz';
 
 async function coverUrl(): Promise<string> {
   try {
@@ -20,9 +22,10 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover] = await Promise.all([
+  const [episodes, cover, { answers }] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
+    loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
   ]);
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
   const isToday = episode?.date === todayInZurich();
@@ -60,6 +63,19 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       }} />
 
       {episode.summary && <p className="summary">{episode.summary}</p>}
+      {episode.quiz && (() => {
+        const revealed = isRevealed(episode.date, episodes);
+        return (
+          <QuizCard
+            key={episode.date} date={episode.date} question={episode.quiz.question} choices={episode.quiz.choices}
+            myChoice={answers[episode.date]?.choice ?? null}
+            answer={revealed ? episode.quiz.answer : undefined}
+            explanation={revealed ? episode.quiz.explanation : undefined}
+            stats={quizStats(episodes, answers)}
+          />
+        );
+      })()}
+
       <Link className="btn primary block cta" href="/avis">
         <Icon name="message" size={18} /> Donner mon avis pour demain
       </Link>
