@@ -24,14 +24,34 @@ export const Quiz = z.object({
   explanation: z.string().max(400).optional(),
 }).refine(q => q.answer < q.choices.length, { message: 'answer doit désigner un des choix', path: ['answer'] });
 
+/** Le jeu du samedi : 8 questions sur la semaine, réponses données en fin d'épisode. */
+export const Game = z.object({
+  questions: z.array(z.object({
+    question: z.string().min(5).max(300),
+    choices: z.array(z.string().min(1).max(120)).min(3).max(4),
+    answer: z.number().int().min(0),
+    explanation: z.string().max(300).optional(),
+  }).refine(q => q.answer < q.choices.length, { message: 'answer doit désigner un des choix', path: ['answer'] })).min(6).max(10),
+});
+
+/** Le face-à-face du samedi : un sujet, la position de Léa (0) et celle de Hugo (1). */
+export const Debate = z.object({
+  topic: z.string().min(5).max(160),
+  sides: z.tuple([z.string().min(3).max(200), z.string().min(3).max(200)]),
+});
+
 export const Script = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   title: z.string().min(1).max(120),
   summary: z.string().min(1).max(600),
   segments: z.array(Segment).min(1),
   quiz: Quiz.optional(),
+  game: Game.optional(),
+  debate: Debate.optional(),
 });
 
 export type Script = z.infer<typeof Script>;
 export type Turn = z.infer<typeof Turn>;
 export type Quiz = z.infer<typeof Quiz>;
+export type Game = z.infer<typeof Game>;
+export type Debate = z.infer<typeof Debate>;

@@ -343,3 +343,9 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 .quiz-choice.wrong .quiz-letter { background: var(--bad); color: #fff; }
 .quiz-choice.dim { opacity: 0.55; }
 .quiz-card > * + * { border-top: 0; }
+
+/* Jeu du samedi : pastilles de progression */
+.game-dots { display: flex; gap: 6px; }
+.game-dot { flex: 1; height: 6px; border-radius: 999px; border: 0; padding: 0; background: var(--surface-2); cursor: pointer; transition: background 150ms ease-out; }
+.game-dot.done { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+.game-dot.on { background: var(--accent); }

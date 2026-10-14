@@ -34,7 +34,24 @@ Deux fichiers dans `episodes/<DATE>/` :
 
 1. **Mémoire** : lis `episodes/<veille>/notes.md` et les `title`/`summary` des `script.json` des 3 jours précédents (s'ils existent). Un sujet déjà traité n'est repris **que s'il y a du nouveau**, et alors présenté comme une suite (« on vous en parlait hier… »). Jamais deux fois la même info comme une nouveauté.
 2. **Retours de l'auditeur** : lis `retours.md`. Les « consignes permanentes » s'appliquent toujours ; les « retours récents » des 14 derniers jours aussi. Ils priment sur les durées et consignes de `config/rubriques.json` en cas de conflit (sauf les règles de neutralité politique et d'exactitude).
-3. **Édition du jour** : regarde le jour de la semaine à Genève (`TZ=Europe/Zurich date +%u` : 6 = samedi, 7 = dimanche). Si `config/rubriques.json` → `editions` contient ce jour (samedi, dimanche) : vise `targetMinutes`, multiplie la durée de chaque rubrique par `minutesFactor` et supprime les rubriques listées dans `skip`. Annonce-le en ouverture (« édition du week-end, version courte »). Le dimanche, seule la durée visée compte : le contenu suit « Le dimanche : le documentaire ».
+3. **Édition du jour** : regarde le jour de la semaine à Genève (`TZ=Europe/Zurich date +%u` : 6 = samedi, 7 = dimanche). Si `config/rubriques.json` → `editions` contient ce jour (samedi, dimanche) : vise `targetMinutes`, multiplie la durée de chaque rubrique par `minutesFactor` et supprime les rubriques listées dans `skip`. Le samedi et le dimanche, seule la durée visée compte : le contenu suit « Le samedi : la grande édition » et « Le dimanche : le documentaire ».
+
+## Le samedi : la grande édition (environ 25 minutes)
+
+Le samedi (`+%u` = 6), pas de rubriques habituelles : une matinale du week-end en six parties, chacune un segment (donc un chapitre) avec ce `rubrique` et cet ordre :
+
+1. `ouverture` (≈ 45 s) : le programme de la grande édition, puis la réponse au quiz de vendredi (règles du quiz ci-dessous, en 20 secondes).
+2. `semaine` — **La semaine en 3 minutes** : les 2 ou 3 histoires qui ont le plus bougé du lundi au vendredi, toutes rubriques confondues (à partir des `script.json` et `notes.md` des cinq jours précédents, mis à jour par une recherche). Pour chacune : où on en était, ce qui s'est passé, où on en est.
+3. `face-a-face` — **Le face-à-face** (≈ 7 min) : un sujet de la semaine qui fait débat mais **pas politique au sens partisan** (sport, technologie, IA, culture, jeux vidéo, consommation, société du quotidien). Léa défend une position, Hugo l'autre, avec des faits, des chiffres et des exemples sourcés, une vraie contradiction mais courtoise ; ils concluent sans trancher et invitent à voter dans l'appli. Commence par le résultat du vote de la semaine précédente s'il existe (`samedi.json`, clé = date du samedi précédent, `vote` = 0 pour la position de Léa, 1 pour celle de Hugo : « la semaine dernière, tu as donné raison à Hugo »).
+4. `jeu` — **Le jeu de la semaine** (≈ 6 min) : 8 questions sur l'actualité des sept derniers jours, de la plus facile à la plus difficile, toutes rubriques. Léa pose chaque question et lit les choix (A, B, C, éventuellement D) ; Hugo glisse un indice amusant pour certaines ; **aucune réponse n'est donnée dans cette partie**. On rappelle qu'on répond dans l'appli et que les réponses viennent après le guide.
+5. `guide` — **Le guide du week-end** (≈ 5 min) : 3 ou 4 sorties concrètes pour samedi et dimanche au pays de Gex (Ferney-Voltaire, Gex, Divonne, Saint-Genis-Pouilly, Prévessin…), à Genève et éventuellement à Lausanne : expo, concert, spectacle, marché, fête, sport à voir. Pour chacune : quoi, où, quand, prix si connu. Puis les matchs du week-end (OL, Real, grosses affiches) avec l'heure et le diffuseur en France, et un film en salle, la série ou le jeu vidéo du moment. Sources : `data/<DATE>.json` → `sorties` s'il existe, sinon recherche web (Genève Tourisme / geneve.com, Ville de Genève, Tribune de Genève sorties, office de tourisme Pays de Gex Monts Jura, sites des mairies, Lausanne Tourisme). Uniquement des événements dont la date est confirmée par une source ; jamais d'événement passé ou incertain.
+6. `jeu-reponses` — **Les réponses du jeu** (1 à 2 min) : les 8 réponses dans l'ordre, chacune avec une phrase d'explication.
+7. `meteo` — la météo de Zoé pour **samedi et dimanche** (`data/<DATE>.json` → `meteo` contient aussi `dimanche`), comme toujours en dernier.
+
+Dans `script.json`, remplis aussi :
+- `"game": { "questions": [ { "question": "…", "choices": ["…","…","…"], "answer": 0, "explanation": "…" }, … ] }` avec exactement 8 questions, identiques à celles lues à l'antenne (sans les lettres), `answer` = index de la bonne réponse, vérifiée par une source ;
+- `"debate": { "topic": "La VAR a-t-elle tué le foot ?", "sides": ["La position de Léa en une phrase", "La position de Hugo en une phrase"] }`.
+Pas de champ `quiz` le samedi : le jeu le remplace. La validation refuse un samedi sans `game` (8 questions) ni `debate`.
 
 ## Le dimanche : le documentaire
 

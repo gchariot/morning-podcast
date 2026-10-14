@@ -3,6 +3,9 @@ import { formatDate, loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { Player } from '@/components/Player';
 import { Icon } from '@/components/Icon';
 import { QuizCard } from '@/components/QuizCard';
+import { GameCard } from '@/components/GameCard';
+import { DebateCard } from '@/components/DebateCard';
+import { loadSamedi } from '@/lib/samedi';
 import { isRevealed, loadAnswers, quizStats } from '@/lib/quiz';
 
 async function coverUrl(): Promise<string> {
@@ -22,10 +25,11 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover, { answers }] = await Promise.all([
+  const [episodes, cover, { answers }, { data: samedi }] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
     loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
+    loadSamedi().catch(() => ({ data: {} as Awaited<ReturnType<typeof loadSamedi>>['data'] })),
   ]);
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
   const isToday = episode?.date === todayInZurich();
@@ -63,6 +67,27 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       }} />
 
       {episode.summary && <p className="summary">{episode.summary}</p>}
+      {episode.debate && (
+        <DebateCard
+          key={`d-${episode.date}`} date={episode.date} topic={episode.debate.topic} sides={episode.debate.sides}
+          myVote={samedi[episode.date]?.vote ?? null}
+          closed={episodes.some(e => e.date > episode.date && e.debate)}
+        />
+      )}
+
+      {episode.game && (() => {
+        // Bonnes réponses envoyées seulement si le jeu a déjà été joué (sinon, elles restent sur le serveur).
+        const played = samedi[episode.date]?.jeu;
+        const qs = episode.game.questions;
+        return (
+          <GameCard
+            key={`g-${episode.date}`} date={episode.date}
+            questions={qs.map(q => ({ question: q.question, choices: q.choices }))}
+            played={played ? { ok: true, message: '', answers: played.answers, correct: qs.map(q => q.answer), explanations: qs.map(q => q.explanation) } : null}
+          />
+        );
+      })()}
+
       {episode.quiz && (() => {
         const revealed = isRevealed(episode.date, episodes);
         return (

@@ -8,6 +8,7 @@ import { loadConfig, parseDomains, saveConfig, slugify, type Rubrique } from '@/
 import { addRecent, loadRetours, removeRecent, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
+import { loadSamedi, updateSamedi } from '@/lib/samedi';
 
 const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim();
 const num = (f: FormData, k: string) => Number(String(f.get(k) ?? '').replace(',', '.'));
@@ -199,10 +200,9 @@ export async function updateSettings(formData: FormData) {
     config.show.targetMinutes = num(formData, 'targetMinutes');
     const editions: NonNullable<typeof config.editions> = {};
     const factor = (m: number) => Math.min(1.5, Math.max(0.2, Math.round((m / config.show.targetMinutes) * 100) / 100));
-    if (formData.get('samedi_on') === 'on') {
-      const m = num(formData, 'samedi_minutes');
-      editions.samedi = { targetMinutes: m, minutesFactor: factor(m), skip: formData.getAll('samedi_skip').map(String) };
-    }
+    // Samedi : toujours la grande édition (face-à-face, jeu, guide) ; seule sa durée se règle.
+    const sm = num(formData, 'samedi_minutes');
+    editions.samedi = { targetMinutes: sm, minutesFactor: factor(sm), skip: [] };
     // Dimanche : toujours le documentaire ; seule sa durée se règle (les thèmes ne s'appliquent pas ce jour-là).
     const dm = num(formData, 'dimanche_minutes');
     editions.dimanche = { targetMinutes: dm, minutesFactor: factor(dm), skip: [] };
@@ -252,6 +252,53 @@ export async function answerQuiz(date: string, choice: number): Promise<{ ok: bo
     updateTag(REPO_TAG);
     revalidatePath('/');
     return { ok: true, message: 'Réponse enregistrée : verdict demain matin dans la Matinale.' };
+  } catch (err) {
+    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+/* ---------- Samedi : jeu et face-à-face ---------- */
+
+export type GameResult = { ok: boolean; message: string; answers?: number[]; correct?: number[]; explanations?: (string | undefined)[] };
+
+/** Valide les réponses au jeu (une seule fois) et renvoie la correction. */
+export async function submitGame(date: string, answers: number[]): Promise<GameResult> {
+  await requireLogin();
+  try {
+    const ep = (await loadEpisodes()).find(e => e.date === date);
+    const qs = ep?.game?.questions;
+    if (!qs) return { ok: false, message: 'Pas de jeu pour cet épisode.' };
+    if (answers.length !== qs.length || answers.some((a, i) => !(Number.isInteger(a) && a >= 0 && a < qs[i].choices.length))) {
+      return { ok: false, message: 'Réponds à toutes les questions avant de valider.' };
+    }
+    const { data } = await loadSamedi(true);
+    const already = data[date]?.jeu;
+    if (!already) await updateSamedi(date, { jeu: { answers, at: new Date().toISOString() } }, `samedi: réponses au jeu du ${date} (app)`);
+    updateTag(REPO_TAG);
+    const mine = already?.answers ?? answers;
+    const score = mine.filter((a, i) => a === qs[i].answer).length;
+    return {
+      ok: true, message: already ? 'Tu avais déjà joué : voici ta correction.' : `${score}/${qs.length} !`,
+      answers: mine, correct: qs.map(q => q.answer), explanations: qs.map(q => q.explanation),
+    };
+  } catch (err) {
+    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+/** Vote du face-à-face (0 = Léa, 1 = Hugo), modifiable jusqu'au samedi suivant. */
+export async function voteDebate(date: string, side: 0 | 1): Promise<{ ok: boolean; message: string }> {
+  await requireLogin();
+  try {
+    const episodes = await loadEpisodes();
+    const ep = episodes.find(e => e.date === date);
+    if (!ep?.debate) return { ok: false, message: 'Pas de face-à-face pour cet épisode.' };
+    if (side !== 0 && side !== 1) return { ok: false, message: 'Vote invalide.' };
+    if (episodes.some(e => e.date > date && e.debate)) return { ok: false, message: 'Trop tard : le résultat a déjà été annoncé.' };
+    await updateSamedi(date, { vote: side }, `samedi: vote du face-à-face du ${date} (app)`);
+    updateTag(REPO_TAG);
+    revalidatePath('/');
+    return { ok: true, message: `Vote enregistré pour ${side === 0 ? 'Léa' : 'Hugo'} : résultat annoncé samedi prochain.` };
   } catch (err) {
     return { ok: false, message: err instanceof Error ? err.message : String(err) };
   }

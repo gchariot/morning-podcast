@@ -10,6 +10,9 @@ export type Episode = {
   sources: { title: string; url: string }[];
   chapters?: { title: string; startSec: number }[];
   quiz?: { question: string; choices: string[]; answer: number; explanation?: string };
+  /** Samedi : le jeu de 8 questions et le face-à-face. */
+  game?: { questions: { question: string; choices: string[]; answer: number; explanation?: string }[] };
+  debate?: { topic: string; sides: [string, string] };
   /** Secondes de voix générées (hors jingle), pour le coût. Absent sur les tout premiers épisodes. */
   ttsSeconds?: number;
 };

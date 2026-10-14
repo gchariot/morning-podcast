@@ -22,8 +22,8 @@
   },
   "editions": {
     "samedi": {
-      "targetMinutes": 10,
-      "minutesFactor": 0.5,
+      "targetMinutes": 25,
+      "minutesFactor": 1.25,
       "skip": []
     },
     "dimanche": {

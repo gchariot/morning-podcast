@@ -116,7 +116,8 @@ async function weather(date: string) {
   if (!place) return { error: `aucune ville prévue le ${jour}` };
   const qs = new URLSearchParams({
     latitude: String(place.lat), longitude: String(place.lon), timezone: 'Europe/Zurich',
-    start_date: date, end_date: date,
+    // Le samedi, on prévoit tout le week-end : samedi et dimanche.
+    start_date: date, end_date: jour === 'samedi' ? shiftDate(date, 1) : date,
     daily: 'weather_code,temperature_2m_min,temperature_2m_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,sunrise,sunset,uv_index_max',
     hourly: 'temperature_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,wind_speed_10m',
   });
@@ -135,7 +136,8 @@ async function weather(date: string) {
     };
   };
   const rainyHours = (j.hourly.time as string[])
-    .map((t, i) => ({ h: Number(t.slice(11, 13)), p: j.hourly.precipitation_probability[i] }))
+    .map((t, i) => ({ day: t.slice(0, 10), h: Number(t.slice(11, 13)), p: j.hourly.precipitation_probability[i] }))
+    .filter(x => x.day === date)
     .filter(x => x.h >= 6 && x.h <= 22 && x.p >= 50).map(x => `${x.h} h`);
   return {
     jour, ville: place.name, source: 'Open-Meteo (open-meteo.com)',
@@ -148,6 +150,14 @@ async function weather(date: string) {
       heuresProbablementPluvieuses: rainyHours,
     },
     creneaux: [7, 9, 12, 15, 18, 21].map(at).filter(Boolean),
+    ...(jour === 'samedi' && d.time?.[1] ? {
+      dimanche: {
+        ciel: WMO[d.weather_code[1]] ?? `code ${d.weather_code[1]}`,
+        temperatureMin: d.temperature_2m_min[1], temperatureMax: d.temperature_2m_max[1],
+        risquePluieMax: d.precipitation_probability_max[1], pluieTotaleMm: d.precipitation_sum[1],
+        ventMaxKmh: d.wind_speed_10m_max[1], rafalesMaxKmh: d.wind_gusts_10m_max[1],
+      },
+    } : {}),
   };
 }
 

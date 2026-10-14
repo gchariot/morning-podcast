@@ -31,6 +31,9 @@ export function loadScript(date: string, strict = false) {
   if (script.segments.some(sg => sg.rubrique === 'culture' || sg.rubrique === 'doc') && !script.quiz) {
     problems.push('La culture générale pose le quiz du jour : remplis `quiz` (question, 3 ou 4 choix, index de la bonne réponse, explication).');
   }
+  const saturday = new Date(`${date}T12:00:00Z`).getUTCDay() === 6;
+  if (saturday && (!script.game || script.game.questions.length !== 8)) problems.push('Le samedi : remplis `game` avec exactement 8 questions (celles lues dans la partie « jeu »).');
+  if (saturday && !script.debate) problems.push('Le samedi : remplis `debate` (sujet du face-à-face et les deux positions).');
   const meteoIdx = script.segments.findIndex(sg => sg.rubrique === 'meteo');
   if (meteoIdx >= 0 && meteoIdx !== script.segments.length - 1) {
     problems.push('La rubrique « meteo » doit être la dernière de l\'épisode (Léa dit au revoir à la fin de la météo).');
