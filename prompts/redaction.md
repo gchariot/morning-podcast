@@ -49,6 +49,13 @@ Deux fichiers dans `episodes/<DATE>/` :
 - Une réplique = 1 à 4 phrases. Alterner souvent les voix.
 - Les `sources` de chaque segment reprennent les URL réellement utilisées.
 
+## Journal des trous et échecs (obligatoire)
+
+Termine `notes.md` par une section `## Trous et échecs`, une ligne par problème, au format :
+`- [rubrique] type : détail` avec type ∈ `aucun résultat`, `site inaccessible`, `info trop ancienne`, `source unique`, `données manquantes`, `rubrique maigre`.
+Exemples : `- [foot] données manquantes : pas de match de l'OL dans data/<DATE>.json` · `- [politique] site inaccessible : rts.ch n'a renvoyé aucun résultat`.
+Si tout s'est bien passé, écris `- aucun`. Sois honnête : ce journal sert à améliorer les sources.
+
 ## Avant de finir
 
 1. Lance `npm ci` si `node_modules` est absent, puis `npm run validate -- --date=<DATE>` et corrige jusqu'à ce que la validation passe.
