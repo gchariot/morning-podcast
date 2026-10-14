@@ -1,0 +1,61 @@
+{
+  "show": {
+    "title": "La Matinale de Huxxley",
+    "description": "Mon podcast quotidien privé : IA, foot, politique, jeux vidéo, cinéma et culture générale.",
+    "language": "fr",
+    "hosts": [
+      { "name": "Léa", "role": "anime, pose le cadre, relance" },
+      { "name": "Hugo", "role": "apporte les détails, le contexte, une pointe d'humour" }
+    ],
+    "targetMinutes": 20,
+    "wordsPerMinute": 150
+  },
+  "rubriques": [
+    {
+      "id": "ia",
+      "title": "Nouveautés IA",
+      "minutes": 4,
+      "brief": "Sorties de modèles, d'outils et d'API des dernières 24 h. Ce qui change concrètement pour un développeur full-stack (Next.js, Supabase, Claude Code).",
+      "domains": ["anthropic.com", "openai.com", "blog.google", "deepmind.google", "mistral.ai", "simonwillison.net", "theverge.com", "techcrunch.com", "news.ycombinator.com"]
+    },
+    {
+      "id": "foot",
+      "title": "Football",
+      "minutes": 4,
+      "brief": "L'OL d'abord, puis le Real Madrid, puis Ligue 1, Ligue des champions et Premier League. Résultats d'hier, affiches du jour, une info de mercato ou de blessure si elle compte. Les scores viennent UNIQUEMENT du fichier de données.",
+      "domains": ["lequipe.fr", "ol.fr", "rmcsport.bfmtv.com", "footmercato.net", "marca.com", "realmadrid.com", "bbc.com", "uefa.com"]
+    },
+    {
+      "id": "politique",
+      "title": "Politique",
+      "minutes": 4,
+      "brief": "Trois volets : France, Suisse romande (Genève et Vaud en priorité), monde. Faits uniquement, chaque opinion attribuée à la personne ou au parti qui la porte, aucune prise de position.",
+      "domains": ["franceinfo.fr", "lemonde.fr", "rts.ch", "letemps.ch", "tdg.ch", "24heures.ch", "france24.com", "reuters.com", "apnews.com"]
+    },
+    {
+      "id": "jeux",
+      "title": "Jeux vidéo",
+      "minutes": 3,
+      "brief": "Sorties de la semaine, annonces, tests marquants, rumeurs sérieuses seulement si elles sont présentées comme telles.",
+      "domains": ["gamekult.com", "jeuxvideo.com", "gameblog.fr", "ign.com", "eurogamer.net"]
+    },
+    {
+      "id": "cinema",
+      "title": "Cinéma et séries",
+      "minutes": 3,
+      "brief": "Le mercredi : les sorties en salle. Les autres jours : la série ou le film dont on parle, une annonce de sortie physique (Blu-ray, 4K) si elle existe. Jamais de spoiler.",
+      "domains": ["allocine.fr", "premiere.fr", "ecranlarge.com", "lesinrocks.com", "variety.com"]
+    },
+    {
+      "id": "culture",
+      "title": "Culture générale",
+      "minutes": 2,
+      "brief": "Raconter une histoire tirée de l'éphéméride ou de l'article du jour Wikipédia (fichier de données), comme une anecdote. Finir l'épisode sur une question-quiz dont la réponse est donnée juste après.",
+      "domains": ["fr.wikipedia.org"]
+    }
+  ],
+  "football": {
+    "competitions": ["FL1", "CL", "PL", "PD"],
+    "favouriteTeams": ["Olympique Lyonnais", "Real Madrid CF"]
+  }
+}

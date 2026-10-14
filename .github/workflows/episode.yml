@@ -1,0 +1,64 @@
+name: 3 · Voix et publication
+
+# Se déclenche quand la tâche planifiée Claude pousse episodes/<date>/script.json.
+on:
+  push:
+    branches: [main]
+    paths: ['episodes/**/script.json']
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date de l''épisode (YYYY-MM-DD), vide = aujourd''hui'
+        required: false
+
+concurrency:
+  group: episode
+  cancel-in-progress: false
+
+jobs:
+  episode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Date de l'épisode
+        id: when
+        run: |
+          if [ -n "${{ inputs.date }}" ]; then
+            echo "date=${{ inputs.date }}" >> "$GITHUB_OUTPUT"
+          else
+            d=$(git diff --name-only HEAD~1 HEAD -- 'episodes/*/script.json' | head -1 | cut -d/ -f2)
+            echo "date=${d:-$(TZ=Europe/Zurich date +%F)}" >> "$GITHUB_OUTPUT"
+          fi
+      - run: npm run validate -- --date=${{ steps.when.outputs.date }}
+      - run: npm run episode -- --date=${{ steps.when.outputs.date }}
+        env:
+          TTS_PROVIDER: ${{ vars.TTS_PROVIDER || 'gemini' }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VOICE_LEA: ${{ vars.VOICE_LEA }}
+          VOICE_HUGO: ${{ vars.VOICE_HUGO }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
+          ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ vars.S3_REGION || 'auto' }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
+          FEED_SECRET: ${{ secrets.FEED_SECRET }}
+      - name: Garder le MP3 en artefact (7 jours)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: matinale-${{ steps.when.outputs.date }}
+          path: out/${{ steps.when.outputs.date }}/*.mp3
+          retention-days: 7
+          if-no-files-found: ignore

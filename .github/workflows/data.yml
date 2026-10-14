@@ -1,0 +1,36 @@
+name: 1 · Données du jour
+
+# 03:00 UTC = 5h00 l'été, 4h00 l'hiver à Genève — avant la rédaction (5h37).
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data
+  cancel-in-progress: false
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run data
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+      - name: Commit des données
+        run: |
+          git config user.name "matinale-bot"
+          git config user.email "matinale-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "data: $(TZ=Europe/Zurich date +%F)"
+          git push
