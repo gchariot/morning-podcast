@@ -9,7 +9,7 @@ import { elevenlabsSegment } from './elevenlabs.js';
 export type SegmentWriter = (turns: Turn[], outBase: string) => Promise<string[]>;
 
 export function getProvider(): { name: string; synth: SegmentWriter } {
-  const name = (process.env.TTS_PROVIDER ?? 'gemini').toLowerCase();
+  const name = (process.env.TTS_PROVIDER || 'gemini').toLowerCase();
   if (name === 'gemini') return { name, synth: geminiSegment };
   if (name === 'elevenlabs') return { name, synth: elevenlabsSegment };
   throw new Error(`TTS_PROVIDER inconnu : ${name}`);

@@ -11,12 +11,12 @@ import type { Turn } from '../schema.js';
 import { requireEnv } from '../lib.js';
 import { chunkTurns } from './index.js';
 
-const MODEL = process.env.GEMINI_TTS_MODEL ?? 'gemini-3.8-flash-tts';
+const MODEL = process.env.GEMINI_TTS_MODEL || 'gemini-3.8-flash-tts';
 
 /** Voix par animateur ; à changer après l'écoute comparative. */
 const VOICES: Record<string, string> = {
-  'Léa': process.env.VOICE_LEA ?? 'Kore',
-  'Hugo': process.env.VOICE_HUGO ?? 'Puck',
+  'Léa': process.env.VOICE_LEA || 'Kore',
+  'Hugo': process.env.VOICE_HUGO || 'Puck',
 };
 
 function findAudioBase64(node: unknown): string | null {

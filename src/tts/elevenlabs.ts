@@ -7,7 +7,7 @@ import { writeFileSync } from 'node:fs';
 import type { Turn } from '../schema.js';
 import { requireEnv } from '../lib.js';
 
-const MODEL = process.env.ELEVENLABS_MODEL ?? 'eleven_v3';
+const MODEL = process.env.ELEVENLABS_MODEL || 'eleven_v3';
 
 /** IDs de voix ElevenLabs (bibliothèque de voix → « ID »). */
 function voiceFor(speaker: string): string {
