@@ -13,7 +13,9 @@ export function assemble(files: string[], out: string): void {
   const args = ['-y', '-hide_banner', '-loglevel', 'error'];
   for (const f of inputs) args.push('-i', f);
   const streams = inputs.map((_, i) => `[${i}:a]aresample=44100,aformat=channel_layouts=mono[a${i}]`).join(';');
-  const concat = inputs.map((_, i) => `[a${i}]`).join('') + `concat=n=${inputs.length}:v=0:a=1[out]`;
+  // loudnorm : volume homogène entre jingle et voix, au standard podcast (-16 LUFS).
+  const concat = inputs.map((_, i) => `[a${i}]`).join('') +
+    `concat=n=${inputs.length}:v=0:a=1,loudnorm=I=-16:TP=-1.5:LRA=11[out]`;
   args.push('-filter_complex', `${streams};${concat}`, '-map', '[out]', '-ac', '1', '-b:a', '64k', out);
   execFileSync('ffmpeg', args, { stdio: 'inherit' });
 }
