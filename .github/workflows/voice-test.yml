@@ -1,14 +1,19 @@
 name: 0 · Test de voix
 
-# Génère un extrait d'environ 20 secondes (Léa + Hugo) et le met en artefact téléchargeable.
+# Lit environ une minute d'un vrai épisode. « comparaison » génère Gemini ET ElevenLabs sur le même texte
+# et donne deux liens A / B à écouter à l'aveugle (réponse dans le résumé du run).
 on:
   workflow_dispatch:
     inputs:
       provider:
         description: 'Fournisseur de voix'
         type: choice
-        options: [gemini, elevenlabs]
-        default: gemini
+        options: [comparaison, gemini, elevenlabs]
+        default: comparaison
+      rubrique:
+        description: 'Rubrique de l''épisode à lire (ia, foot, politique, jeux, cinema, culture)'
+        required: false
+        default: foot
       voice_lea:
         description: 'Voix de Léa (Gemini : Kore, Aoede, Leda, Zephyr…) — vide = défaut'
         required: false
@@ -19,7 +24,15 @@ on:
 jobs:
   voice:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    env:
+      TEST_RUBRIQUE: ${{ inputs.rubrique }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      VOICE_LEA: ${{ inputs.voice_lea || vars.VOICE_LEA }}
+      VOICE_HUGO: ${{ inputs.voice_hugo || vars.VOICE_HUGO }}
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
+      ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -29,23 +42,40 @@ jobs:
       - name: Installer ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - run: npm ci
-      - run: npm run tts:test
-        env:
-          TTS_PROVIDER: ${{ inputs.provider }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          VOICE_LEA: ${{ inputs.voice_lea || vars.VOICE_LEA }}
-          VOICE_HUGO: ${{ inputs.voice_hugo || vars.VOICE_HUGO }}
-          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-          ELEVENLABS_VOICE_LEA: ${{ vars.ELEVENLABS_VOICE_LEA }}
-          ELEVENLABS_VOICE_HUGO: ${{ vars.ELEVENLABS_VOICE_HUGO }}
-      - name: Assemblage en un seul MP3
+      - name: Générer et assembler
         run: |
-          ls out/test-* > /dev/null
-          args=""; n=0
-          for f in out/test-*; do args="$args -i $f"; n=$((n+1)); done
-          filter=""; for i in $(seq 0 $((n-1))); do filter="$filter[$i:a]"; done
-          ffmpeg -y -loglevel error $args -filter_complex "${filter}concat=n=$n:v=0:a=1[out]" -map "[out]" -ac 1 -b:a 96k out/extrait.mp3
+          set -e
+          make_one() {   # $1 = gemini | elevenlabs → out/$1.mp3, volume normalisé (comparaison équitable)
+            rm -f out/test-*
+            TTS_PROVIDER=$1 npm run --silent tts:test
+            args=""; n=0
+            for f in $(ls out/test-* | sort); do args="$args -i $f"; n=$((n+1)); done
+            filter=""; for i in $(seq 0 $((n-1))); do filter="$filter[$i:a]"; done
+            ffmpeg -y -loglevel error $args -filter_complex "${filter}concat=n=$n:v=0:a=1,loudnorm=I=-16:TP=-1.5:LRA=11[out]" -map "[out]" -ac 1 -ar 44100 -b:a 128k out/$1.mp3
+          }
+          mkdir -p out
+          if [ "${{ inputs.provider }}" = "comparaison" ]; then
+            if [ -z "$ELEVENLABS_API_KEY" ]; then echo "::error::Ajoute d'abord le secret ELEVENLABS_API_KEY (Settings → Secrets → Actions)."; exit 1; fi
+            make_one gemini
+            make_one elevenlabs
+          else
+            make_one ${{ inputs.provider }}
+            cp out/${{ inputs.provider }}.mp3 out/extrait.mp3
+          fi
+      - name: Déposer A et B pour l'écoute à l'aveugle
+        if: inputs.provider == 'comparaison'
+        run: npx tsx src/ab-upload.ts
+        env:
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ vars.S3_REGION || 'auto' }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
+          FEED_SECRET: ${{ secrets.FEED_SECRET }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
       - uses: actions/upload-artifact@v5
+        if: inputs.provider != 'comparaison'
         with:
           name: extrait-${{ inputs.provider }}-${{ inputs.voice_lea || 'defaut' }}-${{ inputs.voice_hugo || 'defaut' }}
           path: out/extrait.mp3
