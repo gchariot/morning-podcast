@@ -48,23 +48,6 @@
       ]
     },
     {
-      "id": "ia",
-      "title": "Nouveautés IA",
-      "minutes": 4,
-      "brief": "Sorties de modèles, d'outils et d'API des dernières 24 h. Ce qui change concrètement pour un développeur full-stack (Next.js, Supabase, Claude Code).",
-      "domains": [
-        "anthropic.com",
-        "openai.com",
-        "blog.google",
-        "deepmind.google",
-        "mistral.ai",
-        "simonwillison.net",
-        "theverge.com",
-        "techcrunch.com",
-        "news.ycombinator.com"
-      ]
-    },
-    {
       "id": "politique",
       "title": "Politique",
       "minutes": 4,
@@ -88,6 +71,23 @@
         "apnews.com",
         "bbc.com",
         "aljazeera.com"
+      ]
+    },
+    {
+      "id": "ia",
+      "title": "Nouveautés IA",
+      "minutes": 4,
+      "brief": "Sorties de modèles, d'outils et d'API des dernières 24 h. Ce qui change concrètement pour un développeur full-stack (Next.js, Supabase, Claude Code).",
+      "domains": [
+        "anthropic.com",
+        "openai.com",
+        "blog.google",
+        "deepmind.google",
+        "mistral.ai",
+        "simonwillison.net",
+        "theverge.com",
+        "techcrunch.com",
+        "news.ycombinator.com"
       ]
     },
     {
