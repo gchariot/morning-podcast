@@ -76,6 +76,10 @@ Le flux est privé : son adresse contient une clé secrète (`FEED_SECRET`) et n
 
 ---
 
+## L'app
+
+Une petite appli web privée ([`app/`](app/)) sert de télécommande depuis le téléphone : écouter avec chapitres, donner son avis 👍/👎 par rubrique, créer ou mettre en pause des thèmes, régler les éditions du week-end. Chaque action est un commit sur `retours.md` ou `config/rubriques.json`, pris en compte dès l'épisode suivant. Détails : [`app/README.md`](app/README.md).
+
 ## Régler l'émission
 
 | Je veux… | Je modifie… |
