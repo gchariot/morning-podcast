@@ -55,7 +55,23 @@ async function football(date: string) {
       .map((r: any) => ({ position: r.position, team: r.team?.name, points: r.points, played: r.playedGames }));
   }
 
-  return { window: { from, to }, matches, ligue1Standings: ligue1 };
+  // Dernier et prochain match des équipes suivies, même pendant une trêve internationale.
+  const teams: Record<string, unknown> = {};
+  for (const team of cfg.favouriteTeamIds ?? []) {
+    const simplify = (m: any) => m && ({
+      competition: m.competition?.name, date: m.utcDate, home: m.homeTeam?.name, away: m.awayTeam?.name,
+      score: m.score?.fullTime?.home == null ? null : `${m.score.fullTime.home}-${m.score.fullTime.away}`,
+    });
+    const get = async (qs: string) => {
+      const r = await fetch(`https://api.football-data.org/v4/teams/${team.id}/matches?${qs}`, { headers });
+      return r.ok ? (((await r.json()) as any).matches ?? []) : [];
+    };
+    const last = await get(`status=FINISHED&dateFrom=${shiftDate(date, -30)}&dateTo=${date}`);
+    const next = await get(`status=SCHEDULED,TIMED&dateFrom=${date}&dateTo=${shiftDate(date, 30)}`);
+    teams[team.name] = { lastMatch: simplify(last.at(-1)), nextMatch: simplify(next[0]) };
+  }
+
+  return { window: { from, to }, matches, ligue1Standings: ligue1, favouriteTeams: teams };
 }
 
 async function wikimedia(date: string) {

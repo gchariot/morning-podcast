@@ -29,8 +29,8 @@
       "id": "politique",
       "title": "Politique",
       "minutes": 4,
-      "brief": "Trois volets : France, Suisse romande (Genève et Vaud en priorité), monde. Faits uniquement, chaque opinion attribuée à la personne ou au parti qui la porte, aucune prise de position.",
-      "domains": ["franceinfo.fr", "lemonde.fr", "rts.ch", "letemps.ch", "tdg.ch", "24heures.ch", "france24.com", "reuters.com", "apnews.com"]
+      "brief": "Trois volets : France, Suisse romande (Genève et Vaud en priorité), monde. Faits uniquement, chaque opinion attribuée à la personne ou au parti qui la porte, aucune prise de position. Pour la Suisse romande, une info jusqu'à 72 h est acceptable.",
+      "domains": ["franceinfo.fr", "lemonde.fr", "liberation.fr", "lefigaro.fr", "rts.ch", "letemps.ch", "tdg.ch", "24heures.ch", "watson.ch", "lecourrier.ch", "swissinfo.ch", "keystone-sda.ch", "ge.ch", "france24.com", "reuters.com", "apnews.com", "bbc.com", "aljazeera.com"]
     },
     {
       "id": "jeux",
@@ -56,6 +56,10 @@
   ],
   "football": {
     "competitions": ["FL1", "CL", "PL", "PD"],
-    "favouriteTeams": ["Olympique Lyonnais", "Real Madrid CF"]
+    "favouriteTeams": ["Olympique Lyonnais", "Real Madrid CF"],
+    "favouriteTeamIds": [
+      { "id": 523, "name": "Olympique Lyonnais" },
+      { "id": 86, "name": "Real Madrid CF" }
+    ]
   }
 }

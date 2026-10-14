@@ -22,7 +22,7 @@ export type Config = {
     wordsPerMinute: number;
   };
   rubriques: Rubrique[];
-  football: { competitions: string[]; favouriteTeams: string[] };
+  football: { competitions: string[]; favouriteTeams: string[]; favouriteTeamIds?: { id: number; name: string }[] };
 };
 
 export function loadConfig(): Config {
