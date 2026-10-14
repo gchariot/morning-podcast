@@ -1,25 +1,29 @@
 import Link from 'next/link';
 import { formatDate, loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { Player } from '@/components/Player';
+import { Icon } from '@/components/Icon';
 
-async function coverUrl(): Promise<string | null> {
+async function coverUrl(): Promise<string> {
   try {
     const base = process.env.PUBLIC_BASE_URL!.replace(/\/$/, '');
     const xml = await (await fetch(`${base}/${process.env.FEED_SECRET}/feed.xml`, { cache: 'no-store' })).text();
-    return xml.match(/<itunes:image href="([^"]+)"/)?.[1] ?? null;
+    return xml.match(/<itunes:image href="([^"]+)"/)?.[1] ?? '/cover.jpg';
   } catch {
-    return null;
+    return '/cover.jpg';
   }
 }
+
+const minutes = (s: number) => `${Math.round(s / 60)} min`;
+const host = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } };
 
 export default async function EcouterPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const { date } = await searchParams;
   let episodes: Awaited<ReturnType<typeof loadEpisodes>> = [];
-  let error: string | null = null;
+  let error = false;
   try {
     episodes = await loadEpisodes();
-  } catch (e) {
-    error = e instanceof Error ? e.message : String(e);
+  } catch {
+    error = true;
   }
   const cover = await coverUrl();
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
@@ -27,52 +31,74 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
 
   if (!episode) {
     return (
-      <div className="stack">
-        <p className="kicker">Écouter</p>
-        <h1>Pas encore d&apos;épisode</h1>
-        <p className="muted">{error ?? 'Le premier épisode arrivera demain matin vers 6 h.'}</p>
+      <div className="page-head">
+        <h1>{error ? 'Épisodes injoignables' : 'Pas encore d’épisode'}</h1>
+        <p>
+          {error
+            ? 'La liste des épisodes n’a pas pu être lue sur le stockage. Réessaie dans un instant ; si ça dure, vérifie PUBLIC_BASE_URL et FEED_SECRET.'
+            : 'Le prochain épisode est rédigé à 5 h 37 et arrive vers 6 h. En attendant, tu peux régler tes thèmes.'}
+        </p>
+        {!error && <Link className="btn primary" href="/themes" style={{ marginTop: 16 }}>Régler mes thèmes</Link>}
       </div>
     );
   }
 
+  const others = episodes.filter(e => e.date !== episode.date).slice(0, 10);
+
   return (
-    <div className="stack">
-      <div className="row" style={{ gap: 16, alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-        {cover && <img className="cover" src={cover} alt="" width={112} height={112} />}
+    <>
+      <div className="now">
+        <img className="cover" src={cover} alt="" width={104} height={104} />
         <div>
-          <p className="kicker">{isToday ? "L'épisode du jour" : formatDate(episode.date)}</p>
-          <h1 style={{ fontSize: 22 }}>{episode.title}</h1>
-          <p className="muted small">{Math.round(episode.seconds / 60)} min · {formatDate(episode.date)}</p>
+          <p className="date">{isToday ? 'Aujourd’hui' : formatDate(episode.date)}</p>
+          <h1>{episode.title}</h1>
+          <p className="meta"><span className="num">{minutes(episode.seconds)}</span>{episode.chapters?.length ? ` · ${episode.chapters.length} chapitres` : ''}</p>
         </div>
       </div>
 
-      <div className="card">
-        <Player src={episode.url} title={episode.title} chapters={episode.chapters ?? []} storageKey={`matinale_pos_${episode.date}`} />
-      </div>
+      <Player
+        src={episode.url} title={episode.title} chapters={episode.chapters ?? []}
+        storageKey={`matinale_pos_${episode.date}`} fallbackSeconds={episode.seconds}
+      />
 
-      <p>{episode.summary}</p>
-      <Link className="btn primary" href="/avis" style={{ width: '100%' }}>💬 Donner mon avis sur cet épisode</Link>
+      {episode.summary && <p className="summary">{episode.summary}</p>}
+      <Link className="btn primary block cta" href="/avis">
+        <Icon name="message" size={18} /> Donner mon avis pour demain
+      </Link>
 
       {episode.sources.length > 0 && (
-        <details className="card">
-          <summary><strong>Sources ({episode.sources.length})</strong></summary>
-          <ul className="small" style={{ paddingLeft: 18, marginTop: 12 }}>
-            {episode.sources.map(s => <li key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title}</a></li>)}
-          </ul>
-        </details>
-      )}
-
-      {episodes.length > 1 && (
-        <section className="stack" style={{ marginTop: 24 }}>
-          <h2>Épisodes précédents</h2>
-          {episodes.filter(e => e.date !== episode.date).slice(0, 10).map(e => (
-            <Link key={e.date} href={`/?date=${e.date}`} className="card" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-              <span className="muted small">{formatDate(e.date)} · {Math.round(e.seconds / 60)} min</span>
-              <div>{e.title}</div>
-            </Link>
-          ))}
+        <section className="section">
+          <details className="group">
+            <summary className="item">
+              <span className="grow"><strong style={{ display: 'block' }}>Sources</strong><span className="meta">{episode.sources.length} {episode.sources.length > 1 ? 'articles cités' : 'article cité'} dans l&apos;épisode</span></span>
+              <Icon name="chevron-right" className="chev" />
+            </summary>
+            {episode.sources.map(s => (
+              <a key={s.url} className="item" href={s.url} target="_blank" rel="noreferrer">
+                <span className="grow"><span style={{ display: 'block' }}>{s.title}</span><span className="meta">{host(s.url)}</span></span>
+                <Icon name="external" size={16} className="chev" />
+              </a>
+            ))}
+          </details>
         </section>
       )}
-    </div>
+
+      {others.length > 0 && (
+        <section className="section">
+          <h2>Épisodes précédents</h2>
+          <div className="group" style={{ marginTop: 12 }}>
+            {others.map(e => (
+              <Link key={e.date} href={`/?date=${e.date}`} className="item">
+                <span className="grow">
+                  <span className="meta">{formatDate(e.date)} · <span className="num">{minutes(e.seconds)}</span></span>
+                  <span style={{ display: 'block', fontWeight: 500 }}>{e.title}</span>
+                </span>
+                <Icon name="chevron-right" className="chev" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
   );
 }

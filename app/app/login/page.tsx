@@ -13,17 +13,17 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   if (await isLoggedIn()) redirect('/');
   const { erreur } = await searchParams;
   return (
-    <main className="wrap" style={{ maxWidth: 420, paddingTop: '18vh' }}>
-      <p className="kicker">Chaque matin · 20 min</p>
+    <main className="login">
+      <img className="mark" src="/cover.jpg" alt="" width={72} height={72} />
       <h1>La Matinale</h1>
-      <p className="muted">Ton podcast, tes thèmes, tes retours.</p>
-      <form action={login} className="stack" style={{ marginTop: 24 }}>
-        <div>
+      <p>L&apos;émission du matin, réglée par ceux qui l&apos;écoutent.</p>
+      <form action={login}>
+        <div className="field">
           <label htmlFor="password">Mot de passe</label>
           <input id="password" name="password" type="password" autoComplete="current-password" required autoFocus />
         </div>
-        {erreur && <p className="flash err">Mot de passe incorrect.</p>}
-        <button className="btn primary" type="submit" style={{ width: '100%' }}>Entrer</button>
+        {erreur && <div className="flash err" role="alert" style={{ marginTop: 12 }}><p>Mot de passe incorrect. Réessaie.</p></div>}
+        <button className="btn primary block" type="submit" style={{ marginTop: 16 }}>Se connecter</button>
       </form>
     </main>
   );

@@ -1,31 +1,36 @@
 import { loadConfig, type Rubrique } from '@/lib/config';
 import { Flash, type FlashParams } from '@/components/Flash';
+import { Icon } from '@/components/Icon';
 import { addRubrique, deleteRubrique, moveRubrique, toggleRubrique, updateRubrique } from '../actions';
 
 function RubriqueFields({ r }: { r?: Rubrique }) {
   const key = r?.id ?? 'new';
   return (
-    <div className="stack">
-      <div>
+    <>
+      <div className="field">
         <label htmlFor={`title_${key}`}>Nom du thème</label>
         <input id={`title_${key}`} name="title" type="text" defaultValue={r?.title} required placeholder="Ex. : Formule 1" />
       </div>
-      <div>
-        <label htmlFor={`minutes_${key}`}>Durée (minutes)</label>
-        <input id={`minutes_${key}`} name="minutes" type="number" min={0.5} max={10} step={0.5} defaultValue={r?.minutes ?? 3} required />
+      <div className="field">
+        <label htmlFor={`minutes_${key}`}>Durée</label>
+        <div className="row">
+          <input id={`minutes_${key}`} name="minutes" type="number" min={0.5} max={10} step={0.5} defaultValue={r?.minutes ?? 3} required />
+          <span className="muted">minutes</span>
+        </div>
       </div>
-      <div>
+      <div className="field">
         <label htmlFor={`brief_${key}`}>Consigne pour la rédaction</label>
         <textarea
           id={`brief_${key}`} name="brief" defaultValue={r?.brief} required minLength={10}
           placeholder="Ce qui t'intéresse, ce qu'il faut éviter, ce qui passe en premier…"
         />
       </div>
-      <div>
-        <label htmlFor={`domains_${key}`}>Sites de référence (un par ligne ou séparés par des virgules)</label>
-        <textarea id={`domains_${key}`} name="domains" defaultValue={r?.domains.join('\n')} placeholder={'lequipe.fr\nformula1.com'} style={{ minHeight: 70 }} />
+      <div className="field">
+        <label htmlFor={`domains_${key}`}>Sites de référence</label>
+        <textarea id={`domains_${key}`} name="domains" defaultValue={r?.domains.join('\n')} placeholder={'lequipe.fr\nformula1.com'} style={{ minHeight: 72 }} />
+        <p className="field-hint">Un par ligne. La rédaction les privilégie sans s&apos;y limiter.</p>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -34,80 +39,93 @@ export default async function ThemesPage({ searchParams }: { searchParams: Flash
   const active = config.rubriques.filter(r => r.enabled !== false);
   const total = active.reduce((s, r) => s + r.minutes, 0);
   const target = config.show.targetMinutes;
+  const over = total > target * 1.15;
+  const last = config.rubriques.length - 1;
 
   return (
-    <div className="stack">
-      <p className="kicker">Mes thèmes</p>
-      <h1>Ce que tu veux entendre</h1>
+    <>
+      <header className="page-head">
+        <h1>Thèmes</h1>
+        <p>Dans l&apos;ordre de l&apos;épisode. Une modification vaut dès l&apos;édition de demain.</p>
+      </header>
       <Flash ok={ok} err={err} />
 
-      <div className="card">
+      <div className="group pad">
         <div className="spread small">
-          <span>Durée des thèmes actifs</span>
-          <strong>{total.toFixed(1)} / {target} min</strong>
+          <span className="muted">{active.length} thèmes actifs</span>
+          <strong className="num">{total.toLocaleString('fr-FR', { maximumFractionDigits: 1 })} / {target} min</strong>
         </div>
-        <div className="bar" style={{ marginTop: 8 }} aria-hidden>
-          <i style={{ width: `${Math.min(100, (total / target) * 100)}%` }} />
-        </div>
-        {total > target * 1.15 && <p className="small" style={{ marginTop: 8, color: 'var(--sun)' }}>Plus long que la durée visée : la rédaction raccourcira chaque thème au prorata.</p>}
+        <div className={`meter${over ? ' over' : ''}`} aria-hidden><i style={{ width: `${Math.min(100, (total / target) * 100)}%` }} /></div>
+        {over && <p className="small" style={{ marginTop: 8, color: 'var(--bad)' }}>Plus long que la durée visée : chaque thème sera raccourci au prorata.</p>}
       </div>
 
-      {config.rubriques.map((r, i) => (
-        <details key={r.id} className="card">
-          <summary>
-            <div className="spread">
-              <div>
-                <strong>{r.title}</strong>{' '}
-                {r.enabled === false ? <span className="pill off">en pause</span> : <span className="pill">{r.minutes} min</span>}
-                <p className="muted small" style={{ margin: '4px 0 0' }}>{r.brief.slice(0, 90)}{r.brief.length > 90 ? '…' : ''}</p>
+      <div className="group" style={{ marginTop: 16 }}>
+        {config.rubriques.map((r, i) => (
+          <details key={r.id}>
+            <summary className="item">
+              <span className="grow" style={{ opacity: r.enabled === false ? 0.55 : 1 }}>
+                <span className="row" style={{ gap: 8 }}>
+                  <strong>{r.title}</strong>
+                  {r.enabled === false ? <span className="badge off">En pause</span> : <span className="badge num">{r.minutes} min</span>}
+                </span>
+                <span className="meta" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{r.brief}</span>
+              </span>
+              <Icon name="chevron-right" className="chev" />
+            </summary>
+
+            <div className="pad" style={{ background: 'var(--surface)' }}>
+              <form action={updateRubrique}>
+                <input type="hidden" name="id" value={r.id} />
+                <RubriqueFields r={r} />
+                <button className="btn primary block" type="submit" style={{ marginTop: 16 }}>Enregistrer</button>
+              </form>
+
+              <div className="spread" style={{ marginTop: 16 }}>
+                <form action={toggleRubrique}>
+                  <input type="hidden" name="id" value={r.id} />
+                  <button className="btn small" type="submit">{r.enabled === false ? 'Réactiver' : 'Mettre en pause'}</button>
+                </form>
+                <div className="row" style={{ gap: 4 }}>
+                  <span className="small muted" style={{ marginRight: 4 }}>Ordre</span>
+                  <form action={moveRubrique}>
+                    <input type="hidden" name="id" value={r.id} />
+                    <input type="hidden" name="dir" value="up" />
+                    <button className="btn icon" type="submit" disabled={i === 0} aria-label={`Monter ${r.title}`}><Icon name="chevron-up" size={18} /></button>
+                  </form>
+                  <form action={moveRubrique}>
+                    <input type="hidden" name="id" value={r.id} />
+                    <input type="hidden" name="dir" value="down" />
+                    <button className="btn icon" type="submit" disabled={i === last} aria-label={`Descendre ${r.title}`}><Icon name="chevron-down" size={18} /></button>
+                  </form>
+                </div>
               </div>
-              <span className="muted" aria-hidden>✎</span>
+
+              <form action={deleteRubrique} className="spread" style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
+                <input type="hidden" name="id" value={r.id} />
+                <label className="row" style={{ margin: 0, gap: 8, color: 'var(--ink-2)', flexWrap: 'nowrap' }}>
+                  <input type="checkbox" name="confirm" value="oui" required /> Confirmer
+                </label>
+                <button className="btn small danger" type="submit"><Icon name="trash" size={16} /> Supprimer</button>
+              </form>
             </div>
+          </details>
+        ))}
+      </div>
+
+      <section className="section">
+        <details className="group">
+          <summary className="item" style={{ color: 'var(--accent)' }}>
+            <Icon name="plus" />
+            <strong className="grow">Nouveau thème</strong>
+            <Icon name="chevron-right" className="chev" />
           </summary>
-
-          <div className="stack" style={{ marginTop: 16 }}>
-            <form action={updateRubrique} className="stack">
-              <input type="hidden" name="id" value={r.id} />
-              <RubriqueFields r={r} />
-              <button className="btn primary" type="submit">Enregistrer</button>
-            </form>
-
-            <div className="row">
-              <form action={toggleRubrique}>
-                <input type="hidden" name="id" value={r.id} />
-                <button className="btn small" type="submit">{r.enabled === false ? '▶ Réactiver' : '⏸ Mettre en pause'}</button>
-              </form>
-              <form action={moveRubrique}>
-                <input type="hidden" name="id" value={r.id} />
-                <input type="hidden" name="dir" value="up" />
-                <button className="btn small" type="submit" disabled={i === 0} aria-label="Monter">↑</button>
-              </form>
-              <form action={moveRubrique}>
-                <input type="hidden" name="id" value={r.id} />
-                <input type="hidden" name="dir" value="down" />
-                <button className="btn small" type="submit" disabled={i === config.rubriques.length - 1} aria-label="Descendre">↓</button>
-              </form>
-            </div>
-
-            <form action={deleteRubrique} className="row">
-              <input type="hidden" name="id" value={r.id} />
-              <label className="row" style={{ margin: 0, gap: 6 }}>
-                <input type="checkbox" name="confirm" value="oui" /> je confirme
-              </label>
-              <button className="btn small danger" type="submit">Supprimer ce thème</button>
-            </form>
-          </div>
+          <form action={addRubrique} className="pad">
+            <RubriqueFields />
+            <p className="field-hint" style={{ marginTop: 16 }}>Il sera placé juste avant la culture générale, qui clôt l&apos;épisode. Tu pourras le déplacer ensuite.</p>
+            <button className="btn primary block" type="submit" style={{ marginTop: 12 }}>Créer le thème</button>
+          </form>
         </details>
-      ))}
-
-      <details className="card" style={{ borderStyle: 'dashed' }}>
-        <summary><strong>＋ Ajouter un thème</strong></summary>
-        <form action={addRubrique} className="stack" style={{ marginTop: 16 }}>
-          <RubriqueFields />
-          <p className="muted small">Il sera placé avant la culture générale, qui clôt l&apos;épisode. Tu pourras le déplacer ensuite.</p>
-          <button className="btn primary" type="submit">Créer le thème</button>
-        </form>
-      </details>
-    </div>
+      </section>
+    </>
   );
 }

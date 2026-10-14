@@ -2,7 +2,15 @@ import { loadConfig } from '@/lib/config';
 import { loadRetours } from '@/lib/retours';
 import { formatDate, loadEpisodes } from '@/lib/episodes';
 import { Flash, type FlashParams } from '@/components/Flash';
+import { Icon } from '@/components/Icon';
 import { addPermanentRule, removePermanentRule, sendFeedback } from '../actions';
+
+// « 2026-10-14 : [Football] 👎 trop long (épisode du 2026-10-14) » → « 14/10 · Football 👎 trop long »
+function prettyRetour(line: string) {
+  const m = line.replace(/^-\s*/, '').match(/^(\d{4})-(\d{2})-(\d{2})\s*:\s*(.*?)\s*(\(épisode du [^)]*\))?$/);
+  if (!m) return line;
+  return <><span className="num muted">{m[3]}/{m[2]}</span>{' · '}{m[4].replace(/^\[([^\]]+)\]/, '$1')}</>;
+}
 
 export default async function AvisPage({ searchParams }: { searchParams: FlashParams }) {
   const [{ ok, err }, { config }, retours, episodes] = await Promise.all([
@@ -15,66 +23,81 @@ export default async function AvisPage({ searchParams }: { searchParams: FlashPa
   const active = config.rubriques.filter(r => r.enabled !== false);
 
   return (
-    <div className="stack">
-      <p className="kicker">Mon avis</p>
-      <h1>Qu&apos;as-tu pensé de l&apos;épisode ?</h1>
-      <p className="muted small">
-        {last ? <>Épisode du {formatDate(last.date)} : « {last.title} ». </> : null}
-        Tes retours sont lus demain matin par la rédaction.
-      </p>
+    <>
+      <header className="page-head">
+        <h1>Mon avis</h1>
+        <p>
+          {last ? <>Sur l&apos;épisode du {formatDate(last.date)}. </> : null}
+          La rédaction lit tes retours à 5 h 37 : ils changent l&apos;épisode de demain.
+        </p>
+      </header>
       <Flash ok={ok} err={err} />
 
-      <form action={sendFeedback} className="stack">
+      <form action={sendFeedback}>
         <input type="hidden" name="episode" value={last?.date ?? ''} />
-        {active.map(r => (
-          <fieldset key={r.id} className="card" style={{ margin: 0 }}>
-            <div className="spread">
-              <legend style={{ fontWeight: 600, padding: 0 }}>{r.title}</legend>
-              <span className="vote" role="radiogroup" aria-label={`Avis sur ${r.title}`}>
-                <input type="radio" id={`up_${r.id}`} name={`vote_${r.id}`} value="up" />
-                <label htmlFor={`up_${r.id}`} title="J'ai aimé">👍</label>
-                <input type="radio" id={`down_${r.id}`} name={`vote_${r.id}`} value="down" />
-                <label htmlFor={`down_${r.id}`} title="Pas convaincu">👎</label>
-              </span>
-            </div>
-            <input
-              type="text" name={`note_${r.id}`} aria-label={`Commentaire sur ${r.title}`}
-              placeholder="Un mot ? (trop long, plus de mercato, sujet raté…)" style={{ marginTop: 10 }}
-            />
-          </fieldset>
-        ))}
-        <div>
-          <label htmlFor="general">Sur l&apos;ensemble (ton, voix, durée, ordre…)</label>
-          <textarea id="general" name="general" placeholder="Ex. : Hugo parle trop vite, j'aimerais finir par le foot." />
+        <div className="group">
+          {active.map(r => (
+            <fieldset key={r.id} className="pad">
+              <div className="spread">
+                <legend className="sr">{r.title}</legend>
+                <span aria-hidden style={{ fontWeight: 600 }}>{r.title}</span>
+                <span className="vote" role="radiogroup" aria-label={`Avis sur ${r.title}`}>
+                  <input type="radio" id={`up_${r.id}`} name={`vote_${r.id}`} value="up" />
+                  <label htmlFor={`up_${r.id}`} title="J'ai aimé"><Icon name="up" size={18} /><span className="sr">J&apos;ai aimé</span></label>
+                  <input type="radio" id={`down_${r.id}`} name={`vote_${r.id}`} value="down" />
+                  <label htmlFor={`down_${r.id}`} title="Pas convaincu"><Icon name="down" size={18} /><span className="sr">Pas convaincu</span></label>
+                </span>
+              </div>
+              <input
+                type="text" name={`note_${r.id}`} aria-label={`Commentaire sur ${r.title}`}
+                placeholder="Un mot ? Trop long, sujet raté…" style={{ marginTop: 10 }}
+              />
+            </fieldset>
+          ))}
         </div>
-        <button className="btn primary" type="submit" style={{ width: '100%' }}>Envoyer mes retours</button>
+
+        <div className="field" style={{ marginTop: 20 }}>
+          <label htmlFor="general">Sur l&apos;ensemble</label>
+          <textarea id="general" name="general" placeholder="Ton, voix, durée, ordre… Ex. : Hugo parle trop vite, finir par le foot." />
+        </div>
+        <button className="btn primary block" type="submit" style={{ marginTop: 16 }}>Envoyer pour demain</button>
+        <p className="field-hint" style={{ textAlign: 'center' }}>Rien n&apos;est obligatoire : un seul pouce suffit.</p>
       </form>
 
-      <section className="card stack" style={{ marginTop: 28 }}>
+      <section className="section">
         <h2>Consignes permanentes</h2>
-        <p className="muted small">Elles s&apos;appliquent à tous les épisodes, jusqu&apos;à ce que tu les retires.</p>
-        {retours.permanent.length === 0 && <p className="muted small">Aucune pour l&apos;instant.</p>}
-        {retours.permanent.map((rule, i) => (
-          <form key={`${i}-${rule}`} action={removePermanentRule} className="spread">
-            <span>{rule}</span>
-            <input type="hidden" name="index" value={i} />
-            <button className="btn small danger" type="submit" aria-label={`Retirer : ${rule}`}>Retirer</button>
+        <p className="hint">Appliquées à chaque épisode, jusqu&apos;à ce que tu les retires.</p>
+        <div className="group">
+          {retours.permanent.length === 0 && (
+            <p className="item muted small">Aucune consigne. Ajoute par exemple « Politique monde : 2 sujets maximum ».</p>
+          )}
+          {retours.permanent.map((rule, i) => (
+            <form key={`${i}-${rule}`} action={removePermanentRule} className="item">
+              <span className="grow">{rule}</span>
+              <input type="hidden" name="index" value={i} />
+              <button className="btn icon danger" type="submit" aria-label={`Retirer : ${rule}`} title="Retirer">
+                <Icon name="x" size={18} />
+              </button>
+            </form>
+          ))}
+          <form action={addPermanentRule} className="item">
+            <input type="text" name="rule" placeholder="Nouvelle consigne…" aria-label="Nouvelle consigne permanente" required />
+            <button className="btn small ghost" type="submit">Ajouter</button>
           </form>
-        ))}
-        <form action={addPermanentRule} className="row" style={{ flexWrap: 'nowrap' }}>
-          <input type="text" name="rule" placeholder="Ex. : 2 sujets maximum en politique monde" aria-label="Nouvelle consigne permanente" required />
-          <button className="btn small" type="submit">Ajouter</button>
-        </form>
+        </div>
       </section>
 
       {retours.recent.length > 0 && (
-        <section className="stack" style={{ marginTop: 28 }}>
-          <h2>Derniers retours envoyés</h2>
-          <ul className="muted small" style={{ paddingLeft: 18, margin: 0 }}>
-            {retours.recent.slice(0, 8).map((line, i) => <li key={i}>{line}</li>)}
+        <section className="section">
+          <h2>Derniers retours</h2>
+          <p className="hint">Pris en compte pendant 14 jours.</p>
+          <ul className="group" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            {retours.recent.slice(0, 8).map((line, i) => (
+              <li key={i} className="item small">{prettyRetour(line)}</li>
+            ))}
           </ul>
         </section>
       )}
-    </div>
+    </>
   );
 }
