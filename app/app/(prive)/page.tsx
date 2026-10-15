@@ -64,7 +64,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
         <p className="sky-meta">
           {edition ? <><span className="edition"><span className="thin">N°</span> <b className="num">{edition}</b></span> · </> : null}
           {isToday ? `aujourd’hui, ${formatDate(episode.date)}` : formatDate(episode.date)}
-          {' · '}<span className="num">{minutes(episode.seconds)}</span>
+          <span className="nowrap">{' · '}<span className="num">{minutes(episode.seconds)}</span></span>
         </p>
       </SkyBand>
 

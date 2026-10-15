@@ -83,7 +83,8 @@ export function untilWriting(minutes: number): string {
   const target = 5 * 60 + 37;
   const left = (target - minutes + 1440) % 1440 || 1440;
   const h = Math.floor(left / 60), m = left % 60;
-  return h ? `dans ${h} h ${String(m).padStart(2, '0')}` : `dans ${m} min`;
+  // Espaces insécables : « 8 h 07 » ne se coupe jamais en fin de ligne.
+  return h ? `dans ${h}\u00a0h\u00a0${String(m).padStart(2, '0')}` : `dans ${m}\u00a0min`;
 }
 
 /** Numéro d'édition : N° 1 = premier épisode, une édition par jour. */

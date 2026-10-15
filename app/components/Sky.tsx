@@ -28,7 +28,7 @@ export function SkyBand({ minutes: initial, tall = false, children }: {
   const vars = {
     '--sky-top': s.top, '--sky-mid': s.mid, '--sky-horizon': s.horizon,
     '--rise': rise.toFixed(3), '--stars': s.stars.toFixed(2),
-    '--glints': (s.sun < 1 ? 0.9 : Math.max(0, 0.9 - (s.sun - 1) * 30)).toFixed(2),
+    '--glints': s.sun < 1 ? '0.9' : '0', // pas de reflets sans soleil
   } as React.CSSProperties;
   return (
     <header className={`sky${tall ? ' tall' : ''}`} style={vars}>

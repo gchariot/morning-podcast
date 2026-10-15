@@ -517,7 +517,11 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .edition .thin { font-weight: 300; }
 .edition b { font-weight: 800; }
 .sky .btn.primary { margin-top: 16px; background: var(--sun-gold); color: #1b1206; }
-.sky-stars { position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none; transition: opacity 1s linear; }
+.sky-stars {
+  position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none; transition: opacity 1s linear;
+  /* Les étoiles restent dans la partie libre du ciel, jamais sur le texte (elles liraient comme des accents). */
+  -webkit-mask-image: linear-gradient(to right, transparent 0 66%, #000 82%); mask-image: linear-gradient(to right, transparent 0 66%, #000 82%);
+}
 /* Le soleil monte de la mer selon l'heure réelle de Genève ; couché, il passe sous l'eau. */
 .sky-sun {
   position: absolute; z-index: 1; right: 22px; width: 56px; height: 56px; border-radius: 50%;
