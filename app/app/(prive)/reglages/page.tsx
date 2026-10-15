@@ -1,3 +1,4 @@
+import { passwordEnabled } from '@/lib/auth';
 import { loadConfig } from '@/lib/config';
 import { Flash, type FlashParams } from '@/components/Flash';
 import { Icon } from '@/components/Icon';
@@ -97,11 +98,11 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
         </div>
       </section>
 
-      <form action={logout} className="section">
+      {passwordEnabled() && <form action={logout} className="section">
         <div className="group">
           <button className="item btn danger block" type="submit" style={{ borderRadius: 0, justifyContent: 'flex-start', fontWeight: 500 }}>Se déconnecter</button>
         </div>
-      </form>
+      </form>}
     </>
   );
 }

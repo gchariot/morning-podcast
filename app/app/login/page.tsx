@@ -1,13 +1,16 @@
 import { redirect } from 'next/navigation';
-import { checkPassword, isLoggedIn, openSession } from '@/lib/auth';
+import { checkPassword, isLoggedIn, openSession, passwordEnabled } from '@/lib/auth';
 
 async function login(formData: FormData) {
   'use server';
+  if (!passwordEnabled()) redirect('/');
   const password = String(formData.get('password') ?? '');
   if (!checkPassword(password)) redirect('/login?erreur=1');
   await openSession();
   redirect('/');
 }
+
+export const dynamic = 'force-dynamic';
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ erreur?: string }> }) {
   if (await isLoggedIn()) redirect('/');

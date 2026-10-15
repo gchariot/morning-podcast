@@ -21,8 +21,8 @@ Chaque modification est un commit sur `main`, validé avant écriture (relecture
 
 | Variable | Valeur |
 |---|---|
-| `APP_PASSWORD` | Ton mot de passe de connexion |
-| `APP_SECRET` | Chaîne aléatoire (≥ 16 caractères) qui signe le cookie de session |
+| `APP_PASSWORD` | *Facultatif.* Mot de passe de connexion. Sans lui, l'appli est ouverte à quiconque a l'adresse |
+| `APP_SECRET` | Chaîne aléatoire (≥ 16 caractères) qui signe le cookie de session ; utile seulement avec `APP_PASSWORD` |
 | `GITHUB_TOKEN` | Jeton GitHub *fine-grained* : dépôt `morning-podcast` uniquement, permission **Contents : Read and write** |
 | `GITHUB_REPO` | `gchariot/morning-podcast` |
 | `GITHUB_BRANCH` | `main` |

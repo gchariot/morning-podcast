@@ -40,7 +40,13 @@ export async function closeSession() {
   (await cookies()).delete(COOKIE);
 }
 
+/** Mot de passe facultatif : sans APP_PASSWORD, l'appli est ouverte (usage personnel). */
+export function passwordEnabled(): boolean {
+  return Boolean(process.env.APP_PASSWORD);
+}
+
 export async function isLoggedIn(): Promise<boolean> {
+  if (!passwordEnabled()) return true;
   const raw = (await cookies()).get(COOKIE)?.value;
   if (!raw) return false;
   const i = raw.lastIndexOf('.');

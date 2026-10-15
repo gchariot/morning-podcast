@@ -41,7 +41,7 @@ A podcast nobody else receives, written each night for its listeners from their 
 
 ## Capabilities and Constraints
 
-- Next.js App Router with server actions, deployed on Vercel. The app is private behind a password with a signed cookie.
+- Next.js App Router with server actions, deployed on Vercel. The password (signed cookie) is optional: without `APP_PASSWORD` the app is open to anyone with the URL.
 - Screens:
   - Écouter
   - Mon avis: per-theme 👍/👎, a general note and permanent rules.

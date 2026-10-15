@@ -4,7 +4,7 @@ import { z, ZodError } from 'zod';
 import { revalidatePath, updateTag } from 'next/cache';
 import { REPO_TAG } from '@/lib/github';
 import { closeSession, requireLogin } from '@/lib/auth';
-import { loadConfig, parseDomains, saveConfig, slugify, type Rubrique } from '@/lib/config';
+import { loadConfig, parseDomains, Rubrique, saveConfig, slugify } from '@/lib/config';
 import { addRecent, loadRetours, removeRecent, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
@@ -112,83 +112,110 @@ export async function removePermanentRule(formData: FormData) {
   });
 }
 
-/* ---------- Thèmes ---------- */
+/* ---------- Thèmes ----------
+   Chaque action renvoie un résultat (pas de redirection) : la page reste en place,
+   ce qui est en cours de saisie n'est jamais perdu, et la liste renvoyée resynchronise l'écran. */
 
-function rubriqueFromForm(formData: FormData, id: string, previous?: Rubrique): Rubrique {
-  return {
-    id,
-    title: str(formData, 'title'),
-    minutes: num(formData, 'minutes'),
-    brief: str(formData, 'brief'),
-    domains: parseDomains(str(formData, 'domains')),
-    enabled: previous?.enabled ?? true,
-  };
+export type ThemeResult = { ok: boolean; message: string; rubriques?: Rubrique[] };
+
+const ThemeInput = z.object({
+  id: z.string().optional(),
+  title: z.string(),
+  minutes: z.number(),
+  brief: z.string(),
+  domains: z.array(z.string()).default([]),
+});
+
+/** La météo clôt toujours l'épisode. */
+function meteoLast(list: Rubrique[]): Rubrique[] {
+  const i = list.findIndex(r => r.id === 'meteo');
+  return i < 0 || i === list.length - 1 ? list : [...list.slice(0, i), ...list.slice(i + 1), list[i]];
 }
 
-export async function updateRubrique(formData: FormData) {
-  return run('/themes', async () => {
-    const id = str(formData, 'id');
+async function themeOp(fn: (config: Awaited<ReturnType<typeof loadConfig>>['config']) => { commit: string; message: string }): Promise<ThemeResult> {
+  await requireLogin();
+  try {
     const { config, sha } = await loadConfig(true);
-    const i = config.rubriques.findIndex(r => r.id === id);
-    if (i < 0) throw new Error('Thème introuvable.');
-    config.rubriques[i] = rubriqueFromForm(formData, id, config.rubriques[i]);
-    await saveConfig(config, sha, `thèmes: « ${config.rubriques[i].title} » modifié (app)`);
-    return `« ${config.rubriques[i].title} » enregistré.`;
-  });
+    const { commit, message } = fn(config);
+    config.rubriques = meteoLast(config.rubriques);
+    await saveConfig(config, sha, commit);
+    updateTag(REPO_TAG);
+    revalidatePath('/themes');
+    revalidatePath('/avis');
+    return { ok: true, message, rubriques: config.rubriques };
+  } catch (err) {
+    const msg = err instanceof ZodError ? humanize(err) : err instanceof Error ? err.message : String(err);
+    return { ok: false, message: msg.slice(0, 300) };
+  }
 }
 
-export async function addRubrique(formData: FormData) {
-  return run('/themes', async () => {
-    const { config, sha } = await loadConfig(true);
-    const title = str(formData, 'title');
-    let id = slugify(title);
+/** Crée (sans id) ou modifie un thème. */
+export async function saveTheme(raw: z.input<typeof ThemeInput>): Promise<ThemeResult> {
+  return themeOp(config => {
+    const input = ThemeInput.parse(raw);
+    const fields = {
+      title: input.title.trim(),
+      minutes: input.minutes,
+      brief: input.brief.trim(),
+      domains: parseDomains(input.domains.join(' ')),
+    };
+    if (input.id) {
+      const i = config.rubriques.findIndex(r => r.id === input.id);
+      if (i < 0) throw new Error('Ce thème n’existe plus : recharge la page.');
+      config.rubriques[i] = Rubrique.parse({ ...config.rubriques[i], ...fields });
+      return { commit: `thèmes: « ${fields.title} » modifié (app)`, message: 'Enregistré : effet dès l’épisode de demain.' };
+    }
+    let id = slugify(fields.title);
     while (config.rubriques.some(r => r.id === id)) id = `${id.slice(0, 27)}-${Math.floor(Math.random() * 90 + 10)}`;
-    const rubrique = rubriqueFromForm(formData, id);
-    // Insérée juste avant la culture générale, qui clôt l'épisode avec le quiz.
-    const culture = config.rubriques.findIndex(r => r.id === 'culture');
-    config.rubriques.splice(culture >= 0 ? culture : config.rubriques.length, 0, rubrique);
-    await saveConfig(config, sha, `thèmes: nouveau thème « ${rubrique.title} » (app)`);
-    return `Nouveau thème « ${rubrique.title} » ajouté : il sera dans l'épisode de demain.`;
+    config.rubriques.push(Rubrique.parse({ id, ...fields, enabled: true }));
+    return { commit: `thèmes: nouveau thème « ${fields.title} » (app)`, message: `« ${fields.title} » ajouté : il sera dans l’épisode de demain.` };
   });
 }
 
-export async function toggleRubrique(formData: FormData) {
-  return run('/themes', async () => {
-    const id = str(formData, 'id');
-    const { config, sha } = await loadConfig(true);
+export async function setThemeEnabled(id: string, enabled: boolean): Promise<ThemeResult> {
+  return themeOp(config => {
     const r = config.rubriques.find(x => x.id === id);
-    if (!r) throw new Error('Thème introuvable.');
-    r.enabled = r.enabled === false;
+    if (!r) throw new Error('Ce thème n’existe plus : recharge la page.');
+    r.enabled = enabled;
     if (!config.rubriques.some(x => x.enabled !== false)) throw new Error('Il faut garder au moins un thème actif.');
-    await saveConfig(config, sha, `thèmes: « ${r.title} » ${r.enabled ? 'réactivé' : 'mis en pause'} (app)`);
-    return `« ${r.title} » ${r.enabled ? 'réactivé' : 'mis en pause'}.`;
+    return {
+      commit: `thèmes: « ${r.title} » ${enabled ? 'réactivé' : 'mis en pause'} (app)`,
+      message: enabled ? `« ${r.title} » revient demain.` : `« ${r.title} » en pause à partir de demain.`,
+    };
   });
 }
 
-export async function moveRubrique(formData: FormData) {
-  return run('/themes', async () => {
-    const id = str(formData, 'id');
-    const dir = str(formData, 'dir') === 'up' ? -1 : 1;
-    const { config, sha } = await loadConfig(true);
-    const i = config.rubriques.findIndex(r => r.id === id);
-    const j = i + dir;
-    if (i < 0 || j < 0 || j >= config.rubriques.length) return 'Rien à déplacer.';
-    [config.rubriques[i], config.rubriques[j]] = [config.rubriques[j], config.rubriques[i]];
-    await saveConfig(config, sha, `thèmes: ordre modifié (app)`);
-    return 'Ordre mis à jour.';
-  });
-}
-
-export async function deleteRubrique(formData: FormData) {
-  return run('/themes', async () => {
-    const id = str(formData, 'id');
-    if (str(formData, 'confirm') !== 'oui') throw new Error('Coche la case de confirmation pour supprimer.');
-    const { config, sha } = await loadConfig(true);
+/** Supprime un thème ; le client garde une copie pour pouvoir l'annuler (restoreTheme). */
+export async function deleteTheme(id: string): Promise<ThemeResult> {
+  return themeOp(config => {
     const r = config.rubriques.find(x => x.id === id);
-    if (!r) throw new Error('Thème introuvable.');
+    if (!r) throw new Error('Ce thème n’existe plus : recharge la page.');
+    if (r.id === 'meteo') throw new Error('La météo ne se supprime pas : mets-la en pause si besoin.');
     config.rubriques = config.rubriques.filter(x => x.id !== id);
-    await saveConfig(config, sha, `thèmes: « ${r.title} » supprimé (app)`);
-    return `« ${r.title} » supprimé.`;
+    if (!config.rubriques.some(x => x.enabled !== false)) throw new Error('Il faut garder au moins un thème actif.');
+    return { commit: `thèmes: « ${r.title} » supprimé (app)`, message: `« ${r.title} » supprimé.` };
+  });
+}
+
+/** Annule une suppression : le thème revient à sa place. */
+export async function restoreTheme(raw: Rubrique, index: number): Promise<ThemeResult> {
+  return themeOp(config => {
+    const r = Rubrique.parse(raw);
+    if (config.rubriques.some(x => x.id === r.id)) return { commit: `thèmes: « ${r.title} » déjà présent (app)`, message: `« ${r.title} » est déjà là.` };
+    config.rubriques.splice(Math.max(0, Math.min(index, config.rubriques.length)), 0, r);
+    return { commit: `thèmes: « ${r.title} » rétabli (app)`, message: `« ${r.title} » rétabli.` };
+  });
+}
+
+/** Nouvel ordre complet des thèmes (glisser-déposer). */
+export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
+  return themeOp(config => {
+    const current = config.rubriques.map(r => r.id);
+    if (ids.length !== current.length || [...ids].sort().join() !== [...current].sort().join()) {
+      throw new Error('La liste a changé entre-temps : recharge la page.');
+    }
+    config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
+    return { commit: 'thèmes: ordre modifié (app)', message: 'Ordre enregistré : effet dès demain.' };
   });
 }
 
@@ -212,29 +239,6 @@ export async function updateSettings(formData: FormData) {
     await saveConfig(config, sha, 'réglages: durée et éditions du week-end (app)');
     return 'Réglages enregistrés : effet dès le prochain épisode.';
   });
-}
-
-/** Nouvel ordre complet des thèmes (glisser-déposer). Renvoie un message au lieu de rediriger. */
-export async function reorderRubriques(ids: string[]): Promise<{ ok: boolean; message: string }> {
-  await requireLogin();
-  try {
-    const { config, sha } = await loadConfig(true);
-    const current = config.rubriques.map(r => r.id);
-    if (ids.length !== current.length || [...ids].sort().join() !== [...current].sort().join()) {
-      return { ok: false, message: 'La liste a changé entre-temps : recharge la page.' };
-    }
-    if (ids.join() === current.join()) return { ok: true, message: 'Ordre inchangé.' };
-    config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
-    // La météo clôt toujours l'épisode : elle reste en dernier.
-    const meteo = config.rubriques.findIndex(r => r.id === 'meteo');
-    if (meteo >= 0) config.rubriques.push(...config.rubriques.splice(meteo, 1));
-    await saveConfig(config, sha, 'thèmes: ordre modifié (app)');
-    updateTag(REPO_TAG);
-    revalidatePath('/themes');
-    return { ok: true, message: 'Ordre enregistré.' };
-  } catch (err) {
-    return { ok: false, message: err instanceof Error ? err.message : String(err) };
-  }
 }
 
 /* ---------- Quiz ---------- */

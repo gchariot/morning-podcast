@@ -90,7 +90,7 @@ flowchart LR
 
 ## L'app
 
-Une appli web privée ([`app/`](app/)), protégée par mot de passe, pensée pour le téléphone (thème clair ou sombre automatique) :
+Une appli web privée ([`app/`](app/)), protégée par un mot de passe facultatif, pensée pour le téléphone (thème clair ou sombre automatique) :
 
 | Écran | Ce qu'on y fait |
 |---|---|
