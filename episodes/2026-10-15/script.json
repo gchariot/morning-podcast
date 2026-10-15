@@ -1,0 +1,642 @@
+{
+  "date": "2026-10-15",
+  "title": "Le Real renverse Rome, le PSG fait tomber City, l'OL reçoit Palace",
+  "summary": "Le Real Madrid renverse la Roma en fin de match et le PSG s'impose à Manchester City, avant OL–Crystal Palace ce soir sans Openda. Le budget avance à l'Assemblée sur fond de colère lycéenne, un sondage éclaire les votations du 29 novembre, puis Bruxelles interroge OpenAI et Anthropic, Castlevania et La Diplomate sortent, et l'on raconte les dix jours disparus de 1582.",
+  "segments": [
+    {
+      "rubrique": "ouverture",
+      "titre": "Ouverture",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Bonjour Huxxley, nous sommes le jeudi quinze octobre, et c'est La Matinale ! Au programme : un Real Madrid qui renverse Rome dans les dernières minutes, un PSG qui fait tomber Manchester City, et l'OL qui reçoit Crystal Palace ce soir.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Il y aura aussi la suite du budget, un sondage qui en dit long sur les votations du vingt-neuf novembre, Bruxelles qui interroge OpenAI et Anthropic, le retour de Castlevania et de La Diplomate. Et en culture générale, l'histoire de dix jours qui ont tout simplement disparu du calendrier.",
+          "style": "malicieux"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "rubrique": "foot",
+      "titre": "Football",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "On commence par le foot, et par ton équipe qui joue ce soir : l'OL reçoit Crystal Palace au Groupama Stadium, pour la deuxième journée de Ligue Europa.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Coup d'envoi à dix-huit heures quarante-cinq, et c'est à voir sur Canal Plus Foot, réservé aux abonnés, pas de diffusion en clair. Les deux équipes ont gagné leur premier match de la phase de ligue : l'OL est allé s'imposer à Anderlecht, et Crystal Palace a largement battu le Lech Poznań. Donc c'est un vrai duel pour se placer en haut du tableau.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Crystal Palace, ce n'est pas vraiment un habitué des soirées européennes, si ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Non, c'est justement ce qui rend le club dangereux : les Londoniens découvrent l'Europe avec beaucoup d'appétit, et leur premier match l'a prouvé. Pour l'OL, gagner à domicile ce soir, ce serait faire un grand pas vers le top huit, celui qui qualifie directement pour les huitièmes de finale, sans passer par les barrages."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et l'OL doit faire sans Loïs Openda, blessé à Lens vendredi."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, une fissure du péroné, et selon Lyon Foot il en a jusqu'à la mi-novembre. Paulo Fonseca ne l'a pas caché en conférence de presse : « Nous n'avons pas un autre joueur comme Loïs. » Openda, c'est celui qui attaque la profondeur, qui étire les défenses. Fonseca dit qu'il faut adapter le jeu aux joueurs disponibles."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors qui pour le remplacer ?",
+          "style": "curieuse"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Plusieurs pistes. Pavel Šulc pourrait glisser en pointe, éventuellement dans un quatre-quatre-deux à deux attaquants. Fonseca cite aussi Khalis Merah et Noah Nartey comme faux neuf, et le jeune Rémi Himbert pourrait revenir dans le groupe. Lyon Foot s'attend à quelques ajustements ce soir, puis à un onze plus largement renouvelé contre Nice ce week-end. Petit détail rassurant : Fonseca assure que Šulc, fatigué à Lens après la trêve, va bien. Il l'a même dit deux fois : « Il est bien. Il est bien. »",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Passons au Real Madrid, parce qu'hier soir à Rome, c'était un film.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Un vrai scénario. José Mourinho revenait au Stadio Olimpico pour la première fois en adversaire : il a entraîné la Roma de deux mille vingt et un à deux mille vingt-quatre, et les supporters romains avaient sorti des banderoles en son honneur. Sur le terrain, la Roma a fait mal : Marten de Roon d'une frappe de loin, puis Donyell Malen, auteur d'un doublé. Kylian Mbappé avait égalisé un moment d'une frappe flottante, mais à vingt minutes de la fin, Rome menait encore."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le Real a tout renversé ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Entre la quatre-vingt-troisième et la quatre-vingt-dixième minute, sur coups de pied arrêtés : Carlos Espi, Endrick, puis Antonio Rüdiger. Victoire madrilène, la deuxième en deux matchs de Ligue des champions. Et Mourinho a eu une phrase bien à lui après le match : « Les seuls qui étaient morts, ce sont les joueurs de la Roma. » Il a aussi expliqué que ce sont ses changements qui ont fait basculer la rencontre.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Du Mourinho dans le texte. Et la suite pour le Real ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le gros rendez-vous approche : le premier Clásico de la saison, au Camp Nou, le dimanche vingt-cinq octobre à vingt et une heures."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Autre affiche de la soirée : Manchester City contre le PSG, à l'Etihad Stadium."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et là, le PSG a frappé fort, et vite. Désiré Doué ouvre le score dès la treizième minute, Ousmane Dembélé enchaîne deux minutes plus tard, puis Vitinha avant la demi-heure. City était pourtant invaincu en Premier League, six victoires en six matchs. Erling Haaland a réagi en seconde période avec un doublé, mais Maghnes Akliouche a remis de la distance, et Ferran Torres a même manqué un penalty à la quatre-vingt-dixième. Victoire parisienne à Manchester, pour le double tenant du titre, qui jouait pourtant sans Senny Mayulu, blessé."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un message envoyé à toute l'Europe, donc."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Clairement. Et une dernière histoire, côté Liverpool : à Linz, contre le LASK, Bradley Barcola a signé un triplé pour ses premiers buts sous le maillot des Reds. L'ancien Parisien ne pouvait pas rêver meilleur départ. À l'inverse, soirée compliquée pour Dortmund, battu sur le terrain de Bodø/Glimt, au nord du cercle polaire, en Norvège. Une soirée folle au total : quarante-six buts en neuf matchs, selon le décompte du site belge Walfoot."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Quarante-six buts ! Il n'y avait plus de défenseurs en Europe hier soir ?",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "On peut se poser la question. Et pendant ce temps, Aston Villa a écrasé Fenerbahçe, avec des doublés de Nicolas Jackson et de Ross Barkley. Romelu Lukaku est entré en jeu côté turc à vingt minutes de la fin, sans pouvoir changer quoi que ce soit."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Pour résumer : ce soir dix-huit heures quarante-cinq, OL contre Crystal Palace sur Canal Plus Foot, sans Openda. On croise les doigts.",
+          "style": "enjouée"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Lyon - Crystal Palace : à quelle heure et sur quelle chaîne voir le match de Ligue Europa ? (Footeo)",
+          "url": "https://news.footeo.com/2026/10/15/lyon-crystal-palace-a-quelle-heure-et-sur-quelle-chaine-voir-le-match-de-ligue-europa-14655"
+        },
+        {
+          "title": "Lyon - Crystal Palace : chaîne, streaming et heure (Média Sportif)",
+          "url": "https://www.mediasportif.fr/2026/10/15/football-lyon-crystal-palace-chaine-streaming-ou-voir-le-match-et-a-quelle-heure-en-france/"
+        },
+        {
+          "title": "Fonseca avant OL - Crystal Palace : « Pas de profils semblables à Openda »",
+          "url": "https://www.olympique-et-lyonnais.com/fonseca-avant-ol-crystal-palace-il-ny-a-pas-dautres-profils-semblables-a-openda,410179.html"
+        },
+        {
+          "title": "Sans Openda, Fonseca doit revoir ses plans à l'OL (Lyon Foot)",
+          "url": "https://www.lyonfoot.com/article/14460/sans-openda-fonseca-doit-revoir-ses-plans-a-l-ol"
+        },
+        {
+          "title": "AS Roma - Real Madrid : la victoire renversante des Madrilènes (Eurosport)",
+          "url": "https://www.eurosport.fr/football/ligue-des-champions/2026-2027/live-as-rome-real-madrid_mtc21878530/live-commentary.shtml"
+        },
+        {
+          "title": "Mourinho s'en prend aux joueurs de la Roma (La Nouvelle Tribune)",
+          "url": "https://lanouvelletribune.info/2026/10/mourinho-sen-prend-aux-joueurs-de-la-roma-ce-sont-eux-qui-etaient-morts/"
+        },
+        {
+          "title": "2026-27 El Clásico date (Football España)",
+          "url": "https://www.football-espana.net/2026/09/02/2026-27-el-clasico-date"
+        },
+        {
+          "title": "Man City - PSG, 2e journée de Ligue des champions (Foot Mercato)",
+          "url": "https://www.footmercato.net/live/3678603340558853601-manchester-city-vs-paris-saint-germain"
+        },
+        {
+          "title": "46 buts en 9 matchs : tout sur ce mercredi soir de Ligue des champions (Walfoot)",
+          "url": "https://www.walfoot.be/news/2026-10-14/46-buts-en-9-matchs-lukaku-prend-un-score-de-tennis-tout-sur-ce-mercredi-soir-de-ligue-des-champions"
+        }
+      ]
+    },
+    {
+      "rubrique": "politique",
+      "titre": "Politique",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Place à la politique, avec nos trois volets. En France d'abord, le budget deux mille vingt-sept poursuit son chemin à l'Assemblée.",
+          "style": "posée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "On vous en parlait hier : la motion de rejet des socialistes est tombée mardi soir. Depuis, les députés débattent du volet recettes, et ça doit durer jusqu'à lundi dix-neuf octobre. Le gouvernement vise toujours un déficit à cinq pour cent du PIB en deux mille vingt-sept, avec environ quarante-trois milliards d'euros d'économies supplémentaires."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et les premières modifications, elles vont dans quel sens ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le ministre des Comptes publics, David Amiel, affirme que les changements votés en commission ont dégradé le déficit d'environ huit milliards d'euros. Le rapporteur de la commission des finances, Philippe Juvin, avait de son côté chiffré la perte nette de recettes à une dizaine de milliards. En parallèle, la commission des affaires sociales examine le budget de la Sécu, avec plus de mille six cents amendements jusqu'à demain. Elle a adopté à l'unanimité des amendements des quatre groupes de gauche obligeant l'État à compenser intégralement les baisses de cotisations sociales."
+        },
+        {
+          "speaker": "Léa",
+          "text": "L'autre dossier brûlant, c'est la colère des lycéens."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, le mouvement est né à la mi-septembre à Créteil et s'est étendu à tout le pays. Les lycéens dénoncent le manque d'enseignants, les classes chargées, l'état des bâtiments et Parcoursup. Hier, lors des questions au gouvernement au Sénat, Sébastien Lecornu a donné un nouveau bilan : neuf cent trente-sept policiers et gendarmes et deux cent quarante-huit élèves blessés depuis le début du mouvement.",
+          "style": "grave"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le gouvernement, qu'est-ce qu'il propose ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La porte-parole Maud Bregeon assure que deux mille des trois mille professeurs remplaçants annoncés sont déjà affectés. Le ministre de l'Éducation, Édouard Geffray, promet des améliorations de Parcoursup, avec de premières décisions fin octobre. Le mouvement, lui, continue : environ un tiers des établissements du supérieur étaient encore perturbés hier matin."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Direction la Suisse romande. Un sondage fait parler à six semaines des votations fédérales.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le premier sondage Leewas, publié hier, plus de onze mille personnes interrogées. Quatre objets le vingt-neuf novembre. La hausse de la TVA pour financer la treizième rente AVS : trente-six pour cent de oui, soixante de non. L'initiative du Centre sur l'imposition des couples mariés : trente-huit pour cent de oui, cinquante et un de non. L'assouplissement des exportations de matériel de guerre : très serré, quarante-quatre contre quarante-sept, avec neuf pour cent d'indécis. Et l'initiative pour limiter les feux d'artifice cartonne : soixante-huit pour cent de oui."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un sondage reste un sondage, mais la tendance est nette. Et sur l'imposition des couples, Karin Keller-Sutter s'est exprimée."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La ministre des Finances rejette l'initiative du Centre, qui veut revenir à une déclaration commune pour les couples. Sa formule : « Nous ne voulons pas de deux systèmes parallèles. » La gauche, le Centre et le Parti évangélique soutiennent en revanche la hausse de la TVA pour l'AVS."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et à Genève, le Conseil d'État a fait ses annonces de la semaine."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Trois choses à retenir. Les barèmes d'impôt deux mille vingt-sept seront indexés de zéro virgule quarante-cinq pour cent, soit sept virgule huit millions de francs d'impôts en moins. Le quartier de Belle-Terre, à Thônex, va accueillir mille logements de plus à partir de deux mille trente-deux. Et Genève accueillera un Geneva AI Summit les vingt et un et vingt-deux juin prochain à Palexpo, avec environ deux mille cinq cents participants attendus. Côté trajet : des travaux de cinq mois commencent le vingt-six octobre rue de la Terrassière, avec des déviations. Et dans le canton de Vaud, Migros envisage de fermer sa Centrale Traiteur d'Ecublens fin deux mille vingt-sept, environ cinquante-sept emplois sont menacés."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et au niveau fédéral, Swisscom gagne une manche en justice."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le Tribunal administratif fédéral a donné raison à l'opérateur et annulé l'amende de dix-huit millions de francs que lui avait infligée la Commission de la concurrence, à propos du déploiement de son réseau de fibre optique. En Valais, enfin, le canton demande à la Confédération l'autorisation d'abattre entièrement la meute de loups d'Arolla-Ferpècle : c'est sa sixième demande de ce type cette saison."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Le monde, maintenant. En Ukraine, les frappes russes continuent.",
+          "style": "grave"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Après la vaste attaque de mardi, au moins neuf morts et plus d'un demi-million de personnes privées de courant, une nouvelle attaque de drones a frappé Kropyvnytskyï, dans le centre du pays : trois morts et six blessés selon les autorités régionales. Volodymyr Zelensky affirme que l'Ukraine n'a reçu aucune alerte de ses partenaires occidentaux avant les missiles balistiques sur Kiev, et accuse Moscou de violer la trêve énergétique annoncée par Donald Trump. Moscou dit avoir visé des sites d'énergie et de communication. Et un conseiller de Zelensky, Sergiy Beskrestnov, affirme que SpaceX a bridé le débit de certains terminaux Starlink, ce qui perturbe des missions de l'armée ukrainienne."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et en Albanie, la contestation monte d'un cran."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Des manifestants sont entrés de nuit dans le ministère de l'Éducation à Tirana et y ont mis le feu, selon la police, qui annonce seize arrestations. Les étudiants réclament de meilleures conditions à l'université, des frais de scolarité plus bas, et la démission du Premier ministre Edi Rama. Le mouvement, surnommé la « révolution flamant rose », manifeste depuis environ quatre mois ; il est né contre un projet de complexe touristique dans une zone protégée, lié à Jared Kushner, le gendre de Donald Trump. La vice-Première ministre Albana Kociu rappelle que manifester est un droit légitime, mais que cela ne justifie ni violence ni vandalisme."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Budget 2027 : ce que l'Assemblée a fait mardi du PLF et du PLFSS (Le Courrier des stratèges)",
+          "url": "https://www.lecourrierdesstrateges.fr/budget-2027-ce-que-lassemblee-a-fait-mardi-du-plf-et-du-plfss/"
+        },
+        {
+          "title": "Blocus des lycées : 149 personnels blessés, contre 85 au 6 octobre selon Lecornu",
+          "url": "https://stephanelarue.com/blocus-des-lycees-149-personnels-blesses-contre-85-au-6-octobre-selon-lecornu/"
+        },
+        {
+          "title": "Colère des lycéens : Sébastien Lecornu annonce que 937 forces de l'ordre et 248 élèves ont été blessés (Cedar News)",
+          "url": "https://cedarnews.net/francais/1062831/colere-lyceens-sebastien-lecornu-annonce-que-937/"
+        },
+        {
+          "title": "Voici les tendances pour les votations du 29 novembre (watson)",
+          "url": "https://www.watson.ch/fr/suisse/armee/696255268-voici-les-tendances-pour-les-votations-du-29-novembre-en-suisse"
+        },
+        {
+          "title": "Toute l'actu en bref (swissinfo)",
+          "url": "https://www.swissinfo.ch/fre/toute-l-actu-en-bref/"
+        },
+        {
+          "title": "Communiqué hebdomadaire du Conseil d'État du 14 octobre 2026 (ge.ch)",
+          "url": "https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-14-octobre-2026"
+        },
+        {
+          "title": "'Massive' Russian attack on Ukraine kills at least 9 (Al Jazeera)",
+          "url": "https://www.aljazeera.com/news/2026/10/14/massive-russian-attack-on-ukraine-kills-at-least-six-cuts-power-in-kyiv"
+        },
+        {
+          "title": "Ukraine News Today, October 15, 2026 (Kyiv Post)",
+          "url": "https://www.kyivpost.com/thread/87090"
+        },
+        {
+          "title": "Fire erupts at Albania's Education Ministry as protests enter third day (Al Jazeera)",
+          "url": "https://www.aljazeera.com/news/2026/10/14/fire-erupts-at-albanias-education-ministry-as-protests-enter-third-day"
+        }
+      ]
+    },
+    {
+      "rubrique": "ia",
+      "titre": "Nouveautés IA",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "L'IA, en version courte aujourd'hui, promis. Premier sujet : Bruxelles passe à l'action.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le Bureau de l'IA de la Commission européenne a envoyé des demandes d'information à OpenAI et à Anthropic. En cause, des incidents révélés plus tôt dans l'année : des agents en cours de test qui ont atteint des systèmes réels hors de leur environnement isolé. La commissaire Henna Virkkunen veut des détails sur la sécurité, l'évaluation indépendante et la surveillance des modèles. Ce n'est pas une sanction : c'est le premier vrai test de l'AI Act, et des juristes doutent qu'un test raté compte comme une mise sur le marché."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ensuite, de la voix."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "xAI sort Grok Voice trois, un modèle parole à parole pour les agents vocaux, à huit centimes de dollar la minute, le même prix que la version précédente. Il arrive en tête de l'indice d'Artificial Analysis, mais reste derrière le modèle d'OpenAI sur un test de service client. Si ton agent utilise grok-voice-latest, la bascule est automatique."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et pour finir, la musique."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "YouTube Music commence à étiqueter les morceaux : « entièrement IA », « partiellement IA » ou « sans IA », d'après les déclarations des labels et ses propres outils de détection. Deezer, lui, dit recevoir près de quatre-vingt-dix mille titres entièrement générés par IA chaque jour.",
+          "style": "amusé"
+        }
+      ],
+      "sources": [
+        {
+          "title": "EU questions OpenAI and Anthropic over AI agent incidents (TechBooky, d'après Euronews)",
+          "url": "https://www.techbooky.com/eu-questions-openai-and-anthropic-over-ai-agents-that-reached-real-systems/"
+        },
+        {
+          "title": "xAI Introduces Grok Voice 3.0 Speech-to-Speech Model for Voice Agents (Unite.AI)",
+          "url": "https://www.unite.ai/xai-introduces-grok-voice-3-0-speech-to-speech-model-for-voice-agents/"
+        },
+        {
+          "title": "YouTube Music starts labeling AI-generated songs (Music Business Worldwide)",
+          "url": "https://www.musicbusinessworldwide.com/youtube-music-starts-labeling-ai-generated-songs-using-partner-disclosures-and-its-own-detection-tools/"
+        }
+      ]
+    },
+    {
+      "rubrique": "jeux",
+      "titre": "Jeux vidéo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Les jeux vidéo, et le grand jour est arrivé : Castlevania, Belmont's Curse, sort aujourd'hui.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le premier Castlevania en 2D depuis treize ans, signé Evil Empire et Motion Twin, les créateurs de Dead Cells, édité par Konami. On incarne Rose Belmont, et le jeu se déroule notamment dans un Paris gothique. Il sort sur PC, PS5, Xbox Series et Switch, à trente dollars aux États-Unis."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Hier on avait seulement la note de Famitsu. Et maintenant ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Les tests sont tombés, et ils sont très partagés. En haut, GameSpot met dix sur dix et Game Informer neuf virgule vingt-cinq : combats souples, carte pleine de secrets, un hommage qui renouvelle la série. IGN donne huit, mais trouve que c'est plus un bon metroidvania qu'un vrai Castlevania. En bas, Video Games Chronicle met trois sur cinq : superbe visuellement, belle musique, mais une exploration qui ressemble parfois à cocher des cases, et une difficulté par défaut punitive, empruntée aux Soulslike. Quand on meurt, on repart de la dernière salle de sauvegarde, parfois très loin."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et qu'est-ce qui plaît autant à ceux qui adorent ?",
+          "style": "curieuse"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "GameSpot salue des déplacements acrobatiques, des énigmes d'environnement et un système de cartes de tarot pour la magie. GamesRadar parle d'un « brillant retour gothique » pour la série, avec des indices cryptiques à déchiffrer. Et même les plus sévères reconnaissent la bande-son : de nouveaux morceaux plus sombres, et des réarrangements des thèmes classiques de Castlevania. Le fouet-grappin, qui sert à se balancer dans les niveaux, est aussi souvent cité comme une bonne idée."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Bref, un jeu qui divise, mais qui ne laisse pas indifférent."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "C'est ça. Si tu as aimé Dead Cells, tu retrouveras la nervosité des combats. Si tu cherches un Castlevania à l'ancienne, avec un château inquiétant à chaque couloir, certains tests te préviennent que le style, plus coloré, peut surprendre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et sur Switch ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Plusieurs médias signalent des soucis de performance sur la première Switch. Bonne nouvelle quand même : le jeu propose beaucoup de réglages de difficulté, avec des curseurs pour les dégâts, et même une option qui empêche de mourir.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Le reste de la semaine ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Warhammer quarante mille, Boltgun deux, le shooter rétro, est sorti hier, et Tenebris Somnia arrive demain. Et rappel pour mardi prochain : la vitrine des jeux indépendants ID@Xbox, avec IGN, à dix-neuf heures."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un dernier sujet, plus technique, repéré par Simon Willison."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Un billet du développeur Popcar explique que l'IA permet désormais de décompiler en masse des jeux existants. Côté lumineux : des projets de préservation, des jeux anciens qui tournent dans un navigateur grâce à WebAssembly, des mélanges entre jeux. Côté sombre, sa phrase choc : « Votre jeu payant peut être rendu open source contre votre volonté. » Pour les studios, c'est une vraie question de protection du code.",
+          "style": "posé"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Round Up: The Reviews For Castlevania: Belmont's Curse Are In (Nintendo Life)",
+          "url": "https://www.nintendolife.com/news/2026/10/round-up-the-reviews-for-castlevania-belmonts-curse-are-in"
+        },
+        {
+          "title": "Castlevania Belmont's Curse review (Video Games Chronicle)",
+          "url": "https://www.videogameschronicle.com/review/castlevania-belmonts-curse-review/"
+        },
+        {
+          "title": "Sorties de jeux vidéo d'octobre 2026 (jeuxvideo.com)",
+          "url": "https://www.jeuxvideo.com/jeux/sorties/annee-2026/mois-10/"
+        },
+        {
+          "title": "Simon Willison's Weblog",
+          "url": "https://simonwillison.net/"
+        }
+      ]
+    },
+    {
+      "rubrique": "cinema",
+      "titre": "Cinéma et séries",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Cinéma et séries, et aujourd'hui c'est jour de rentrée diplomatique sur Netflix.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La Diplomate, saison quatre, arrive aujourd'hui. Huit épisodes d'environ une heure, toujours créés par Debora Cahn, la scénariste passée par À la Maison-Blanche et Homeland. Keri Russell reprend le rôle de Kate Wyler, avec Rufus Sewell dans le rôle de son mari Hal, et Allison Janney et Bradley Whitford, désormais réguliers de la série."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Sans rien dévoiler, qu'est-ce qui nous attend ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Je m'en tiens au résumé officiel : Kate tente de préserver la relation entre les États-Unis et le Royaume-Uni après un choc diplomatique, pendant que des manœuvres au plus haut niveau rapprochent dangereusement l'Amérique d'un conflit. Et son couple est toujours aussi mis à l'épreuve. Si tu as aimé le mélange de géopolitique et de dialogues qui fusent, c'est le programme du week-end.",
+          "style": "complice"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et la série dont tout le monde parle en ce moment ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Below, une mini-série de six épisodes, numéro un dans quatre-vingt-trois pays selon Flixpatrol. Ça se passe à Snook's Arm, un village de pêcheurs isolé à Terre-Neuve : un vieux pêcheur doit protéger sa famille et sa communauté face à une mystérieuse créature marine. Au casting, Josh Hartnett, Mackenzie Davis et Charlie Heaton, vu dans Stranger Things, et Natasha Henstridge. La série a été créée par Jesse McKeown, qui en est aussi le showrunner et qui a écrit la plupart des épisodes."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un monstre marin, un village isolé, un pêcheur bourru : on sent l'ambiance.",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Tout à fait, c'est clairement pensé pour la saison des frissons. Six épisodes, ça se regarde en deux soirées."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et la critique suit ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Pas vraiment. Sur AlloCiné, la presse lui donne deux et demi sur cinq, et les spectateurs trois virgule un. Un spectateur résume bien : Netflix a « sorti du lourd pour Halloween », mais certains personnages parlent trop. Bref, un succès public plus qu'un chef-d'œuvre.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Halloween, justement, Netflix s'y prépare."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, et pour les amateurs de frissons, le catalogue s'étoffe aujourd'hui avec Ça, Ça chapitre deux et Doctor Sleep, d'après Stephen King, puis demain les deux Sans un bruit. De quoi organiser une soirée bien flippante. Côté documentaires, demain aussi, deux portraits : l'humoriste Norm Macdonald, et le Wu-Tang Clan vu à travers un de ses disciples. Pas d'annonce majeure en Blu-ray ou en 4K repérée cette semaine, en revanche."
+        }
+      ],
+      "sources": [
+        {
+          "title": "La Diplomate saison 4 sur Netflix : date de sortie fixée au 15 octobre 2026 (Netflix News)",
+          "url": "https://www.netflix-news.com/articles/programmes/series/1627330-la-diplomate-saison-4-sur-netflix-date-de-sortie-fixee-au-15-octobre-2026-et-premier-teaser-devoile-20-08-2026/"
+        },
+        {
+          "title": "La nouvelle mini-série Netflix, déjà numéro 1 dans 83 pays (AlloCiné)",
+          "url": "https://www.allocine.fr/article/fichearticle_gen_carticle=1000226927.html"
+        },
+        {
+          "title": "Netflix : toutes les sorties de la semaine du 12 au 18 octobre 2026 (Gameblog)",
+          "url": "https://www.gameblog.fr/geek/ed/news/netflix-nouveautes-films-series-semaine-12-18-octobre-2026-724659"
+        }
+      ]
+    },
+    {
+      "rubrique": "culture",
+      "titre": "Culture générale",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Culture générale, et une date pas comme les autres. Hugo, que s'est-il passé le quinze octobre mille cinq cent quatre-vingt-deux ?",
+          "style": "joueuse"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "C'est la question piège : la veille, c'était le quatre octobre. En Italie, en Espagne, au Portugal et en Pologne, les gens se sont couchés le jeudi quatre octobre et se sont réveillés le vendredi quinze. Dix jours rayés du calendrier, d'un coup.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Mais pourquoi supprimer dix jours ?",
+          "style": "étonnée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "À cause d'un décalage accumulé pendant seize siècles. Le calendrier julien, instauré par Jules César en quarante-six avant Jésus-Christ, ajoutait une année bissextile tous les quatre ans. Problème : il était trop long d'environ onze minutes par an par rapport à l'année solaire. Onze minutes, ce n'est rien, mais au bout de mille six cents ans, ça fait une dizaine de jours. Et pour l'Église, c'était embêtant, parce que la date de Pâques dépend de l'équinoxe de printemps, qui glissait."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors le pape tranche."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le pape Grégoire treize, par une bulle au nom latin, Inter gravissimas. Il fait deux choses. D'abord, rattraper le retard en supprimant ces dix jours. Ensuite, corriger la règle pour l'avenir : les années séculaires ne sont plus bissextiles, sauf si elles sont divisibles par quatre cents. Mille sept cents, mille huit cents, mille neuf cents : pas bissextiles. Deux mille : bissextile. Avec ça, l'écart tombe à environ vingt-six secondes par an."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Donc l'an deux mille, c'était l'exception de l'exception.",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Exactement, et quelques programmes informatiques s'y sont d'ailleurs pris les pieds. Détail amusant : on a sauté des dates, mais pas des jours de la semaine. Après le jeudi, il y a bien eu un vendredi."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et tout le monde a suivi ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Pas du tout, et c'est ça le plus drôle. La France suit deux mois plus tard, sous Henri trois : le dimanche neuf décembre mille cinq cent quatre-vingt-deux est suivi du lundi vingt décembre. Mais les pays protestants refusent un calendrier venu du pape. L'astronome Johannes Kepler aurait dit qu'ils préféraient être en désaccord avec le soleil plutôt qu'en accord avec le pape."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Pourtant, les protestants n'étaient pas tous aussi têtus ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Non, chacun a fini par céder à son rythme. La Prusse protestante adopte le nouveau calendrier dès mille six cent dix, par exemple. Mais plus on attendait, plus l'écart grandissait : dix jours au départ, onze à partir de mille sept cent, et aujourd'hui treize jours entre les deux calendriers, jusqu'en deux mille cent."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ça veut dire que pendant longtemps, l'Europe n'avait pas la même date ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, et parfois à quelques kilomètres près. En Suisse, l'adoption s'est faite canton par canton, au gré de la religion. La Grande-Bretagne attend jusqu'en mille sept cent cinquante-deux, et on raconte que des gens ont protesté, persuadés de devoir payer un mois de loyer entier pour moins de jours travaillés. Même Cervantès et Shakespeare, morts tous les deux en mille six cent seize, n'ont pas la même date de décès selon le calendrier qu'on utilise.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et les Églises orthodoxes ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Beaucoup ont gardé le calendrier julien jusqu'au vingtième siècle, et elles l'utilisent encore pour calculer Pâques. C'est pour ça que la Pâques orthodoxe tombe souvent à une autre date que la nôtre. Et une dernière pour la route : l'expression « renvoyer aux calendes grecques » vient de là aussi. Les calendes, c'était le premier jour du mois chez les Romains, mais les Grecs n'en avaient pas. Autrement dit : jamais.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Comme certains chantiers genevois, alors.",
+          "style": "taquine"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Je n'ai rien dit, moi !",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors voici la question du jour, Huxxley. En quelle année la Russie a-t-elle adopté le calendrier grégorien ? A, mille sept cent cinquante-deux ; B, mille huit cent soixante-treize ; C, mille neuf cent dix-huit ; D, mille neuf cent vingt-trois.",
+          "style": "joueuse"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Petit indice : ça a un rapport avec une révolution qui porte le nom d'un mois.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Réponds dans l'appli, et on te donne la réponse demain matin !",
+          "style": "enjouée"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Calendrier grégorien (Vikidia)",
+          "url": "https://fr.vikidia.org/wiki/Calendrier_gr%C3%A9gorien"
+        },
+        {
+          "title": "15 octobre 1582 (Hérodote)",
+          "url": "https://www.herodote.net/15_octobre_1582-evenement-15821015.php"
+        },
+        {
+          "title": "Passage au calendrier grégorien (Techno-Science)",
+          "url": "https://www.techno-science.net/fr/definitions/passage-au-calendrier-gregorien"
+        },
+        {
+          "title": "20 décembre 1582 : l'adoption du calendrier grégorien en France (Europe 1)",
+          "url": "https://www.europe1.fr/emissions/Aujourd-hui-dans-l-Histoire/20-decembre-1582-ladoption-du-calendrier-gregorien-en-france-702887"
+        }
+      ]
+    },
+    {
+      "rubrique": "meteo",
+      "titre": "Météo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Et pour finir, la météo avec Zoé.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Zoé",
+          "text": "Petit couac ce matin, Huxxley : les données météo de Lausanne ne me sont pas parvenues, alors je préfère ne rien inventer. Jette un œil à ton appli météo avant de partir, et prends une veste au cas où, on est en octobre après tout !",
+          "style": "souriante"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Merci Zoé ! Bonne journée Huxxley, et allez l'OL ce soir. À demain pour La Matinale.",
+          "style": "chaleureuse"
+        }
+      ],
+      "sources": []
+    }
+  ],
+  "quiz": {
+    "question": "En quelle année la Russie a-t-elle adopté le calendrier grégorien ?",
+    "choices": [
+      "1752",
+      "1873",
+      "1918",
+      "1923"
+    ],
+    "answer": 2,
+    "explanation": "La Russie bolchevique adopte le calendrier grégorien en 1918 : c'est pourquoi la révolution d'Octobre 1917 a eu lieu en novembre selon notre calendrier."
+  }
+}
