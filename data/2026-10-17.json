@@ -1,0 +1,1360 @@
+{
+  "date": "2026-10-17",
+  "generatedAt": "2026-10-15T08:33:19.068Z",
+  "football": {
+    "window": {
+      "from": "2026-10-16",
+      "to": "2026-10-18"
+    },
+    "matches": [
+      {
+        "competition": "Ligue 1",
+        "date": "2026-10-16T18:45:00Z",
+        "status": "TIMED",
+        "home": "Le Mans FC",
+        "away": "Toulouse FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-16T19:00:00Z",
+        "status": "TIMED",
+        "home": "RC Deportivo La Coruña",
+        "away": "Levante UD",
+        "score": null,
+        "matchday": 9
+      },
+      {
+        "competition": "Premier League",
+        "date": "2026-10-17T11:30:00Z",
+        "status": "TIMED",
+        "home": "Everton FC",
+        "away": "Chelsea FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-17T12:00:00Z",
+        "status": "TIMED",
+        "home": "RCD Espanyol de Barcelona",
+        "away": "Club Atlético de Madrid",
+        "score": null,
+        "matchday": 9
+      },
+      {
+        "competition": "Premier League",
+        "date": "2026-10-17T14:00:00Z",
+        "status": "TIMED",
+        "home": "Manchester City FC",
+        "away": "Ipswich Town FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Premier League",
+        "date": "2026-10-17T14:00:00Z",
+        "status": "TIMED",
+        "home": "Brentford FC",
+        "away": "Liverpool FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Premier League",
+        "date": "2026-10-17T14:00:00Z",
+        "status": "TIMED",
+        "home": "Fulham FC",
+        "away": "Hull City AFC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-17T14:15:00Z",
+        "status": "TIMED",
+        "home": "Villarreal CF",
+        "away": "Elche CF",
+        "score": null,
+        "matchday": 9
+      },
+      {
+        "competition": "Ligue 1",
+        "date": "2026-10-17T15:15:00Z",
+        "status": "TIMED",
+        "home": "RC Strasbourg Alsace",
+        "away": "Paris Saint-Germain FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-17T16:30:00Z",
+        "status": "TIMED",
+        "home": "Real Betis Balompié",
+        "away": "FC Barcelona",
+        "score": null,
+        "matchday": 9
+      },
+      {
+        "competition": "Premier League",
+        "date": "2026-10-17T16:30:00Z",
+        "status": "TIMED",
+        "home": "Newcastle United FC",
+        "away": "Aston Villa FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Ligue 1",
+        "date": "2026-10-17T18:45:00Z",
+        "status": "TIMED",
+        "home": "ES Troyes AC",
+        "away": "Racing Club de Lens",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Ligue 1",
+        "date": "2026-10-17T18:45:00Z",
+        "status": "TIMED",
+        "home": "Lille OSC",
+        "away": "Stade Brestois 29",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-17T19:00:00Z",
+        "status": "TIMED",
+        "home": "Valencia CF",
+        "away": "Athletic Club",
+        "score": null,
+        "matchday": 9
+      }
+    ],
+    "ligue1Standings": [
+      {
+        "position": 1,
+        "team": "AS Monaco FC",
+        "points": 14,
+        "played": 6
+      },
+      {
+        "position": 2,
+        "team": "Lille OSC",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 3,
+        "team": "Stade Rennais FC 1901",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 4,
+        "team": "Olympique Lyonnais",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 5,
+        "team": "Paris FC",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 6,
+        "team": "Paris Saint-Germain FC",
+        "points": 11,
+        "played": 6
+      }
+    ],
+    "favouriteTeams": {
+      "Olympique Lyonnais": {
+        "lastMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-09T18:45:00Z",
+          "home": "Racing Club de Lens",
+          "away": "Olympique Lyonnais",
+          "score": "2-1"
+        },
+        "nextMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-18T18:45:00Z",
+          "home": "Olympique Lyonnais",
+          "away": "OGC Nice",
+          "score": null
+        }
+      },
+      "Real Madrid CF": {
+        "lastMatch": {
+          "competition": "UEFA Champions League",
+          "date": "2026-10-14T19:00:00Z",
+          "home": "AS Roma",
+          "away": "Real Madrid CF",
+          "score": "3-4"
+        },
+        "nextMatch": {
+          "competition": "Primera Division",
+          "date": "2026-10-18T19:00:00Z",
+          "home": "Real Madrid CF",
+          "away": "Sevilla FC",
+          "score": null
+        }
+      }
+    }
+  },
+  "wikipedia": {
+    "articleDuJour": null,
+    "ephemeride": [
+      {
+        "year": 2016,
+        "text": "début de la bataille de Mossoul opposant l'Irak et ses alliés à l'État islamique lors de la seconde guerre civile irakienne.",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Mossoul_(2016-2017)"
+      },
+      {
+        "year": 1979,
+        "text": "mère Teresa (photo) reçoit le prix Nobel de la paix.",
+        "url": "https://fr.wikipedia.org/wiki/M%C3%A8re_Teresa"
+      },
+      {
+        "year": 1917,
+        "text": "début de la bataille du détroit de Muhu opposant l'Empire allemand et la jeune République russe pendant la Première Guerre mondiale.",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_du_d%C3%A9troit_de_Muhu"
+      },
+      {
+        "year": 1912,
+        "text": "la première guerre balkanique est déclenchée par la déclaration de guerre de la Bulgarie, de la Grèce et de la Serbie à l'Empire ottoman.",
+        "url": "https://fr.wikipedia.org/wiki/Premi%C3%A8re_guerre_balkanique"
+      },
+      {
+        "year": 1806,
+        "text": "l'armée impériale française remporte le combat de Halle face à l'armée prussienne, lors des campagnes napoléoniennes contre la Quatrième Coalition.",
+        "url": "https://fr.wikipedia.org/wiki/Grande_Arm%C3%A9e"
+      },
+      {
+        "year": 1793,
+        "text": "victoire des Républicains sur les Vendéens lors de la bataille de Cholet, au cours de la guerre de Vendée.",
+        "url": "https://fr.wikipedia.org/wiki/Premi%C3%A8re_R%C3%A9publique_(France)"
+      },
+      {
+        "year": 1448,
+        "text": "l'Empire ottoman, alors en pleine expansion en Europe, remporte la seconde bataille de Kosovo face à la coalition magyaro-valaque.",
+        "url": "https://fr.wikipedia.org/wiki/Empire_ottoman"
+      },
+      {
+        "year": 1346,
+        "text": "l'Angleterre remporte la bataille de Neville's Cross face à l'Écosse lors de la guerre de Cent Ans.",
+        "url": "https://fr.wikipedia.org/wiki/Royaume_d'Angleterre"
+      }
+    ]
+  },
+  "meteo": {
+    "jour": "samedi",
+    "ville": "Ferney-Voltaire",
+    "source": "Open-Meteo (open-meteo.com)",
+    "journee": {
+      "ciel": "averses faibles",
+      "temperatureMin": 10.1,
+      "temperatureMax": 15.2,
+      "risquePluieMax": 70,
+      "pluieTotaleMm": 15.5,
+      "ventMaxKmh": 24.5,
+      "rafalesMaxKmh": 40,
+      "indiceUV": 0.8,
+      "leverSoleil": "07:55",
+      "coucherSoleil": "18:45",
+      "heuresProbablementPluvieuses": [
+        "16 h",
+        "17 h",
+        "18 h",
+        "19 h",
+        "20 h",
+        "21 h",
+        "22 h"
+      ]
+    },
+    "creneaux": [
+      {
+        "heure": "7 h",
+        "temperature": 12.1,
+        "ressenti": 11.9,
+        "ciel": "couvert",
+        "risquePluie": 8,
+        "pluieMm": 0,
+        "ventKmh": 2.9
+      },
+      {
+        "heure": "9 h",
+        "temperature": 12.9,
+        "ressenti": 13,
+        "ciel": "couvert",
+        "risquePluie": 18,
+        "pluieMm": 0.1,
+        "ventKmh": 1.5
+      },
+      {
+        "heure": "12 h",
+        "temperature": 15,
+        "ressenti": 15,
+        "ciel": "couvert",
+        "risquePluie": 32,
+        "pluieMm": 0.1,
+        "ventKmh": 4.7
+      },
+      {
+        "heure": "15 h",
+        "temperature": 15.2,
+        "ressenti": 15.2,
+        "ciel": "pluie faible",
+        "risquePluie": 47,
+        "pluieMm": 1.1,
+        "ventKmh": 6.7
+      },
+      {
+        "heure": "18 h",
+        "temperature": 14.8,
+        "ressenti": 13.8,
+        "ciel": "pluie faible",
+        "risquePluie": 67,
+        "pluieMm": 2.3,
+        "ventKmh": 12.1
+      },
+      {
+        "heure": "21 h",
+        "temperature": 13.1,
+        "ressenti": 10.3,
+        "ciel": "pluie faible",
+        "risquePluie": 67,
+        "pluieMm": 0.7,
+        "ventKmh": 20.7
+      }
+    ],
+    "dimanche": {
+      "ciel": "pluie faible",
+      "temperatureMin": 10.2,
+      "temperatureMax": 12.3,
+      "risquePluieMax": 58,
+      "pluieTotaleMm": 13.7,
+      "ventMaxKmh": 24.3,
+      "rafalesMaxKmh": 42.1
+    }
+  },
+  "sorties": {
+    "source": "OpenAgenda",
+    "agendas": 164,
+    "evenements": [
+      {
+        "titre": "FESTIVAL DU SOIR - Palexpo",
+        "resume": "TROIS WEEKENDS · PLUSIEURS UNIVERS · UNE SEULE ADRESSE",
+        "lieu": "Palexpo",
+        "ville": "Le Grand-Saconnex",
+        "adresse": "Route François-PEYROT 30, 1218 Le Grand-Saconnex",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T06:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T19:00:00+02:00",
+            "fin": "2026-10-17T23:59:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T00:00:00+02:00",
+            "fin": "2026-10-18T06:00:00+02:00"
+          }
+        ],
+        "prix": "Les prix varient selon les événements. Consultez les pages de billetterie pour les informations détaillées.",
+        "url": "https://openagenda.com/agendas/17821345/events/festival-du-soir-palexpo",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Madame Loyal Genève by Festival du Soir",
+        "resume": "La célèbre fête foraine électronique fait son grand retour en Suisse.",
+        "lieu": "Palexpo",
+        "ville": "Le Grand-Saconnex",
+        "adresse": "Route François-PEYROT 30, 1218 Le Grand-Saconnex",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T23:59:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T00:00:00+02:00",
+            "fin": "2026-10-18T23:59:00+02:00"
+          }
+        ],
+        "prix": "CHF 48.- Entrée avant 21h – CHF 53.-Phase 2 Billet Standard – Phase 1 CHF 120,00.-",
+        "url": "https://openagenda.com/agendas/17821345/events/madame-loyal-geneve-by-festival-du-soir",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Festival Everybody's Perfect",
+        "resume": "Festival de cinéma queer à Genève",
+        "lieu": "Maison des arts du Grütli",
+        "ville": "Genève",
+        "adresse": "Rue du Général-DUFOUR 16, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T05:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T13:45:00+02:00",
+            "fin": "2026-10-17T23:59:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T00:00:00+02:00",
+            "fin": "2026-10-18T05:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T13:00:00+02:00",
+            "fin": "2026-10-18T22:30:00+02:00"
+          }
+        ],
+        "prix": "Tarifs à regarder sur le site internet",
+        "url": "https://openagenda.com/agendas/17821345/events/festival-everybodys-perfect-9136144",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "ELECTRON CLUB TOUR",
+        "resume": "Trois clubs, une nuit, une même trajectoire dédiée à la fête, le partage et la découverte.",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T06:00:00+02:00"
+          }
+        ],
+        "prix": "Early Bird CHF 20.- , Prélocation CHF 29.- , 20 ans 20 francs CHF 10.- , jeunes CHF 15.-",
+        "url": "https://openagenda.com/agendas/17821345/events/electron-club-tour",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Fête lesbienne queer féministe",
+        "resume": "Cabarets et dj sets, soirée durant le Festival Everybody's Perfect, au Groove",
+        "lieu": "Le Groove",
+        "ville": "Genève",
+        "adresse": "rue des Gazomètres 9",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T04:00:00+02:00"
+          }
+        ],
+        "prix": "Différents tarifs selon l'heure d'arrivée et options",
+        "url": "https://openagenda.com/agendas/17821345/events/lesbian-queer-feminist-party",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "La migration des oiseaux en direct",
+        "resume": "Observez de près les oiseaux migrateurs au col de Jaman et découvrez les secrets de leur migration grâce au baguage, accompagné par un biologiste du Muséum de Genève.",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T07:00:00+02:00",
+            "fin": "2026-10-17T16:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.-",
+        "url": "https://openagenda.com/agendas/17821345/events/la-migration-des-oiseaux-en-direct",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Enquêter sur la violence aux frontières, favoriser la «justice de la mobilité»",
+        "resume": "Exposition audiovisuelle à Uni Mail présentant des vidéos de l'association Border Forensics qui mène des enquêtes avec et en soutien aux communautés exposées à la violence frontalière.",
+        "lieu": "Uni Mail",
+        "ville": "Genève",
+        "adresse": "Boulevard du Pont-d'Arve 40",
+        "horaires": [
+          {
+            "debut": "2026-10-17T08:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/enqueter-sur-la-violence-aux-frontieres-favoriser-la-justice-de-la-mobilite",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Hortus Botanicus Helveticus - 30 ans, 30 jardins, 30 espèces emblématiques",
+        "resume": "Pour les 30 ans d’Hortus Botanicus Helveticus, cette exposition invite à découvrir, à travers 30 voiles, la diversité et l’engagement des jardins botaniques suisses pour la préservation du vivant.",
+        "lieu": "Jardin Botanique de Genève",
+        "ville": "Chambésy",
+        "adresse": "Chemin de l'Impératrice 1, 1292 Chambésy",
+        "horaires": [
+          {
+            "debut": "2026-10-17T08:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T08:00:00+02:00",
+            "fin": "2026-10-18T19:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/hortus-botanicus-helveticus-30-years-30-gardens-30-iconic-species",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Permanence Numérique - Rive droite",
+        "resume": "L'espace de conseil et d'échange accueille la population les lundis, mercredis, vendredis et samedis pour répondre à ses questions sur l’informatique et le web gratuitement et sans rendez-vous à OSEO.",
+        "lieu": "OSEO Genève siège social",
+        "ville": "Genève",
+        "adresse": "Rue pécolat 5",
+        "horaires": [
+          {
+            "debut": "2026-10-17T08:30:00+02:00",
+            "fin": "2026-10-17T12:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/permanence-numerique-rive-droite",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Médiation sensible, méditation intérieure",
+        "resume": "Visite guidée et atelier de méditation",
+        "lieu": "Musée international de la Réforme",
+        "ville": "Genève",
+        "adresse": "Cour de Saint-Pierre 10",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T10:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 15.- (normal) ; CHF 10.- (réduit)",
+        "url": "https://openagenda.com/agendas/17821345/events/mindful-meditation-inner-meditation",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Cafés genevois: la vie même",
+        "resume": "A l’orée des années 1980, la photographe Dany Gignoux (1944-2025) et le poète Georges Haldas (1917-2010) ont saisi la vie des cafés genevois.",
+        "lieu": "Bibliothèque de Genève",
+        "ville": "Genève",
+        "adresse": "Promenade des Bastions 8, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T12:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0",
+        "url": "https://openagenda.com/agendas/17821345/events/cafes-genevois-la-vie-meme",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "L'Asphalte, un lieu de partage",
+        "resume": "L’Asphalte, organisé par la Ville de Genève, revient à la pointe de la Jonction du 5 juin au 25 octobre afin de vous offrir un lieu où la pratique du sport urbain devient facile.",
+        "lieu": "Pointe de la Jonction",
+        "ville": "Genève",
+        "adresse": "Sentier Sentier des Saules 3, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T21:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T21:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/asphalte-107791",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Escape Game en plein air dans la Vieille Ville",
+        "resume": "En famille ou entre amis, partez à l'aventure avec votre équipe favorite et élucidez les nombreux mystères de la Vieille Ville !",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T19:00:00+02:00"
+          }
+        ],
+        "prix": "Tarif Adulte (15 ans et +) : CHF 35.- / Tarif Enfant (de 8 à 14 ans inclus) : CHF 20.- / Jusqu’à 7 ans (inclus) : Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/outdoor-escape-game-in-the-old-town",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Escape Game en extérieur dans le parc des Bastions",
+        "resume": "En famille ou entre amis, partez à l'aventure avec votre équipe favorite et élucidez les nombreux mystères du parc des Bastions !",
+        "lieu": "Parc des Bastions",
+        "ville": "Genève",
+        "adresse": "Promenade des Bastions 1, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T19:00:00+02:00"
+          }
+        ],
+        "prix": "Tarif Adulte (15 ans et +) : CHF 35.- ; sauf Duo CHF 45.- / Tarif Enfant (de 8 à 14 ans inclus) : CHF 20.- / Jusqu’à 7 ans (inclus) : Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/escape-game-en-exterieur-dans-le-parc-des-bastions",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Escape Game en plein air dans la Vieille Ville",
+        "resume": "En famille ou entre amis, partez à l'aventure avec votre équipe favorite et élucidez les nombreux mystères de la Vieille Ville !",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T19:00:00+02:00"
+          }
+        ],
+        "prix": "Tarif Adulte (15 ans et +) : CHF 35.- ; sauf Duo CHF 45.- / Tarif Enfant (de 8 à 14 ans inclus) : CHF 20.- / Jusqu’à 7 ans (inclus) : Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/outdoor-escape-game-in-the-old-town-2470195",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Le Cabinet d’Émerveille s’invite au MEG",
+        "resume": "Art, jeu libre et exploration sensorielle pour les tout-e-s petit-e-s (0 à 8 ans) au cœur du musée. Auditorium. Samedi 17 octobre de 9h à 18h",
+        "lieu": "MEG",
+        "ville": "Genève",
+        "adresse": "Boulevard Carl-VOGT 65, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.-",
+        "url": "https://openagenda.com/agendas/17821345/events/le-cabinet-demerveille-sinvite-au-meg-6661642",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Ateliers numériques d'octobre - Permanence numérique Rive droite",
+        "resume": "Dans le cadre des Permanences numériques, la Ville de Genève et OSEO organisent des ateliers pratiques, gratuits et sans inscription, tous les vendredis et samedis en octobre aux Pâquis.",
+        "lieu": "OSEO Genève siège social",
+        "ville": "Genève",
+        "adresse": "Rue pécolat 5",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:30:00+02:00",
+            "fin": "2026-10-17T11:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/ateliers-numeriques-doctobre-permanence-numerique-rive-droite",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Humanitarian, by design?",
+        "resume": "Découvrez la nouvelle exposition temporaire du Musée international de la Croix-Rouge et du Croissant-Rouge du 8 octobre 2026 au 29 août 2027.",
+        "lieu": "Musée international de la Croix-Rouge et du Croissant-Rouge",
+        "ville": "Genève",
+        "adresse": "Avenue de la Paix 17, 1202 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "Entrée : CHF 15.-, tarif réduit : CHF 10.-",
+        "url": "https://openagenda.com/agendas/17821345/events/humanitarian-by-design",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Bonjour, ça va ? petites histoires pour créer du lien",
+        "resume": "Exposition à la Bibliothèque de la Cité",
+        "lieu": "Bibliothèque de la Cité",
+        "ville": "Genève",
+        "adresse": "Place des Trois-Perdrix 5, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/bonjour-ca-va-petites-histoires-pour-creer-du-lien",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "À l'ombre des découvertes",
+        "resume": "Venez jouer avec les ombres pour en apprendre un peu plus sur leur rôle en science.",
+        "lieu": "Musée d'histoire des sciences",
+        "ville": "Genève",
+        "adresse": "Rue de Lausanne 128, 1202 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.-",
+        "url": "https://openagenda.com/agendas/17821345/events/in-the-shadow-of-discovery",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Ferdinand Hodler. Profession de foi",
+        "resume": "Exposition",
+        "lieu": "Musée international de la Réforme",
+        "ville": "Genève",
+        "adresse": "Cour de Saint-Pierre 10",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 13.- (normal) / CHF 8.- (réduit)",
+        "url": "https://openagenda.com/agendas/17821345/events/ferdinand-hodler-profession-of-faith",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "LE VERRE, AU-DELÀ DE LA MATIÈRE",
+        "resume": "Rétrospective sur les collections du CIRVA, Centre international de recherche sur le verre et les arts plastiques de Marseille",
+        "lieu": "Musée Ariana - Musée suisse de la céramique et du verre",
+        "ville": "Genève",
+        "adresse": "Avenue de la Paix 10, 1202 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "12 / 9 CHF; Entrée libre jusqu’à 25 ans et le premier dimanche du mois",
+        "url": "https://openagenda.com/agendas/17821345/events/le-verre-au-dela-de-la-matiere",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "MARIE DUCATÉ. SIMULTANÉS",
+        "resume": "L'artiste Marie Ducaté vous ouvre les portes de son atelier recomposé.",
+        "lieu": "Musée Ariana - Musée suisse de la céramique et du verre",
+        "ville": "Genève",
+        "adresse": "Avenue de la Paix 10, 1202 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "6 / 4 CHF Entrée libre jusqu’à 25 ans et le premier dimanche du mois",
+        "url": "https://openagenda.com/agendas/17821345/events/marie-ducate-simultanes-9564760",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "SaSA x MAMCO",
+        "resume": "Première exposition temporaire du SaSA: une intervention artistique inédite, de Joana Hadjithomas et Khalil Joreige, proposée en collaboration avec le MAMCO.",
+        "lieu": "Site archéologique Saint-Antoine (SaSA)",
+        "ville": "Genève",
+        "adresse": "Esplanade Théodelinde 1",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "o",
+        "url": "https://openagenda.com/agendas/17821345/events/sasa-x-mamco",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Marguerite Roesgen-Champion",
+        "resume": "Regards sur une compositrice genevoise et le clavecin moderne",
+        "lieu": "HEM DUFOUR",
+        "ville": "Genève",
+        "adresse": "2, rue du Général Dufour",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "Entrée libre",
+        "url": "https://openagenda.com/agendas/17821345/events/marguerite-roesgen-champion",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "L'Afrique au coeur de l'assiette - une journée festive autour de notre souveraineté alimentaire!",
+        "resume": "Au programme : marché de produits de saison, rencontres avec des acteurs de la coopération, ateliers culinaires, animations pour petits et grands, découvertes et moments conviviaux.",
+        "lieu": "Ferme de Budé",
+        "ville": "Genève",
+        "adresse": "Moïse-Duboule 2, 1209 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          }
+        ],
+        "prix": "gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/lafrique-au-coeur-de-lassiette-une-journee-festive-autour-de-notre-souverainete-alimentaire",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "La Souris Traviata",
+        "resume": "Atelier-spectacle pour les enfants accompagnés d’un adulte",
+        "lieu": "Bâtiment des Forces Motrices",
+        "ville": "Genève",
+        "adresse": "Place des Volontaires 2, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T10:35:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T15:00:00+02:00",
+            "fin": "2026-10-17T15:35:00+02:00"
+          }
+        ],
+        "prix": "Dès CHF 15.-",
+        "url": "https://openagenda.com/agendas/17821345/events/la-souris-traviata-3809573",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Empreintes de fêtes",
+        "resume": "Samedis des tout-petits, 2-4 ans",
+        "lieu": "Musée Ariana - Musée suisse de la céramique et du verre",
+        "ville": "Genève",
+        "adresse": "Avenue de la Paix 10, 1202 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T11:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T11:30:00+02:00",
+            "fin": "2026-10-17T12:30:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T14:30:00+02:00",
+            "fin": "2026-10-17T15:30:00+02:00"
+          }
+        ],
+        "prix": "15 CHF/famille – 1 enfant + 1 adulte",
+        "url": "https://openagenda.com/agendas/17821345/events/empreintes-de-fetes",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Lecture du paysage et histoire du Léman en balade au bord du lac",
+        "resume": "Dans le cadre de l’exposition “Léman être vivant”, cette animation d’Hydromondes vous invite à découvrir le Léman, son histoire, son fonctionnement et ses menaces depuis ses rives.",
+        "lieu": "Baby-Plage",
+        "ville": "Genève",
+        "adresse": "quai gustave-ador",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T12:00:00+02:00"
+          }
+        ],
+        "prix": "Prix libre",
+        "url": "https://openagenda.com/agendas/17821345/events/lecture-du-paysage-et-histoire-du-leman-en-balade-au-bord-du-lac",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Éveil sensoriel. Le futur, c’est quoi ?",
+        "resume": "Une première découverte du musée par les sens. Exposition temporaire. Samedi 17 octobre de 10h à 11h.",
+        "lieu": "MEG",
+        "ville": "Genève",
+        "adresse": "Boulevard Carl-VOGT 65, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T11:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.- / réservation obligatoire",
+        "url": "https://openagenda.com/agendas/17821345/events/eveil-sensoriel-le-futur-cest-quoi-2486255",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "LANGAGES SACRÉS : LES MÉTAMORPHOSES, MARTIN ABEGA",
+        "resume": "Une expo co-curatée avec Mayi Arts",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T11:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T15:00:00+02:00"
+          }
+        ],
+        "prix": "Entrée libre",
+        "url": "https://openagenda.com/agendas/17821345/events/langages-sacres-les-metamorphoses-martin-abega-2649433",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Exposition du concours d'architecture pluridisciplinaire | Transformation du Centre sportif du Bout-du-Monde",
+        "resume": "La Ville de Genève expose les projets du concours d'architecture pluridisciplinaire pour la transformation du Centre sportif du Bout-du-Monde du 13 au 31 octobre 2026 au Forum Faubourg.",
+        "lieu": "Forum Faubourg",
+        "ville": "Genève",
+        "adresse": "Rue des Terreaux-du-Temple 6, 1201 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T11:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/exposition-du-concours-darchitecture-pluridisciplinaire-or-transformation-du-centre-sportif-du-bout-du-monde",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "MuseOM# - MOPS_DanceSyndrome / Ela Franscella",
+        "resume": "Performance",
+        "lieu": "Musée d'art et d'histoire",
+        "ville": "Genève",
+        "adresse": "Rue Charles-GALLAND 2, 1206 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T11:21:00+02:00",
+            "fin": "2026-10-17T12:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T12:21:00+02:00",
+            "fin": "2026-10-17T13:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T16:21:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T17:21:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          }
+        ],
+        "prix": "Prix libre, sur réservation",
+        "url": "https://openagenda.com/agendas/17821345/events/museom",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "MOPS_DanceSyndrome, MuseOM#",
+        "resume": "Dance First Think Later - MOPS_DanceSyndrome, MuseOM# - MAH - 11h21, 12h21, 16h21, 17h21",
+        "lieu": "Musée d'art et d'histoire",
+        "ville": "Genève",
+        "adresse": "Rue Charles-GALLAND 2, 1206 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T11:21:00+02:00",
+            "fin": "2026-10-17T11:45:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T12:21:00+02:00",
+            "fin": "2026-10-17T12:45:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T16:21:00+02:00",
+            "fin": "2026-10-17T16:45:00+02:00"
+          },
+          {
+            "debut": "2026-10-17T17:21:00+02:00",
+            "fin": "2026-10-17T17:45:00+02:00"
+          }
+        ],
+        "prix": "Prix libre, réservation sur le site du MAH",
+        "url": "https://openagenda.com/agendas/17821345/events/mopsdancesyndrome-museom",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Journée Mondiale du refus de la misère",
+        "resume": "Un repas partagé, des ateliers et des prises de parole : rejoignez-nous le 17 octobre au Centre de Quartier des Libellules pour une journée placée sous le signe de la dignité et de la solidarité.",
+        "lieu": "Centre de quartier des Libellules",
+        "ville": "Vernier",
+        "adresse": "Avenue des Libellules 6 bis, 1219 Châtelaine",
+        "horaires": [
+          {
+            "debut": "2026-10-17T12:00:00+02:00",
+            "fin": "2026-10-17T18:30:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/93993811/events/journee-mondiale-du-refus-de-la-misere-9193353",
+        "agenda": "Ville de Vernier"
+      },
+      {
+        "titre": "Dance First Think Later",
+        "resume": "Exposition-festival entre danse, performance, arts visuels et images en mouvement, organisée par Arta Sperto du 13 oct. au 15 nov. 2026 au Commun et dans des lieux partenaires. Curation O. Kaeser.",
+        "lieu": "Espaces d’exposition «Le Commun»",
+        "ville": "Genève",
+        "adresse": "rue des Vieux-Grenadiers 10, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T13:00:00+02:00",
+            "fin": "2026-10-17T17:59:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T13:00:00+02:00",
+            "fin": "2026-10-18T17:59:00+02:00"
+          }
+        ],
+        "prix": "0",
+        "url": "https://openagenda.com/agendas/17821345/events/dance-first-think-later-862739",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Short Ass Attention Span #3",
+        "resume": "Le Centre d’Art Contemporain Genève accueille la troisième édition de « Short Ass Attention Span », un projet éditorial, littéraire et performatif imaginé par l’artiste Pauline Coquart.",
+        "lieu": "L'Arcade - Centre d'Art Contemporain Genève",
+        "ville": "Genève",
+        "adresse": "Rue de Chantepoulet 1-3",
+        "horaires": [
+          {
+            "debut": "2026-10-17T13:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T13:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 5.- / CHF 0.-",
+        "url": "https://openagenda.com/agendas/17821345/events/short-ass-attention-span-3",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Que cachent vos objets numériques?",
+        "resume": "Exposition itinérante",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T13:30:00+02:00",
+            "fin": "2026-10-17T17:30:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/que-cachent-vos-objets-numeriques",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "L'espace médiation du Jardin botanique",
+        "resume": "Vous êtes curieux? Vous voulez en apprendre plus sur le monde végétal et fongique, mais ne savez pas par où commencer? Nous sommes là pour répondre à vos questions et vous proposer des activités!",
+        "lieu": "Jardin Botanique de Genève",
+        "ville": "Chambésy",
+        "adresse": "Chemin de l'Impératrice 1, 1292 Chambésy",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T12:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/lespace-mediation-du-jardin-botanique",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Composez votre planche d’herbier à la Rousseau!",
+        "resume": "Plongez dans le processus de création d’un herbier et repartez avec votre planche d’herbier sous le bras.",
+        "lieu": "Jardin Botanique de Genève",
+        "ville": "Chambésy",
+        "adresse": "Chemin de l'Impératrice 1, 1292 Chambésy",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T12:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/come-and-create-your-own-herbarium-a-la-rousseau",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Lecture du paysage et histoire du Léman en balade au bord du lac",
+        "resume": "Dans le cadre de l’exposition “Léman être vivant”, cette animation d’Hydromondes vous invite à découvrir le Léman, son histoire, son fonctionnement et ses menaces depuis ses rives.",
+        "lieu": "Baby-Plage",
+        "ville": "Genève",
+        "adresse": "quai gustave-ador",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T16:00:00+02:00"
+          }
+        ],
+        "prix": "Prix libre",
+        "url": "https://openagenda.com/agendas/17821345/events/lecture-du-paysage-et-histoire-du-leman-en-balade-au-bord-du-lac-3734239",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "titre": "Atelier de création de cartographie numérique collective à la Bibliothèque de la Cité",
+        "resume": "Rassembler les lieux importants et créer ainsi un outil numérique d'entraide pour tous et toutes",
+        "lieu": "Bibliothèque de la Cité",
+        "ville": "Genève",
+        "adresse": "Place des Trois-Perdrix 5, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T15:30:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/97836408/events/atelier-de-creation-de-cartographie-numerique-collective-a-la-bibliotheque-de-la-cite",
+        "agenda": "Bibliothèques municipales de la Ville de Genève"
+      },
+      {
+        "titre": "Week-end japonais",
+        "resume": "Entre fleurs, thé et danse, laissez-vous emporter par les traditions japonaises le temps d’un week-end.",
+        "lieu": "Maison Chauvet-Lullin",
+        "ville": "Vernier",
+        "adresse": "Rue du Village 57, 1214 Vernier",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T19:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T14:00:00+02:00",
+            "fin": "2026-10-18T19:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/93993811/events/week-end-japonais-749687",
+        "agenda": "Ville de Vernier"
+      },
+      {
+        "titre": "Anan Atoyama / Cie AtOU, Atlas des Souffles",
+        "resume": "Dance First Think Later - Le Commun - Anan Atoyama / Cie AtOU, Atlas des Souffles - 19h00",
+        "lieu": "Espaces d’exposition «Le Commun»",
+        "ville": "Genève",
+        "adresse": "rue des Vieux-Grenadiers 10, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T19:00:00+02:00",
+            "fin": "2026-10-17T20:30:00+02:00"
+          }
+        ],
+        "prix": "Entrée libre",
+        "url": "https://openagenda.com/agendas/34080678/events/anan-atoyama-cie-atou-atlas-des-souffles",
+        "agenda": "Scènes Culturelles - Ville de Genève"
+      },
+      {
+        "titre": "Les 10 petites anarchistes - ce qu'il en coûte de réinventer le monde",
+        "resume": "1873. Saint-Imier. Petite ville horlogère du Jura. Dix jeunes femmes quittent la Suisse pour fonder en Patagonie une société anarchiste égalitaire, loin des injustices qu’elles ont connues.",
+        "lieu": "Théâtre du Loup",
+        "ville": "Genève",
+        "adresse": "Chemin de la Gravière 10 1227 Les Acacias Genève, Suisse",
+        "horaires": [
+          {
+            "debut": "2026-10-17T19:00:00+02:00",
+            "fin": "2026-10-17T20:30:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T17:00:00+02:00",
+            "fin": "2026-10-18T18:30:00+02:00"
+          }
+        ],
+        "prix": "Tarif plein 25.–\nTarif moins de 30 ans 20.–\nTarif réduit 16.–\n(membres, AVS, AI, chômeurs, unireso)\nEnfants, étudiants* 12.–\n20 ans/20 francs* Enfants Loup, PAG",
+        "url": "https://openagenda.com/agendas/62864469/events/les-10-petites-anarchistes",
+        "agenda": "Théâtre du Loup - Genève"
+      },
+      {
+        "titre": "La politique du pire – Adrien Barazzone",
+        "resume": "Adrien Barazzone convoque à lui seul tout un conseil municipal et transforme la scène en une réjouissante foire aux egos.",
+        "lieu": "Concorde espace culture",
+        "ville": "Vernier",
+        "adresse": "Avenue de l'Ain 60",
+        "horaires": [
+          {
+            "debut": "2026-10-17T19:30:00+02:00",
+            "fin": "2026-10-17T20:30:00+02:00"
+          }
+        ],
+        "prix": "Plein tarif CHF 40.- | Tarif réduit de CHF 15.- à 25.- (AVS, AI, chômage, jeunes - 26 ans, PMR, habitant·es de Vernier, 20ans20francs)",
+        "url": "https://openagenda.com/agendas/93993811/events/la-politique-du-pire-adrien-barazzone-5506429",
+        "agenda": "Ville de Vernier"
+      },
+      {
+        "titre": "Stephan Eicher",
+        "resume": "-",
+        "lieu": "Victoria Hall",
+        "ville": "Genève",
+        "adresse": "Rue du Général-DUFOUR 14, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T20:00:00+02:00",
+            "fin": "2026-10-17T22:00:00+02:00"
+          }
+        ],
+        "prix": "Ticketcorner Fnac, Globus, La Praille, Balexert",
+        "url": "https://openagenda.com/agendas/36135579/events/stephan-eicher-6610284",
+        "agenda": "Victoria Hall - Ville de Genève"
+      },
+      {
+        "titre": "Le Dieu du carnage",
+        "resume": "Une version endiablée et hilarante de la pièce vitriolée de Yasmina Reza.",
+        "lieu": "Théâtre Pitoëff",
+        "ville": "Genève",
+        "adresse": "Rue de Carouge 52, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T20:00:00+02:00",
+            "fin": "2026-10-17T21:10:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T18:00:00+02:00",
+            "fin": "2026-10-18T19:10:00+02:00"
+          }
+        ],
+        "prix": "CHF Plein 30,- CHF Réduit 20,- CHF Jeune 15,- CHF Carte 20 ans20 fr 10,-",
+        "url": "https://openagenda.com/agendas/61316708/events/le-dieu-du-carnage-2660215",
+        "agenda": "Théâtre Pitoëff - Ville de Genève"
+      },
+      {
+        "titre": "Chroniques d'Immeuble",
+        "resume": "Dans un immeuble comme les autres, chaque porte cache une histoire… et souvent un grain de folie.",
+        "lieu": "Théâtre des Grottes",
+        "ville": "Genève",
+        "adresse": "Rue Louis-FAVRE 43, 1201 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T20:00:00+02:00",
+            "fin": "2026-10-17T21:30:00+02:00"
+          }
+        ],
+        "prix": "Normal : CHF 20 / AVS : CHF 15",
+        "url": "https://openagenda.com/agendas/34080678/events/chroniques-dimmeuble",
+        "agenda": "Scènes Culturelles - Ville de Genève"
+      },
+      {
+        "titre": "Le Cabinet d’Émerveille s’invite au MEG",
+        "resume": "Art, jeu libre et exploration sensorielle pour les tout-e-s petit-e-s (0 à 8 ans) au cœur du musée. Auditorium. Dimanche 18 octobre de 9h à 18h",
+        "lieu": "MEG",
+        "ville": "Genève",
+        "adresse": "Boulevard Carl-VOGT 65, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.-",
+        "url": "https://openagenda.com/agendas/96959970/events/le-cabinet-demerveille-sinvite-au-meg-3883038",
+        "agenda": "Musées de Genève"
+      },
+      {
+        "titre": "LES 7 PÉCHÉS CAPITAUX",
+        "resume": "KURT WEILL & BERTOLT BRECHT",
+        "lieu": "Théâtre des Amis",
+        "ville": "Carouge GE",
+        "adresse": "Place du Temple 8, 1227 Carouge GE",
+        "horaires": [
+          {
+            "debut": "2026-10-18T11:00:00+02:00",
+            "fin": "2026-10-18T12:00:00+02:00"
+          }
+        ],
+        "prix": "20.-",
+        "url": "https://openagenda.com/agendas/86923199/events/les-7-peches-capitaux-460023",
+        "agenda": "Théâtre des Amis - Genève"
+      },
+      {
+        "titre": "Graines en fête!",
+        "resume": "À l'occasion des 25 ans de notre banque de semences, partez à la découverte de son rôle dans la préservation de la diversité végétale, ainsi que de l'extraordinaire diversité des graines.",
+        "lieu": "Jardin Botanique de Genève",
+        "ville": "Chambésy",
+        "adresse": "Chemin de l'Impératrice 1, 1292 Chambésy",
+        "horaires": [
+          {
+            "debut": "2026-10-18T12:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/96959970/events/seeds-in-celebration",
+        "agenda": "Musées de Genève"
+      },
+      {
+        "titre": "Visites commentées de l'exposition \"brave la nuit / poems for ruptures / نعبرُ الليل \" par des historien·nes de l'art et médiateur·ices.",
+        "resume": "L'exposition « brave la nuit / poems for ruptures / نعبرُ الليل » est ouverte tous les mercredis et dimanches de 12h à 18h, des visites commentées sont organisées à 15h.",
+        "lieu": "FMAC (Collection d'art contemporain de la Ville de Genève)",
+        "ville": "Genève",
+        "adresse": "Chemin du 23-Août 5, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-18T15:00:00+02:00",
+            "fin": "2026-10-18T16:00:00+02:00"
+          }
+        ],
+        "prix": "0",
+        "url": "https://openagenda.com/agendas/96959970/events/visite-commente-de-lexposition-brave-la-nuit-poems-for-ruptures-nabru-allyl-par-des-historiennes-de-lart-et-mediateurices",
+        "agenda": "Musées de Genève"
+      },
+      {
+        "titre": "Brass Band Arquebuse Genève",
+        "resume": "Concert de bienfaisance du Brass Band Arquebuse Genève, le 18 octobre 2026, au Victoria Hall, à 17h",
+        "lieu": "Victoria Hall",
+        "ville": "Genève",
+        "adresse": "Rue du Général-DUFOUR 14, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-18T17:00:00+02:00",
+            "fin": "2026-10-18T18:30:00+02:00"
+          }
+        ],
+        "prix": "Espace Ville de Genève, Grütli, Genève Tourisme, Cité Seniors, Centrale Billetterie T 0800 418 418 (Suisse), T +41 22 418 36 18 (Etranger)",
+        "url": "https://openagenda.com/agendas/36135579/events/brass-band-arquebuse-geneve-2574305",
+        "agenda": "Victoria Hall - Ville de Genève"
+      }
+    ]
+  }
+}
