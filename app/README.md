@@ -22,7 +22,7 @@ Chaque modification est un commit sur `main`, validé avant écriture (relecture
 
 | Variable | Valeur |
 |---|---|
-| `APP_PASSWORD` | *Facultatif.* Mot de passe de connexion. Sans lui, l'appli est ouverte à quiconque a l'adresse |
+| `APP_PASSWORD` | *Fortement conseillé.* Mot de passe de connexion. Sans lui, l'appli est ouverte à quiconque a l'adresse, y compris l'écriture des consignes lues par la rédaction. Le changer déconnecte tous les appareils |
 | `APP_SECRET` | Chaîne aléatoire (≥ 16 caractères) qui signe le cookie de session ; utile seulement avec `APP_PASSWORD` |
 | `GITHUB_TOKEN` | Jeton GitHub *fine-grained* : dépôt `morning-podcast` uniquement, permission **Contents : Read and write** |
 | `GITHUB_REPO` | `gchariot/morning-podcast` |
@@ -39,3 +39,11 @@ npm run dev                  # http://localhost:3000
 ```
 
 Sur Vercel : *Root Directory* = `app`.
+
+## Sécurité
+
+- Le dépôt GitHub doit rester **privé** : il contient les avis, les consignes, les réponses au quiz et les scripts des épisodes.
+- Connexion : 5 essais ratés en 15 min depuis une même adresse bloquent 15 min ; session de 90 jours signée avec `APP_SECRET` et liée au mot de passe.
+- En-têtes : CSP, pas d'affichage dans un cadre, `nosniff`, `Referrer-Policy: same-origin`, HSTS, `noindex`.
+- Actions serveur : session vérifiée et arguments validés à chaque appel ; les erreurs internes ne sont jamais renvoyées au téléphone.
+
