@@ -509,11 +509,12 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
   /* Les étoiles restent dans la partie libre du ciel, jamais sur le texte (elles liraient comme des accents). */
   -webkit-mask-image: linear-gradient(to right, transparent calc(100% - 92px), #000 calc(100% - 64px)); mask-image: linear-gradient(to right, transparent calc(100% - 92px), #000 calc(100% - 64px));
 }
-/* Le soleil monte de la mer selon l'heure réelle de Genève ; couché, il passe sous l'eau. */
+/* Le soleil monte de la mer selon l'heure réelle de Genève ; couché, il passe sous l'eau.
+   Course fixe au-dessus de la mer (pas un pourcentage du bandeau) : même heure, même place sur tous les onglets. */
 .sky-sun {
   position: absolute; z-index: 1; right: 22px; width: 56px; height: 56px; border-radius: 50%;
   background: var(--sun-gold);
-  bottom: calc(var(--sea) - 28px + var(--rise) * (100% - var(--sea) - 84px));
+  bottom: calc(var(--sea) - 28px + var(--rise) * 72px);
   transition: bottom 1s linear;
 }
 .sky-sun::before {
