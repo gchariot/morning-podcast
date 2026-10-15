@@ -1,62 +1,36 @@
 /* La Matinale — le monde de la pochette : un ciel d'aube au-dessus de la mer.
-   Fond teinté de la nuit (lavande pâle en clair, bleu nuit en sombre), accent rose de l'horizon (or du soleil en sombre),
+   Toujours en sombre (choix de l'utilisateur) : fond bleu nuit de la pochette, accent or du soleil,
    et une couleur par voix : Léa l'or du soleil, Hugo le rose de l'horizon, Zoé le bleu du ciel. */
 :root {
-  --bg: #f1eff5;
-  --surface: #ffffff;
-  --surface-2: #e9e6ef;
-  --ink: #17162a;
-  --ink-2: #57536b;
-  --ink-3: #67637c;
-  --line: #dfdbe8;
-  /* Accent : le rose de l'horizon, assombri pour la lecture ; les fonds doux viennent du violet de l'aube. */
-  --accent: #93503f;
-  --accent-ink: #ffffff;
-  --accent-soft: #ebe7f1;
+  /* Valeurs du thème sombre, le seul utilisé */
+  --bg: #0e1124;
+  --surface: #171b33;
+  --surface-2: #22274a;
+  --ink: #f3f0f7;
+  --ink-2: #b9b4c9;
+  --ink-3: #9d98b3;
+  --line: #2a2f52;
+  --accent: #ffd796;
+  --accent-ink: #141a3a;
+  --accent-soft: #262a52;
   --night: #141a3a;
-  --switch-on: #7a7398;
-  --good: #166534;
-  --good-soft: #dcf2e3;
-  --bad: #b42318;
-  --bad-soft: #fde4e1;
-  --shadow: 0 1px 2px rgba(23, 22, 42, 0.06), 0 4px 16px rgba(23, 22, 42, 0.06);
-  --snack-action: #ffd796;
+  --switch-on: #7c76ad;
+  --good: #5fd08a;
+  --good-soft: #17301f;
+  --bad: #ff7a8a;
+  --bad-soft: #3b1a26;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --snack-action: #93503f;
   --radius: 14px;
   --tabbar: 64px;
-  /* Voix : pastilles (fond) et texte lisible sur le fond de l'appli */
-  --lea: #f2b84b; --lea-ink: #8a5a00;
-  --hugo: #e07a6b; --hugo-ink: #a33a2c;
-  --zoe: #6fa8e6; --zoe-ink: #1f5f9e;
+  --lea: #f2b84b;
+  --hugo: #e07a6b;
+  --zoe: #6fa8e6;
   --sun-gold: #ffd796;
   --cream: #fff8ee;
   --display: "Figtree Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e1124;
-    --surface: #171b33;
-    --surface-2: #22274a;
-    --ink: #f3f0f7;
-    --ink-2: #b9b4c9;
-    --ink-3: #9d98b3;
-    --line: #2a2f52;
-    --accent: #ffd796;
-    --accent-ink: #141a3a;
-    --accent-soft: #262a52;
-    --switch-on: #7c76ad;
-    --good: #5fd08a;
-    --good-soft: #17301f;
-    --bad: #ff7a8a;
-    --bad-soft: #3b1a26;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-    --snack-action: #93503f;
-    --lea-ink: #f2b84b;
-    --hugo-ink: #f08a7c;
-    --zoe-ink: #7db4ee;
-    color-scheme: dark;
-  }
+  color-scheme: dark;
+  --lea-ink: #f2b84b; --hugo-ink: #f08a7c; --zoe-ink: #7db4ee;
 }
 
 * { box-sizing: border-box; }
@@ -418,7 +392,8 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 @keyframes snack-in { from { opacity: 0; transform: translateY(8px); } }
 
 /* ---------- Robustesse et boucle ---------- */
-@media (prefers-color-scheme: dark) { .playbtn { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); } }
+ .playbtn { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); } 
+
 
 .offline {
   position: sticky; top: 0; z-index: 19; max-width: 640px; margin: 0 auto;
@@ -576,13 +551,12 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .scrub::-moz-range-thumb { background: var(--night); }
 .scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--night) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
 .scrub::-moz-range-progress { background: var(--night); }
-@media (prefers-color-scheme: dark) {
   .playbtn { background: var(--sun-gold); color: var(--night); }
   .scrub::-webkit-slider-thumb { background: var(--sun-gold); }
   .scrub::-moz-range-thumb { background: var(--sun-gold); }
   .scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--sun-gold) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
   .scrub::-moz-range-progress { background: var(--sun-gold); }
-}
+
 .mini-progress { background: var(--lea); }
 
 /* Avant le lever : une seule braise courte sous le bord du soleil (la dernière ligne de la pochette) */
@@ -613,5 +587,5 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .ghost-cta { background: transparent; border: 1px solid var(--line); color: var(--ink-2); font-weight: 500; }
 .snack.neutral { background: var(--surface-2); color: var(--ink); }
 .mini-btn.skipper span { font-size: 0.5625rem; }
-.skip { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 14px; border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
-.skip:focus { top: calc(8px + env(safe-area-inset-top)); }
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 14px; border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
+.skip-link:focus { top: calc(8px + env(safe-area-inset-top)); }

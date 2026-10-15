@@ -14,16 +14,14 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: [
-    // La barre d'état prend la couleur du ciel nocturne de la pochette (haut du bandeau).
-    { media: '(prefers-color-scheme: light)', color: '#141a3a' },
-    { media: '(prefers-color-scheme: dark)', color: '#141a3a' },
-  ],
+  // Toujours en sombre : la barre d'état prend la nuit de la pochette.
+  themeColor: '#141a3a',
+  colorScheme: 'dark',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" style={{ colorScheme: 'dark' }}>
       <body>{children}</body>
     </html>
   );

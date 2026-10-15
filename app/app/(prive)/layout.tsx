@@ -16,7 +16,7 @@ export default async function PrivateLayout({ children }: { children: React.Reac
       <AudioProvider>
         <UpdateWatcher version={currentVersion()} />
         <Connectivity />
-        <a className="skip" href="#contenu">Aller au contenu</a>
+        <a className="skip-link" href="#contenu">Aller au contenu</a>
         <main className="wrap" id="contenu">{children}</main>
         <Tabs />
       </AudioProvider>

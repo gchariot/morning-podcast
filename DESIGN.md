@@ -147,6 +147,8 @@ components:
     height: "52px"
 ---
 
+> **Decision (15/10/2026):** the app is dark-only, by the user's choice; the light values below are retired and no longer shipped. The night-blue ground `#0e1124`, surfaces `#171b33` / `#22274a` and the sun-gold accent `#ffd796` are the only palette.
+
 # Design System: La Matinale
 
 ## Overview
