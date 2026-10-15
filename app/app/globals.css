@@ -118,7 +118,7 @@ a.item:hover { background: var(--surface-2); }
   text-decoration: none; color: var(--ink-2); font-size: 0.75rem; font-weight: 500;
   padding: 6px 4px; border-radius: 10px; transition: color 150ms ease-out;
 }
-.tabs a:hover { color: var(--ink); }
+@media (hover: hover) { .tabs a:hover { color: var(--ink); } }
 .tabs a[aria-current="page"] { color: var(--accent); }
 
 /* ---------- Formulaires ---------- */
@@ -327,7 +327,7 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 
 /* Jeu du samedi : pastilles de progression */
 .game-dots { display: flex; gap: 6px; }
-.game-dot { flex: 1; height: 28px; padding: 11px 0; background-clip: content-box; border-radius: 999px; border: 0; background-color: var(--surface-2); cursor: pointer; transition: background 150ms ease-out; }
+.game-dot { flex: 1; height: 44px; padding: 19px 0; background-clip: content-box; border-radius: 999px; border: 0; background-color: var(--surface-2); cursor: pointer; transition: background 150ms ease-out; }
 .game-dot.done { background-color: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
 .game-dot.on { background-color: var(--accent); }
 .saved-pill { display: inline-flex; align-items: center; gap: 4px; flex: none; font-size: 0.75rem; font-weight: 700; color: var(--good); background: var(--good-soft); padding: 3px 8px; border-radius: 999px; animation: flash-in 200ms cubic-bezier(.2,.8,.2,1); }
@@ -415,7 +415,6 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 .snack .btn { background: transparent; color: var(--snack-action); flex: none; }
 .snack.err .btn { color: #fff; }
 .snack .btn:hover { background: color-mix(in srgb, var(--bg) 12%, transparent); }
-body:has(.mini) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 80px); }
 @keyframes snack-in { from { opacity: 0; transform: translateY(8px); } }
 
 /* ---------- Robustesse et boucle ---------- */
@@ -501,7 +500,7 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
   position: relative; overflow: hidden; isolation: isolate;
   margin: -24px -16px 24px; padding: calc(28px + env(safe-area-inset-top)) 20px calc(var(--sea) + 22px);
   color: var(--cream);
-  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 60%, var(--sky-horizon) 100%);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 70%, var(--sky-horizon) 100%);
   transition: background 1s linear;
 }
 .sky.tall { padding-top: calc(36px + env(safe-area-inset-top)); padding-bottom: calc(var(--sea) + 28px); }
@@ -520,7 +519,7 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .sky-stars {
   position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none; transition: opacity 1s linear;
   /* Les étoiles restent dans la partie libre du ciel, jamais sur le texte (elles liraient comme des accents). */
-  -webkit-mask-image: linear-gradient(to right, transparent 0 66%, #000 82%); mask-image: linear-gradient(to right, transparent 0 66%, #000 82%);
+  -webkit-mask-image: linear-gradient(to right, transparent calc(100% - 92px), #000 calc(100% - 64px)); mask-image: linear-gradient(to right, transparent calc(100% - 92px), #000 calc(100% - 64px));
 }
 /* Le soleil monte de la mer selon l'heure réelle de Genève ; couché, il passe sous l'eau. */
 .sky-sun {
@@ -535,7 +534,8 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 }
 .sky-sea {
   position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: var(--sea);
-  background: #141a3a; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly;
+  background: var(--sea-color, #141a3a); display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly;
+  transition: height 1s ease-out;
   padding: 3px 0;
 }
 /* Les reflets dorés, centrés sous le soleil (centre à 22 + 28 px du bord droit) */
@@ -584,3 +584,15 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
   .scrub::-moz-range-progress { background: var(--sun-gold); }
 }
 .mini-progress { background: var(--lea); }
+
+/* Avant le lever : seule la première ligne de reflet, couleur braise */
+.sky.predawn .sky-sea i { opacity: 0; }
+.sky.predawn .sky-sea i:first-child { opacity: var(--glints); background: #e8955a; }
+.sky-note { margin-top: 10px; font-size: 0.875rem; font-weight: 600; color: var(--sun-gold); }
+
+/* Un seul étage en bas : le message prend la place du mini-lecteur le temps de s'afficher */
+body:has(.mini) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 8px); }
+body:has(.snack) .mini { visibility: hidden; }
+body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 76px); }
+.game-summary { margin-top: 4px; color: var(--ink-2); }
+.game-hits { padding: 14px 16px; font-size: 0.875rem; color: var(--ink-2); }

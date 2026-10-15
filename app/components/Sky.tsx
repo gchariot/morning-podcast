@@ -1,10 +1,10 @@
 'use client';
 /**
  * Le bandeau ciel : la pochette, à l'heure qu'il est à Genève.
- * Nuit étoilée avant 6 h, aube vers 6 h 30, jour, soir ; le soleil monte de la mer et s'y reflète.
+ * Lever et coucher réels (lib/sky.ts) ; une heure avant le lever, l'horizon s'éclaire et le soleil affleure.
  */
 import { useEffect, useState } from 'react';
-import { skyAt, untilWriting, zurichMinutes } from '@/lib/sky';
+import { clock, seaColor, skyAt, sunTimes, untilWriting, zurichMinutes } from '@/lib/sky';
 
 // Ciel étoilé fixe (positions pseudo-aléatoires mais stables), comme sur la pochette.
 const STARS = Array.from({ length: 46 }, (_, i) => {
@@ -12,8 +12,8 @@ const STARS = Array.from({ length: 46 }, (_, i) => {
   return `radial-gradient(${r}px ${r}px at ${x.toFixed(1)}% ${y.toFixed(1)}%, #fff 60%, transparent 100%)`;
 }).join(',');
 
-export function SkyBand({ minutes: initial, tall = false, children }: {
-  minutes: number; tall?: boolean; children: React.ReactNode;
+export function SkyBand({ minutes: initial, tall = false, sunrise = false, children }: {
+  minutes: number; tall?: boolean; sunrise?: boolean; children: React.ReactNode;
 }) {
   const [m, setM] = useState(initial);
   useEffect(() => {
@@ -23,19 +23,28 @@ export function SkyBand({ minutes: initial, tall = false, children }: {
     return () => clearInterval(id);
   }, []);
   const s = skyAt(m);
+  const { rise } = sunTimes();
   // Hauteur du soleil : 0 posé sur la mer (comme sur la pochette), 1 en haut du ciel, négatif = couché.
-  const rise = s.sun <= 1 ? 1 - s.sun : -(s.sun - 1) * 12;
+  // Juste avant le lever (soleil entre 1 et 1,04), le bord affleure au-dessus de la mer.
+  const height = s.sun <= 1 ? 1 - s.sun : s.sun <= 1.04 ? -(s.sun - 1) * 4 : -(s.sun - 1) * 12;
+  // Reflets : pleins quand le soleil est bas sur l'eau, absents quand il est haut ;
+  // avant le lever, une seule braise sous le bord du soleil.
+  const glints = s.sun > 1.06 ? 0 : s.sun > 1 ? 0.45 : Math.max(0, Math.min(0.9, ((s.sun - 0.3) / 0.4) * 0.9));
+  const night = s.sun > 1.06;
   const vars = {
     '--sky-top': s.top, '--sky-mid': s.mid, '--sky-horizon': s.horizon,
-    '--rise': rise.toFixed(3), '--stars': s.stars.toFixed(2),
-    '--glints': s.sun < 1 ? '0.9' : '0', // pas de reflets sans soleil
+    '--rise': height.toFixed(3), '--stars': s.stars.toFixed(2), '--glints': glints.toFixed(2),
+    '--sea': night ? '20px' : '40px', '--sea-color': seaColor(s.sun),
   } as React.CSSProperties;
   return (
-    <header className={`sky${tall ? ' tall' : ''}`} style={vars}>
+    <header className={`sky${tall ? ' tall' : ''}${s.sun > 1 ? ' predawn' : ''}`} style={vars}>
       <div className="sky-stars" style={{ backgroundImage: STARS }} aria-hidden />
       <span className="sky-sun" aria-hidden />
       <span className="sky-sea" aria-hidden><i /><i /><i /><i /><i /><i /><i /></span>
-      <div className="sky-content">{children}</div>
+      <div className="sky-content">
+        {children}
+        {sunrise && m < rise && m > rise - 360 && <p className="sky-note">Lever du soleil à {clock(rise)}</p>}
+      </div>
     </header>
   );
 }

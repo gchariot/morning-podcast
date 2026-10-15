@@ -155,7 +155,7 @@ components:
 
 La Matinale is the podcast cover come to life. Each tab opens on a band of real sky: the gradient, the stars, and the height of the sun are computed from Geneva's actual sunrise and sunset, minute by minute, so the band at 6:40 on the Geneva–Lausanne train looks like the sky outside. At the bottom of the band, a strip of night sea carries the cover's golden reflections under the sun. Below the band the app is quiet and practical: lavender-tinted panels in light mode, deep night blue in dark mode, grouped rows, thumb-sized controls.
 
-The world has two registers. The sky band is atmosphere: it moves slowly (1s linear transitions on gradient, stars, sun, and glints), it carries the bold Figtree title and the two-weight edition number, and it is the only full-colour surface. The working surfaces underneath borrow from the same night: the canvas is night-tinted, the play button is night with a sun, and the light-mode accent is the horizon's rose, darkened for reading. Three voice hues (Léa gold, Hugo rose, Zoé sky blue) mark who is speaking where it matters.
+The world has two registers. The sky band is atmosphere: it moves slowly (1s transitions on stars, sun, glints and sea height; the gradient itself switches minute by minute, since CSS cannot animate gradients), it carries the bold Figtree title and the two-weight edition number, and it is the only full-colour surface. The working surfaces underneath borrow from the same night: the canvas is night-tinted, the play button is night with a sun, and the light-mode accent is the horizon's rose, darkened for reading. Three voice hues (Léa gold, Hugo rose, Zoé sky blue) mark who is speaking where it matters. Glints follow the sun's height: full when it sits low on the water, gone when it is high or set; an hour before sunrise a single ember glint and the sun's rim announce the day, with the sunrise time written on Écouter.
 
 Density is mobile and one-thumb: a single 640px column, 44px minimum targets throughout, and a fixed 64px tab bar with a floating mini-player above it. The anti-reference is the grey iOS settings list with an orange accent. The grouped-row structure stays, but it sits on night-tinted ground with a horizon accent.
 
@@ -207,7 +207,7 @@ The palette is the cover at the instant of sunrise: night blue, dawn violet, a c
 **Character:** Figtree at 800 with tight negative tracking carries the cover's heavy masthead. Everything you read while operating the app stays in the native system face at ordinary weights.
 
 ### Hierarchy
-- **Display** (Figtree 800, 2rem, 1.08, -0.03em): the episode title in the tall sky band. On other tabs, the band title drops to 1.75rem.
+- **Display** (Figtree 800, 2rem, 1.08, -0.03em): the tab title in the sky band (Mon avis, Thèmes, Réglages). On Écouter the band is taller and the episode title, longer, drops to 1.75rem.
 - **Headline** (Figtree 800, 1.75rem, 1.2, -0.025em): page `h1` outside the band. The login title is 2rem.
 - **Edition** (Figtree 1.0625rem, "N°" at 300 and the number at 800): the edition number in the sky meta line.
 - **Title** (system 650, 1.25rem, -0.01em): section headings ("Le face-à-face", chapters). `h3` is 1rem at 600.

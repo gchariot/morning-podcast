@@ -7,6 +7,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { submitGame, type GameResult } from '@/app/(prive)/actions';
 import { OFFLINE, radioKeys, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
+import { Icon } from './Icon';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -59,21 +60,33 @@ export function GameCard({ date, questions, played }: { date: string; questions:
           <h2>Le jeu de la semaine</h2>
           <strong className="num" style={{ color: score >= 6 ? 'var(--good)' : score >= 4 ? 'var(--ink)' : 'var(--bad)' }}>{score}/{questions.length}</strong>
         </div>
+        <p className="small game-summary">
+          {score === questions.length ? 'Sans faute, chapeau !' : score >= 6 ? 'Très belle semaine.' : score >= 4 ? 'Pas mal du tout.' : 'Semaine difficile, revanche samedi prochain.'}
+          {score < questions.length ? ` Voici ${questions.length - score === 1 ? 'la question ratée' : `les ${questions.length - score} questions ratées`}.` : ''}
+        </p>
         <div className="group" style={{ marginTop: 12 }}>
           {questions.map((q, i) => {
             const ok = result.answers![i] === result.correct![i];
+            if (ok) return null; // les bonnes réponses sont regroupées plus bas
             return (
               <div key={i} className="pad">
                 <p className="small muted num">Question {i + 1}</p>
                 <p style={{ fontWeight: 600, marginTop: 2 }}>{q.question}</p>
-                <p className="small" style={{ marginTop: 6, color: ok ? 'var(--good)' : 'var(--bad)' }}>
-                  {ok ? 'Bonne réponse : ' : `Ta réponse : ${LETTERS[result.answers![i]]}. ${q.choices[result.answers![i]]} · Bonne réponse : `}
-                  <strong>{LETTERS[result.correct![i]]}. {q.choices[result.correct![i]]}</strong>
+                <p className="small" style={{ marginTop: 6, color: 'var(--bad)' }}>
+                  Ta réponse : {LETTERS[result.answers![i]]}. {q.choices[result.answers![i]]} · Bonne réponse : <strong>{LETTERS[result.correct![i]]}. {q.choices[result.correct![i]]}</strong>
                 </p>
                 {result.explanations?.[i] && <p className="small muted" style={{ marginTop: 4 }}>{result.explanations[i]}</p>}
               </div>
             );
           })}
+          {score > 0 && (
+            <details>
+              <summary className="item"><span className="grow">{score} bonne{score > 1 ? 's' : ''} réponse{score > 1 ? 's' : ''}</span><Icon name="chevron-right" className="chev" /></summary>
+              {questions.map((q, i) => result.answers![i] === result.correct![i] && (
+                <p key={i} className="game-hits"><span className="num">{i + 1}.</span> {q.question} <strong style={{ color: 'var(--good)' }}>{LETTERS[result.correct![i]]}. {q.choices[result.correct![i]]}</strong></p>
+              ))}
+            </details>
+          )}
         </div>
       </section>
     );

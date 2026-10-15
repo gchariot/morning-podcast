@@ -33,12 +33,14 @@ export function sunTimes(d = new Date()): { rise: number; noon: number; set: num
 
 const NIGHT: Look = { top: '#0b1030', mid: '#151a3d', horizon: '#1d2048', sun: 1.3, stars: 1 };
 const LATE: Look = { top: '#0f1434', mid: '#1d1d48', horizon: '#2c2550', sun: 1.2, stars: 1 };
-const PREDAWN: Look = { top: '#121838', mid: '#2e2650', horizon: '#6d4258', sun: 1.06, stars: 0.8 };
+// Une heure avant le lever, l'horizon s'éclaire et le bord du soleil affleure : le ciel du train, en hiver.
+const PREGLOW: Look = { top: '#10163a', mid: '#2a2452', horizon: '#5e3a5a', sun: 1.04, stars: 0.9 };
+const PREDAWN: Look = { top: '#131a3c', mid: '#352a58', horizon: '#8a4e56', sun: 1.015, stars: 0.7 };
 const COVER: Look = { top: '#141a3a', mid: '#3a2a55', horizon: '#a8604f', sun: 1, stars: 0.5 }; // l'instant de la pochette
 const MORNING: Look = { top: '#222b58', mid: '#5a4472', horizon: '#d98a62', sun: 0.75, stars: 0.1 };
-const FORENOON: Look = { top: '#244a86', mid: '#4d6ca6', horizon: '#e8b48a', sun: 0.45, stars: 0 };
-const NOON: Look = { top: '#1f4f93', mid: '#3a6db0', horizon: '#9cc3e6', sun: 0.05, stars: 0 };
-const AFTERNOON: Look = { top: '#244f8f', mid: '#3d6aa8', horizon: '#b6cfe6', sun: 0.45, stars: 0 };
+const FORENOON: Look = { top: '#22457f', mid: '#3d5c96', horizon: '#d9a07e', sun: 0.45, stars: 0 };
+const NOON: Look = { top: '#1c4a8c', mid: '#2c5c9c', horizon: '#7aa5d6', sun: 0.05, stars: 0 };
+const AFTERNOON: Look = { top: '#214b8a', mid: '#30609e', horizon: '#8fb3dc', sun: 0.45, stars: 0 };
 const DUSK: Look = { top: '#2a2c62', mid: '#6a4670', horizon: '#d77a55', sun: 0.8, stars: 0.05 };
 const SUNSET: Look = { top: '#1f2150', mid: '#4a3462', horizon: '#b5604a', sun: 1, stars: 0.3 };
 const EVENING: Look = { top: '#141a3a', mid: '#2a2550', horizon: '#4a3058', sun: 1.2, stars: 0.8 };
@@ -46,7 +48,7 @@ const EVENING: Look = { top: '#141a3a', mid: '#2a2550', horizon: '#4a3058', sun:
 function keys(d: Date): Key[] {
   const { rise, noon, set } = sunTimes(d);
   return [
-    { at: 0, ...NIGHT }, { at: rise - 90, ...LATE }, { at: rise - 30, ...PREDAWN }, { at: rise, ...COVER },
+    { at: 0, ...NIGHT }, { at: rise - 120, ...LATE }, { at: rise - 60, ...PREGLOW }, { at: rise - 20, ...PREDAWN }, { at: rise, ...COVER },
     { at: rise + 45, ...MORNING }, { at: rise + 120, ...FORENOON }, { at: noon, ...NOON },
     { at: set - 120, ...AFTERNOON }, { at: set - 40, ...DUSK }, { at: set, ...SUNSET },
     { at: set + 50, ...EVENING }, { at: 1440, ...NIGHT },
@@ -92,4 +94,16 @@ export function editionNumber(date: string, first: string | undefined): number |
   if (!first) return null;
   const n = Math.round((Date.parse(`${date}T12:00:00Z`) - Date.parse(`${first}T12:00:00Z`)) / 86400000) + 1;
   return n >= 1 ? n : null;
+}
+
+/** « 7 h 51 » */
+export function clock(minutes: number): string {
+  const m = Math.round(minutes);
+  return `${Math.floor(m / 60)}\u00a0h\u00a0${String(m % 60).padStart(2, '0')}`;
+}
+
+/** Couleur de la mer : nuit de la pochette, bleuie par le jour. */
+export function seaColor(sun: number): string {
+  const day = Math.max(0, Math.min(1, (0.9 - sun) / 0.6));
+  return mix('#141a3a', '#1d3f78', day);
 }

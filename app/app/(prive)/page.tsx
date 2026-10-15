@@ -8,6 +8,7 @@ import { DebateCard } from '@/components/DebateCard';
 import { loadSamedi } from '@/lib/samedi';
 import { isRevealed, loadAnswers, quizStats } from '@/lib/quiz';
 import { loadConfig } from '@/lib/config';
+import { loadRetours } from '@/lib/retours';
 import { editionNumber, zurichMinutes } from '@/lib/sky';
 import { SkyBand } from '@/components/Sky';
 
@@ -28,12 +29,13 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover, { answers }, { data: samedi }, firstEdition] = await Promise.all([
+  const [episodes, cover, { answers }, { data: samedi }, firstEdition, recent] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
     loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
     loadSamedi().catch(() => ({ data: {} as Awaited<ReturnType<typeof loadSamedi>>['data'] })),
     loadConfig().then(c => (c.config.show as { firstEdition?: string }).firstEdition).catch(() => undefined),
+    loadRetours().then(r => r.recent).catch(() => [] as string[]),
   ]);
   const now = zurichMinutes();
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
@@ -59,11 +61,11 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <SkyBand minutes={now} tall>
+      <SkyBand minutes={now} tall sunrise>
         <h1>{episode.title}</h1>
         <p className="sky-meta">
           {edition ? <><span className="edition"><span className="thin">N°</span> <b className="num">{edition}</b></span> · </> : null}
-          {isToday ? `aujourd’hui, ${formatDate(episode.date)}` : formatDate(episode.date)}
+          {(isToday ? `aujourd’hui, ${formatDate(episode.date)}` : formatDate(episode.date)).replace(/ (\d+) /, '\u00a0$1\u00a0')}
           <span className="nowrap">{' · '}<span className="num">{minutes(episode.seconds)}</span></span>
         </p>
       </SkyBand>
@@ -78,7 +80,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       <Player track={{
         date: episode.date, src: episode.url, title: episode.title, cover,
         seconds: episode.seconds, chapters: episode.chapters ?? [],
-      }} />
+      }} feedbackSent={recent.some(l => l.endsWith(`(épisode du ${episode.date})`))} />
 
       {isLatest && (
         <Link className="btn block cta" href="/avis">

@@ -2,6 +2,8 @@
 /** Un écran qui ne charge pas reste dans l'appli : les onglets et l'épisode en cours continuent. */
 import { startTransition, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { SkyBand } from '@/components/Sky';
+import { zurichMinutes } from '@/lib/sky';
 
 export default function PageError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const router = useRouter();
@@ -9,9 +11,11 @@ export default function PageError({ reset }: { error: Error & { digest?: string 
   useEffect(() => { setOffline(!navigator.onLine); }, []);
 
   return (
-    <div className="page-head" role="alert">
-      <h1>Cet écran n&apos;a pas pu se charger</h1>
-      <p>
+    <div role="alert">
+      <SkyBand minutes={zurichMinutes()}>
+        <h1>Cet écran n&apos;a pas pu se charger</h1>
+      </SkyBand>
+      <p className="muted">
         {offline
           ? 'Pas de réseau pour le moment. L’épisode en cours continue ; réessaie quand ça capte.'
           : 'Le serveur n’a pas répondu. L’épisode en cours continue ; réessaie dans un instant.'}

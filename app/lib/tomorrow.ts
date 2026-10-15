@@ -47,13 +47,20 @@ function describe(message: string): { key: string; label: string | null } | null
 export async function loadTomorrow(): Promise<Tomorrow> {
   const { last, nextLabel } = lastWriting();
   const commits = await listCommits(last).catch(() => []);
-  const byKey = new Map<string, string | null>();
-  // Du plus ancien au plus récent : la dernière modification d'un même sujet l'emporte.
-  for (const c of [...commits].reverse()) {
+  // Par sujet : le premier et le dernier changement depuis 5 h 37 ; deux changements qui s'annulent ne s'affichent pas.
+  const first = new Map<string, string | null>(), latest = new Map<string, string | null>();
+  for (const c of [...commits].reverse()) { // du plus ancien au plus récent
     const d = describe(c.message);
     if (!d) continue;
-    byKey.delete(d.key);
-    byKey.set(d.key, d.label);
+    if (!first.has(d.key)) first.set(d.key, d.label);
+    latest.delete(d.key);
+    latest.set(d.key, d.label);
   }
-  return { when: nextLabel, items: [...byKey.values()].filter((v): v is string => Boolean(v)) };
+  const cancels = (a: string | null | undefined, b: string | null | undefined) =>
+    (!!a && !!b && ((a.endsWith('en pause') && b.endsWith('revient')) || (a.endsWith('revient') && b.endsWith('en pause'))))
+    || (!!a && a.startsWith('Nouveau thème') && (b ?? '').endsWith('supprimé'));
+  const items = [...latest.entries()]
+    .filter(([k, v]) => v && !cancels(first.get(k), v))
+    .map(([, v]) => v as string);
+  return { when: nextLabel, items };
 }

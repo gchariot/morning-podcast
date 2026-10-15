@@ -162,7 +162,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     if (!('mediaSession' in navigator) || !track) return;
     const ms = navigator.mediaSession;
     const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
-      ['play', () => void el.current?.play()],
+      ['play', () => { if (el.current) start(el.current); }],
       ['pause', () => el.current?.pause()],
       ['seekbackward', d => skip(-(d.seekOffset ?? 15))],
       ['seekforward', d => skip(d.seekOffset ?? 30)],
@@ -173,7 +173,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     for (const [action, fn] of handlers) {
       try { ms.setActionHandler(action, fn); } catch { /* action non prise en charge */ }
     }
-  }, [track, skip, seek, nextChapter, prevChapter]);
+  }, [track, skip, seek, nextChapter, prevChapter, start]);
 
   // Titre affiché sur l'écran verrouillé : l'épisode, et le chapitre en cours.
   const chapterTitle = chapter >= 0 ? chapters[chapter]?.title : undefined;

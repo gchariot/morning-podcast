@@ -11,7 +11,7 @@ const hms = (s: number) => {
 };
 
 /** Commandes de l'épisode affiché. Le son lui-même vit dans <AudioProvider> et continue entre les onglets. */
-export function Player({ track }: { track: Track }) {
+export function Player({ track, feedbackSent = false }: { track: Track; feedbackSent?: boolean }) {
   const audio = useAudio();
   const { prepare, setShown } = audio;
   useEffect(() => { prepare(track); }, [prepare, track]);
@@ -69,8 +69,11 @@ export function Player({ track }: { track: Track }) {
         )}
         {finished && (
           <div className="ended" role="status">
-            <span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Deux pouces et la rédaction ajuste demain.</span>
-            <Link href="/avis" className="btn small primary">Donner mon avis</Link>
+            {feedbackSent
+              ? <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Ton avis est déjà parti pour demain.</span>
+                  <Link href="/avis" className="btn small">Modifier</Link></>
+              : <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Deux pouces et la rédaction ajuste demain.</span>
+                  <Link href="/avis" className="btn small primary">Donner mon avis</Link></>}
           </div>
         )}
         {!live && audio.track && audio.playing && (

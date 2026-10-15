@@ -4,7 +4,7 @@
  * Ce qui a déjà été envoyé reste affiché sur la ligne ; le modifier puis renvoyer remplace l'ancien avis.
  * Le brouillon est gardé sur le téléphone tant qu'il n'est pas envoyé (coupure réseau, onglet fermé…).
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useOnline } from './Connectivity';
 import { Icon } from './Icon';
@@ -34,7 +34,6 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
   const [waiting, setWaiting] = useState(false); // envoi refusé faute de réseau, brouillon gardé
   const { show } = useSnack();
   const router = useRouter();
-  const sendRef = useRef<() => Promise<void>>(async () => {});
   const online = useOnline();
 
   // Brouillon non envoyé : on le retrouve en revenant sur l'onglet.
@@ -62,7 +61,7 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
   useEffect(() => {
     if (online && waiting && count > 0) {
       setWaiting(false);
-      show({ ok: true, message: 'Le réseau est revenu : ton avis est prêt.', action: { label: 'Envoyer', run: () => void sendRef.current() } });
+      show({ ok: true, message: 'Le réseau est revenu : ton avis est prêt à partir.' });
     }
   }, [online, waiting, count, show]);
 
@@ -84,7 +83,7 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     setSending(false);
     if (!res.ok && res.message === OFFLINE) {
       setWaiting(true);
-      show({ ok: false, message: 'Pas de réseau : ton avis est gardé sur le téléphone. Tu pourras l’envoyer dès que ça capte.' });
+      show({ ok: true, message: 'Pas de réseau : ton avis est gardé sur le téléphone. Envoie-le dès que ça capte.' });
       return;
     }
     setWaiting(false);
@@ -102,8 +101,6 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     setEntries(next);
     setGeneral(g);
   };
-
-  useEffect(() => { sendRef.current = send; });
 
   return (
     <div>

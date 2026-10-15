@@ -261,10 +261,10 @@ function Row({
         <button type="button" className="row-main" aria-expanded={expanded} aria-controls={id} onClick={onExpand}>
           <span className="row-title">
             <strong className="row-name">{r.title}</strong>
-            {dirty && <span className="pill">Non enregistré</span>}
             <Icon name="chevron-right" size={18} className="chev" />
           </span>
           <span className="row-meta">
+            {dirty && <span className="pill">Non enregistré</span>}{dirty ? ' ' : ''}
             {on ? meta : 'En pause : absent des prochains épisodes'}
             {on && cue !== undefined && <span className="sr">, commence vers {cueLabel(cue)}</span>}
           </span>
