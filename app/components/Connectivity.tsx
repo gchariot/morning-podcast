@@ -46,7 +46,7 @@ export function Connectivity() {
   if (online) return null;
   return (
     <div className="offline" role="status">
-      Hors connexion{playing ? ' · l’écoute continue avec ce qui est déjà chargé' : ''}
+      Hors connexion{playing ? ' · l’écoute continue' : ''}
     </div>
   );
 }

@@ -83,7 +83,7 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     setSending(false);
     if (!res.ok && res.message === OFFLINE) {
       setWaiting(true);
-      show({ ok: true, message: 'Pas de réseau : ton avis est gardé sur le téléphone. Envoie-le dès que ça capte.' });
+      show({ ok: true, neutral: true, message: 'Pas de réseau : ton avis est gardé sur le téléphone. Envoie-le dès que ça capte.' });
       return;
     }
     setWaiting(false);
@@ -118,7 +118,7 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
               <div className="item">
                 <span className="grow row" style={{ gap: 8, flexWrap: 'nowrap', minWidth: 0 }}>
                   <strong className="fb-title">{t}</strong>
-                  {status && <span className={`pill${status === 'Envoyé' ? ' sent' : ''}`}>{status}</span>}
+                  {status && status !== 'Envoyé' && <span className="pill">{status}</span>}
                 </span>
                 <span className="vote" role="group" aria-label={`Avis sur ${t}`}>
                   <button type="button" className="thumb up" aria-pressed={e.vote === 'up'} onClick={() => vote(t, 'up')} title="J'ai aimé">

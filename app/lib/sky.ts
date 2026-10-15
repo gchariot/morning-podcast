@@ -34,8 +34,8 @@ export function sunTimes(d = new Date()): { rise: number; noon: number; set: num
 const NIGHT: Look = { top: '#0b1030', mid: '#151a3d', horizon: '#1d2048', sun: 1.3, stars: 1 };
 const LATE: Look = { top: '#0f1434', mid: '#1d1d48', horizon: '#2c2550', sun: 1.2, stars: 1 };
 // Une heure avant le lever, l'horizon s'éclaire et le bord du soleil affleure : le ciel du train, en hiver.
-const PREGLOW: Look = { top: '#10163a', mid: '#2a2452', horizon: '#5e3a5a', sun: 1.04, stars: 0.9 };
-const PREDAWN: Look = { top: '#131a3c', mid: '#352a58', horizon: '#8a4e56', sun: 1.015, stars: 0.7 };
+const PREGLOW: Look = { top: '#10163a', mid: '#2a2452', horizon: '#5e3a5a', sun: 1.035, stars: 0.9 };
+const PREDAWN: Look = { top: '#131a3c', mid: '#352a58', horizon: '#8a4e56', sun: 1.012, stars: 0.7 };
 const COVER: Look = { top: '#141a3a', mid: '#3a2a55', horizon: '#a8604f', sun: 1, stars: 0.5 }; // l'instant de la pochette
 const MORNING: Look = { top: '#222b58', mid: '#5a4472', horizon: '#d98a62', sun: 0.75, stars: 0.1 };
 const FORENOON: Look = { top: '#22457f', mid: '#3d5c96', horizon: '#d9a07e', sun: 0.45, stars: 0 };
@@ -48,7 +48,7 @@ const EVENING: Look = { top: '#141a3a', mid: '#2a2550', horizon: '#4a3058', sun:
 function keys(d: Date): Key[] {
   const { rise, noon, set } = sunTimes(d);
   return [
-    { at: 0, ...NIGHT }, { at: rise - 120, ...LATE }, { at: rise - 60, ...PREGLOW }, { at: rise - 20, ...PREDAWN }, { at: rise, ...COVER },
+    { at: 0, ...NIGHT }, { at: rise - 150, ...LATE }, { at: rise - 90, ...PREGLOW }, { at: rise - 30, ...PREDAWN }, { at: rise, ...COVER },
     { at: rise + 45, ...MORNING }, { at: rise + 120, ...FORENOON }, { at: noon, ...NOON },
     { at: set - 120, ...AFTERNOON }, { at: set - 40, ...DUSK }, { at: set, ...SUNSET },
     { at: set + 50, ...EVENING }, { at: 1440, ...NIGHT },

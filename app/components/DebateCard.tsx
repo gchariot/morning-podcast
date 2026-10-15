@@ -2,7 +2,7 @@
 /** Le face-à-face du samedi : qui t'a convaincu, Léa ou Hugo ? Résultat annoncé le samedi suivant. */
 import { useState, useTransition } from 'react';
 import { voteDebate } from '@/app/(prive)/actions';
-import { OFFLINE, radioKeys, safeCall } from '@/lib/safe';
+import { OFFLINE, fr, radioKeys, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
 
 export function DebateCard({ date, topic, sides, myVote, closed }: {
@@ -30,7 +30,7 @@ export function DebateCard({ date, topic, sides, myVote, closed }: {
     <section className="section">
       <h2>Le face-à-face</h2>
       <div className="group pad quiz-card" style={{ marginTop: 12 }}>
-        <p style={{ fontWeight: 600, lineHeight: 1.45 }}>{topic}</p>
+        <p style={{ fontWeight: 600, lineHeight: 1.45 }}>{fr(topic)}</p>
         <div className="quiz-choices" role="radiogroup" aria-label="Qui t'a convaincu ?">
           {(['Léa', 'Hugo'] as const).map((host, i) => (
             <button key={host} type="button" role="radio" aria-checked={vote === i} disabled={closed}

@@ -14,7 +14,7 @@
   --accent-ink: #ffffff;
   --accent-soft: #ebe7f1;
   --night: #141a3a;
-  --switch-on: #141a3a;
+  --switch-on: #7a7398;
   --good: #166534;
   --good-soft: #dcf2e3;
   --bad: #b42318;
@@ -45,7 +45,7 @@
     --accent: #ffd796;
     --accent-ink: #141a3a;
     --accent-soft: #262a52;
-    --switch-on: #f2b84b;
+    --switch-on: #7c76ad;
     --good: #5fd08a;
     --good-soft: #17301f;
     --bad: #ff7a8a;
@@ -465,7 +465,7 @@ body:has(.sendbar) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-b
 .run-note.over { display: flex; gap: 8px; align-items: flex-start; color: var(--ink); background: var(--bad-soft); padding: 10px 12px; border-radius: 10px; }
 .run-note.over svg { color: var(--bad); flex: none; margin-top: 1px; }
 .run-note.over .linkish { color: var(--bad); }
-.linkish { font: inherit; font-weight: 700; color: var(--accent); background: none; border: 0; padding: 10px 2px; margin: -10px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.linkish { font: inherit; font-weight: 700; color: var(--accent); background: none; border: 0; padding: 12px 2px; margin: -12px 0; min-height: 44px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .nowrap { white-space: nowrap; }
 
 /* Poignée clavier des thèmes : invisible au doigt, visible quand elle a le focus */
@@ -490,7 +490,7 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .fb-summary { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 0 16px 12px; font: inherit; font-size: 0.875rem; color: var(--ink-2); text-align: left; background: none; border: 0; cursor: pointer; }
 .fb-edit { flex: none; font-weight: 600; color: var(--accent); }
 
-.row-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.row-name { font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .row-title { min-width: 0; }
 .ended.err { background: var(--bad-soft); }
 
@@ -585,9 +585,10 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 }
 .mini-progress { background: var(--lea); }
 
-/* Avant le lever : seule la première ligne de reflet, couleur braise */
-.sky.predawn .sky-sea i { opacity: 0; }
-.sky.predawn .sky-sea i:first-child { opacity: var(--glints); background: #e8955a; }
+/* Avant le lever : une seule braise courte sous le bord du soleil (la dernière ligne de la pochette) */
+.sky.predawn .sky-sea { justify-content: flex-start; padding-top: 5px; }
+.sky.predawn .sky-sea i { display: none; }
+.sky.predawn .sky-sea i:last-child { display: block; opacity: var(--glints); width: 22px; margin-right: calc(50px - 11px); }
 .sky-note { margin-top: 10px; font-size: 0.875rem; font-weight: 600; color: var(--sun-gold); }
 
 /* Un seul étage en bas : le message prend la place du mini-lecteur le temps de s'afficher */
@@ -596,3 +597,21 @@ body:has(.snack) .mini { visibility: hidden; }
 body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 76px); }
 .game-summary { margin-top: 4px; color: var(--ink-2); }
 .game-hits { padding: 14px 16px; font-size: 0.875rem; color: var(--ink-2); }
+
+/* Thèmes : une ligne d'en-tête dit ce qu'est la colonne d'heures */
+.theme-cols { display: flex; align-items: center; gap: 0; padding: 10px 8px 8px 36px; font-size: 0.75rem; font-weight: 600; color: var(--ink-2); background: var(--surface); border-bottom: 1px solid var(--line); }
+.theme-cols span:first-child { width: 50px; }
+.theme-cols span:nth-child(2) { flex: 1; }
+.theme-cols span:last-child { width: 64px; text-align: center; }
+.group > .theme-cols + * { border-top: 0; }
+
+/* Focus clair partout, même dans les champs posés sur un groupe */
+.group input[type="text"]:focus, .group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
+.switch:focus-visible, .scrub:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Bouton d'avis déjà envoyé : discret */
+.ghost-cta { background: transparent; border: 1px solid var(--line); color: var(--ink-2); font-weight: 500; }
+.snack.neutral { background: var(--surface-2); color: var(--ink); }
+.mini-btn.skipper span { font-size: 0.5625rem; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 14px; border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
+.skip:focus { top: calc(8px + env(safe-area-inset-top)); }

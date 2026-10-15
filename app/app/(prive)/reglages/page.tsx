@@ -53,7 +53,7 @@ export default async function ReglagesPage() {
             <span className="grow">Le reste<span className="meta" style={{ display: 'block' }}>Rédaction : incluse dans Claude Pro. Hébergement (Vercel, Cloudflare R2, GitHub Actions) et données (football-data, Open-Meteo, Wikipédia) : offres gratuites.</span></span>
             <strong className="num">0 $</strong>
           </div>
-          <p className="pad field-hint" style={{ marginTop: 0 }}>Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio{todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
+          <p className="pad field-hint" style={{ marginTop: 0 }}>Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio (environ 25 jetons par seconde de voix){todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
         </details>
 
         <details className="group" style={{ marginTop: 12 }}>

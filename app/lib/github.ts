@@ -26,8 +26,8 @@ export const REPO_TAG = 'repo';
  * Lit un fichier. Par défaut, la lecture est mise en cache 5 min (affichage rapide des pages) ;
  * `fresh` force une lecture à jour, obligatoire avant d'écrire (le sha doit être le dernier).
  */
-export async function readFile(path: string, fresh = false): Promise<RepoFile | null> {
-  const res = await fetch(`${api()}/${path}?ref=${branch()}`, {
+export async function readFile(path: string, fresh = false, ref?: string): Promise<RepoFile | null> {
+  const res = await fetch(`${api()}/${path}?ref=${ref ?? branch()}`, {
     headers: headers(),
     ...(fresh ? { cache: 'no-store' as const } : { next: { revalidate: 300, tags: [REPO_TAG] } }),
   });
@@ -66,4 +66,15 @@ export async function listCommits(since: Date): Promise<{ message: string; date:
   if (!res.ok) throw new Error(`GitHub ${res.status} en lisant l'historique`);
   const json = (await res.json()) as { commit: { message: string; author?: { date?: string }; committer?: { date?: string } } }[];
   return json.map(c => ({ message: c.commit.message.split('\n')[0], date: c.commit.committer?.date ?? c.commit.author?.date ?? '' }));
+}
+
+/** Contenu d'un fichier tel qu'il était à une date (dernier commit qui le touchait avant). */
+export async function readFileAsOf(path: string, until: Date): Promise<RepoFile | null> {
+  const base = `${process.env.GITHUB_API_URL || 'https://api.github.com'}/repos/${env('GITHUB_REPO')}/commits`;
+  const res = await fetch(`${base}?sha=${branch()}&path=${encodeURIComponent(path)}&until=${until.toISOString()}&per_page=1`, {
+    headers: headers(), next: { revalidate: 300, tags: [REPO_TAG] },
+  });
+  if (!res.ok) return null;
+  const [c] = (await res.json()) as { sha?: string }[];
+  return c?.sha ? readFile(path, false, c.sha) : null;
 }

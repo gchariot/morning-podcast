@@ -191,6 +191,7 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
       <div className="group" style={{ marginTop: 16 }} onClickCapture={e => { if (justDragged.current) { e.preventDefault(); e.stopPropagation(); } }}>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
           <SortableContext items={sortable.map(r => r.id)} strategy={verticalListSortingStrategy}>
+            <div className="theme-cols" aria-hidden><span>Départ</span><span>Thème</span><span>Diffusé</span></div>
             <div>{sortable.map(r => <SortableRow key={r.id} {...rowProps(r)} locked={busy > 0} />)}</div>
           </SortableContext>
         </DndContext>
@@ -261,7 +262,6 @@ function Row({
         <button type="button" className="row-main" aria-expanded={expanded} aria-controls={id} onClick={onExpand}>
           <span className="row-title">
             <strong className="row-name">{r.title}</strong>
-            <Icon name="chevron-right" size={18} className="chev" />
           </span>
           <span className="row-meta">
             {dirty && <span className="pill">Non enregistré</span>}{dirty ? ' ' : ''}

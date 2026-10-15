@@ -11,6 +11,7 @@ import { loadConfig } from '@/lib/config';
 import { loadRetours } from '@/lib/retours';
 import { editionNumber, zurichMinutes } from '@/lib/sky';
 import { SkyBand } from '@/components/Sky';
+import { FeedbackCta } from '@/components/FeedbackCta';
 
 async function coverUrl(): Promise<string> {
   try {
@@ -58,6 +59,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const others = episodes.filter(e => e.date !== episode.date).slice(0, 10);
   const isLatest = episode.date === episodes[0]?.date;
   const edition = editionNumber(episode.date, firstEdition);
+  const sent = recent.some(l => l.endsWith(`(épisode du ${episode.date})`));
 
   return (
     <>
@@ -80,12 +82,16 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       <Player track={{
         date: episode.date, src: episode.url, title: episode.title, cover,
         seconds: episode.seconds, chapters: episode.chapters ?? [],
-      }} feedbackSent={recent.some(l => l.endsWith(`(épisode du ${episode.date})`))} />
+      }} feedbackSent={sent} />
 
-      {isLatest && (
-        <Link className="btn block cta" href="/avis">
-          <Icon name="message" size={18} /> Donner mon avis pour demain
-        </Link>
+      {isLatest && <FeedbackCta date={episode.date} sent={sent} />}
+
+      {episode.debate && (
+        <DebateCard
+          key={`d-${episode.date}`} date={episode.date} topic={episode.debate.topic} sides={episode.debate.sides}
+          myVote={samedi[episode.date]?.vote ?? null}
+          closed={episodes.some(e => e.date > episode.date && e.debate)}
+        />
       )}
 
       {episode.game && (() => {
@@ -100,14 +106,6 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
           />
         );
       })()}
-
-      {episode.debate && (
-        <DebateCard
-          key={`d-${episode.date}`} date={episode.date} topic={episode.debate.topic} sides={episode.debate.sides}
-          myVote={samedi[episode.date]?.vote ?? null}
-          closed={episodes.some(e => e.date > episode.date && e.debate)}
-        />
-      )}
 
       {episode.quiz && (() => {
         const revealed = isRevealed(episode.date, episodes);

@@ -29,8 +29,9 @@ export function SkyBand({ minutes: initial, tall = false, sunrise = false, child
   const height = s.sun <= 1 ? 1 - s.sun : s.sun <= 1.04 ? -(s.sun - 1) * 4 : -(s.sun - 1) * 12;
   // Reflets : pleins quand le soleil est bas sur l'eau, absents quand il est haut ;
   // avant le lever, une seule braise sous le bord du soleil.
-  const glints = s.sun > 1.06 ? 0 : s.sun > 1 ? 0.45 : Math.max(0, Math.min(0.9, ((s.sun - 0.3) / 0.4) * 0.9));
-  const night = s.sun > 1.06;
+  const glints = s.sun > 1.04 ? 0 : s.sun > 1 ? 0.6 : Math.max(0, Math.min(0.9, ((s.sun - 0.3) / 0.4) * 0.9));
+  // Tant que le soleil n'est pas levé, la mer reste fine : il n'y a rien à refléter.
+  const night = s.sun > 1;
   const vars = {
     '--sky-top': s.top, '--sky-mid': s.mid, '--sky-horizon': s.horizon,
     '--rise': height.toFixed(3), '--stars': s.stars.toFixed(2), '--glints': glints.toFixed(2),

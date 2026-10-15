@@ -28,3 +28,8 @@ export function radioKeys(e: { key: string; currentTarget: HTMLElement; preventD
   e.preventDefault();
   items[(i + dir + items.length) % items.length].focus();
 }
+
+/** Typographie française : espace fine insécable avant ? ! : ; (évite « collège / ? » en fin de ligne). */
+export function fr(text: string): string {
+  return text.replace(/\s+([?!:;»])/g, '\u202f$1').replace(/«\s+/g, '«\u202f');
+}

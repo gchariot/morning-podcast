@@ -2,7 +2,7 @@
 /** Quiz de l'épisode : on répond dans l'appli, la réponse est donnée le lendemain dans la Matinale. */
 import { useState, useTransition } from 'react';
 import { answerQuiz } from '@/app/(prive)/actions';
-import { OFFLINE, radioKeys, safeCall } from '@/lib/safe';
+import { OFFLINE, fr, radioKeys, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
@@ -67,7 +67,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
         )}
       </div>
       <div className="group pad quiz-card" style={{ marginTop: 12 }}>
-        <p style={{ fontWeight: 600, lineHeight: 1.45 }}>{question}</p>
+        <p style={{ fontWeight: 600, lineHeight: 1.45 }}>{fr(question)}</p>
         <div className="quiz-choices" role="radiogroup" aria-label="Choix de réponse">
           {choices.map((c, i) => (
             <button

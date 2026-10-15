@@ -7,7 +7,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { Icon } from './Icon';
 
 /** `undo` affiche « Annuler » ; `action` affiche un autre bouton (ex. « Envoyer »). */
-export type Snack = { message: string; ok: boolean; undo?: () => void; action?: { label: string; run: () => void } };
+export type Snack = { message: string; ok: boolean; neutral?: boolean; undo?: () => void; action?: { label: string; run: () => void } };
 type SnackApi = { show: (s: Snack) => void; close: () => void; closeErrors: () => void };
 
 const Ctx = createContext<SnackApi | null>(null);
@@ -36,8 +36,8 @@ export function SnackProvider({ children }: { children: React.ReactNode }) {
       {children}
       <div aria-live="polite" aria-atomic="true">
         {snack && (
-          <div key={snack.id} className={`snack${snack.ok ? '' : ' err'}`}>
-            {snack.ok && <Icon name="check" size={18} />}
+          <div key={snack.id} className={`snack${snack.ok ? '' : ' err'}${snack.neutral ? ' neutral' : ''}`}>
+            {snack.ok && !snack.neutral && <Icon name="check" size={18} />}
             <p>{snack.message}</p>
             {snack.undo || snack.action
               ? <button type="button" className="btn small" onClick={() => { (snack.undo ?? snack.action!.run)(); close(); }}>{snack.undo ? 'Annuler' : snack.action!.label}</button>

@@ -1,5 +1,6 @@
 import 'server-only';
-import { listCommits } from './github';
+import { listCommits, readFileAsOf } from './github';
+import { loadConfig } from './config';
 
 /**
  * « Ce qui change demain » : les modifications faites depuis l'appli depuis la dernière rédaction (5 h 37),
@@ -59,8 +60,24 @@ export async function loadTomorrow(): Promise<Tomorrow> {
   const cancels = (a: string | null | undefined, b: string | null | undefined) =>
     (!!a && !!b && ((a.endsWith('en pause') && b.endsWith('revient')) || (a.endsWith('revient') && b.endsWith('en pause'))))
     || (!!a && a.startsWith('Nouveau thème') && (b ?? '').endsWith('supprimé'));
+  // Réglages : une valeur revenue à celle de 5 h 37 (21 → 17 → 21) n'est pas un changement.
+  const unchanged = new Set<string>();
+  if ([...latest.keys()].some(k => k.startsWith('r:') || k === 'doc')) {
+    const [before, now] = await Promise.all([
+      readFileAsOf('config/rubriques.json', last).then(f => (f ? JSON.parse(f.content) : null)).catch(() => null),
+      loadConfig().then(c => c.config as unknown as Record<string, any>).catch(() => null),
+    ]);
+    if (before && now) {
+      const pick = (c: Record<string, any>) => ({
+        'r:durée en semaine': c.show?.targetMinutes, 'r:samedi': c.editions?.samedi?.targetMinutes,
+        'r:dimanche': c.editions?.dimanche?.targetMinutes, doc: c.documentaire?.sujet ?? '',
+      }) as Record<string, unknown>;
+      const a = pick(before), b = pick(now);
+      for (const k of Object.keys(a)) if (a[k] === b[k]) unchanged.add(k);
+    }
+  }
   const items = [...latest.entries()]
-    .filter(([k, v]) => v && !cancels(first.get(k), v))
+    .filter(([k, v]) => v && !cancels(first.get(k), v) && !unchanged.has(k))
     .map(([, v]) => v as string);
   return { when: nextLabel, items };
 }
