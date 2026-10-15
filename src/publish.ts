@@ -85,15 +85,19 @@ export function buildFeed(episodes: EpisodeEntry[], base: string, coverUrl: stri
     <itunes:image href="${esc(coverUrl)}"/>
     <image><url>${esc(coverUrl)}</url><title>${esc(show.title)}</title><link>${esc(base)}</link></image>`
     : '';
+  // Flux privé : interdit aux annuaires (Apple, Google, Podcast Index) de le lister ou de le reprendre.
   return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0">
   <channel>
     <title>${esc(show.title)}</title>
     <link>${esc(base)}</link>
     <description>${esc(show.description)}</description>
     <language>${show.language}</language>
     <itunes:author>La Matinale</itunes:author>
-    <itunes:explicit>false</itunes:explicit>${image}
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:block>Yes</itunes:block>
+    <googleplay:block>yes</googleplay:block>
+    <podcast:locked>yes</podcast:locked>${image}
 ${items}
   </channel>
 </rss>
