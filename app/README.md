@@ -16,6 +16,7 @@ Chaque modification est un commit sur `main`, validé avant écriture (relecture
 - Les bonnes réponses du quiz et du jeu ne sont envoyées au téléphone qu'une fois révélées.
 - Un bandeau « Nouvelle version » apparaît quand un déploiement plus récent est en ligne (identifiant du déploiement Vercel lu à l'exécution).
 - La fonction tourne à Francfort (`vercel.json`), près de Genève.
+- Vercel ne reconstruit l'appli que si un fichier de `app/` a changé (`ignoreCommand`) : les écritures de l'appli et de la routine (avis, thèmes, épisodes) ne déclenchent ni déploiement ni bandeau « Nouvelle version ».
 
 ## Variables d'environnement (Vercel → Settings → Environment Variables)
 
