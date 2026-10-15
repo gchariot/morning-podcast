@@ -1,0 +1,274 @@
+{
+  "date": "2026-10-15",
+  "generatedAt": "2026-10-15T05:17:41.890Z",
+  "football": {
+    "window": {
+      "from": "2026-10-14",
+      "to": "2026-10-16"
+    },
+    "matches": [
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T16:45:00Z",
+        "status": "FINISHED",
+        "home": "LASK Linz",
+        "away": "Liverpool FC",
+        "score": "3-6",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T16:45:00Z",
+        "status": "FINISHED",
+        "home": "Feyenoord Rotterdam",
+        "away": "Como 1907",
+        "score": "3-2",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "FK Bodø/Glimt",
+        "away": "Borussia Dortmund",
+        "score": "1-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Real Betis Balompié",
+        "away": "FC Porto",
+        "score": "3-2",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "AS Roma",
+        "away": "Real Madrid CF",
+        "score": "3-4",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "ŠK Slovan Bratislava",
+        "away": "VfB Stuttgart",
+        "score": "0-3",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Aston Villa FC",
+        "away": "Fenerbahçe SK",
+        "score": "6-0",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "FK Shakhtar Donetsk",
+        "away": "PAE AEK",
+        "score": "3-1",
+        "matchday": 2
+      },
+      {
+        "competition": "UEFA Champions League",
+        "date": "2026-10-14T19:00:00Z",
+        "status": "FINISHED",
+        "home": "Manchester City FC",
+        "away": "Paris Saint-Germain FC",
+        "score": "2-4",
+        "matchday": 2
+      }
+    ],
+    "ligue1Standings": [
+      {
+        "position": 1,
+        "team": "AS Monaco FC",
+        "points": 14,
+        "played": 6
+      },
+      {
+        "position": 2,
+        "team": "Lille OSC",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 3,
+        "team": "Stade Rennais FC 1901",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 4,
+        "team": "Olympique Lyonnais",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 5,
+        "team": "Paris FC",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 6,
+        "team": "Paris Saint-Germain FC",
+        "points": 11,
+        "played": 6
+      }
+    ],
+    "favouriteTeams": {
+      "Olympique Lyonnais": {
+        "lastMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-09T18:45:00Z",
+          "home": "Racing Club de Lens",
+          "away": "Olympique Lyonnais",
+          "score": "2-1"
+        },
+        "nextMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-18T18:45:00Z",
+          "home": "Olympique Lyonnais",
+          "away": "OGC Nice",
+          "score": null
+        }
+      },
+      "Real Madrid CF": {
+        "lastMatch": {
+          "competition": "UEFA Champions League",
+          "date": "2026-10-14T19:00:00Z",
+          "home": "AS Roma",
+          "away": "Real Madrid CF",
+          "score": "3-4"
+        },
+        "nextMatch": {
+          "competition": "Primera Division",
+          "date": "2026-10-18T19:00:00Z",
+          "home": "Real Madrid CF",
+          "away": "Sevilla FC",
+          "score": null
+        }
+      }
+    }
+  },
+  "wikipedia": {
+    "articleDuJour": null,
+    "ephemeride": [
+      {
+        "year": 2013,
+        "text": "un séisme de magnitude 7,2 fait 155 victimes dans l'archipel des Visayas aux Philippines.",
+        "url": "https://fr.wikipedia.org/wiki/S%C3%A9isme_de_2013_%C3%A0_Bohol"
+      },
+      {
+        "year": 1987,
+        "text": "un coup d'État au Burkina Faso aboutit à la prise de pouvoir de Blaise Compaoré.",
+        "url": "https://fr.wikipedia.org/wiki/Histoire_du_Burkina_Faso"
+      },
+      {
+        "year": 1983,
+        "text": "la marche pour l'égalité et contre le racisme part de Marseille.",
+        "url": "https://fr.wikipedia.org/wiki/Marche_pour_l'%C3%A9galit%C3%A9_et_contre_le_racisme"
+      },
+      {
+        "year": 1940,
+        "text": "exécution du président de la généralité de Catalogne, Lluís Companys, par le régime franquiste.",
+        "url": "https://fr.wikipedia.org/wiki/Pr%C3%A9sident_de_la_g%C3%A9n%C3%A9ralit%C3%A9_de_Catalogne"
+      },
+      {
+        "year": 1894,
+        "text": "le capitaine Alfred Dreyfus est arrêté au ministère de la Guerre pour trahison, début d'une affaire politico-judiciaire qui divisera durablement la société française.",
+        "url": "https://fr.wikipedia.org/wiki/Alfred_Dreyfus"
+      },
+      {
+        "year": 1805,
+        "text": "début de la bataille d'Ulm entre les empires français et autrichien lors de la campagne d'Autriche.",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_d'Ulm"
+      }
+    ]
+  },
+  "meteo": {
+    "jour": "jeudi",
+    "ville": "Lausanne",
+    "source": "Open-Meteo (open-meteo.com)",
+    "journee": {
+      "ciel": "partiellement nuageux",
+      "temperatureMin": 12.7,
+      "temperatureMax": 19.7,
+      "risquePluieMax": 0,
+      "pluieTotaleMm": 0,
+      "ventMaxKmh": 8.8,
+      "rafalesMaxKmh": 13.7,
+      "indiceUV": 3.7,
+      "leverSoleil": "07:50",
+      "coucherSoleil": "18:47",
+      "heuresProbablementPluvieuses": []
+    },
+    "creneaux": [
+      {
+        "heure": "7 h",
+        "temperature": 12.9,
+        "ressenti": 12.1,
+        "ciel": "ciel dégagé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 5.6
+      },
+      {
+        "heure": "9 h",
+        "temperature": 13.1,
+        "ressenti": 12.5,
+        "ciel": "plutôt ensoleillé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 5.5
+      },
+      {
+        "heure": "12 h",
+        "temperature": 17.1,
+        "ressenti": 17.2,
+        "ciel": "ciel dégagé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 3.9
+      },
+      {
+        "heure": "15 h",
+        "temperature": 19.3,
+        "ressenti": 19.8,
+        "ciel": "plutôt ensoleillé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 4
+      },
+      {
+        "heure": "18 h",
+        "temperature": 19.1,
+        "ressenti": 19.9,
+        "ciel": "plutôt ensoleillé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 1.8
+      },
+      {
+        "heure": "21 h",
+        "temperature": 16.8,
+        "ressenti": 16,
+        "ciel": "plutôt ensoleillé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 5.5
+      }
+    ]
+  }
+}
