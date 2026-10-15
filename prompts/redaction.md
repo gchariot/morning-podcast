@@ -106,6 +106,14 @@ La réponse n'est **jamais** donnée le jour même : l'auditeur répond dans l'a
 
 Format : `"quiz": { "question": "…", "choices": ["…", "…", "…"], "answer": 1, "explanation": "…" }`, au même niveau que `segments`.
 
+## Ce qui a changé grâce aux retours (`applied`)
+
+L'appli affiche en tête de l'épisode ce que tes retours ont changé : c'est la preuve pour l'auditeur que son avis compte. Remplis `applied` dans `script.json` (au même niveau que `segments`) avec **1 à 4 phrases courtes** (160 caractères max), au tutoiement, chacune reliant un retour précis à ce que tu as fait dans **cet** épisode :
+`"applied": ["Politique en 3 min au lieu de 4, comme tu l'as demandé (« Trop long »).", "Plus de mercato OL, comme tu l'as suggéré."]`
+- Uniquement les retours datés d'hier ou d'avant-hier (les nouveaux) et ce qui est réellement audible dans l'épisode ; une consigne permanente ne s'y met que le jour où elle a été ajoutée.
+- Un 👍 « Parfait comme ça » qui ne change rien peut s'écrire « Football gardé tel quel, tu as aimé ».
+- Aucun retour nouveau : omets le champ. N'invente jamais un retour.
+
 ## Journal des trous et échecs (obligatoire)
 
 Termine `notes.md` par une section `## Trous et échecs`, une ligne par problème, au format :

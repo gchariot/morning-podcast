@@ -48,6 +48,8 @@ export const Script = z.object({
   quiz: Quiz.optional(),
   game: Game.optional(),
   debate: Debate.optional(),
+  /** Ce que la rédaction a changé grâce aux retours de l'auditeur (affiché dans l'appli). */
+  applied: z.array(z.string().min(3).max(160)).max(4).optional(),
 });
 
 export type Script = z.infer<typeof Script>;

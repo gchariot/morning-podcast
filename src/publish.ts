@@ -26,6 +26,8 @@ export type EpisodeEntry = {
   /** Samedi : le jeu (8 questions) et le face-à-face. */
   game?: { questions: { question: string; choices: string[]; answer: number; explanation?: string }[] };
   debate?: { topic: string; sides: [string, string] };
+  /** Ce que la rédaction a changé grâce aux retours (affiché dans l'appli). */
+  applied?: string[];
   /** Secondes de voix réellement générées (pour estimer le coût de synthèse). */
   ttsSeconds?: number;
 };
@@ -144,6 +146,7 @@ export async function publish(date: string, mp3: string, seconds: number, script
     ...(script.quiz ? { quiz: script.quiz } : {}),
     ...(script.game ? { game: script.game } : {}),
     ...(script.debate ? { debate: script.debate } : {}),
+    ...(script.applied?.length ? { applied: script.applied } : {}),
     ...(ttsSeconds ? { ttsSeconds } : {}),
   };
   episodes = [entry, ...episodes.filter(e => e.date !== date)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, KEEP);

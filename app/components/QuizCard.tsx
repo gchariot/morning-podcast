@@ -2,6 +2,7 @@
 /** Quiz de l'épisode : on répond dans l'appli, la réponse est donnée le lendemain dans la Matinale. */
 import { useState, useTransition } from 'react';
 import { answerQuiz } from '@/app/(prive)/actions';
+import { safeCall } from '@/lib/safe';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -31,7 +32,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
     setChoice(i);
     setMsg(null);
     start(async () => {
-      const res = await answerQuiz(date, i);
+      const res = await safeCall(() => answerQuiz(date, i));
       setMsg(res);
       if (!res.ok) setChoice(before); else setSavedAt(new Date().toISOString());
     });

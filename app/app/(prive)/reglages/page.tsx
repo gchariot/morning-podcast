@@ -1,14 +1,13 @@
 import { passwordEnabled } from '@/lib/auth';
 import { loadConfig } from '@/lib/config';
-import { Flash, type FlashParams } from '@/components/Flash';
+import { SettingsEditor } from '@/components/SettingsEditor';
 import { Icon } from '@/components/Icon';
-import { logout, updateSettings } from '../actions';
+import { logout } from '../actions';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { monthCost, pricePerMillion, usd } from '@/lib/costs';
 
-
-export default async function ReglagesPage({ searchParams }: { searchParams: FlashParams }) {
-  const [{ ok, err }, { config }, episodes] = await Promise.all([searchParams, loadConfig(), loadEpisodes().catch(() => [])]);
+export default async function ReglagesPage() {
+  const [{ config }, episodes] = await Promise.all([loadConfig(), loadEpisodes().catch(() => [])]);
   const month = todayInZurich().slice(0, 7);
   const cost = monthCost(episodes, month);
   const monthName = new Intl.DateTimeFormat('fr-CH', { month: 'long', timeZone: 'UTC' }).format(new Date(`${month}-15T12:00:00Z`));
@@ -21,54 +20,16 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
         <h1>Réglages</h1>
         <p>Le format de l&apos;émission, jour par jour.</p>
       </header>
-      <Flash ok={ok} err={err} />
 
-      <form action={updateSettings}>
-        <div className="group">
-          <div className="item">
-            <label htmlFor="targetMinutes" className="grow" style={{ margin: 0, color: 'var(--ink)', fontWeight: 500 }}>Durée en semaine</label>
-            <input id="targetMinutes" name="targetMinutes" type="number" min={3} max={40} step={1} defaultValue={config.show.targetMinutes} required style={{ width: 80 }} />
-            <span className="muted small">min</span>
-          </div>
-        </div>
-
-        <section className="section" style={{ marginTop: 28 }}>
-          <h2>Samedi : la grande édition</h2>
-          <p className="hint">La semaine en 3 minutes, le face-à-face, le jeu de la semaine, le guide du week-end, puis la météo du week-end.</p>
-          <fieldset className="group">
-            <legend className="sr">Grande édition du samedi</legend>
-            <div className="item">
-              <label htmlFor="samedi_minutes" className="grow" style={{ margin: 0, color: 'var(--ink)', fontWeight: 500 }}>Durée</label>
-              <input id="samedi_minutes" name="samedi_minutes" type="number" min={10} max={40} defaultValue={editions.samedi?.targetMinutes ?? 25} style={{ width: 80 }} />
-              <span className="muted small">min</span>
-            </div>
-          </fieldset>
-        </section>
-
-        <section className="section" style={{ marginTop: 28 }}>
-          <h2>Dimanche : le documentaire</h2>
-          <p className="hint">Un seul sujet de culture générale, raconté en plusieurs actes, puis la météo. Pas d&apos;actualité ce jour-là.</p>
-          <fieldset className="group">
-            <legend className="sr">Documentaire du dimanche</legend>
-            <div className="item">
-              <label htmlFor="dimanche_minutes" className="grow" style={{ margin: 0, color: 'var(--ink)', fontWeight: 500 }}>Durée</label>
-              <input id="dimanche_minutes" name="dimanche_minutes" type="number" min={5} max={30} defaultValue={editions.dimanche?.targetMinutes ?? 10} style={{ width: 80 }} />
-              <span className="muted small">min</span>
-            </div>
-            <div className="pad">
-              <label htmlFor="dimanche_sujet">Sujet souhaité (facultatif)</label>
-              <input id="dimanche_sujet" name="dimanche_sujet" type="text" maxLength={200} defaultValue={docSubject}
-                placeholder="Ex. : le percement du tunnel du Gothard" />
-              <p className="field-hint">Vide : la rédaction choisit. Un sujet déjà traité un dimanche précédent n&apos;est pas refait.</p>
-            </div>
-          </fieldset>
-        </section>
-
-        <button className="btn primary block" type="submit" style={{ marginTop: 24 }}>Enregistrer</button>
-      </form>
+      <SettingsEditor initial={{
+        targetMinutes: config.show.targetMinutes,
+        samedi: editions.samedi?.targetMinutes ?? 25,
+        dimanche: editions.dimanche?.targetMinutes ?? 10,
+        sujet: docSubject,
+      }} />
 
       <section className="section">
-        <h2>Coût</h2>
+        <h2>Coulisses : le coût</h2>
         <p className="hint">Estimation à partir de la durée de voix générée et du tarif Gemini. La facture exacte est sur Google AI Studio.</p>
         <div className="group">
           <div className="item">
@@ -88,14 +49,17 @@ export default async function ReglagesPage({ searchParams }: { searchParams: Fla
       </section>
 
       <section className="section">
-        <h2>Voix</h2>
-        <p className="hint">Léa et Hugo sont lus par Gemini. Pour essayer d&apos;autres voix, lance « 0 · Test de voix » dans GitHub Actions, puis change VOICE_LEA et VOICE_HUGO.</p>
-        <div className="group">
+        <details className="group">
+          <summary className="item">
+            <span className="grow"><span style={{ fontWeight: 600, display: 'block' }}>Changer les voix</span><span className="meta">Voix Gemini de Léa, Hugo et Zoé</span></span>
+            <Icon name="chevron-right" className="chev" />
+          </summary>
+          <p className="pad small muted">Pour comparer d&apos;autres voix, lance « 0 · Test de voix » dans GitHub Actions, écoute les extraits, puis change les variables VOICE_LEA et VOICE_HUGO du dépôt.</p>
           <a className="item" href={`https://github.com/${process.env.GITHUB_REPO}/actions`} target="_blank" rel="noreferrer">
             <span className="grow">Ouvrir GitHub Actions</span>
             <Icon name="external" size={16} className="chev" />
           </a>
-        </div>
+        </details>
       </section>
 
       {passwordEnabled() && <form action={logout} className="section">

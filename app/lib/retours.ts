@@ -72,3 +72,20 @@ export async function removeRecent(line: string) {
   const recent = r.recent.filter((_, j) => j !== i);
   await writeFile(PATH, render(s.head, r.permanent, recent), 'retours: un avis retiré (app)', r.sha ?? undefined);
 }
+
+const topicOf = (line: string) => line.replace(/^\d{4}-\d{2}-\d{2}\s*:\s*/, '').match(/^\[([^\]]+)\]/)?.[1] ?? '';
+
+/**
+ * Avis sur un épisode : pour chaque sujet touché, l'ancienne ligne est remplacée (un seul avis par sujet et par épisode).
+ * Renvoie les lignes de cet épisode après écriture.
+ */
+export async function replaceEpisodeFeedback(tag: string, topics: string[], lines: string[], date: string): Promise<string[]> {
+  const r = await loadRetours(true);
+  const s = sections(r.raw) ?? sections(TEMPLATE)!;
+  const kept = r.recent.filter(l => !(l.endsWith(tag) && topics.includes(topicOf(l))));
+  const fresh = lines.map(clean).filter(Boolean).map(l => `${date} : ${l}`);
+  const recent = [...fresh, ...kept].slice(0, 60);
+  const removed = r.recent.length - kept.length;
+  await writeFile(PATH, render(s.head, r.permanent, recent), `retours: ${fresh.length} avis, ${removed} remplacé(s) — ${date} (app)`, r.sha ?? undefined);
+  return recent.filter(l => l.endsWith(tag));
+}

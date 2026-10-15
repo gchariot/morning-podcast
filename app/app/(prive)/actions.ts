@@ -5,17 +5,15 @@ import { revalidatePath, updateTag } from 'next/cache';
 import { REPO_TAG } from '@/lib/github';
 import { closeSession, requireLogin } from '@/lib/auth';
 import { loadConfig, parseDomains, Rubrique, saveConfig, slugify } from '@/lib/config';
-import { addRecent, loadRetours, removeRecent, setPermanent } from '@/lib/retours';
+import { loadRetours, replaceEpisodeFeedback, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
 import { loadSamedi, updateSamedi } from '@/lib/samedi';
 
-const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim();
-const num = (f: FormData, k: string) => Number(String(f.get(k) ?? '').replace(',', '.'));
 
 const FIELDS: Record<string, string> = {
   id: 'Nom du thème', title: 'Nom du thème', minutes: 'Durée', brief: 'Consigne', domains: 'Sites de référence',
-  targetMinutes: 'Durée visée', minutesFactor: 'Durée du week-end',
+  targetMinutes: 'Durée en semaine', samedi: 'Durée du samedi', dimanche: 'Durée du dimanche', sujet: 'Sujet', chips: 'Précisions', note: 'Commentaire',
 };
 
 /** Erreurs de validation en français lisible : « Consigne : 10 caractères minimum ». */
@@ -35,20 +33,20 @@ function humanize(err: ZodError): string {
     .join(' · ');
 }
 
-/** Exécute une modification et revient sur la page avec un message. */
-async function run(page: string, fn: () => Promise<string>): Promise<never> {
+export type Result = { ok: boolean; message: string };
+
+/** Exécute une écriture et renvoie un résultat lisible (jamais de redirection : la page reste en place). */
+async function attempt<T extends object>(pages: string[], fn: () => Promise<T & Result>): Promise<T & Result> {
   await requireLogin();
-  let target: string;
   try {
-    const ok = await fn();
+    const res = await fn();
     updateTag(REPO_TAG);
-    revalidatePath(page);
-    target = `${page}?ok=${encodeURIComponent(ok)}`;
+    for (const p of pages) revalidatePath(p);
+    return res;
   } catch (err) {
     const msg = err instanceof ZodError ? humanize(err) : err instanceof Error ? err.message : String(err);
-    target = `${page}?err=${encodeURIComponent(msg.slice(0, 300))}`;
+    return { ok: false, message: msg.slice(0, 300) } as T & Result;
   }
-  redirect(target);
 }
 
 export async function logout() {
@@ -65,50 +63,113 @@ const FeedbackItem = z.object({
   note: z.string().trim().max(300).default(''),
 });
 
-export async function sendFeedback(formData: FormData) {
-  return run('/avis', async () => {
-    const episode = str(formData, 'episode');
+export type FeedbackResult = Result & { sent?: string[] };
+
+/**
+ * Envoie (ou corrige) l'avis sur un épisode. Seuls les sujets modifiés sont transmis ;
+ * un sujet remis à blanc retire son avis. `general` : null = inchangé, '' = retiré.
+ */
+export async function saveFeedback(episode: string, rawItems: unknown[], general: string | null): Promise<FeedbackResult> {
+  return attempt(['/avis'], async () => {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(episode)) throw new Error('Aucun épisode à commenter pour l’instant.');
+    const items = z.array(FeedbackItem).max(20).parse(rawItems);
+    const tag = `(épisode du ${episode})`;
     const lines: string[] = [];
-    for (const raw of formData.getAll('item')) {
-      const it = FeedbackItem.parse(JSON.parse(String(raw)));
+    const topics = items.map(i => i.title);
+    for (const it of items) {
       const icon = it.vote === 'up' ? '👍' : it.vote === 'down' ? '👎' : '';
       const words = [it.chips.join(', '), it.note].filter(Boolean).join(' — ');
-      if (!icon && !words) continue;
-      lines.push(`[${it.title}] ${icon} ${words}`.replace(/\s+/g, ' ').trim());
+      if (icon || words) lines.push(`[${it.title}] ${icon} ${words} ${tag}`.replace(/\s+/g, ' ').trim());
     }
-    const general = str(formData, 'general');
-    if (general) lines.push(`[Général] ${general}`);
-    if (!lines.length) throw new Error('Rien à envoyer : touche un pouce ou écris un mot.');
-    const tagged = episode ? lines.map(l => `${l} (épisode du ${episode})`) : lines;
-    const n = await addRecent(tagged, todayInZurich());
-    return `${n} retour${n > 1 ? 's' : ''} envoyé${n > 1 ? 's' : ''} : la rédaction en tiendra compte demain matin.`;
+    if (general !== null) {
+      topics.push('Général');
+      const g = general.trim().slice(0, 600);
+      if (g) lines.push(`[Général] ${g} ${tag}`.replace(/\s+/g, ' '));
+    }
+    if (!topics.length) throw new Error('Rien à envoyer : touche un pouce ou écris un mot.');
+    const sent = await replaceEpisodeFeedback(tag, topics, lines, todayInZurich());
+    const message = lines.length
+      ? 'Envoyé : la rédaction le lit à 5 h 37 pour l’épisode de demain.'
+      : 'Avis retiré.';
+    return { ok: true, message, sent };
   });
 }
 
-export async function removeFeedback(formData: FormData) {
-  return run('/avis', async () => {
-    await removeRecent(str(formData, 'line'));
-    return 'Retour retiré.';
+export type RulesResult = Result & { permanent?: string[]; index?: number };
+
+export async function addRule(rule: string): Promise<RulesResult> {
+  return attempt(['/avis'], async () => {
+    const r = rule.replace(/\s+/g, ' ').trim();
+    if (r.length < 3) throw new Error('Consigne trop courte (3 caractères minimum).');
+    const { permanent } = await loadRetours(true);
+    if (permanent.includes(r)) return { ok: true, message: 'Cette consigne existe déjà.', permanent };
+    const next = [...permanent, r];
+    await setPermanent(next);
+    return { ok: true, message: 'Consigne ajoutée : appliquée dès demain, à chaque épisode.', permanent: next };
   });
 }
 
-export async function addPermanentRule(formData: FormData) {
-  return run('/avis', async () => {
-    const rule = str(formData, 'rule');
-    if (rule.length < 3) throw new Error('Consigne trop courte.');
-    const r = await loadRetours(true);
-    await setPermanent([...r.permanent, rule]);
-    return 'Consigne permanente ajoutée.';
+/** Retire une consigne (par son texte, pas par sa position). L'index sert à l'annulation. */
+export async function removeRule(rule: string): Promise<RulesResult> {
+  return attempt(['/avis'], async () => {
+    const { permanent } = await loadRetours(true);
+    const index = permanent.indexOf(rule);
+    if (index < 0) throw new Error('Cette consigne a déjà été retirée.');
+    const next = permanent.filter((_, i) => i !== index);
+    await setPermanent(next);
+    return { ok: true, message: 'Consigne retirée.', permanent: next, index };
   });
 }
 
-export async function removePermanentRule(formData: FormData) {
-  return run('/avis', async () => {
-    const index = num(formData, 'index');
-    const r = await loadRetours(true);
-    if (!(index >= 0 && index < r.permanent.length)) throw new Error('Consigne introuvable.');
-    await setPermanent(r.permanent.filter((_, i) => i !== index));
-    return 'Consigne supprimée.';
+export async function restoreRule(rule: string, index: number): Promise<RulesResult> {
+  return attempt(['/avis'], async () => {
+    const { permanent } = await loadRetours(true);
+    if (permanent.includes(rule)) return { ok: true, message: 'Consigne rétablie.', permanent };
+    const next = [...permanent];
+    next.splice(Math.max(0, Math.min(index, next.length)), 0, rule);
+    await setPermanent(next);
+    return { ok: true, message: 'Consigne rétablie.', permanent: next };
+  });
+}
+
+/* ---------- Réglages ---------- */
+
+const SettingsPatch = z.object({
+  targetMinutes: z.number().int().min(3).max(40).optional(),
+  samedi: z.number().int().min(10).max(40).optional(),
+  dimanche: z.number().int().min(5).max(30).optional(),
+  sujet: z.string().max(200).optional(),
+});
+
+export type SettingsResult = Result & { targetMinutes?: number };
+
+/** Enregistre un réglage dès qu'il change (comme les thèmes). */
+export async function saveSettings(raw: z.input<typeof SettingsPatch>): Promise<SettingsResult> {
+  return attempt(['/reglages', '/themes'], async () => {
+    const patch = SettingsPatch.parse(raw);
+    const { config, sha } = await loadConfig(true);
+    if (patch.targetMinutes !== undefined) config.show.targetMinutes = patch.targetMinutes;
+    const target = config.show.targetMinutes;
+    const factor = (m: number) => Math.min(1.5, Math.max(0.2, Math.round((m / target) * 100) / 100));
+    const ed = config.editions ?? {};
+    const sm = patch.samedi ?? ed.samedi?.targetMinutes ?? 25;
+    const dm = patch.dimanche ?? ed.dimanche?.targetMinutes ?? 10;
+    // Samedi : toujours la grande édition ; dimanche : toujours le documentaire. Seules les durées se règlent.
+    config.editions = {
+      ...ed,
+      samedi: { targetMinutes: sm, minutesFactor: factor(sm), skip: [] },
+      dimanche: { targetMinutes: dm, minutesFactor: factor(dm), skip: [] },
+    };
+    if (patch.sujet !== undefined) (config as Record<string, unknown>).documentaire = { sujet: patch.sujet.trim() };
+    const what = patch.targetMinutes !== undefined ? `durée en semaine : ${target} min`
+      : patch.samedi !== undefined ? `samedi : ${sm} min`
+      : patch.dimanche !== undefined ? `dimanche : ${dm} min`
+      : 'sujet du documentaire';
+    await saveConfig(config, sha, `réglages: ${what} (app)`);
+    const message = patch.sujet !== undefined
+      ? (patch.sujet.trim() ? 'Sujet enregistré pour dimanche.' : 'Sujet retiré : la rédaction choisira.')
+      : `Enregistré (${what}) : effet dès le prochain épisode.`;
+    return { ok: true, message, targetMinutes: target };
   });
 }
 
@@ -216,28 +277,6 @@ export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
     }
     config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
     return { commit: 'thèmes: ordre modifié (app)', message: 'Ordre enregistré : effet dès demain.' };
-  });
-}
-
-/* ---------- Réglages ---------- */
-
-export async function updateSettings(formData: FormData) {
-  return run('/reglages', async () => {
-    const { config, sha } = await loadConfig(true);
-    config.show.targetMinutes = num(formData, 'targetMinutes');
-    const editions: NonNullable<typeof config.editions> = {};
-    const factor = (m: number) => Math.min(1.5, Math.max(0.2, Math.round((m / config.show.targetMinutes) * 100) / 100));
-    // Samedi : toujours la grande édition (face-à-face, jeu, guide) ; seule sa durée se règle.
-    const sm = num(formData, 'samedi_minutes');
-    editions.samedi = { targetMinutes: sm, minutesFactor: factor(sm), skip: [] };
-    // Dimanche : toujours le documentaire ; seule sa durée se règle (les thèmes ne s'appliquent pas ce jour-là).
-    const dm = num(formData, 'dimanche_minutes');
-    editions.dimanche = { targetMinutes: dm, minutesFactor: factor(dm), skip: [] };
-    config.editions = editions;
-    const sujet = str(formData, 'dimanche_sujet').slice(0, 200);
-    (config as Record<string, unknown>).documentaire = { sujet };
-    await saveConfig(config, sha, 'réglages: durée et éditions du week-end (app)');
-    return 'Réglages enregistrés : effet dès le prochain épisode.';
   });
 }
 

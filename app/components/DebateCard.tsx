@@ -2,6 +2,7 @@
 /** Le face-à-face du samedi : qui t'a convaincu, Léa ou Hugo ? Résultat annoncé le samedi suivant. */
 import { useState, useTransition } from 'react';
 import { voteDebate } from '@/app/(prive)/actions';
+import { safeCall } from '@/lib/safe';
 
 export function DebateCard({ date, topic, sides, myVote, closed }: {
   date: string; topic: string; sides: [string, string]; myVote: 0 | 1 | null; closed: boolean;
@@ -16,7 +17,7 @@ export function DebateCard({ date, topic, sides, myVote, closed }: {
     setVote(side);
     setMsg(null);
     start(async () => {
-      const res = await voteDebate(date, side);
+      const res = await safeCall(() => voteDebate(date, side));
       setMsg(res);
       if (!res.ok) setVote(before);
     });

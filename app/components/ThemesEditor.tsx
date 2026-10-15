@@ -12,8 +12,11 @@ import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, v
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import { CSS } from '@dnd-kit/utilities';
 import { Icon } from '@/components/Icon';
+import { Stepper } from '@/components/Stepper';
+import { useSnack } from '@/components/Snack';
+import { safeCall } from '@/lib/safe';
 import {
-  deleteTheme, reorderRubriques, restoreTheme, saveTheme, setThemeEnabled, type ThemeResult,
+  deleteTheme, reorderRubriques, restoreTheme, saveSettings, saveTheme, setThemeEnabled, type ThemeResult,
 } from '@/app/(prive)/actions';
 import type { Rubrique } from '@/lib/config';
 
@@ -39,33 +42,46 @@ function cleanDomain(raw: string): string {
     .replace(/[?#].*$/, '').replace(/\/+$/, '');
 }
 
-type Snack = { message: string; ok: boolean; undo?: () => void };
 type Draft = { minutes: number; dirty: boolean };
 
 /* ---------------------------------------------------------------- */
 
-export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target: number }) {
+export function ThemesEditor({ initial, target: targetInit }: { initial: Rubrique[]; target: number }) {
   const [list, setList] = useState(initial);
   const [open, setOpen] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
-  const [snack, setSnack] = useState<Snack | null>(null);
+  const [target, setTarget] = useState(targetInit);
+  const { show } = useSnack();
   const [busy, setBusy] = useState(0);
 
   // Les écritures passent une par une : chacune relit la version la plus récente du fichier.
   const queue = useRef<Promise<unknown>>(Promise.resolve());
-  const send = useCallback((fn: () => Promise<ThemeResult>, undo?: (res: ThemeResult) => (() => void) | undefined) => {
+  // `quiet` : les erreurs restent dans le formulaire, sans doublon en bas d'écran.
+  const send = useCallback((fn: () => Promise<ThemeResult>, opts: { undo?: () => void; quiet?: boolean } = {}) => {
     setBusy(b => b + 1);
-    const p = queue.current.then(fn).catch((e: unknown) => ({ ok: false, message: e instanceof Error ? e.message : String(e) }) as ThemeResult);
+    const p = queue.current.then(() => safeCall(fn));
     queue.current = p;
     return p.then(res => {
       setBusy(b => b - 1);
       if (res.ok && res.rubriques) setList(res.rubriques);
-      setSnack({ message: res.message, ok: res.ok, undo: res.ok ? undo?.(res) : undefined });
+      if (res.ok || !opts.quiet) show({ message: res.message, ok: res.ok, undo: res.ok ? opts.undo : undefined });
       return res;
     });
-  }, []);
+  }, [show]);
 
-  const closeSnack = useCallback(() => setSnack(null), []);
+  /* La durée visée se règle ici aussi : c'est là qu'on la compare. */
+  const targetTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const targetSaved = useRef(targetInit);
+  const changeTarget = (v: number) => {
+    setTarget(v);
+    clearTimeout(targetTimer.current);
+    targetTimer.current = setTimeout(async () => {
+      if (v === targetSaved.current) return;
+      const res = await safeCall(() => saveSettings({ targetMinutes: v }));
+      show({ ok: res.ok, message: res.ok ? `Durée visée : ${v} min, dès le prochain épisode.` : res.message });
+      if (res.ok) targetSaved.current = v; else setTarget(targetSaved.current);
+    }, 700);
+  };
   const setDraft = useCallback((id: string, d: Draft) => {
     setDrafts(prev => (prev[id]?.minutes === d.minutes && prev[id]?.dirty === d.dirty ? prev : { ...prev, [id]: d }));
   }, []);
@@ -85,8 +101,9 @@ export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target:
     }
     return out;
   }, [list, minutesOf, scale]);
-  const over = total > target * 1.15;
+  const over = total > target + 0.01;
   const cut = Math.round((1 - target / total) * 100);
+  const fit = Math.min(40, Math.ceil(total));
 
   const sortable = list.filter(r => r.id !== PINNED);
   const pinned = list.find(r => r.id === PINNED);
@@ -118,7 +135,7 @@ export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target:
   const remove = (r: Rubrique) => {
     const index = list.findIndex(x => x.id === r.id);
     setOpen(null);
-    send(() => deleteTheme(r.id), () => () => send(() => restoreTheme(r, index)));
+    send(() => deleteTheme(r.id), { undo: () => send(() => restoreTheme(r, index)) });
   };
 
   const rowProps = (r: Rubrique) => ({
@@ -132,7 +149,7 @@ export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target:
     editor: (
       <ThemeForm
         key={formKey(r)} r={r} busy={busy > 0} onDraft={setDraft}
-        onSave={input => send(() => saveTheme({ ...input, id: r.id })).then(res => { if (res.ok) setOpen(null); return res; })}
+        onSave={input => send(() => saveTheme({ ...input, id: r.id }), { quiet: true }).then(res => { if (res.ok) setOpen(null); return res; })}
         onDelete={r.id === PINNED ? undefined : () => remove(r)}
       />
     ),
@@ -142,13 +159,25 @@ export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target:
     <>
       <div className="group pad run-card">
         <div className="run-head">
-          <span className="run-total num">{fmtMin(total)} <small>/ {target} min visées</small></span>
-          <span className="muted small">{active.length} thème{active.length > 1 ? 's' : ''} actif{active.length > 1 ? 's' : ''}</span>
+          <span className="run-total num">{fmtMin(total)} <small>min de thèmes · {active.length} actif{active.length > 1 ? 's' : ''}</small></span>
         </div>
-        <div className={`meter${over ? ' over' : ''}`} aria-hidden><i style={{ width: `${Math.min(100, (total / target) * 100)}%` }} /></div>
+        <div className={`meter${over ? ' over' : ''}`} aria-hidden>
+          <i style={{ width: `${Math.min(100, (Math.min(total, target) / Math.max(total, target)) * 100)}%` }} />
+          {over && <b style={{ width: `${((total - target) / total) * 100}%` }} />}
+        </div>
+        <div className="run-target">
+          <span id="lbl-target" className="small">Durée visée en semaine</span>
+          <Stepper value={target} min={3} max={40} onChange={changeTarget} labelledBy="lbl-target" />
+        </div>
         {over
-          ? <p className="run-note over">C&apos;est {fmtMin(total - target)} min de trop : la rédaction raccourcira chaque thème d&apos;environ {cut} %. Les heures ci-dessous en tiennent compte.</p>
-          : <p className="run-note">Heures de départ indicatives pour une édition de semaine.</p>}
+          ? <div className="run-note over" role="status">
+              <Icon name="alert" size={18} />
+              <span>
+                <strong>{fmtMin(total - target)} min de trop.</strong> La rédaction raccourcira chaque thème d&apos;environ {cut} % (les heures en tiennent compte).
+                {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
+              </span>
+            </div>
+          : <p className="run-note">{total < target - 0.5 ? `Il reste ${fmtMin(target - total)} min : la rédaction développera un peu plus. ` : ''}Heures de départ indicatives pour une édition de semaine.</p>}
       </div>
 
       <div className="group" style={{ marginTop: 16 }} onClickCapture={e => { if (justDragged.current) { e.preventDefault(); e.stopPropagation(); } }}>
@@ -161,9 +190,8 @@ export function ThemesEditor({ initial, target }: { initial: Rubrique[]; target:
       </div>
       <p className="field-hint">Pour changer l&apos;ordre, maintiens un thème appuyé puis glisse-le. La météo reste toujours en dernier.</p>
 
-      <NewTheme busy={busy > 0} onCreate={input => send(() => saveTheme(input))} />
+      <NewTheme busy={busy > 0} onCreate={input => send(() => saveTheme(input), { quiet: true })} />
 
-      <div aria-live="polite" aria-atomic="true">{snack && <SnackBar snack={snack} onClose={closeSnack} />}</div>
     </>
   );
 }
@@ -193,7 +221,7 @@ function SortableRow(props: RowProps & { locked: boolean }) {
       rootProps={{ ...rowListeners, style: { transform: CSS.Transform.toString(transform), transition } }}
       dragging={isDragging}
       keyboardHandle={
-        <button type="button" className="sr" aria-label={`Déplacer ${props.r.title} (Espace, puis flèches)`} {...attributes} onKeyDown={listeners?.onKeyDown as React.KeyboardEventHandler} />
+        <button type="button" className="sr" aria-label={`Déplacer ${props.r.title} (Espace, puis flèches)`} {...attributes} onKeyDown={listeners?.onKeyDown as React.KeyboardEventHandler}>Déplacer</button>
       }
     />
   );
@@ -266,41 +294,48 @@ function ThemeForm({
 
   useEffect(() => { if (r) onDraft?.(r.id, { minutes, dirty }); }, [r, minutes, dirty, onDraft]);
 
+  const [fieldErr, setFieldErr] = useState<{ title?: string; brief?: string }>({});
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    // Vérifié ici, près du champ : pas d'aller-retour serveur pour une consigne trop courte.
+    const fe = {
+      title: title.trim().length < 2 ? 'Donne un nom au thème (2 caractères minimum).' : undefined,
+      brief: brief.trim().length < 10 ? 'Dis en une phrase ce que tu veux entendre (10 caractères minimum).' : undefined,
+    };
+    setFieldErr(fe);
+    if (fe.title || fe.brief) return;
     setSaving(true);
     const res = await onSave({ title, minutes, brief, domains });
     setSaving(false);
     if (!res.ok) setError(res.message);
   };
 
-  const step = (d: number) => setMinutes(m => Math.min(10, Math.max(0.5, Math.round((m + d) * 2) / 2)));
-
   return (
     <form onSubmit={submit} noValidate>
       <div className="field">
         <label htmlFor={`${uid}t`}>Nom du thème</label>
-        <input id={`${uid}t`} type="text" value={title} onChange={e => setTitle(e.target.value)} maxLength={60} placeholder="Ex. : Formule 1" autoComplete="off" />
+        <input id={`${uid}t`} type="text" value={title} onChange={e => { setTitle(e.target.value); setFieldErr(f => ({ ...f, title: undefined })); }}
+          maxLength={60} placeholder="Ex. : Formule 1" autoComplete="off" aria-invalid={Boolean(fieldErr.title)} aria-describedby={fieldErr.title ? `${uid}te` : undefined} />
+        {fieldErr.title && <p className="field-error" id={`${uid}te`} style={{ marginTop: 6 }}>{fieldErr.title}</p>}
       </div>
 
       <div className="field">
         <span className="label" id={`${uid}m`}>Durée</span>
-        <div className="stepper" role="group" aria-labelledby={`${uid}m`}>
-          <button type="button" onClick={() => step(-0.5)} disabled={minutes <= 0.5} aria-label="Une demi-minute de moins"><Icon name="minus" size={18} /></button>
-          <output aria-live="polite">{fmtMin(minutes)} min</output>
-          <button type="button" onClick={() => step(0.5)} disabled={minutes >= 10} aria-label="Une demi-minute de plus"><Icon name="plus" size={18} /></button>
-        </div>
+        <Stepper value={minutes} min={0.5} max={10} step={0.5} onChange={setMinutes} labelledBy={`${uid}m`} />
       </div>
 
       <div className="field">
         <label htmlFor={`${uid}b`}>Consigne pour la rédaction</label>
         <textarea
-          id={`${uid}b`} value={brief} onChange={e => setBrief(e.target.value)} maxLength={1200}
+          id={`${uid}b`} value={brief} onChange={e => { setBrief(e.target.value); setFieldErr(f => ({ ...f, brief: undefined })); }} maxLength={1200}
+          aria-invalid={Boolean(fieldErr.brief)}
           placeholder="Ce qui t'intéresse, ce qu'il faut éviter, ce qui passe en premier…"
         />
         <div className="field-row">
-          <span className="field-hint">{brief.trim().length < 10 ? '10 caractères minimum.' : 'Lue chaque nuit par la rédaction.'}</span>
+          {fieldErr.brief
+            ? <span className="field-error" role="alert">{fieldErr.brief}</span>
+            : <span className="field-hint">Lue chaque nuit par la rédaction.</span>}
           <span className="field-hint num">{brief.length} / 1200</span>
         </div>
       </div>
@@ -333,6 +368,11 @@ function DomainInput({ value, onChange, example }: { value: string[]; onChange: 
   const [error, setError] = useState<string | null>(null);
 
   const add = (raw: string) => {
+    // Une saisie sans point n'est pas une adresse : on la signale telle quelle.
+    if (raw.trim() && !raw.includes('.')) {
+      setError(`« ${raw.trim()} » n’est pas une adresse de site. Exemple : ${example}`);
+      return;
+    }
     const parts = raw.split(/[\s,;]+/).map(cleanDomain).filter(Boolean);
     if (!parts.length) return;
     const next = [...value];
@@ -371,7 +411,7 @@ function DomainInput({ value, onChange, example }: { value: string[]; onChange: 
             aria-describedby={`${uid}h`} aria-invalid={Boolean(error)}
             onChange={e => { setText(e.target.value); if (error) setError(null); }}
             onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ',' || e.key === ' ') { e.preventDefault(); add(text); }
+              if (e.key === 'Enter' || e.key === ',' || (e.key === ' ' && text.includes('.'))) { e.preventDefault(); add(text); }
               if (e.key === 'Backspace' && !text && value.length) { e.preventDefault(); setText(value[value.length - 1]); onChange(value.slice(0, -1)); }
             }}
             onPaste={e => { e.preventDefault(); add(`${text} ${e.clipboardData.getData('text')}`); }}
@@ -383,7 +423,7 @@ function DomainInput({ value, onChange, example }: { value: string[]; onChange: 
         {error
           ? <span className="field-error" role="alert">{error}</span>
           : <span className="field-hint">La rédaction les privilégie sans s&apos;y limiter. Colle une adresse, elle sera nettoyée.</span>}
-        <span className="field-hint num">{value.length} / {MAX_DOMAINS}</span>
+        <span className="field-hint num nowrap">{value.length} / {MAX_DOMAINS}</span>
       </div>
     </div>
   );
@@ -410,23 +450,5 @@ function NewTheme({ busy, onCreate }: { busy: boolean; onCreate: (input: Input) 
         </div>
       </div>
     </section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-
-function SnackBar({ snack, onClose }: { snack: Snack; onClose: () => void }) {
-  useEffect(() => {
-    const t = setTimeout(onClose, snack.undo ? 8000 : snack.ok ? 4000 : 9000);
-    return () => clearTimeout(t);
-  }, [snack, onClose]);
-  return (
-    <div className={`snack${snack.ok ? '' : ' err'}`}>
-      {snack.ok && <Icon name="check" size={18} />}
-      <p>{snack.message}</p>
-      {snack.undo
-        ? <button type="button" className="btn small" onClick={() => { snack.undo?.(); onClose(); }}>Annuler</button>
-        : <button type="button" className="btn small icon" onClick={onClose} aria-label="Fermer"><Icon name="x" size={16} /></button>}
-    </div>
   );
 }

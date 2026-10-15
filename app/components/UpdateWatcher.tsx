@@ -38,7 +38,7 @@ export function UpdateWatcher({ version: mine }: { version: string }) {
     const onVisibility = () => {
       if (document.visibilityState === 'hidden') { hiddenAt.current = Date.now(); return; }
       void check();
-      if (hiddenAt.current && Date.now() - hiddenAt.current > STALE_AFTER) router.refresh();
+      if (hiddenAt.current && Date.now() - hiddenAt.current > STALE_AFTER && navigator.onLine) router.refresh();
       hiddenAt.current = null;
     };
     void check();

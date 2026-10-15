@@ -5,6 +5,7 @@
  */
 import { useState, useTransition } from 'react';
 import { submitGame, type GameResult } from '@/app/(prive)/actions';
+import { safeCall } from '@/lib/safe';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -27,7 +28,7 @@ export function GameCard({ date, questions, played }: { date: string; questions:
 
   const validate = () => start(async () => {
     setError(null);
-    const res = await submitGame(date, answers as number[]);
+    const res = await safeCall(() => submitGame(date, answers as number[]));
     if (res.ok) setResult(res); else setError(res.message);
   });
 

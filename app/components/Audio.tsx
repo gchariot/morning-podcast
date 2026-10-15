@@ -22,7 +22,14 @@ type AudioState = {
   now: number;
   duration: number;
   playing: boolean;
+  /** L'épisode chargé est arrivé au bout (pour proposer l'avis du jour). */
+  ended: boolean;
   rate: number;
+  /** Index du chapitre en cours (-1 avant le début). */
+  chapter: number;
+  /** Épisode affiché sur la page Écouter (le mini-lecteur se montre si un autre joue). */
+  shown: string | null;
+  setShown: (date: string | null) => void;
   /** Prépare un épisode sans le lancer (ne change rien si un autre épisode est en cours de lecture). */
   prepare: (t: Track) => void;
   /** Lance un épisode (en change si besoin), éventuellement à une position donnée. */
@@ -50,6 +57,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [rate, setRate] = useState(1);
+  const [ended, setEnded] = useState(false);
+  const [shown, setShown] = useState<string | null>(null);
   const pendingSeek = useRef<number | null>(null);
 
   useEffect(() => {
@@ -67,6 +76,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       try { const saved = Number(localStorage.getItem(posKey(t.date))); if (saved > 5) start = saved; } catch { /* ignoré */ }
     }
     setTrack(t);
+    setEnded(false);
     setDuration(t.seconds);
     setNow(start);
     pendingSeek.current = start;
@@ -116,35 +126,83 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => { if (el.current) el.current.playbackRate = rate; }, [rate, track]);
 
+  const chapters = track?.chapters ?? [];
+  const chapter = chapters.reduce((idx, c, i) => (now >= c.startSec ? i : idx), -1);
+
+  /** Écouteurs : chapitre suivant / précédent (le précédent revient d'abord au début du chapitre en cours). */
+  const nextChapter = useCallback(() => {
+    const a = el.current;
+    if (!a || !track) return;
+    const t = a.currentTime;
+    const next = track.chapters.find(c => c.startSec > t + 1);
+    if (next) seek(next.startSec);
+  }, [track, seek]);
+  const prevChapter = useCallback(() => {
+    const a = el.current;
+    if (!a || !track) return;
+    const t = a.currentTime;
+    const starts = track.chapters.map(c => c.startSec).filter(s => s <= t);
+    const cur = starts.length ? starts[starts.length - 1] : 0;
+    seek(t - cur > 4 ? cur : (starts.length > 1 ? starts[starts.length - 2] : 0));
+  }, [track, seek]);
+
   // Écran verrouillé / CarPlay / écouteurs.
   useEffect(() => {
     if (!('mediaSession' in navigator) || !track) return;
+    const ms = navigator.mediaSession;
+    const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
+      ['play', () => void el.current?.play()],
+      ['pause', () => el.current?.pause()],
+      ['seekbackward', d => skip(-(d.seekOffset ?? 15))],
+      ['seekforward', d => skip(d.seekOffset ?? 30)],
+      ['seekto', d => { if (d.seekTime !== undefined) seek(d.seekTime); }],
+      ['nexttrack', () => nextChapter()],
+      ['previoustrack', () => prevChapter()],
+    ];
+    for (const [action, fn] of handlers) {
+      try { ms.setActionHandler(action, fn); } catch { /* action non prise en charge */ }
+    }
+  }, [track, skip, seek, nextChapter, prevChapter]);
+
+  // Titre affiché sur l'écran verrouillé : l'épisode, et le chapitre en cours.
+  const chapterTitle = chapter >= 0 ? chapters[chapter]?.title : undefined;
+  useEffect(() => {
+    if (!('mediaSession' in navigator) || !track) return;
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: track.title, artist: 'La Matinale', artwork: [{ src: track.cover, sizes: '1400x1400', type: 'image/jpeg' }],
+      title: chapterTitle ? `${chapterTitle} · La Matinale` : track.title,
+      artist: 'La Matinale',
+      album: track.title,
+      artwork: [{ src: track.cover, sizes: '1400x1400', type: 'image/jpeg' }],
     });
-    navigator.mediaSession.setActionHandler('play', () => void el.current?.play());
-    navigator.mediaSession.setActionHandler('pause', () => el.current?.pause());
-    navigator.mediaSession.setActionHandler('seekbackward', () => skip(-15));
-    navigator.mediaSession.setActionHandler('seekforward', () => skip(30));
-  }, [track, skip]);
+  }, [track, chapterTitle]);
+
+  // Barre de progression de l'écran verrouillé.
+  const syncPosition = useCallback(() => {
+    const a = el.current;
+    if (!a || !('mediaSession' in navigator) || !Number.isFinite(a.duration)) return;
+    try { navigator.mediaSession.setPositionState({ duration: a.duration, position: Math.min(a.currentTime, a.duration), playbackRate: a.playbackRate || 1 }); } catch { /* ignoré */ }
+  }, []);
 
   const onTime = () => {
     const a = el.current;
     if (!a || !track) return;
     setNow(a.currentTime);
+    if (Math.floor(a.currentTime) % 5 === 0) syncPosition();
     try { localStorage.setItem(posKey(track.date), String(Math.floor(a.currentTime))); } catch { /* ignoré */ }
   };
 
   return (
-    <Ctx.Provider value={{ track, now, duration, playing, rate, prepare, play, toggle, seek, skip, nextRate }}>
+    <Ctx.Provider value={{ track, now, duration, playing, ended, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
       <audio
         ref={el} preload="metadata"
-        onTimeUpdate={onTime} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)}
+        onTimeUpdate={onTime} onPlay={() => { setPlaying(true); setEnded(false); syncPosition(); }} onPause={() => { setPlaying(false); syncPosition(); }}
+        onEnded={() => { setPlaying(false); setEnded(true); }} onSeeked={syncPosition} onRateChange={syncPosition}
         onLoadedMetadata={e => {
           const a = e.currentTarget;
           if (Number.isFinite(a.duration)) setDuration(a.duration);
           a.playbackRate = rate;
           if (pendingSeek.current) { a.currentTime = pendingSeek.current; pendingSeek.current = null; }
+          syncPosition();
         }}
       />
       {children}
@@ -153,25 +211,39 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Barre au-dessus des onglets, visible hors de la page Écouter dès qu'un épisode a été lancé. */
+/** Barre au-dessus des onglets, visible dès qu'un épisode a été lancé, sauf sur sa propre page. */
 function MiniPlayer() {
-  const { track, now, duration, playing, toggle, skip } = useAudio();
+  const { track, now, duration, playing, ended, shown, toggle, skip } = useAudio();
   const path = usePathname();
   const [started, setStarted] = useState(false);
   useEffect(() => { if (playing) setStarted(true); }, [playing]);
-  if (!track || !started || path === '/') return null;
+  if (!track || !started) return null;
+  if (path === '/' && shown === track.date) return null;
   const pct = duration ? Math.min(100, (now / duration) * 100) : 0;
+  const left = Math.max(0, Math.round((duration - now) / 60));
   return (
     <div className="mini" role="region" aria-label="Lecture en cours">
       <i className="mini-progress" style={{ width: `${pct}%` }} aria-hidden />
       <Link href={`/?date=${track.date}`} className="mini-info">
         <img src={track.cover} alt="" width={40} height={40} />
-        <span className="grow"><span className="mini-title">{track.title}</span></span>
+        <span className="grow">
+          <span className="mini-title">{track.title}</span>
+          <span className="mini-meta num">{ended ? 'Terminé' : `${left} min restantes`}</span>
+        </span>
       </Link>
-      <button type="button" className="mini-btn" onClick={() => skip(-15)} aria-label="Reculer de 15 secondes"><Icon name="back" size={22} /></button>
-      <button type="button" className="mini-btn" onClick={toggle} aria-label={playing ? 'Pause' : 'Lecture'}>
-        <Icon name={playing ? 'pause' : 'play'} size={22} />
-      </button>
+      {ended
+        ? <Link href="/avis" className="btn small primary" style={{ flex: 'none' }}>Ton avis ?</Link>
+        : <>
+            <button type="button" className="mini-btn skipper" onClick={() => skip(-15)} aria-label="Reculer de 15 secondes">
+              <Icon name="back" size={22} /><span aria-hidden>15</span>
+            </button>
+            <button type="button" className="mini-btn" onClick={toggle} aria-label={playing ? 'Pause' : 'Lecture'}>
+              <Icon name={playing ? 'pause' : 'play'} size={22} />
+            </button>
+            <button type="button" className="mini-btn skipper" onClick={() => skip(30)} aria-label="Avancer de 30 secondes">
+              <Icon name="forward" size={22} /><span aria-hidden>30</span>
+            </button>
+          </>}
     </div>
   );
 }

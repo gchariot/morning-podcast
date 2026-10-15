@@ -94,8 +94,8 @@ Une appli web privée ([`app/`](app/)), protégée par un mot de passe facultati
 
 | Écran | Ce qu'on y fait |
 |---|---|
-| **Écouter** | Lecteur avec chapitres, −15 s / +30 s, vitesse, reprise là où on s'est arrêté ; quiz du jour, jeu et face-à-face du samedi ; sources ; épisodes précédents. Le son continue d'un onglet à l'autre (mini-lecteur). |
-| **Mon avis** | Un pouce par thème entendu, des pastilles toutes prêtes (« trop long », « sujet raté »…), un mot si besoin ; « Déjà envoyé » avec retrait ; consignes permanentes |
+| **Écouter** | « Grâce à tes retours » (ce que la rédaction a changé suite à tes avis) ; lecteur avec chapitres, −15 s / +30 s, vitesse, reprise ; chapitre suivant / précédent depuis les écouteurs ; quiz du jour, jeu et face-à-face du samedi ; invite à donner son avis en fin d'épisode ; résumé et sources ; épisodes précédents. Le son continue d'un onglet à l'autre (mini-lecteur) et résiste aux coupures réseau. |
+| **Mon avis** | Un pouce par thème entendu, des pastilles toutes prêtes (« trop long », « sujet raté »…), un mot si besoin ; ce qui est envoyé reste affiché et se corrige en renvoyant ; brouillon gardé hors réseau ; consignes permanentes (retrait annulable) |
 | **Thèmes** | Ordre par glisser-déposer, durée, consigne, sites de référence, pause, création et suppression |
 | **Réglages** | Durée en semaine, grande édition du samedi, documentaire du dimanche (durée et sujet souhaité), coût estimé du mois |
 

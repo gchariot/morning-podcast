@@ -1,5 +1,6 @@
 'use client';
-import { useEffect } from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { Icon } from './Icon';
 import { useAudio, type Track } from './Audio';
 
@@ -12,8 +13,10 @@ const hms = (s: number) => {
 /** Commandes de l'épisode affiché. Le son lui-même vit dans <AudioProvider> et continue entre les onglets. */
 export function Player({ track }: { track: Track }) {
   const audio = useAudio();
-  const { prepare } = audio;
+  const { prepare, setShown } = audio;
   useEffect(() => { prepare(track); }, [prepare, track]);
+  useEffect(() => { setShown(track.date); return () => setShown(null); }, [setShown, track.date]);
+  const [allChapters, setAllChapters] = useState(false);
 
   const live = audio.track?.date === track.date;   // cet épisode est celui chargé dans le lecteur
   const now = live ? audio.now : 0;
@@ -25,7 +28,15 @@ export function Player({ track }: { track: Track }) {
   const seek = (sec: number) => (live ? audio.seek(sec) : audio.play(track, sec));
   const skip = (d: number) => (live ? audio.skip(d) : audio.play(track, Math.max(0, d)));
   const jump = (sec: number) => audio.play(track, sec);
-  const current = track.chapters.reduce((idx, c, i) => (now >= c.startSec ? i : idx), 0);
+  const started = live && (audio.playing || now > 1);
+  const current = started ? track.chapters.reduce((idx, c, i) => (now >= c.startSec ? i : idx), 0) : -1;
+  // Chapitres repliés : celui en cours et ses voisins ; tous sur demande.
+  const anchor = Math.max(0, current);
+  const from = Math.max(0, Math.min(anchor - 1, track.chapters.length - 3));
+  const visible = allChapters || track.chapters.length <= 4
+    ? track.chapters.map((c, i) => [c, i] as const)
+    : track.chapters.slice(from, from + 3).map((c, i) => [c, from + i] as const);
+  const finished = live && audio.ended;
 
   return (
     <>
@@ -50,6 +61,12 @@ export function Player({ track }: { track: Track }) {
           </button>
           <button type="button" className="rate" onClick={audio.nextRate} aria-label={`Vitesse ×${audio.rate}, changer`}>×{audio.rate}</button>
         </div>
+        {finished && (
+          <div className="ended" role="status">
+            <span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Deux pouces et la rédaction ajuste demain.</span>
+            <Link href="/avis" className="btn small primary">Donner mon avis</Link>
+          </div>
+        )}
         {!live && audio.track && audio.playing && (
           <p className="field-hint" style={{ textAlign: 'center' }}>Un autre épisode est en cours : appuie sur lecture pour passer à celui-ci.</p>
         )}
@@ -57,17 +74,25 @@ export function Player({ track }: { track: Track }) {
 
       {track.chapters.length > 0 && (
         <section className="section">
-          <h2>Chapitres</h2>
-          <ul className="chapters group" style={{ marginTop: 12 }}>
-            {track.chapters.map((c, i) => (
+          <h2 className="sr">Chapitres</h2>
+          <ul className="chapters group">
+            {visible.map(([c, i]) => (
               <li key={c.title + c.startSec}>
-                <button type="button" aria-current={live && i === current ? 'true' : undefined} onClick={() => jump(c.startSec)}>
+                <button type="button" aria-current={i === current ? 'true' : undefined} onClick={() => jump(c.startSec)}>
                   <span className="dot" aria-hidden />
                   <span className="grow">{c.title}</span>
                   <time>{hms(c.startSec)}</time>
                 </button>
               </li>
             ))}
+            {track.chapters.length > 4 && (
+              <li>
+                <button type="button" className="chapters-more" onClick={() => setAllChapters(v => !v)} aria-expanded={allChapters}>
+                  <span className="grow">{allChapters ? 'Replier les chapitres' : `Les ${track.chapters.length} chapitres`}</span>
+                  <Icon name={allChapters ? 'chevron-up' : 'chevron-down'} size={18} />
+                </button>
+              </li>
+            )}
           </ul>
         </section>
       )}

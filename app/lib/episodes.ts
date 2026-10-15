@@ -13,6 +13,8 @@ export type Episode = {
   /** Samedi : le jeu de 8 questions et le face-à-face. */
   game?: { questions: { question: string; choices: string[]; answer: number; explanation?: string }[] };
   debate?: { topic: string; sides: [string, string] };
+  /** Ce que la rédaction a changé grâce aux retours de l'auditeur. */
+  applied?: string[];
   /** Secondes de voix générées (hors jingle), pour le coût. Absent sur les tout premiers épisodes. */
   ttsSeconds?: number;
 };
