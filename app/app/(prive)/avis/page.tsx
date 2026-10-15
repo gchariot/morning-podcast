@@ -32,10 +32,11 @@ export default async function AvisPage() {
     if (p.topic === 'Général') general = p.note;
     else if (p.topic && !saved[p.topic]) saved[p.topic] = { vote: p.vote, chips: p.chips, note: p.note };
   }
-  // Le détail de ce qui partira demain : d'abord ce qui demande un changement, puis ce qui reste tel quel.
+  // Résumé de l'avis parti pour demain (le détail est sur les lignes juste en dessous, inutile de le recopier).
   const sentNow = mine.map(parseLine).filter(p => p.topic && p.topic !== 'Général');
-  const keep = sentNow.filter(p => p.vote === 'up' && !p.chips.length && !p.note.trim());
-  const detailed = sentNow.filter(p => !keep.includes(p));
+  const toFix = sentNow.filter(p => p.vote === 'down').map(p => p.topic);
+  const liked = sentNow.length - toFix.length;
+  const list = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} et ${xs[xs.length - 1]}` : xs[0] ?? '');
   const older = retours.recent.filter(l => !mine.includes(l)).slice(0, 8).map(parseLine);
   const isToday = last?.date === todayInZurich();
 
@@ -53,14 +54,13 @@ export default async function AvisPage() {
         <h2 id="tomorrow-h">Ce que la rédaction appliquera {tomorrow.when}</h2>
         {mine.length || tomorrow.items.length
           ? <ul>
-              {detailed.map(p => (
-                <li key={p.topic}>
-                  <strong>{p.topic}</strong>{' '}
-                  {p.vote && <span className={`vote-ico ${p.vote}`}><Icon name={p.vote} size={14} /><span className="sr">{p.vote === 'up' ? 'aimé' : 'pas convaincu'}</span></span>}
-                  {' '}{[p.chips.join(', ').toLowerCase(), p.note].filter(Boolean).join(' — ')}
+              {sentNow.length > 0 && (
+                <li>
+                  <strong>Ton avis sur {sentNow.length} thème{sentNow.length > 1 ? 's' : ''}</strong>
+                  {toFix.length > 0 && <> : à revoir, {list(toFix)}</>}
+                  {liked > 0 && <>{toFix.length ? ' ; ' : ' : '}{liked} gardé{liked > 1 ? 's' : ''} ou renforcé{liked > 1 ? 's' : ''}</>}
                 </li>
-              ))}
-              {keep.length > 0 && <li>{keep.map(p => p.topic).join(', ')} : {keep.length > 1 ? 'gardés tels quels' : 'gardé tel quel'}</li>}
+              )}
               {general && <li><strong>Sur l&apos;ensemble</strong> : « {general} »</li>}
               {tomorrow.items.map(i => <li key={i}>{i}</li>)}
             </ul>

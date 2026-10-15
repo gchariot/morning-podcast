@@ -47,7 +47,11 @@ export function Player({ track, feedbackSent = false }: { track: Track; feedback
           aria-label="Position dans l'épisode" aria-valuetext={`${hms(now)} sur ${hms(duration)}`}
           style={{ ['--p' as string]: `${pct}%` }}
         />
-        <div className="times"><time>{hms(now)}</time><time>−{hms(duration - now)}</time></div>
+        <div className="times">
+          <time>{hms(now)}</time>
+          {live && playing && audio.buffering && <span className="buffering" role="status">En attente du réseau…</span>}
+          <time>−{hms(duration - now)}</time>
+        </div>
         <div className="controls">
           <span />
           <button type="button" className="skip" onClick={() => skip(-15)} aria-label="Reculer de 15 secondes">

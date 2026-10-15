@@ -24,7 +24,7 @@ export function useOnline(): boolean {
 export function Connectivity() {
   const online = useOnline();
   const { show, closeErrors } = useSnack();
-  const { playing } = useAudio();
+  const { playing, buffering } = useAudio();
 
   useEffect(() => { if (online) closeErrors(); }, [online, closeErrors]);
 
@@ -37,16 +37,16 @@ export function Connectivity() {
       if (new URL(a.href, location.href).origin !== location.origin) return;
       e.preventDefault();
       e.stopPropagation();
-      show({ ok: false, message: `Pas de réseau : réessaie dès que ça capte.${playing ? ' L’écoute continue.' : ''}` });
+      show({ ok: false, message: `Pas de réseau : réessaie dès que ça capte.${playing && !buffering ? ' L’écoute continue.' : ''}` });
     };
     document.addEventListener('click', onClick, true);
     return () => document.removeEventListener('click', onClick, true);
-  }, [show, playing]);
+  }, [show, playing, buffering]);
 
   if (online) return null;
   return (
-    <div className="offline" role="status">
-      Hors connexion{playing ? ' · l’écoute continue' : ''}
+    <div className={`offline${playing && buffering ? ' waiting' : ''}`} role="status">
+      Hors connexion{playing ? (buffering ? ' · le son attend le réseau' : ' · l’écoute continue') : ''}
     </div>
   );
 }

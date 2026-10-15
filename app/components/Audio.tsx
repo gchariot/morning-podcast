@@ -26,6 +26,8 @@ type AudioState = {
   ended: boolean;
   /** L'épisode n'a pas pu être chargé ou lancé (réseau). */
   failed: boolean;
+  /** Lecture demandée mais le son attend des données (tunnel, saut hors de la partie chargée). */
+  buffering: boolean;
   rate: number;
   /** Index du chapitre en cours (-1 avant le début). */
   chapter: number;
@@ -61,6 +63,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [rate, setRate] = useState(1);
   const [ended, setEnded] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [buffering, setBuffering] = useState(false);
   // Un échec de lecture est dit, jamais silencieux.
   const start = useCallback((a: HTMLAudioElement) => {
     setFailed(false);
@@ -198,16 +201,18 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     const a = el.current;
     if (!a || !track) return;
     setNow(a.currentTime);
+    if (buffering && !a.paused && a.readyState >= 3) setBuffering(false);
     if (Math.floor(a.currentTime) % 5 === 0) syncPosition();
     try { localStorage.setItem(posKey(track.date), String(Math.floor(a.currentTime))); } catch { /* ignoré */ }
   };
 
   return (
-    <Ctx.Provider value={{ track, now, duration, playing, ended, failed, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
+    <Ctx.Provider value={{ track, now, duration, playing, ended, failed, buffering, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
       <audio
         ref={el} preload="metadata"
-        onTimeUpdate={onTime} onPlay={() => { setPlaying(true); setEnded(false); syncPosition(); }} onPause={() => { setPlaying(false); syncPosition(); }}
-        onEnded={() => { setPlaying(false); setEnded(true); }} onError={() => { if (track) setFailed(true); }} onSeeked={syncPosition} onRateChange={syncPosition}
+        onTimeUpdate={onTime} onPlay={() => { setPlaying(true); setEnded(false); syncPosition(); }} onPause={() => { setPlaying(false); setBuffering(false); syncPosition(); }}
+        onWaiting={e => { if (!e.currentTarget.paused) setBuffering(true); }} onPlaying={() => setBuffering(false)}
+        onEnded={() => { setPlaying(false); setBuffering(false); setEnded(true); }} onError={() => { if (track) setFailed(true); }} onSeeked={syncPosition} onRateChange={syncPosition}
         onLoadedMetadata={e => {
           const a = e.currentTarget;
           if (Number.isFinite(a.duration)) setDuration(a.duration);
@@ -224,7 +229,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
 /** Barre au-dessus des onglets, visible dès qu'un épisode a été lancé, sauf sur sa propre page. */
 function MiniPlayer() {
-  const { track, now, duration, playing, ended, shown, toggle, skip } = useAudio();
+  const { track, now, duration, playing, ended, buffering, shown, toggle, skip } = useAudio();
   const path = usePathname();
   const [started, setStarted] = useState(false);
   useEffect(() => { if (playing) setStarted(true); }, [playing]);
@@ -239,7 +244,7 @@ function MiniPlayer() {
         <img src={track.cover} alt="" width={40} height={40} />
         <span className="grow">
           <span className="mini-title">{track.title}</span>
-          <span className="mini-meta num">{ended ? 'Terminé' : `${left} min restantes`}</span>
+          <span className="mini-meta num">{ended ? 'Terminé' : buffering ? 'En attente du réseau…' : `${left} min restantes`}</span>
         </span>
       </Link>
       {ended

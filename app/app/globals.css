@@ -14,13 +14,13 @@
   --accent-ink: #141a3a;
   --accent-soft: #262a52;
   --night: #141a3a;
-  --switch-on: #7c76ad;
+  --switch-on: #f2b84b; /* l'or de Léa, comme le prévoit DESIGN */
   --good: #5fd08a;
   --good-soft: #17301f;
   --bad: #ff7a8a;
   --bad-soft: #3b1a26;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-  --snack-action: #93503f;
+  --snack-action: #ffd796;
   --radius: 14px;
   --tabbar: 64px;
   --lea: #f2b84b;
@@ -69,7 +69,7 @@ time, .num { font-variant-numeric: tabular-nums; }
 .spread { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 
 /* Groupe de lignes, façon réglages iOS */
-.group { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.group { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; overflow: clip; } /* clip : coins arrondis sans bloquer les pieds collants */
 .group > * + * { border-top: 1px solid var(--line); }
 .item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; min-height: 52px; }
 a.item { color: inherit; text-decoration: none; }
@@ -117,9 +117,9 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 
 /* Interrupteur (case à cocher stylée) */
 .switch { appearance: none; -webkit-appearance: none; width: 51px !important; height: 31px !important; border-radius: 999px; background: var(--surface-2); position: relative; cursor: pointer; transition: background 200ms ease-out; border: 1px solid var(--line); }
-.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 25px; height: 25px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms cubic-bezier(.2,.8,.2,1); }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 25px; height: 25px; border-radius: 50%; background: var(--ink-2); box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms cubic-bezier(.2,.8,.2,1); }
 .switch:checked { background: var(--switch-on); border-color: var(--switch-on); }
-.switch:checked::after { transform: translateX(20px); }
+.switch:checked::after { transform: translateX(20px); background: var(--night); }
 
 /* ---------- Boutons ---------- */
 .btn {
@@ -188,7 +188,7 @@ details[open] > summary { border-bottom: 1px solid var(--line); }
   font: inherit; color: var(--ink); background: none; border: 0; padding: 13px 16px; cursor: pointer; min-height: 48px;
 }
 .chapters button:hover { background: var(--surface-2); }
-.chapters .dot { width: 8px; height: 8px; border-radius: 50%; background: transparent; flex: none; }
+.chapters .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex: none; }
 .chapters [aria-current="true"] { color: var(--accent); font-weight: 600; }
 .chapters [aria-current="true"] .dot { background: var(--accent); }
 .chapters .grow { flex: 1; }
@@ -341,7 +341,13 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 
 .editor { padding: 4px 16px 18px 36px; border-top: 1px dashed var(--line); background: var(--surface); }
 .editor .field:first-child { margin-top: 14px; }
-.editor-foot { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+.editor-foot {
+  display: flex; align-items: center; gap: 12px; margin-top: 18px;
+  /* « Enregistrer » suit le pouce pendant qu'on fait défiler un long éditeur */
+  position: sticky; z-index: 5; bottom: calc(var(--tabbar) + env(safe-area-inset-bottom));
+  margin-inline: -4px; padding: 10px 4px; background: var(--surface);
+}
+body:has(.mini) .editor-foot { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 72px); }
 .editor-foot .btn.primary { flex: 1; }
 .editor-err { margin-top: 12px; font-size: 0.875rem; color: var(--bad); }
 .editor-del { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -363,6 +369,7 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 .domain button { position: relative; width: 32px; height: 36px; display: grid; place-items: center; border: 0; background: none; color: var(--ink-2); cursor: pointer; border-radius: 0 8px 8px 0; }
 .domain button::before { content: ""; position: absolute; inset: -4px -2px; }
 .domain button:hover { color: var(--bad); }
+.domain.more { border: 0; padding: 0 12px; min-height: 44px; height: auto; font: inherit; font-size: 0.875rem; font-weight: 600; color: var(--accent); cursor: pointer; }
 .domains input[type="text"] { flex: 1 1 140px; min-width: 120px; width: auto; height: 36px; padding: 0 6px; background: transparent; border: 0; box-shadow: none; }
 .domains input[type="text"]:focus { box-shadow: none; }
 .field-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
@@ -380,26 +387,30 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
   position: fixed; z-index: 12; left: 12px; right: 12px; max-width: 616px; margin: 0 auto;
   bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 12px);
   display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 6px 6px 16px;
-  background: var(--ink); color: var(--bg); border-radius: 14px; font-size: 0.9375rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  background: var(--surface-2); color: var(--ink); border-radius: 14px; font-size: 0.9375rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--line);
   animation: snack-in 260ms cubic-bezier(.2,.8,.2,1);
 }
 .snack p { flex: 1; color: inherit; }
-.snack.err { background: var(--bad); color: #fff; }
+.snack > svg { color: var(--good); flex: none; }
+.snack.err { background: var(--bad-soft); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px color-mix(in srgb, var(--bad) 45%, transparent); }
+.snack.err > svg { color: var(--bad); }
+.snack.err.neutral { background: var(--surface-2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--line); }
 .snack .btn { background: transparent; color: var(--snack-action); flex: none; }
-.snack.err .btn { color: #fff; }
-.snack .btn:hover { background: color-mix(in srgb, var(--bg) 12%, transparent); }
+.snack .btn.icon { color: var(--ink-2); }
+.snack .btn:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); }
 @keyframes snack-in { from { opacity: 0; transform: translateY(8px); } }
 
 /* ---------- Robustesse et boucle ---------- */
- .playbtn { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); } 
 
 
 .offline {
   position: sticky; top: 0; z-index: 19; max-width: 640px; margin: 0 auto;
   padding: calc(8px + env(safe-area-inset-top)) 16px 8px; text-align: center;
-  font-size: 0.8125rem; font-weight: 600; background: var(--ink); color: var(--bg);
+  font-size: 0.8125rem; font-weight: 600; background: var(--surface-2); color: var(--ink);
+  border-bottom: 1px solid var(--line);
 }
+.offline.waiting { color: var(--sun-gold); }
 
 /* « Grâce à tes retours » : la preuve que l'avis d'hier a changé l'épisode du jour */
 .applied { margin-top: 18px; padding: 14px 16px; border-radius: var(--radius); background: var(--accent-soft); }
@@ -445,7 +456,7 @@ body:has(.sendbar) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-b
 
 /* Poignée clavier des thèmes : invisible au doigt, visible quand elle a le focus */
 .theme button.sr:focus-visible {
-  clip: auto; width: auto; height: auto; margin: 0; overflow: visible; right: 76px; top: 14px;
+  clip: auto; width: auto; height: auto; margin: 0; overflow: visible; left: 8px; top: 50%; transform: translateY(-50%); z-index: 2;
   padding: 6px 10px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink);
   font: inherit; font-size: 0.8125rem; font-weight: 600;
 }
@@ -546,16 +557,11 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .sk.sk-sky { background: rgba(255, 248, 238, 0.16); }
 
 /* Le bouton lecture : la nuit de la pochette et son soleil (en sombre : le soleil, et la nuit dessus) */
-.playbtn { background: var(--night); color: var(--sun-gold); box-shadow: 0 8px 22px rgba(20, 26, 58, 0.28); }
-.scrub::-webkit-slider-thumb { background: var(--night); }
-.scrub::-moz-range-thumb { background: var(--night); }
-.scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--night) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
-.scrub::-moz-range-progress { background: var(--night); }
-  .playbtn { background: var(--sun-gold); color: var(--night); }
-  .scrub::-webkit-slider-thumb { background: var(--sun-gold); }
-  .scrub::-moz-range-thumb { background: var(--sun-gold); }
-  .scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--sun-gold) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
-  .scrub::-moz-range-progress { background: var(--sun-gold); }
+.playbtn { background: var(--sun-gold); color: var(--night); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45); }
+.scrub::-webkit-slider-thumb { background: var(--sun-gold); }
+.scrub::-moz-range-thumb { background: var(--sun-gold); }
+.scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--sun-gold) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
+.scrub::-moz-range-progress { background: var(--sun-gold); }
 
 .mini-progress { background: var(--lea); }
 
@@ -565,9 +571,8 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .sky.predawn .sky-sea i:last-child { display: block; opacity: var(--glints); width: 22px; margin-right: calc(50px - 11px); }
 .sky-note { margin-top: 10px; font-size: 0.875rem; font-weight: 600; color: var(--sun-gold); }
 
-/* Un seul étage en bas : le message prend la place du mini-lecteur le temps de s'afficher */
-body:has(.mini) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 8px); }
-body:has(.snack) .mini { visibility: hidden; }
+/* Le message s'empile au-dessus du mini-lecteur : pause et −15 s restent sous le pouce */
+body:has(.mini) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 76px); }
 body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 76px); }
 .game-summary { margin-top: 4px; color: var(--ink-2); }
 .game-hits { padding: 14px 16px; font-size: 0.875rem; color: var(--ink-2); }
@@ -589,3 +594,8 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .mini-btn.skipper span { font-size: 0.5625rem; }
 .skip-link { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 14px; border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
 .skip-link:focus { top: calc(8px + env(safe-area-inset-top)); }
+
+/* Le son attend des données : on le dit au lieu de laisser croire qu'il joue */
+.times .buffering { color: var(--sun-gold); font-size: 0.8125rem; font-weight: 600; animation: breathe 1.6s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .times .buffering { animation: none; } }

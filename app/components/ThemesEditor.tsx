@@ -320,6 +320,24 @@ function ThemeForm({
     } catch { /* ignoré */ }
   }, [draftKey, base, dirty, title, minutes, brief, domains]);
 
+  // La consigne s'affiche en entier : pas de défilement à l'intérieur du champ (jusqu'à la moitié de l'écran).
+  const briefRef = useRef<HTMLTextAreaElement>(null);
+  const fit = useCallback(() => {
+    const el = briefRef.current;
+    if (!el || !el.offsetWidth) return; // éditeur replié : on mesurera à l'ouverture
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight + 2, Math.round(window.innerHeight * 0.5))}px`;
+  }, []);
+  useEffect(fit, [brief, fit]);
+  useEffect(() => {
+    const el = briefRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    let w = el.offsetWidth;
+    const ro = new ResizeObserver(() => { if (el.offsetWidth !== w) { w = el.offsetWidth; fit(); } });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [fit]);
+
   const [fieldErr, setFieldErr] = useState<{ title?: string; brief?: string }>({});
   const online = useOnline();
   const shownError = error && !(online && error === OFFLINE) ? error : null;
@@ -357,7 +375,7 @@ function ThemeForm({
       <div className="field">
         <label htmlFor={`${uid}b`}>Consigne pour la rédaction</label>
         <textarea
-          id={`${uid}b`} value={brief} onChange={e => { setBrief(e.target.value); setFieldErr(f => ({ ...f, brief: undefined })); }} maxLength={1200}
+          ref={briefRef} id={`${uid}b`} value={brief} onChange={e => { setBrief(e.target.value); setFieldErr(f => ({ ...f, brief: undefined })); }} maxLength={1200}
           aria-invalid={Boolean(fieldErr.brief)}
           placeholder="Ce qui t'intéresse, ce qu'il faut éviter, ce qui passe en premier…"
         />
@@ -391,10 +409,15 @@ function ThemeForm({
 
 /* ---------------------------------------------------------------- */
 
+const FOLDED_DOMAINS = 6;
+
 function DomainInput({ value, onChange, example }: { value: string[]; onChange: (v: string[]) => void; example: string }) {
   const uid = useId();
   const [text, setText] = useState('');
   const [error, setError] = useState<string | null>(null);
+  // Une longue liste de sites se replie : « Enregistrer » reste à portée de pouce.
+  const [all, setAll] = useState(false);
+  const hidden = all ? 0 : Math.max(0, value.length - FOLDED_DOMAINS);
 
   const add = (raw: string) => {
     // Une saisie sans point n'est pas une adresse : on la signale telle quelle.
@@ -427,12 +450,17 @@ function DomainInput({ value, onChange, example }: { value: string[]; onChange: 
     <div className="field">
       <label htmlFor={`${uid}d`}>Sites de référence</label>
       <div className={`domains${error ? ' invalid' : ''}`}>
-        {value.map(d => (
+        {(hidden ? value.slice(0, FOLDED_DOMAINS) : value).map(d => (
           <span className="domain" key={d}>
             <span>{d}</span>
             <button type="button" onClick={() => onChange(value.filter(x => x !== d))} aria-label={`Retirer ${d}`}><Icon name="x" size={14} /></button>
           </span>
         ))}
+        {hidden > 0 && (
+          <button type="button" className="domain more" onClick={() => setAll(true)} aria-label={`Afficher les ${hidden} autres sites`}>
+            +{hidden} site{hidden > 1 ? 's' : ''}
+          </button>
+        )}
         {value.length < MAX_DOMAINS && (
           <input
             id={`${uid}d`} type="text" value={text} placeholder={value.length ? 'Ajouter un site' : `Ex. : ${example}`}

@@ -141,13 +141,13 @@ components:
     textColor: "{colors.cream}"
     padding: "28px 20px 62px"
   snack:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.lavender-mist}"
+    backgroundColor: "#22274a"
+    textColor: "#f3f0f7"
     rounded: "{rounded.xl}"
     height: "52px"
 ---
 
-> **Decision (15/10/2026):** the app is dark-only, by the user's choice; the light values below are retired and no longer shipped. The night-blue ground `#0e1124`, surfaces `#171b33` / `#22274a` and the sun-gold accent `#ffd796` are the only palette.
+> **Decision (15/10/2026):** the app is dark-only, by the user's choice; the light values below are retired and no longer shipped. The night-blue ground `#0e1124`, surfaces `#171b33` / `#22274a` and the sun-gold accent `#ffd796` are the only palette. Snack and offline banner sit on Surface 2 (`#22274a`) with light ink; an error snack uses the dark rose `#3b1a26` with a rose ring and alert icon, never white text on rose. Switches turn Léa gold when on.
 
 # Design System: La Matinale
 
@@ -230,7 +230,7 @@ There is one centred column, 640px wide. The page wrapper pads 24px on top and 1
 
 The sky band runs full-bleed on phones. It uses negative margins to cancel the wrapper padding, and it extends under the status bar (`viewport-fit: cover`, safe-area top padding). Above 641px, the band sits inside the column and rounds its bottom corners. Band content keeps 72px clear on the right so the sun can rise beside the title. The tall variant (Écouter) adds 8px above and 6px below.
 
-Fixed and sticky layers stack in a set order. From the bottom: the tab bar (64px + safe area), then the mini-player 8px above it, then the snack 12px above the tab bar (moved up to 80px when the mini-player is present, and 76px when the send bar is), and the send bar. The update and offline banners stick to the top. Layers never overlap; each one offsets for the others with `body:has()`.
+Fixed and sticky layers stack in a set order. From the bottom: the tab bar (64px + safe area), then the mini-player 8px above it, then the snack 12px above the tab bar (stacked 76px above it when the mini-player or the send bar is present, so pause and −15 s stay reachable), and the send bar. A long theme editor keeps its Save footer sticky above these layers. The update and offline banners stick to the top. Layers never overlap; each one offsets for the others with `body:has()`.
 
 ## Elevation & Depth
 
@@ -239,7 +239,7 @@ The elevation is mostly flat and tonal. Grouped panels lift only slightly with a
 ### Shadow Vocabulary
 - **Panel** (`0 1px 2px rgba(23,22,42,.06), 0 4px 16px rgba(23,22,42,.06)`, dark mode `0 1px 2px rgba(0,0,0,.45)`): grouped rows, the "prochaine rédaction" card.
 - **Float** (`0 8px 28px rgba(0,0,0,.18), 0 0 0 1px var(--line)`): the mini-player and the send-bar play button (`0 8px 24px rgba(0,0,0,.16)`).
-- **Snack / Drag** (`0 10px 30px rgba(0,0,0,.25)` / `0 10px 30px rgba(0,0,0,.22)`): the bottom message, and a theme row being dragged.
+- **Snack / Drag** (`0 10px 30px rgba(0,0,0,.45)` plus a 1px Line ring / `0 10px 30px rgba(0,0,0,.22)`): the bottom message, and a theme row being dragged.
 - **Play** (`0 8px 22px rgba(20,26,58,.28)`; dark mode `0 6px 18px rgba(0,0,0,.45)`): the night play button.
 - **Sun glow** (radial gradient `rgba(255,210,140,.42)` falling to transparent at 70%, 46px beyond the disc): only on the sun.
 

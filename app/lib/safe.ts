@@ -29,6 +29,11 @@ export function radioKeys(e: { key: string; currentTarget: HTMLElement; preventD
   items[(i + dir + items.length) % items.length].focus();
 }
 
+/** Un seul arrêt de Tab par groupe de choix : la réponse cochée, sinon la première ; les flèches font le reste. */
+export function rovingTab(selected: number | null | undefined, i: number): 0 | -1 {
+  return selected === i || ((selected === null || selected === undefined || selected < 0) && i === 0) ? 0 : -1;
+}
+
 /** Typographie française : espace fine insécable avant ? ! : ; (évite « collège / ? » en fin de ligne). */
 export function fr(text: string): string {
   return text.replace(/\s+([?!:;»])/g, '\u202f$1').replace(/«\s+/g, '«\u202f');

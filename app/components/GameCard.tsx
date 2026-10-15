@@ -5,7 +5,7 @@
  */
 import { useEffect, useState, useTransition } from 'react';
 import { submitGame, type GameResult } from '@/app/(prive)/actions';
-import { OFFLINE, fr, radioKeys, safeCall } from '@/lib/safe';
+import { OFFLINE, fr, radioKeys, rovingTab, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
 import { Icon } from './Icon';
 
@@ -111,7 +111,7 @@ export function GameCard({ date, questions, played }: { date: string; questions:
         <div className="quiz-choices" role="radiogroup" aria-label={`Choix pour la question ${step + 1}`}>
           {q.choices.map((c, i) => (
             <button key={i} type="button" role="radio" aria-checked={answers[step] === i}
-              className={`quiz-choice${answers[step] === i ? ' picked' : ''}`} onClick={() => pick(i)} onKeyDown={radioKeys}>
+              className={`quiz-choice${answers[step] === i ? ' picked' : ''}`} onClick={() => pick(i)} onKeyDown={radioKeys} tabIndex={rovingTab(answers[step], i)}>
               <span className="quiz-letter" aria-hidden>{LETTERS[i]}</span>
               <span className="grow">{c}</span>
             </button>

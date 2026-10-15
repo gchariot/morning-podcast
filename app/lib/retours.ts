@@ -31,6 +31,12 @@ function sections(raw: string) {
   return { head: raw.slice(0, p), permanent: raw.slice(p + PERMANENT.length, r), recent: raw.slice(r + RECENT.length) };
 }
 
+/** Consignes permanentes d'un contenu brut de retours.md (pour comparer deux versions). */
+export function permanentOf(raw: string): string[] {
+  const s = sections(raw);
+  return s ? bulletsOf(s.permanent) : [];
+}
+
 export async function loadRetours(fresh = false): Promise<Retours> {
   const file = await readFile(PATH, fresh);
   const raw = file?.content ?? TEMPLATE;

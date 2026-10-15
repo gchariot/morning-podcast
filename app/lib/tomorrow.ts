@@ -1,6 +1,7 @@
 import 'server-only';
 import { listCommits, readFileAsOf } from './github';
 import { loadConfig } from './config';
+import { loadRetours, permanentOf } from './retours';
 
 /**
  * « Ce qui change demain » : les modifications faites depuis l'appli depuis la dernière rédaction (5 h 37),
@@ -76,8 +77,21 @@ export async function loadTomorrow(): Promise<Tomorrow> {
       for (const k of Object.keys(a)) if (a[k] === b[k]) unchanged.add(k);
     }
   }
+  // Consignes permanentes : on nomme ce qui a été ajouté ou retiré depuis 5 h 37, pas un vague « modifiées ».
+  const rules: string[] = [];
+  if (latest.has('regles')) {
+    const [before, now] = await Promise.all([
+      readFileAsOf('retours.md', last).then(f => (f ? permanentOf(f.content) : null)).catch(() => null),
+      loadRetours().then(r => r.permanent).catch(() => null),
+    ]);
+    if (before && now) {
+      for (const r of now) if (!before.includes(r)) rules.push(`Nouvelle consigne : « ${r} »`);
+      for (const r of before) if (!now.includes(r)) rules.push(`Consigne retirée : « ${r} »`);
+      unchanged.add('regles');
+    }
+  }
   const items = [...latest.entries()]
     .filter(([k, v]) => v && !cancels(first.get(k), v) && !unchanged.has(k))
     .map(([, v]) => v as string);
-  return { when: nextLabel, items };
+  return { when: nextLabel, items: [...rules, ...items] };
 }

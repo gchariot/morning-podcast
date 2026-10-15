@@ -2,7 +2,7 @@
 /** Quiz de l'épisode : on répond dans l'appli, la réponse est donnée le lendemain dans la Matinale. */
 import { useState, useTransition } from 'react';
 import { answerQuiz } from '@/app/(prive)/actions';
-import { OFFLINE, fr, radioKeys, safeCall } from '@/lib/safe';
+import { OFFLINE, fr, radioKeys, rovingTab, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
@@ -72,7 +72,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
           {choices.map((c, i) => (
             <button
               key={i} type="button" role="radio" aria-checked={choice === i}
-              className={`quiz-choice ${state(i)}`} disabled={revealed} onClick={() => pick(i)} onKeyDown={radioKeys}
+              className={`quiz-choice ${state(i)}`} disabled={revealed} onClick={() => pick(i)} onKeyDown={radioKeys} tabIndex={rovingTab(choice, i)}
             >
               <span className="quiz-letter" aria-hidden>{LETTERS[i]}</span>
               <span className="grow">{c}</span>

@@ -21,7 +21,8 @@ export function useSnack(): SnackApi {
 export function SnackProvider({ children }: { children: React.ReactNode }) {
   const [snack, setSnack] = useState<(Snack & { id: number }) | null>(null);
   const close = useCallback(() => setSnack(null), []);
-  const show = useCallback((s: Snack) => setSnack({ ...s, id: Date.now() }), []);
+  // Une coupure réseau n'est pas une faute : même ton neutre partout (avis, thèmes, onglets, quiz…).
+  const show = useCallback((s: Snack) => setSnack({ ...s, neutral: s.neutral ?? (!s.ok && s.message.startsWith('Pas de réseau')), id: Date.now() }), []);
   const closeErrors = useCallback(() => setSnack(s => (s && !s.ok ? null : s)), []);
   const api = useMemo(() => ({ show, close, closeErrors }), [show, close, closeErrors]);
 
@@ -38,6 +39,7 @@ export function SnackProvider({ children }: { children: React.ReactNode }) {
         {snack && (
           <div key={snack.id} className={`snack${snack.ok ? '' : ' err'}${snack.neutral ? ' neutral' : ''}`}>
             {snack.ok && !snack.neutral && <Icon name="check" size={18} />}
+            {!snack.ok && !snack.neutral && <Icon name="alert" size={18} />}
             <p>{snack.message}</p>
             {snack.undo || snack.action
               ? <button type="button" className="btn small" onClick={() => { (snack.undo ?? snack.action!.run)(); close(); }}>{snack.undo ? 'Annuler' : snack.action!.label}</button>

@@ -2,7 +2,7 @@
 /** Le face-à-face du samedi : qui t'a convaincu, Léa ou Hugo ? Résultat annoncé le samedi suivant. */
 import { useState, useTransition } from 'react';
 import { voteDebate } from '@/app/(prive)/actions';
-import { OFFLINE, fr, radioKeys, safeCall } from '@/lib/safe';
+import { OFFLINE, fr, radioKeys, rovingTab, safeCall } from '@/lib/safe';
 import { useOnline } from './Connectivity';
 
 export function DebateCard({ date, topic, sides, myVote, closed }: {
@@ -34,7 +34,7 @@ export function DebateCard({ date, topic, sides, myVote, closed }: {
         <div className="quiz-choices" role="radiogroup" aria-label="Qui t'a convaincu ?">
           {(['Léa', 'Hugo'] as const).map((host, i) => (
             <button key={host} type="button" role="radio" aria-checked={vote === i} disabled={closed}
-              className={`quiz-choice${vote === i ? ' picked' : ''}`} onClick={() => cast(i as 0 | 1)} onKeyDown={radioKeys}>
+              className={`quiz-choice${vote === i ? ' picked' : ''}`} onClick={() => cast(i as 0 | 1)} onKeyDown={radioKeys} tabIndex={rovingTab(vote, i)}>
               <span className={`quiz-letter ${i === 0 ? 'lea' : 'hugo'}`} aria-hidden>{host[0]}</span>
               <span className="grow"><strong className={`debate-name ${i === 0 ? 'lea' : 'hugo'}`}>{host}</strong> : {sides[i].replace(new RegExp(`^${host}\\s*:\\s*`, 'i'), '')}</span>
             </button>
