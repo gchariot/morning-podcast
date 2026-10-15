@@ -1,9 +1,14 @@
 name: 1 · Données du jour
 
-# 03:00 UTC = 5h00 l'été, 4h00 l'hiver à Genève — avant la rédaction (5h37).
+# 02:17 UTC = 4h17 l'été, 3h17 l'hiver à Genève — bien avant la rédaction (5h37).
+# Minute « bizarre » exprès : GitHub retarde ou saute souvent les tâches prévues à l'heure pile.
+# Filet de sécurité : la rédaction pousse requests/data-AAAA-MM-JJ si le fichier manque, ce qui relance ce workflow.
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '17 2 * * *'
+  push:
+    branches: [main]
+    paths: ['requests/data-*']
   workflow_dispatch:
     inputs:
       date:
@@ -28,7 +33,15 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run data -- ${{ inputs.date && format('--date={0}', inputs.date) || '' }}
+      - name: Date demandée
+        id: d
+        run: |
+          D="${{ inputs.date }}"
+          if [ -z "$D" ] && [ "${{ github.event_name }}" = "push" ]; then
+            D=$(ls requests/ 2>/dev/null | sed -n 's#^data-\([0-9-]*\)$#\1#p' | sort | tail -1)
+          fi
+          echo "date=$D" >> "$GITHUB_OUTPUT"
+      - run: npm run data -- ${{ steps.d.outputs.date && format('--date={0}', steps.d.outputs.date) || '' }}
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           OPENAGENDA_KEY: ${{ secrets.OPENAGENDA_KEY }}
@@ -37,6 +50,8 @@ jobs:
           git config user.name "matinale-bot"
           git config user.email "matinale-bot@users.noreply.github.com"
           git add data/
-          D="${{ inputs.date }}"; [ -n "$D" ] || D=$(TZ=Europe/Zurich date +%F)
+          D="${{ steps.d.outputs.date }}"; [ -n "$D" ] || D=$(TZ=Europe/Zurich date +%F)
+          git rm -q --ignore-unmatch "requests/data-$D" || true
           git diff --cached --quiet || git commit -m "data: $D"
+          git pull --rebase -q origin main
           git push

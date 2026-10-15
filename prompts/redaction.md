@@ -30,6 +30,11 @@ Deux fichiers dans `episodes/<DATE>/` :
 
 ## Avant de chercher : mémoire, retours, édition du jour
 
+**Étape zéro : le fichier de données du jour.** Fais `git pull` puis vérifie que `data/<DATE>.json` existe. S'il manque (la collecte de 4h17 a pu être sautée par GitHub) :
+1. crée le fichier `requests/data-<DATE>` (une ligne : l'heure actuelle), commit `request: data <DATE>` et pousse sur `main` : cela relance la collecte ;
+2. attends en refaisant `git pull` toutes les 30 secondes, 8 minutes au maximum, jusqu'à ce que `data/<DATE>.json` apparaisse ;
+3. s'il n'est toujours pas là, continue sans : aucun score cité, et pour la météo seulement, lis directement `https://api.open-meteo.com/v1/forecast?latitude=<lat>&longitude=<lon>&timezone=Europe/Zurich&start_date=<DATE>&end_date=<DATE>&daily=weather_code,temperature_2m_min,temperature_2m_max,precipitation_probability_max,precipitation_sum,wind_speed_10m_max&hourly=temperature_2m,precipitation_probability` avec les coordonnées de la ville du jour (`config/rubriques.json` → `meteo`), via l'outil de lecture web. Note chaque étape dans le journal des trous.
+
 0. **Thèmes en pause** : une rubrique de `config/rubriques.json` avec `"enabled": false` est ignorée (ni recherche, ni segment). L'ordre des rubriques dans le fichier est l'ordre de l'épisode.
 
 1. **Mémoire** : lis `episodes/<veille>/notes.md` et les `title`/`summary` des `script.json` des 3 jours précédents (s'ils existent). Un sujet déjà traité n'est repris **que s'il y a du nouveau**, et alors présenté comme une suite (« on vous en parlait hier… »). Jamais deux fois la même info comme une nouveauté.

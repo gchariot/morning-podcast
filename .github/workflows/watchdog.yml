@@ -1,10 +1,10 @@
 name: 4 · Chien de garde
 
-# 04:30 UTC = 6h30 l'été, 5h30 l'hiver à Genève. Vérifie que l'épisode du jour est rédigé ET publié.
+# 04:23 UTC = 6h23 l'été, 5h23 l'hiver à Genève (minute « bizarre » : GitHub saute souvent l'heure pile et la demi-heure). Vérifie que l'épisode du jour est rédigé ET publié.
 # En cas de problème : notification push (ntfy) + run en rouge (mail GitHub).
 on:
   schedule:
-    - cron: '30 4 * * *'
+    - cron: '23 4 * * *'
   workflow_dispatch: {}
 
 jobs:
