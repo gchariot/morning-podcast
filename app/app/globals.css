@@ -501,6 +501,8 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .edition { font-family: var(--display); font-size: 1.0625rem; letter-spacing: -0.01em; }
 .edition .thin { font-weight: 300; }
 .edition b { font-weight: 800; }
+.edition.small { font-size: inherit; color: var(--ink-2); }
+.edition.small b { font-weight: 700; color: var(--ink); }
 .sky .btn.primary { margin-top: 16px; background: var(--sun-gold); color: #1b1206; }
 .sky-stars {
   position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none; transition: opacity 1s linear;

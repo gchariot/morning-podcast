@@ -150,7 +150,10 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
             {others.map(e => (
               <Link key={e.date} href={`/?date=${e.date}`} className="item">
                 <span className="grow">
-                  <span className="meta">{formatDate(e.date)} · <span className="num">{minutes(e.seconds)}</span></span>
+                  <span className="meta">
+                    {editionNumber(e.date, firstEdition) ? <><span className="edition small"><span className="thin">N°</span> <b className="num">{editionNumber(e.date, firstEdition)}</b></span> · </> : null}
+                    {formatDate(e.date)} · <span className="num">{minutes(e.seconds)}</span>
+                  </span>
                   <span style={{ display: 'block', fontWeight: 500 }}>{e.title}</span>
                 </span>
                 <Icon name="chevron-right" className="chev" />
