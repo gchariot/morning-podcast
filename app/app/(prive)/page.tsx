@@ -94,6 +94,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
           <QuizCard
             key={episode.date} date={episode.date} question={episode.quiz.question} choices={episode.quiz.choices}
             myChoice={answers[episode.date]?.choice ?? null}
+            savedAt={answers[episode.date]?.at}
             answer={revealed ? episode.quiz.answer : undefined}
             explanation={revealed ? episode.quiz.explanation : undefined}
             stats={quizStats(episodes, answers)}

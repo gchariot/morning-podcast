@@ -349,3 +349,4 @@ body:has(.mini) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-bott
 .game-dot { flex: 1; height: 6px; border-radius: 999px; border: 0; padding: 0; background: var(--surface-2); cursor: pointer; transition: background 150ms ease-out; }
 .game-dot.done { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
 .game-dot.on { background: var(--accent); }
+.saved-pill { display: inline-flex; align-items: center; gap: 4px; flex: none; font-size: 0.75rem; font-weight: 700; color: var(--good); background: var(--good-soft); padding: 3px 8px; border-radius: 999px; animation: flash-in 200ms cubic-bezier(.2,.8,.2,1); }
