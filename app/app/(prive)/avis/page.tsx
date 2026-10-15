@@ -5,12 +5,15 @@ import { parseLine, type Saved } from '@/lib/feedback';
 import { Icon } from '@/components/Icon';
 import { FeedbackForm } from '@/components/FeedbackForm';
 import { RulesEditor } from '@/components/RulesEditor';
+import { loadTomorrow } from '@/lib/tomorrow';
 
 // Chapitres qui ne sont pas des thèmes (on ne note pas l'ouverture ni le générique).
 const NOT_A_TOPIC = /^(ouverture|introduction|intro|générique|fin|au revoir|conclusion)$/i;
 
 export default async function AvisPage() {
-  const [{ config }, retours, episodes] = await Promise.all([loadConfig(), loadRetours(), loadEpisodes().catch(() => [])]);
+  const [{ config }, retours, episodes, tomorrow] = await Promise.all([
+    loadConfig(), loadRetours(), loadEpisodes().catch(() => []), loadTomorrow(),
+  ]);
   const last = episodes[0];
 
   // Les thèmes réellement entendus dans l'épisode ; à défaut, les thèmes actifs.
@@ -39,6 +42,16 @@ export default async function AvisPage() {
           La rédaction le lit à 5 h 37 : il change l&apos;épisode de demain.
         </p>
       </header>
+
+      <section className="tomorrow" aria-labelledby="tomorrow-h">
+        <h2 id="tomorrow-h">Prochaine rédaction : {tomorrow.when}</h2>
+        {mine.length || tomorrow.items.length
+          ? <ul>
+              {mine.length > 0 && <li>Ton avis sur {mine.length} {mine.length > 1 ? 'sujets' : 'sujet'} de l&apos;épisode</li>}
+              {tomorrow.items.map(i => <li key={i}>{i}</li>)}
+            </ul>
+          : <p>Rien de nouveau pour l&apos;instant : ce que tu changes ici, dans Thèmes ou dans Réglages s&apos;affichera ici.</p>}
+      </section>
 
       {last
         ? <FeedbackForm episode={last.date} topics={topics} saved={saved} savedGeneral={general} />

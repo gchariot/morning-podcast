@@ -2,19 +2,33 @@
 /**
  * Hors connexion (tunnel, zone blanche) : un bandeau discret, et les liens internes ne quittent pas la page.
  * Sans ça, le navigateur tente un chargement complet, affiche sa page d'erreur et coupe l'épisode.
+ * Au retour du réseau, les messages d'erreur périmés disparaissent.
  */
 import { useEffect, useState } from 'react';
 import { useSnack } from './Snack';
+import { useAudio } from './Audio';
 
-export function Connectivity() {
+/** État du réseau, mis à jour en direct. */
+export function useOnline(): boolean {
   const [online, setOnline] = useState(true);
-  const { show } = useSnack();
-
   useEffect(() => {
     const update = () => setOnline(navigator.onLine);
     update();
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); };
+  }, []);
+  return online;
+}
+
+export function Connectivity() {
+  const online = useOnline();
+  const { show, closeErrors } = useSnack();
+  const { playing } = useAudio();
+
+  useEffect(() => { if (online) closeErrors(); }, [online, closeErrors]);
+
+  useEffect(() => {
     // Phase de capture : passe avant la navigation de Next.
     const onClick = (e: MouseEvent) => {
       if (navigator.onLine) return;
@@ -23,20 +37,16 @@ export function Connectivity() {
       if (new URL(a.href, location.href).origin !== location.origin) return;
       e.preventDefault();
       e.stopPropagation();
-      show({ ok: false, message: 'Pas de réseau : cet écran s’ouvrira quand ça captera. L’écoute continue.' });
+      show({ ok: false, message: `Pas de réseau : réessaie dès que ça capte.${playing ? ' L’écoute continue.' : ''}` });
     };
     document.addEventListener('click', onClick, true);
-    return () => {
-      window.removeEventListener('online', update);
-      window.removeEventListener('offline', update);
-      document.removeEventListener('click', onClick, true);
-    };
-  }, [show]);
+    return () => document.removeEventListener('click', onClick, true);
+  }, [show, playing]);
 
   if (online) return null;
   return (
     <div className="offline" role="status">
-      Hors connexion · l&apos;écoute continue avec ce qui est déjà chargé
+      Hors connexion{playing ? ' · l’écoute continue avec ce qui est déjà chargé' : ''}
     </div>
   );
 }

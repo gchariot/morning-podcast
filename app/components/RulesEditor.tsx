@@ -1,10 +1,12 @@
 'use client';
 /** Consignes permanentes : ajout sur place, retrait annulable (même langage que les thèmes). */
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Icon } from './Icon';
 import { useSnack } from './Snack';
 import { addRule, removeRule, restoreRule } from '@/app/(prive)/actions';
-import { safeCall } from '@/lib/safe';
+import { OFFLINE, safeCall } from '@/lib/safe';
+import { useOnline } from './Connectivity';
 
 export function RulesEditor({ initial }: { initial: string[] }) {
   const [rules, setRules] = useState(initial);
@@ -12,6 +14,9 @@ export function RulesEditor({ initial }: { initial: string[] }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { show } = useSnack();
+  const online = useOnline();
+  const router = useRouter();
+  const shownError = error && !(online && error === OFFLINE) ? error : null;
 
   const add = async () => {
     if (text.trim().length < 3) { setError('Écris au moins quelques mots.'); return; }
@@ -20,6 +25,7 @@ export function RulesEditor({ initial }: { initial: string[] }) {
     setBusy(false);
     if (!res.ok) { setError(res.message); return; }
     if (res.permanent) setRules(res.permanent);
+    router.refresh();
     setText('');
     show({ ok: true, message: res.message });
   };
@@ -30,12 +36,14 @@ export function RulesEditor({ initial }: { initial: string[] }) {
     const res = await safeCall(() => removeRule(rule));
     if (!res.ok) { setRules(before); show({ ok: false, message: res.message }); return; }
     if (res.permanent) setRules(res.permanent);
+    router.refresh();
     const index = res.index ?? 0;
     show({
       ok: true, message: res.message,
       undo: async () => {
         const back = await safeCall(() => restoreRule(rule, index));
         if (back.permanent) setRules(back.permanent);
+        router.refresh();
         show({ ok: back.ok, message: back.message });
       },
     });
@@ -65,10 +73,10 @@ export function RulesEditor({ initial }: { initial: string[] }) {
         <label htmlFor="new-rule">Nouvelle consigne</label>
         <div className="row" style={{ flexWrap: 'nowrap' }}>
           <input id="new-rule" type="text" value={text} maxLength={200} onChange={e => { setText(e.target.value); setError(null); }}
-            placeholder="Ex. : politique monde, 2 sujets maximum" enterKeyHint="send" aria-invalid={Boolean(error)} />
+            placeholder="Ex. : politique monde, 2 sujets maximum" enterKeyHint="send" aria-invalid={Boolean(shownError)} />
           <button className="btn primary" type="submit" disabled={busy || !text.trim()} aria-busy={busy}>{busy ? '…' : 'Ajouter'}</button>
         </div>
-        {error && <p className="field-error" role="alert" style={{ marginTop: 6 }}>{error}</p>}
+        {shownError && <p className="field-error" role="alert" style={{ marginTop: 6 }}>{shownError}</p>}
       </form>
     </details>
   );

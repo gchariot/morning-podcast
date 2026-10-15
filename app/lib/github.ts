@@ -55,3 +55,15 @@ export async function writeFile(path: string, content: string, message: string, 
   if (res.status === 409 || res.status === 422) throw new ConflictError('Le fichier a changé entre-temps : recharge la page et recommence.');
   if (!res.ok) throw new Error(`GitHub ${res.status} en écrivant ${path} : ${await res.text()}`);
 }
+
+/** Messages des commits sur la branche depuis une date (les plus récents d'abord). */
+export async function listCommits(since: Date): Promise<{ message: string; date: string }[]> {
+  const base = `${process.env.GITHUB_API_URL || 'https://api.github.com'}/repos/${env('GITHUB_REPO')}/commits`;
+  const res = await fetch(`${base}?sha=${branch()}&since=${since.toISOString()}&per_page=60`, {
+    headers: headers(),
+    next: { revalidate: 300, tags: [REPO_TAG] },
+  });
+  if (!res.ok) throw new Error(`GitHub ${res.status} en lisant l'historique`);
+  const json = (await res.json()) as { commit: { message: string; author?: { date?: string }; committer?: { date?: string } } }[];
+  return json.map(c => ({ message: c.commit.message.split('\n')[0], date: c.commit.committer?.date ?? c.commit.author?.date ?? '' }));
+}

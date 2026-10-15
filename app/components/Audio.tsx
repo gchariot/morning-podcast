@@ -24,6 +24,8 @@ type AudioState = {
   playing: boolean;
   /** L'épisode chargé est arrivé au bout (pour proposer l'avis du jour). */
   ended: boolean;
+  /** L'épisode n'a pas pu être chargé ou lancé (réseau). */
+  failed: boolean;
   rate: number;
   /** Index du chapitre en cours (-1 avant le début). */
   chapter: number;
@@ -58,6 +60,12 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [playing, setPlaying] = useState(false);
   const [rate, setRate] = useState(1);
   const [ended, setEnded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  // Un échec de lecture est dit, jamais silencieux.
+  const start = useCallback((a: HTMLAudioElement) => {
+    setFailed(false);
+    a.play().catch((e: unknown) => { if (!(e instanceof DOMException && e.name === 'AbortError')) setFailed(true); });
+  }, []);
   const [shown, setShown] = useState<string | null>(null);
   const pendingSeek = useRef<number | null>(null);
 
@@ -97,14 +105,17 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     if (!a) return;
     if (track?.date !== t.date) load(t, at);
     else if (at !== undefined) { a.currentTime = at; setNow(at); }
-    void a.play();
-  }, [track, load]);
+    start(a);
+  }, [track, load, start]);
 
   const toggle = useCallback(() => {
     const a = el.current;
     if (!a || !track) return;
-    if (a.paused) void a.play(); else a.pause();
-  }, [track]);
+    if (a.paused) {
+      if (failed) { const t = a.currentTime; a.load(); pendingSeek.current = t || now; }
+      start(a);
+    } else a.pause();
+  }, [track, failed, now, start]);
 
   const seek = useCallback((sec: number) => {
     const a = el.current;
@@ -192,11 +203,11 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Ctx.Provider value={{ track, now, duration, playing, ended, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
+    <Ctx.Provider value={{ track, now, duration, playing, ended, failed, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
       <audio
         ref={el} preload="metadata"
         onTimeUpdate={onTime} onPlay={() => { setPlaying(true); setEnded(false); syncPosition(); }} onPause={() => { setPlaying(false); syncPosition(); }}
-        onEnded={() => { setPlaying(false); setEnded(true); }} onSeeked={syncPosition} onRateChange={syncPosition}
+        onEnded={() => { setPlaying(false); setEnded(true); }} onError={() => { if (track) setFailed(true); }} onSeeked={syncPosition} onRateChange={syncPosition}
         onLoadedMetadata={e => {
           const a = e.currentTarget;
           if (Number.isFinite(a.duration)) setDuration(a.duration);

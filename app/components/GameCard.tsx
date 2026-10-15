@@ -3,9 +3,10 @@
  * Le jeu du samedi : une question à la fois, au rythme de l'épisode.
  * Les bonnes réponses ne sont envoyées au téléphone qu'après validation (pas de triche possible).
  */
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { submitGame, type GameResult } from '@/app/(prive)/actions';
-import { safeCall } from '@/lib/safe';
+import { OFFLINE, radioKeys, safeCall } from '@/lib/safe';
+import { useOnline } from './Connectivity';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -18,6 +19,23 @@ export function GameCard({ date, questions, played }: { date: string; questions:
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const done = answers.every(a => a !== null);
+  const online = useOnline();
+  const shownError = error && !(online && error === OFFLINE) ? error : null;
+
+  // Réponses gardées sur le téléphone : on joue au fil de l'écoute, en changeant d'onglet.
+  const key = `matinale_jeu_${date}`;
+  useEffect(() => {
+    try {
+      const d = JSON.parse(localStorage.getItem(key) ?? 'null') as { answers: (number | null)[]; step: number } | null;
+      if (d && d.answers.length === questions.length) { setAnswers(d.answers); setStep(Math.min(d.step, questions.length - 1)); }
+    } catch { /* stockage indisponible */ }
+  }, [key, questions.length]);
+  useEffect(() => {
+    try {
+      if (result) localStorage.removeItem(key);
+      else if (answers.some(a => a !== null)) localStorage.setItem(key, JSON.stringify({ answers, step }));
+    } catch { /* ignoré */ }
+  }, [key, answers, step, result]);
 
   const pick = (i: number) => {
     const next = [...answers];
@@ -69,9 +87,10 @@ export function GameCard({ date, questions, played }: { date: string; questions:
         <span className="small muted num">{answers.filter(a => a !== null).length}/{questions.length} répondues</span>
       </div>
       <div className="group pad quiz-card" style={{ marginTop: 12 }}>
-        <div className="game-dots" aria-hidden>
+        <div className="game-dots" role="group" aria-label="Aller à une question">
           {questions.map((_, i) => (
-            <button key={i} type="button" tabIndex={-1} className={`game-dot${i === step ? ' on' : ''}${answers[i] !== null ? ' done' : ''}`} onClick={() => setStep(i)} />
+            <button key={i} type="button" className={`game-dot${i === step ? ' on' : ''}${answers[i] !== null ? ' done' : ''}`} onClick={() => setStep(i)}
+              aria-label={`Question ${i + 1}${answers[i] !== null ? ', répondue' : ''}`} aria-current={i === step ? 'step' : undefined} />
           ))}
         </div>
         <p className="small muted num" style={{ marginTop: 12 }}>Question {step + 1} sur {questions.length}</p>
@@ -79,7 +98,7 @@ export function GameCard({ date, questions, played }: { date: string; questions:
         <div className="quiz-choices" role="radiogroup" aria-label={`Choix pour la question ${step + 1}`}>
           {q.choices.map((c, i) => (
             <button key={i} type="button" role="radio" aria-checked={answers[step] === i}
-              className={`quiz-choice${answers[step] === i ? ' picked' : ''}`} onClick={() => pick(i)}>
+              className={`quiz-choice${answers[step] === i ? ' picked' : ''}`} onClick={() => pick(i)} onKeyDown={radioKeys}>
               <span className="quiz-letter" aria-hidden>{LETTERS[i]}</span>
               <span className="grow">{c}</span>
             </button>
@@ -93,8 +112,8 @@ export function GameCard({ date, questions, played }: { date: string; questions:
                 {pending ? 'Correction…' : 'Valider mes réponses'}
               </button>}
         </div>
-        <p className="small" role="status" aria-live="polite" style={{ marginTop: 10, color: error ? 'var(--bad)' : 'var(--ink-2)' }}>
-          {error ?? (done ? 'Tout est répondu : valide pour voir ton score (les réponses sont aussi à la fin de l’épisode).' : 'Réponds au fil de l’écoute ; les réponses sont données après le guide du week-end.')}
+        <p className="small" role="status" aria-live="polite" style={{ marginTop: 10, color: shownError ? 'var(--bad)' : 'var(--ink-2)' }}>
+          {shownError ?? (done ? 'Tout est répondu : valide pour voir ton score (les réponses sont aussi à la fin de l’épisode).' : 'Réponds au fil de l’écoute ; les réponses sont données après le guide du week-end.')}
         </p>
       </div>
     </section>

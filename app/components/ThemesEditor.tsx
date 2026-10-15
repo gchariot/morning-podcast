@@ -14,7 +14,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { Icon } from '@/components/Icon';
 import { Stepper } from '@/components/Stepper';
 import { useSnack } from '@/components/Snack';
-import { safeCall } from '@/lib/safe';
+import { OFFLINE, safeCall } from '@/lib/safe';
+import { useOnline } from '@/components/Connectivity';
 import {
   deleteTheme, reorderRubriques, restoreTheme, saveSettings, saveTheme, setThemeEnabled, type ThemeResult,
 } from '@/app/(prive)/actions';
@@ -78,7 +79,7 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
     targetTimer.current = setTimeout(async () => {
       if (v === targetSaved.current) return;
       const res = await safeCall(() => saveSettings({ targetMinutes: v }));
-      show({ ok: res.ok, message: res.ok ? `Durée visée : ${v} min, dès le prochain épisode.` : res.message });
+      show({ ok: res.ok, message: res.message });
       if (res.ok) targetSaved.current = v; else setTarget(targetSaved.current);
     }, 700);
   };
@@ -102,6 +103,8 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
     return out;
   }, [list, minutesOf, scale]);
   const over = total > target + 0.01;
+  // Une petite marge est normale : rouge seulement quand ça déborde vraiment.
+  const severe = total - target > Math.max(2, target * 0.1);
   const cut = Math.round((1 - target / total) * 100);
   const fit = Math.min(40, Math.ceil(total));
 
@@ -161,7 +164,7 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
         <div className="run-head">
           <span className="run-total num">{fmtMin(total)} <small>min de thèmes · {active.length} actif{active.length > 1 ? 's' : ''}</small></span>
         </div>
-        <div className={`meter${over ? ' over' : ''}`} aria-hidden>
+        <div className={`meter${severe ? ' over' : over ? ' mild' : ''}`} aria-hidden>
           <i style={{ width: `${Math.min(100, (Math.min(total, target) / Math.max(total, target)) * 100)}%` }} />
           {over && <b style={{ width: `${((total - target) / total) * 100}%` }} />}
         </div>
@@ -169,7 +172,7 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
           <span id="lbl-target" className="small">Durée visée en semaine</span>
           <Stepper value={target} min={3} max={40} onChange={changeTarget} labelledBy="lbl-target" />
         </div>
-        {over
+        {severe
           ? <div className="run-note over" role="status">
               <Icon name="alert" size={18} />
               <span>
@@ -177,6 +180,11 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
                 {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
               </span>
             </div>
+          : over
+          ? <p className="run-note">
+              Un peu plus que visé (+{fmtMin(total - target)} min) : la rédaction resserrera légèrement.
+              {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
+            </p>
           : <p className="run-note">{total < target - 0.5 ? `Il reste ${fmtMin(target - total)} min : la rédaction développera un peu plus. ` : ''}Heures de départ indicatives pour une édition de semaine.</p>}
       </div>
 
@@ -235,7 +243,8 @@ function Row({
 }) {
   const id = useId();
   const on = r.enabled !== false;
-  const meta = pinned ? `${fmtMin(minutes)} min · toujours en dernier` : `${fmtMin(minutes)} min · ${r.brief}`;
+  const sites = r.domains.length ? r.domains.slice(0, 2).join(', ') + (r.domains.length > 2 ? ` +${r.domains.length - 2}` : '') : 'sans site imposé';
+  const meta = pinned ? `${fmtMin(minutes)} min · toujours en dernier` : `${fmtMin(minutes)} min · ${sites}`;
   return (
     <div ref={rootRef} {...rootProps} className={`theme${pinned ? '' : ' sortable-theme'}${on ? '' : ' off'}${dragging ? ' dragging' : ''}`}>
       <div className="theme-line">
@@ -251,7 +260,7 @@ function Row({
         <span className="cue" aria-hidden>{on && cue !== undefined ? cueLabel(cue) : '—'}</span>
         <button type="button" className="row-main" aria-expanded={expanded} aria-controls={id} onClick={onExpand}>
           <span className="row-title">
-            <strong>{r.title}</strong>
+            <strong className="row-name">{r.title}</strong>
             {dirty && <span className="pill">Non enregistré</span>}
             <Icon name="chevron-right" size={18} className="chev" />
           </span>
@@ -294,7 +303,26 @@ function ThemeForm({
 
   useEffect(() => { if (r) onDraft?.(r.id, { minutes, dirty }); }, [r, minutes, dirty, onDraft]);
 
+  // Brouillon gardé sur le téléphone : une interruption (onglet, appel, tunnel) ne fait rien perdre.
+  const draftKey = `matinale_theme_${r?.id ?? 'nouveau'}`;
+  const base = r ? formKey(r) : '';
+  useEffect(() => {
+    try {
+      const d = JSON.parse(localStorage.getItem(draftKey) ?? 'null') as (Input & { base: string }) | null;
+      if (!d || d.base !== base) return;
+      setTitle(d.title); setMinutes(d.minutes); setBrief(d.brief); setDomains(d.domains);
+    } catch { /* stockage indisponible */ }
+  }, [draftKey, base]);
+  useEffect(() => {
+    try {
+      if (dirty) localStorage.setItem(draftKey, JSON.stringify({ base, title, minutes, brief, domains }));
+      else localStorage.removeItem(draftKey);
+    } catch { /* ignoré */ }
+  }, [draftKey, base, dirty, title, minutes, brief, domains]);
+
   const [fieldErr, setFieldErr] = useState<{ title?: string; brief?: string }>({});
+  const online = useOnline();
+  const shownError = error && !(online && error === OFFLINE) ? error : null;
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -309,6 +337,7 @@ function ThemeForm({
     const res = await onSave({ title, minutes, brief, domains });
     setSaving(false);
     if (!res.ok) setError(res.message);
+    else try { localStorage.removeItem(draftKey); } catch { /* ignoré */ }
   };
 
   return (
@@ -342,7 +371,7 @@ function ThemeForm({
 
       <DomainInput value={domains} onChange={setDomains} example={EXAMPLES[r?.id ?? ''] ?? 'formula1.com'} />
 
-      {error && <p className="editor-err" role="alert">{error}</p>}
+      {shownError && <p className="editor-err" role="alert">{shownError}</p>}
       <div className="editor-foot">
         <button className="btn primary" type="submit" disabled={!dirty || saving || busy} aria-busy={saving}>
           {saving ? 'Enregistrement…' : submitLabel}

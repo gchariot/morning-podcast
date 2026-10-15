@@ -61,6 +61,12 @@ export function Player({ track }: { track: Track }) {
           </button>
           <button type="button" className="rate" onClick={audio.nextRate} aria-label={`Vitesse ×${audio.rate}, changer`}>×{audio.rate}</button>
         </div>
+        {live && audio.failed && !audio.playing && (
+          <div className="ended err" role="alert">
+            <span className="grow"><strong>L&apos;épisode n&apos;a pas pu se charger.</strong> {typeof navigator !== 'undefined' && !navigator.onLine ? 'Pas de réseau pour le moment.' : 'Vérifie le réseau.'}</span>
+            <button type="button" className="btn small primary" onClick={() => audio.toggle()}>Réessayer</button>
+          </div>
+        )}
         {finished && (
           <div className="ended" role="status">
             <span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Deux pouces et la rédaction ajuste demain.</span>

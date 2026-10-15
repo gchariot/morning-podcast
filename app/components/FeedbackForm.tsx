@@ -4,15 +4,17 @@
  * Ce qui a déjà été envoyé reste affiché sur la ligne ; le modifier puis renvoyer remplace l'ancien avis.
  * Le brouillon est gardé sur le téléphone tant qu'il n'est pas envoyé (coupure réseau, onglet fermé…).
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useOnline } from './Connectivity';
 import { Icon } from './Icon';
 import { useAudio } from './Audio';
 import { useSnack } from './Snack';
 import { saveFeedback } from '@/app/(prive)/actions';
 import { CHIPS, parseLine, type Saved } from '@/lib/feedback';
-import { safeCall } from '@/lib/safe';
+import { OFFLINE, safeCall } from '@/lib/safe';
 
-type Entry = Saved & { noteOpen?: boolean; more?: boolean };
+type Entry = Saved & { noteOpen?: boolean; more?: boolean; edit?: boolean };
 const EMPTY: Entry = { vote: '', chips: [], note: '' };
 const VISIBLE = 3;
 
@@ -29,7 +31,11 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
   const [entries, setEntries] = useState<Record<string, Entry>>(savedInit);
   const [general, setGeneral] = useState(savedGeneral);
   const [sending, setSending] = useState(false);
+  const [waiting, setWaiting] = useState(false); // envoi refusé faute de réseau, brouillon gardé
   const { show } = useSnack();
+  const router = useRouter();
+  const sendRef = useRef<() => Promise<void>>(async () => {});
+  const online = useOnline();
 
   // Brouillon non envoyé : on le retrouve en revenant sur l'onglet.
   useEffect(() => {
@@ -52,6 +58,14 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     } catch { /* ignoré */ }
   }, [count, entries, general, draftKey]);
 
+  // Le réseau revient : on propose d'envoyer ce qui attendait.
+  useEffect(() => {
+    if (online && waiting && count > 0) {
+      setWaiting(false);
+      show({ ok: true, message: 'Le réseau est revenu : ton avis est prêt.', action: { label: 'Envoyer', run: () => void sendRef.current() } });
+    }
+  }, [online, waiting, count, show]);
+
   const set = (t: string, patch: Partial<Entry>) => setEntries(e => ({ ...e, [t]: { ...(e[t] ?? EMPTY), ...patch } }));
   const vote = (t: string, v: 'up' | 'down') => {
     const cur = get(t);
@@ -68,8 +82,15 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     const items = changed.map(t => { const e = get(t); return { title: t, vote: e.vote, chips: e.chips, note: e.note }; });
     const res = await safeCall(() => saveFeedback(episode, items, generalChanged ? general : null));
     setSending(false);
+    if (!res.ok && res.message === OFFLINE) {
+      setWaiting(true);
+      show({ ok: false, message: 'Pas de réseau : ton avis est gardé sur le téléphone. Tu pourras l’envoyer dès que ça capte.' });
+      return;
+    }
+    setWaiting(false);
     show({ ok: res.ok, message: res.message });
     if (!res.ok || !res.sent) return;
+    router.refresh(); // met à jour « Prochaine rédaction »
     const next: Record<string, Saved> = {};
     let g = '';
     for (const line of res.sent) {
@@ -82,6 +103,8 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
     setGeneral(g);
   };
 
+  useEffect(() => { sendRef.current = send; });
+
   return (
     <div>
       <div className="group">
@@ -90,6 +113,9 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
           const status = !same(e, base(t)) ? (isEmpty(e) && !isEmpty(base(t)) ? 'À retirer' : isEmpty(base(t)) ? '' : 'Modifié') : !isEmpty(base(t)) ? 'Envoyé' : '';
           const list = e.vote ? CHIPS[e.vote] : [];
           const showAll = e.more || e.chips.some(c => list.indexOf(c) >= VISIBLE);
+          // Une ligne envoyée et inchangée se replie en résumé ; un tap la rouvre.
+          const folded = status === 'Envoyé' && !e.edit;
+          const summary = [e.chips.join(', '), e.note].filter(Boolean).join(' — ');
           return (
             <div key={t} className={`fb${e.vote ? ` fb-${e.vote}` : ''}`}>
               <div className="item">
@@ -106,7 +132,13 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
                   </button>
                 </span>
               </div>
-              {e.vote && (
+              {e.vote && folded && (
+                <button type="button" className="fb-summary" onClick={() => set(t, { edit: true })} aria-label={summary ? `Modifier les précisions sur ${t} : ${summary}` : `Ajouter une précision sur ${t}`}>
+                  <span className="grow">{summary || 'Pas de précision'}</span>
+                  <span className="fb-edit">{summary ? 'Modifier' : 'Préciser'}</span>
+                </button>
+              )}
+              {e.vote && !folded && (
                 <div className="fb-more">
                   <div className="row" style={{ gap: 6 }}>
                     {(showAll ? list : list.slice(0, VISIBLE)).map(c => (

@@ -2,7 +2,8 @@
 /** Quiz de l'épisode : on répond dans l'appli, la réponse est donnée le lendemain dans la Matinale. */
 import { useState, useTransition } from 'react';
 import { answerQuiz } from '@/app/(prive)/actions';
-import { safeCall } from '@/lib/safe';
+import { OFFLINE, radioKeys, safeCall } from '@/lib/safe';
+import { useOnline } from './Connectivity';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -25,6 +26,9 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
   const [savedAt, setSavedAt] = useState<string | undefined>(savedAtInit);
   const [pending, start] = useTransition();
   const revealed = answer !== undefined;
+  const online = useOnline();
+  // Une erreur « pas de réseau » disparaît d'elle-même quand le réseau revient.
+  const err = msg && !msg.ok && !(online && msg.message === OFFLINE) ? msg : null;
 
   const pick = (i: number) => {
     if (revealed || pending) return;
@@ -46,7 +50,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
   };
 
   const hhmm = (iso?: string) => (iso ? new Intl.DateTimeFormat('fr-CH', { hour: 'numeric', minute: '2-digit', timeZone: 'Europe/Zurich' }).format(new Date(iso)).replace(':', ' h ') : '');
-  const saved = !revealed && choice !== null && !pending && !(msg && !msg.ok);
+  const saved = !revealed && choice !== null && !pending && !err;
   let verdict: string;
   if (!revealed) verdict = choice === null ? 'Réponds ici : la réponse sera donnée demain matin dans la Matinale.' : 'Tu peux encore changer d’avis jusqu’à demain matin.';
   else if (choice === null) verdict = 'Tu n’avais pas répondu.';
@@ -56,7 +60,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
     <section className="section">
       <div className="spread" style={{ alignItems: 'baseline' }}>
         <h2>Le quiz</h2>
-        {stats.answered > 0 && (
+        {stats.answered >= 3 && (
           <span className="small muted num">
             {stats.correct}/{stats.answered} bonnes réponses{stats.streak >= 2 ? ` · série de ${stats.streak}` : ''}
           </span>
@@ -68,7 +72,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
           {choices.map((c, i) => (
             <button
               key={i} type="button" role="radio" aria-checked={choice === i}
-              className={`quiz-choice ${state(i)}`} disabled={revealed} onClick={() => pick(i)}
+              className={`quiz-choice ${state(i)}`} disabled={revealed} onClick={() => pick(i)} onKeyDown={radioKeys}
             >
               <span className="quiz-letter" aria-hidden>{LETTERS[i]}</span>
               <span className="grow">{c}</span>
@@ -81,9 +85,9 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
             </button>
           ))}
         </div>
-        <p className="small" role="status" aria-live="polite" style={{ marginTop: 12, color: msg && !msg.ok ? 'var(--bad)' : revealed && choice !== null ? (choice === answer ? 'var(--good)' : 'var(--bad)') : 'var(--ink-2)' }}>
-          {pending ? 'Enregistrement…' : msg && !msg.ok ? msg.message : saved
-            ? <><strong style={{ color: 'var(--good)' }}>Réponse {LETTERS[choice!]} enregistrée{savedAt ? ` à ${hhmm(savedAt)}` : ''}.</strong> {verdict}</>
+        <p className="small" role="status" aria-live="polite" style={{ marginTop: 12, color: err ? 'var(--bad)' : revealed && choice !== null ? (choice === answer ? 'var(--good)' : 'var(--bad)') : 'var(--ink-2)' }}>
+          {pending ? 'Enregistrement…' : err ? err.message : saved
+            ? <>{savedAt ? `Réponse ${LETTERS[choice!]} à ${hhmm(savedAt)}. ` : ''}{verdict}</>
             : verdict}
         </p>
         {revealed && explanation && <p className="small muted" style={{ marginTop: 6 }}>{explanation}</p>}

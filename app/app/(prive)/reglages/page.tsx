@@ -29,9 +29,16 @@ export default async function ReglagesPage() {
       }} />
 
       <section className="section">
-        <h2>Coulisses : le coût</h2>
-        <p className="hint">Estimation à partir de la durée de voix générée et du tarif Gemini. La facture exacte est sur Google AI Studio.</p>
-        <div className="group">
+        <h2>Coulisses</h2>
+        <details className="group" style={{ marginTop: 12 }}>
+          <summary className="item">
+            <span className="grow">
+              <span style={{ fontWeight: 600, display: 'block' }}>Coût de la voix</span>
+              <span className="meta num">{usd(cost.total)} en {monthName}{cost.count ? ` · environ ${usd(cost.projection30)} sur 30 jours` : ''}</span>
+            </span>
+            <Icon name="chevron-right" className="chev" />
+          </summary>
+          <p className="pad small muted" style={{ paddingBottom: 0 }}>Estimation à partir de la durée de voix générée et du tarif Gemini. La facture exacte est sur Google AI Studio.</p>
           <div className="item">
             <span className="grow">Voix Gemini en {monthName}<span className="meta" style={{ display: 'block' }}>{cost.count} épisode{cost.count > 1 ? 's' : ''} · {Math.round(cost.minutes)} min de voix</span></span>
             <strong className="num">{usd(cost.total)}</strong>
@@ -44,14 +51,12 @@ export default async function ReglagesPage() {
             <span className="grow">Le reste<span className="meta" style={{ display: 'block' }}>Rédaction : incluse dans Claude Pro. Hébergement (Vercel, Cloudflare R2, GitHub Actions) et données (football-data, Open-Meteo, Wikipédia) : offres gratuites.</span></span>
             <strong className="num">0 $</strong>
           </div>
-        </div>
-        <p className="field-hint">Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio{todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
-      </section>
+          <p className="pad field-hint" style={{ marginTop: 0 }}>Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio{todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
+        </details>
 
-      <section className="section">
-        <details className="group">
+        <details className="group" style={{ marginTop: 12 }}>
           <summary className="item">
-            <span className="grow"><span style={{ fontWeight: 600, display: 'block' }}>Changer les voix</span><span className="meta">Voix Gemini de Léa, Hugo et Zoé</span></span>
+            <span className="grow"><span style={{ fontWeight: 600, display: 'block' }}>Changer les voix</span><span className="meta">Voix Gemini de Léa, Hugo et Zoé (la météo)</span></span>
             <Icon name="chevron-right" className="chev" />
           </summary>
           <p className="pad small muted">Pour comparer d&apos;autres voix, lance « 0 · Test de voix » dans GitHub Actions, écoute les extraits, puis change les variables VOICE_LEA et VOICE_HUGO du dépôt.</p>

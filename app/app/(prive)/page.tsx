@@ -74,6 +74,12 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
         seconds: episode.seconds, chapters: episode.chapters ?? [],
       }} />
 
+      {isLatest && (
+        <Link className="btn block cta" href="/avis">
+          <Icon name="message" size={18} /> Donner mon avis pour demain
+        </Link>
+      )}
+
       {episode.game && (() => {
         // Bonnes réponses envoyées seulement si le jeu a déjà été joué (sinon, elles restent sur le serveur).
         const played = samedi[episode.date]?.jeu;
@@ -109,11 +115,6 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
         );
       })()}
 
-      {isLatest && (
-        <Link className="btn primary block cta" href="/avis">
-          <Icon name="message" size={18} /> Donner mon avis pour demain
-        </Link>
-      )}
 
       {(episode.summary || episode.sources.length > 0) && (
         <section className="section">
@@ -138,7 +139,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
 
       {others.length > 0 && (
         <section className="section">
-          <h2>Épisodes précédents</h2>
+          <h2>{isLatest ? 'Épisodes précédents' : 'Autres épisodes'}</h2>
           <div className="group" style={{ marginTop: 12 }}>
             {others.map(e => (
               <Link key={e.date} href={`/?date=${e.date}`} className="item">
