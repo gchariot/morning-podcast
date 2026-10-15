@@ -17,19 +17,19 @@
         "role": "présente la météo, uniquement dans la rubrique météo"
       }
     ],
-    "targetMinutes": 20,
+    "targetMinutes": 21,
     "wordsPerMinute": 190,
     "firstEdition": "2026-10-14"
   },
   "editions": {
     "samedi": {
       "targetMinutes": 25,
-      "minutesFactor": 1.25,
+      "minutesFactor": 1.19,
       "skip": []
     },
     "dimanche": {
       "targetMinutes": 10,
-      "minutesFactor": 0.5,
+      "minutesFactor": 0.48,
       "skip": []
     }
   },
