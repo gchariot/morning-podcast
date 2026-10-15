@@ -4,12 +4,18 @@ Petite appli web privée pour piloter l'émission depuis le téléphone :
 
 | Écran | Rôle | Fichier modifié dans le dépôt |
 |---|---|---|
-| 🎧 **Écouter** | Épisode du jour, chapitres cliquables, vitesse, reprise là où tu t'étais arrêté, épisodes précédents | — (lecture seule depuis R2) |
-| 💬 **Mon avis** | 👍/👎 et un mot par rubrique, avis général, consignes permanentes | `retours.md` |
-| 🧩 **Thèmes** | Modifier, mettre en pause, réordonner, supprimer, **créer** un thème | `config/rubriques.json` |
-| ⚙️ **Réglages** | Durée visée, éditions du samedi et du dimanche | `config/rubriques.json` |
+| 🎧 **Écouter** | Lecteur (chapitres, −15 s / +30 s, vitesse, reprise), quiz du jour, jeu et face-à-face du samedi, sources, épisodes précédents. Le son continue d'un onglet à l'autre grâce au mini-lecteur. | `quiz.json`, `samedi.json` |
+| 💬 **Mon avis** | Pouce par thème entendu, pastilles toutes prêtes, un mot si besoin, « Déjà envoyé » avec retrait, consignes permanentes | `retours.md` |
+| 🧩 **Thèmes** | Ordre par glisser-déposer (appui long), modifier, mettre en pause, supprimer, créer ; la météo reste en dernier | `config/rubriques.json` |
+| ⚙️ **Réglages** | Durée en semaine, grande édition du samedi, documentaire du dimanche (durée, sujet souhaité), coût estimé du mois | `config/rubriques.json` |
 
-Chaque modification est un commit sur `main`, validé avant écriture : la rédaction de 5h37 la prend en compte dès le lendemain.
+Chaque modification est un commit sur `main`, validé avant écriture (relecture à jour juste avant, refus propre si le fichier a changé entre-temps) : la rédaction de 5h37 la prend en compte dès le lendemain.
+
+**Bon à savoir**
+- Les lectures du dépôt et de R2 sont en cache 5 minutes ; une modification faite dans l'app est visible tout de suite, une modification faite à la main sur GitHub peut mettre 5 minutes.
+- Les bonnes réponses du quiz et du jeu ne sont envoyées au téléphone qu'une fois révélées.
+- Un bandeau « Nouvelle version » apparaît quand un déploiement plus récent est en ligne (identifiant du déploiement Vercel lu à l'exécution).
+- La fonction tourne à Francfort (`vercel.json`), près de Genève.
 
 ## Variables d'environnement (Vercel → Settings → Environment Variables)
 
