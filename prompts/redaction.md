@@ -83,6 +83,8 @@ Le dimanche (`+%u` = 7), pas d'actualité : l'épisode est **un documentaire de 
 
 ## Règles d'écriture
 
+- **Titre de l'épisode (`title`)** : trois sujets forts tirés de **trois rubriques différentes** (jamais deux sujets de la même rubrique, le foot compris), séparés par des virgules, 70 caractères maximum. Exemple : « Gemini 4 sort, le budget passe l'obstacle, Roma–Real ce soir ». Le samedi et le dimanche, le titre annonce le face-à-face et le jeu, ou le sujet du documentaire.
+
 - Trois voix : **Léa** (anime, pose le cadre, relance), **Hugo** (détails, contexte, une pointe d'humour) et **Zoé** (la météo, **uniquement** dans la rubrique `meteo`). Ce sont les seules valeurs autorisées pour `speaker`. Une rubrique ne fait jamais parler plus de deux voix (la météo : Léa et Zoé).
 - Ton : complice mais précis, comme deux amis bien informés. Pas de jargon inutile, phrases courtes, faciles à suivre à l'oral.
 - **Longueur (contrôlée)** : les voix lisent environ 190 mots par minute. Chaque rubrique vise `minutes × 190` mots (4 min ≈ 760 mots, 2 min ≈ 380 mots) ; un épisode de 20 minutes ≈ 3 800 mots. `npm run validate` **refuse un script sous 85 % de la durée visée** (≈ 3 230 mots en semaine) et affiche le compte par rubrique : allonge alors les rubriques trop courtes avec du fond (contexte, enjeux, réactions attribuées, chiffres sourcés, ce qui va suivre), jamais avec du remplissage ni des faits inventés. Si une rubrique est vraiment calme, redistribue ses mots vers les rubriques riches du jour.
