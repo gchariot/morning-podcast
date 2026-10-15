@@ -11,7 +11,8 @@ export const Segment = z.object({
   rubrique: z.string().min(1),
   titre: z.string().min(1),
   turns: z.array(Turn).min(1),
-  sources: z.array(z.object({ title: z.string(), url: z.string().url() })).default([]),
+  // Liens cliquables dans l'appli : seulement http(s), jamais javascript: ou data: repris d'une page web.
+  sources: z.array(z.object({ title: z.string(), url: z.string().url().refine(u => /^https?:\/\//i.test(u), 'lien http(s) attendu') })).default([]),
 });
 
 /** Question du quiz : posée à la fin de la culture générale, réponse donnée le lendemain. */

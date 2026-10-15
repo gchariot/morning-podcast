@@ -24,6 +24,8 @@ async function coverUrl(): Promise<string> {
 }
 
 const minutes = (s: number) => `${Math.round(s / 60)} min`;
+/** Lien de source : seulement http(s) (jamais javascript: ou data: venus d'une page web reprise). */
+const safeUrl = (url: string) => { try { return ['http:', 'https:'].includes(new URL(url).protocol); } catch { return false; } };
 const host = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } };
 
 export default async function EcouterPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
@@ -133,7 +135,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
               <Icon name="chevron-right" className="chev" />
             </summary>
             {episode.summary && <p className="pad summary">{episode.summary}</p>}
-            {episode.sources.map(s => (
+            {episode.sources.filter(s => safeUrl(s.url)).map(s => (
               <a key={s.url} className="item" href={s.url} target="_blank" rel="noreferrer">
                 <span className="grow"><span style={{ display: 'block' }}>{s.title}</span><span className="meta">{host(s.url)}</span></span>
                 <Icon name="external" size={16} className="chev" />

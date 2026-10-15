@@ -35,6 +35,26 @@ function humanize(err: ZodError): string {
 
 export type Result = { ok: boolean; message: string };
 
+/**
+ * Message montré au téléphone : nos erreurs en français passent telles quelles ; les erreurs internes
+ * (types inattendus, réponses brutes de GitHub) sont journalisées côté serveur et résumées.
+ */
+function publicMessage(err: unknown): string {
+  if (err instanceof ZodError) return humanize(err);
+  if (err instanceof TypeError || err instanceof SyntaxError || err instanceof RangeError) return 'Requête invalide.';
+  const msg = err instanceof Error ? err.message : String(err);
+  if (/^GitHub \d/.test(msg) || /Variable d'environnement|introuvable dans le dépôt/.test(msg)) {
+    console.error('[action]', msg);
+    return 'L’enregistrement a échoué côté stockage : réessaie dans un instant.';
+  }
+  return msg.slice(0, 300);
+}
+
+/** Arguments reçus du téléphone : jamais pris pour acquis. */
+const Text = (max: number) => z.string().max(max);
+const Day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const Id = z.string().regex(/^[a-z0-9-]{2,30}$/);
+
 /** Exécute une écriture et renvoie un résultat lisible (jamais de redirection : la page reste en place). */
 async function attempt<T extends object>(pages: string[], fn: () => Promise<T & Result>): Promise<T & Result> {
   await requireLogin();
@@ -44,8 +64,7 @@ async function attempt<T extends object>(pages: string[], fn: () => Promise<T & 
     for (const p of pages) revalidatePath(p);
     return res;
   } catch (err) {
-    const msg = err instanceof ZodError ? humanize(err) : err instanceof Error ? err.message : String(err);
-    return { ok: false, message: msg.slice(0, 300) } as T & Result;
+    return { ok: false, message: publicMessage(err) } as T & Result;
   }
 }
 
@@ -73,6 +92,7 @@ export async function saveFeedback(episode: string, rawItems: unknown[], general
   return attempt(['/avis'], async () => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(episode)) throw new Error('Aucun épisode à commenter pour l’instant.');
     const items = z.array(FeedbackItem).max(20).parse(rawItems);
+    general = z.string().max(2000).nullable().parse(general);
     const tag = `(épisode du ${episode})`;
     const lines: string[] = [];
     const topics = items.map(i => i.title);
@@ -99,7 +119,7 @@ export type RulesResult = Result & { permanent?: string[]; index?: number };
 
 export async function addRule(rule: string): Promise<RulesResult> {
   return attempt(['/avis'], async () => {
-    const r = rule.replace(/\s+/g, ' ').trim();
+    const r = Text(2000).parse(rule).replace(/\s+/g, ' ').trim();
     if (r.length < 3) throw new Error('Consigne trop courte (3 caractères minimum).');
     const { permanent } = await loadRetours(true);
     if (permanent.includes(r)) return { ok: true, message: 'Cette consigne existe déjà.', permanent };
@@ -112,6 +132,7 @@ export async function addRule(rule: string): Promise<RulesResult> {
 /** Retire une consigne (par son texte, pas par sa position). L'index sert à l'annulation. */
 export async function removeRule(rule: string): Promise<RulesResult> {
   return attempt(['/avis'], async () => {
+    Text(2000).parse(rule);
     const { permanent } = await loadRetours(true);
     const index = permanent.indexOf(rule);
     if (index < 0) throw new Error('Cette consigne a déjà été retirée.');
@@ -123,6 +144,7 @@ export async function removeRule(rule: string): Promise<RulesResult> {
 
 export async function restoreRule(rule: string, index: number): Promise<RulesResult> {
   return attempt(['/avis'], async () => {
+    Text(2000).parse(rule); z.number().int().min(0).max(100).parse(index);
     const { permanent } = await loadRetours(true);
     if (permanent.includes(rule)) return { ok: true, message: 'Consigne rétablie.', permanent };
     const next = [...permanent];
@@ -180,11 +202,11 @@ export async function saveSettings(raw: z.input<typeof SettingsPatch>): Promise<
 export type ThemeResult = { ok: boolean; message: string; rubriques?: Rubrique[] };
 
 const ThemeInput = z.object({
-  id: z.string().optional(),
-  title: z.string(),
+  id: Id.optional(),
+  title: Text(200),
   minutes: z.number(),
-  brief: z.string(),
-  domains: z.array(z.string()).default([]),
+  brief: Text(5000),
+  domains: z.array(Text(300)).max(50).default([]),
 });
 
 /** La météo clôt toujours l'épisode. */
@@ -205,8 +227,7 @@ async function themeOp(fn: (config: Awaited<ReturnType<typeof loadConfig>>['conf
     revalidatePath('/avis');
     return { ok: true, message, rubriques: config.rubriques };
   } catch (err) {
-    const msg = err instanceof ZodError ? humanize(err) : err instanceof Error ? err.message : String(err);
-    return { ok: false, message: msg.slice(0, 300) };
+    return { ok: false, message: publicMessage(err) };
   }
 }
 
@@ -235,6 +256,7 @@ export async function saveTheme(raw: z.input<typeof ThemeInput>): Promise<ThemeR
 
 export async function setThemeEnabled(id: string, enabled: boolean): Promise<ThemeResult> {
   return themeOp(config => {
+    Id.parse(id); z.boolean().parse(enabled);
     const r = config.rubriques.find(x => x.id === id);
     if (!r) throw new Error('Ce thème n’existe plus : recharge la page.');
     r.enabled = enabled;
@@ -249,6 +271,7 @@ export async function setThemeEnabled(id: string, enabled: boolean): Promise<The
 /** Supprime un thème ; le client garde une copie pour pouvoir l'annuler (restoreTheme). */
 export async function deleteTheme(id: string): Promise<ThemeResult> {
   return themeOp(config => {
+    Id.parse(id);
     const r = config.rubriques.find(x => x.id === id);
     if (!r) throw new Error('Ce thème n’existe plus : recharge la page.');
     if (r.id === 'meteo') throw new Error('La météo ne se supprime pas : mets-la en pause si besoin.');
@@ -262,6 +285,7 @@ export async function deleteTheme(id: string): Promise<ThemeResult> {
 export async function restoreTheme(raw: Rubrique, index: number): Promise<ThemeResult> {
   return themeOp(config => {
     const r = Rubrique.parse(raw);
+    z.number().int().min(0).max(100).parse(index);
     if (config.rubriques.some(x => x.id === r.id)) return { commit: `thèmes: « ${r.title} » déjà présent (app)`, message: `« ${r.title} » est déjà là.` };
     config.rubriques.splice(Math.max(0, Math.min(index, config.rubriques.length)), 0, r);
     return { commit: `thèmes: « ${r.title} » rétabli (app)`, message: `« ${r.title} » rétabli.` };
@@ -271,6 +295,7 @@ export async function restoreTheme(raw: Rubrique, index: number): Promise<ThemeR
 /** Nouvel ordre complet des thèmes (glisser-déposer). */
 export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
   return themeOp(config => {
+    z.array(Id).max(50).parse(ids);
     const current = config.rubriques.map(r => r.id);
     if (ids.length !== current.length || [...ids].sort().join() !== [...current].sort().join()) {
       throw new Error('La liste a changé entre-temps : recharge la page.');
@@ -286,6 +311,7 @@ export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
 export async function answerQuiz(date: string, choice: number): Promise<{ ok: boolean; message: string }> {
   await requireLogin();
   try {
+    Day.parse(date);
     const episodes = await loadEpisodes();
     const ep = episodes.find(e => e.date === date);
     if (!ep?.quiz) return { ok: false, message: 'Pas de quiz pour cet épisode.' };
@@ -296,7 +322,7 @@ export async function answerQuiz(date: string, choice: number): Promise<{ ok: bo
     revalidatePath('/');
     return { ok: true, message: 'Réponse enregistrée.' };
   } catch (err) {
-    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+    return { ok: false, message: publicMessage(err) };
   }
 }
 
@@ -308,6 +334,7 @@ export type GameResult = { ok: boolean; message: string; answers?: number[]; cor
 export async function submitGame(date: string, answers: number[]): Promise<GameResult> {
   await requireLogin();
   try {
+    Day.parse(date); z.array(z.number().int()).max(20).parse(answers);
     const ep = (await loadEpisodes()).find(e => e.date === date);
     const qs = ep?.game?.questions;
     if (!qs) return { ok: false, message: 'Pas de jeu pour cet épisode.' };
@@ -325,7 +352,7 @@ export async function submitGame(date: string, answers: number[]): Promise<GameR
       answers: mine, correct: qs.map(q => q.answer), explanations: qs.map(q => q.explanation),
     };
   } catch (err) {
-    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+    return { ok: false, message: publicMessage(err) };
   }
 }
 
@@ -333,6 +360,7 @@ export async function submitGame(date: string, answers: number[]): Promise<GameR
 export async function voteDebate(date: string, side: 0 | 1): Promise<{ ok: boolean; message: string }> {
   await requireLogin();
   try {
+    Day.parse(date);
     const episodes = await loadEpisodes();
     const ep = episodes.find(e => e.date === date);
     if (!ep?.debate) return { ok: false, message: 'Pas de face-à-face pour cet épisode.' };
@@ -343,6 +371,6 @@ export async function voteDebate(date: string, side: 0 | 1): Promise<{ ok: boole
     revalidatePath('/');
     return { ok: true, message: `Vote enregistré pour ${side === 0 ? 'Léa' : 'Hugo'} : résultat annoncé samedi prochain.` };
   } catch (err) {
-    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+    return { ok: false, message: publicMessage(err) };
   }
 }
