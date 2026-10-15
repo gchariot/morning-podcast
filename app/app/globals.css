@@ -1,5 +1,5 @@
 /* La Matinale — le monde de la pochette : un ciel d'aube au-dessus de la mer.
-   Fond teinté de la nuit (lavande pâle en clair, bleu nuit en sombre), accent orange du soleil levant,
+   Fond teinté de la nuit (lavande pâle en clair, bleu nuit en sombre), accent rose de l'horizon (or du soleil en sombre),
    et une couleur par voix : Léa l'or du soleil, Hugo le rose de l'horizon, Zoé le bleu du ciel. */
 :root {
   --bg: #f1eff5;
@@ -20,7 +20,7 @@
   --bad: #b42318;
   --bad-soft: #fde4e1;
   --shadow: 0 1px 2px rgba(23, 22, 42, 0.06), 0 4px 16px rgba(23, 22, 42, 0.06);
-  --snack-action: #fdba8c;
+  --snack-action: #ffd796;
   --radius: 14px;
   --tabbar: 64px;
   /* Voix : pastilles (fond) et texte lisible sur le fond de l'appli */
@@ -51,7 +51,7 @@
     --bad: #ff7a8a;
     --bad-soft: #3b1a26;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-    --snack-action: #9a3412;
+    --snack-action: #93503f;
     --lea-ink: #f2b84b;
     --hugo-ink: #f08a7c;
     --zoe-ink: #7db4ee;
@@ -118,7 +118,7 @@ a.item:hover { background: var(--surface-2); }
   text-decoration: none; color: var(--ink-2); font-size: 0.75rem; font-weight: 500;
   padding: 6px 4px; border-radius: 10px; transition: color 150ms ease-out;
 }
-.tabs a:hover { color: var(--ink-2); }
+.tabs a:hover { color: var(--ink); }
 .tabs a[aria-current="page"] { color: var(--accent); }
 
 /* ---------- Formulaires ---------- */
@@ -466,7 +466,7 @@ body:has(.sendbar) .sendbar { bottom: calc(var(--tabbar) + env(safe-area-inset-b
 .run-note.over { display: flex; gap: 8px; align-items: flex-start; color: var(--ink); background: var(--bad-soft); padding: 10px 12px; border-radius: 10px; }
 .run-note.over svg { color: var(--bad); flex: none; margin-top: 1px; }
 .run-note.over .linkish { color: var(--bad); }
-.linkish { font: inherit; font-weight: 700; color: var(--accent-strong, var(--accent)); background: none; border: 0; padding: 10px 2px; margin: -10px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.linkish { font: inherit; font-weight: 700; color: var(--accent); background: none; border: 0; padding: 10px 2px; margin: -10px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .nowrap { white-space: nowrap; }
 
 /* Poignée clavier des thèmes : invisible au doigt, visible quand elle a le focus */
