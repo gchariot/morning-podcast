@@ -6,6 +6,8 @@ import { Icon } from '@/components/Icon';
 import { FeedbackForm } from '@/components/FeedbackForm';
 import { RulesEditor } from '@/components/RulesEditor';
 import { loadTomorrow } from '@/lib/tomorrow';
+import { zurichMinutes } from '@/lib/sky';
+import { NextWriting, SkyBand } from '@/components/Sky';
 
 // Chapitres qui ne sont pas des thèmes (on ne note pas l'ouverture ni le générique).
 const NOT_A_TOPIC = /^(ouverture|introduction|intro|générique|fin|au revoir|conclusion)$/i;
@@ -35,16 +37,16 @@ export default async function AvisPage() {
 
   return (
     <>
-      <header className="page-head">
+      <SkyBand minutes={zurichMinutes()}>
         <h1>Mon avis</h1>
-        <p>
+        <p className="sky-meta">
           {last ? <>Sur l&apos;épisode {isToday ? 'd’aujourd’hui' : `du ${formatDate(last.date)}`}. </> : null}
-          La rédaction le lit à 5 h 37 : il change l&apos;épisode de demain.
+          Ton avis change celui de demain.
         </p>
-      </header>
+      </SkyBand>
 
       <section className="tomorrow" aria-labelledby="tomorrow-h">
-        <h2 id="tomorrow-h">Prochaine rédaction : {tomorrow.when}</h2>
+        <h2 id="tomorrow-h"><NextWriting minutes={zurichMinutes()} /> ({tomorrow.when})</h2>
         {mine.length || tomorrow.items.length
           ? <ul>
               {mine.length > 0 && <li>Ton avis sur {mine.length} {mine.length > 1 ? 'sujets' : 'sujet'} de l&apos;épisode</li>}

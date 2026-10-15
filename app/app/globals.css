@@ -1,45 +1,56 @@
-/* La Matinale — appli de podcast, registre « standard soigné ».
-   Clair ou sombre selon le téléphone ; une seule couleur d'accent, l'orange de la pochette. */
+/* La Matinale — le monde de la pochette : un ciel d'aube au-dessus de la mer.
+   Fond teinté de la nuit (lavande pâle en clair, bleu nuit en sombre), accent orange du soleil levant,
+   et une couleur par voix : Léa l'or du soleil, Hugo le rose de l'horizon, Zoé le bleu du ciel. */
 :root {
-  --bg: #f4f3f0;
+  --bg: #f1eff5;
   --surface: #ffffff;
-  --surface-2: #ecebe7;
-  --ink: #1b1a17;
-  --ink-2: #5f5c55;
-  --ink-3: #6b675f;
-  --line: #e2e0da;
-  --accent: #c2410c;
+  --surface-2: #e9e6ef;
+  --ink: #17162a;
+  --ink-2: #57536b;
+  --ink-3: #67637c;
+  --line: #dfdbe8;
+  --accent: #b23a0a;
   --accent-ink: #ffffff;
   --accent-soft: #fbe6da;
   --good: #166534;
   --good-soft: #dcf2e3;
   --bad: #b42318;
   --bad-soft: #fde4e1;
-  --shadow: 0 1px 2px rgba(27, 26, 23, 0.06), 0 4px 16px rgba(27, 26, 23, 0.05);
+  --shadow: 0 1px 2px rgba(23, 22, 42, 0.06), 0 4px 16px rgba(23, 22, 42, 0.06);
   --snack-action: #fdba8c;
   --radius: 14px;
   --tabbar: 64px;
+  /* Voix : pastilles (fond) et texte lisible sur le fond de l'appli */
+  --lea: #f2b84b; --lea-ink: #8a5a00;
+  --hugo: #e07a6b; --hugo-ink: #a33a2c;
+  --zoe: #6fa8e6; --zoe-ink: #1f5f9e;
+  --sun-gold: #ffd796;
+  --cream: #fff8ee;
+  --display: "Figtree Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #121110;
-    --surface: #1c1b19;
-    --surface-2: #272522;
-    --ink: #f3f1ec;
-    --ink-2: #b5b0a6;
-    --ink-3: #9a958b;
-    --line: #2f2d29;
+    --bg: #0e1124;
+    --surface: #171b33;
+    --surface-2: #22274a;
+    --ink: #f3f0f7;
+    --ink-2: #b9b4c9;
+    --ink-3: #9d98b3;
+    --line: #2a2f52;
     --accent: #fb8a4e;
     --accent-ink: #1f0d03;
-    --accent-soft: #3a2216;
+    --accent-soft: #3a2533;
     --good: #5fd08a;
     --good-soft: #17301f;
     --bad: #ff7a8a;
-    --bad-soft: #3b1a16;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --bad-soft: #3b1a26;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
     --snack-action: #9a3412;
+    --lea-ink: #f2b84b;
+    --hugo-ink: #f08a7c;
+    --zoe-ink: #7db4ee;
     color-scheme: dark;
   }
 }
@@ -59,7 +70,7 @@ body {
 a { color: var(--accent); text-underline-offset: 3px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
-h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+h1 { font-family: var(--display); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.025em; }
 h2 { font-size: 1.25rem; font-weight: 650; letter-spacing: -0.01em; }
 h3 { font-size: 1rem; font-weight: 600; }
 p { margin: 0; }
@@ -174,11 +185,6 @@ details[open] > summary .chev { transform: rotate(90deg); }
 details[open] > summary { border-bottom: 1px solid var(--line); }
 
 /* ---------- Écouter ---------- */
-.now { display: flex; gap: 16px; align-items: center; }
-.cover { width: 104px; height: 104px; border-radius: 12px; object-fit: cover; flex: none; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18); }
-.now .date { color: var(--accent); font-weight: 600; font-size: 0.875rem; }
-.now h1 { font-size: 1.375rem; margin-top: 2px; }
-.now .meta { color: var(--ink-2); font-size: 0.875rem; margin-top: 6px; }
 
 .player { margin-top: 20px; }
 .scrub { width: 100%; margin: -10px 0; appearance: none; -webkit-appearance: none; height: 44px; background: transparent; cursor: pointer; }
@@ -484,3 +490,81 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .row-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .row-title { min-width: 0; }
 .ended.err { background: var(--bad-soft); }
+
+/* ---------- Le ciel (bandeau de chaque onglet) ---------- */
+.sky {
+  --strip: 64px;
+  position: relative; overflow: hidden; isolation: isolate;
+  margin: -24px -16px 24px; padding: calc(28px + env(safe-area-inset-top)) 20px calc(var(--strip) + 6px);
+  color: var(--cream);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 62%, var(--sky-horizon) 100%);
+  transition: background 1s linear;
+}
+.sky.tall { --strip: 76px; padding-top: calc(36px + env(safe-area-inset-top)); }
+@media (min-width: 641px) { .sky { border-radius: 0 0 24px 24px; } }
+.sky h1 { color: var(--cream); font-size: 2rem; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance; }
+.sky.tall h1 { font-size: 1.875rem; }
+.sky-meta { margin-top: 8px; color: var(--cream); font-size: 0.9375rem; line-height: 1.45; max-width: 56ch; }
+.sky .sky-meta .num { font-weight: 700; }
+.sky .btn.primary { margin-top: 16px; background: var(--sun-gold); color: #1b1206; }
+.sky-content { position: relative; z-index: 2; }
+.sky-stars {
+  position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 18%, #fff 50%, transparent 52%),
+    radial-gradient(1px 1px at 27% 42%, #fff 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 46% 12%, #fff 50%, transparent 52%),
+    radial-gradient(1px 1px at 61% 33%, #fff 50%, transparent 52%),
+    radial-gradient(1.3px 1.3px at 74% 9%, #fff 50%, transparent 52%),
+    radial-gradient(1px 1px at 88% 26%, #fff 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 93% 52%, #fff 50%, transparent 52%),
+    radial-gradient(1px 1px at 6% 58%, #fff 50%, transparent 52%),
+    radial-gradient(1.5px 1.5px at 36% 66%, #fff 50%, transparent 52%),
+    radial-gradient(1px 1px at 55% 58%, #fff 50%, transparent 52%);
+  transition: opacity 1s linear;
+}
+/* La bande du bas : le soleil monte de la mer selon l'heure, ses reflets dorés sur l'eau. */
+.sky-horizon { position: absolute; left: 0; right: 0; bottom: 0; height: var(--strip); z-index: 1; pointer-events: none; }
+.sky-sun {
+  position: absolute; left: 50%; width: 64px; height: 64px; margin-left: -32px; border-radius: 50%;
+  background: var(--sun-gold);
+  /* --rise 0 : posé sur la mer comme sur la pochette ; 1 : haut de la bande ; < 0 : couché */
+  bottom: calc(-14px + var(--rise) * (var(--strip) - 50px));
+  box-shadow: 0 10px 40px rgba(255, 196, 120, 0.35);
+  transition: bottom 1s linear;
+}
+.sky-sea {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 18px;
+  background: #141a3a; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+}
+.sky-sea i { display: block; height: 2px; border-radius: 2px; background: #f6c27e; opacity: var(--glints); }
+.sky-sea i:nth-child(1) { width: 96px; }
+.sky-sea i:nth-child(2) { width: 76px; }
+.sky-sea i:nth-child(3) { width: 58px; }
+.sky-sea i:nth-child(4) { width: 40px; }
+.sky-sea i:nth-child(5) { width: 22px; }
+@media (prefers-reduced-motion: reduce) { .sky, .sky-sun, .sky-stars { transition: none; } }
+
+/* Les voix */
+.cast { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 0.875rem; font-weight: 600; }
+.cast li { display: inline-flex; align-items: center; gap: 6px; }
+.sky .cast { color: var(--cream); }
+.voice-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18); }
+.voice-dot.lea { background: var(--lea); }
+.voice-dot.hugo { background: var(--hugo); }
+.voice-dot.zoe { background: var(--zoe); }
+.voice { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; }
+.voice.zoe { color: var(--zoe-ink); }
+.quiz-letter.lea { background: var(--lea); color: #1b1206; }
+.quiz-letter.hugo { background: var(--hugo); color: #1b1206; }
+.debate-name.lea { color: var(--lea-ink); }
+.debate-name.hugo { color: var(--hugo-ink); }
+
+/* Onglet actif : les reflets de la pochette */
+.tabs a { position: relative; }
+.tabs a[aria-current="page"]::before {
+  content: ""; position: absolute; top: 0; left: 50%; width: 22px; height: 6px; margin-left: -11px;
+  background: linear-gradient(var(--accent), var(--accent)) top center / 22px 2px no-repeat,
+              linear-gradient(var(--accent), var(--accent)) bottom center / 12px 2px no-repeat;
+}
+.sk.sk-sky { background: rgba(255, 248, 238, 0.16); }

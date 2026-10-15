@@ -86,7 +86,7 @@ export function Player({ track }: { track: Track }) {
               <li key={c.title + c.startSec}>
                 <button type="button" aria-current={i === current ? 'true' : undefined} onClick={() => jump(c.startSec)}>
                   <span className="dot" aria-hidden />
-                  <span className="grow">{c.title}</span>
+                  <span className="grow">{c.title}{/m[ée]t[ée]o/i.test(c.title) && <> <span className="voice zoe"><span className="voice-dot zoe" aria-hidden />Zoé</span></>}</span>
                   <time>{hms(c.startSec)}</time>
                 </button>
               </li>

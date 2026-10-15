@@ -35,8 +35,8 @@ export function DebateCard({ date, topic, sides, myVote, closed }: {
           {(['Léa', 'Hugo'] as const).map((host, i) => (
             <button key={host} type="button" role="radio" aria-checked={vote === i} disabled={closed}
               className={`quiz-choice${vote === i ? ' picked' : ''}`} onClick={() => cast(i as 0 | 1)} onKeyDown={radioKeys}>
-              <span className="quiz-letter" aria-hidden>{host[0]}</span>
-              <span className="grow"><strong>{host}</strong> : {sides[i].replace(new RegExp(`^${host}\\s*:\\s*`, 'i'), '')}</span>
+              <span className={`quiz-letter ${i === 0 ? 'lea' : 'hugo'}`} aria-hidden>{host[0]}</span>
+              <span className="grow"><strong className={`debate-name ${i === 0 ? 'lea' : 'hugo'}`}>{host}</strong> : {sides[i].replace(new RegExp(`^${host}\\s*:\\s*`, 'i'), '')}</span>
             </button>
           ))}
         </div>

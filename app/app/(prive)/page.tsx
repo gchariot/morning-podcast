@@ -7,6 +7,9 @@ import { GameCard } from '@/components/GameCard';
 import { DebateCard } from '@/components/DebateCard';
 import { loadSamedi } from '@/lib/samedi';
 import { isRevealed, loadAnswers, quizStats } from '@/lib/quiz';
+import { loadConfig } from '@/lib/config';
+import { editionNumber, zurichMinutes } from '@/lib/sky';
+import { Cast, SkyBand } from '@/components/Sky';
 
 async function coverUrl(): Promise<string> {
   try {
@@ -25,18 +28,20 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover, { answers }, { data: samedi }] = await Promise.all([
+  const [episodes, cover, { answers }, { data: samedi }, firstEdition] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
     loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
     loadSamedi().catch(() => ({ data: {} as Awaited<ReturnType<typeof loadSamedi>>['data'] })),
+    loadConfig().then(c => (c.config.show as { firstEdition?: string }).firstEdition).catch(() => undefined),
   ]);
+  const now = zurichMinutes();
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
   const isToday = episode?.date === todayInZurich();
 
   if (!episode) {
     return (
-      <div className="page-head">
+      <SkyBand minutes={now}>
         <h1>{error ? 'Épisodes injoignables' : 'Pas encore d’épisode'}</h1>
         <p>
           {error
@@ -44,23 +49,25 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
             : 'Le prochain épisode est rédigé à 5 h 37 et arrive vers 6 h. En attendant, tu peux régler tes thèmes.'}
         </p>
         {!error && <Link className="btn primary" href="/themes" style={{ marginTop: 16 }}>Régler mes thèmes</Link>}
-      </div>
+      </SkyBand>
     );
   }
 
   const others = episodes.filter(e => e.date !== episode.date).slice(0, 10);
   const isLatest = episode.date === episodes[0]?.date;
+  const edition = editionNumber(episode.date, firstEdition);
 
   return (
     <>
-      <div className="now">
-        <img className="cover" src={cover} alt="" width={104} height={104} />
-        <div>
-          <p className="date">{isToday ? 'Aujourd’hui' : formatDate(episode.date)}</p>
-          <h1>{episode.title}</h1>
-          <p className="meta"><span className="num">{minutes(episode.seconds)}</span>{episode.chapters?.length ? ` · ${episode.chapters.length} chapitres` : ''}</p>
-        </div>
-      </div>
+      <SkyBand minutes={now} tall>
+        <h1>{episode.title}</h1>
+        <p className="sky-meta">
+          {edition ? <><span className="num">N° {edition}</span> · </> : null}
+          {isToday ? `aujourd’hui, ${formatDate(episode.date)}` : formatDate(episode.date)}
+          {' · '}<span className="num">{minutes(episode.seconds)}</span>
+        </p>
+        <Cast withZoe={episode.chapters?.some(c => /m[ée]t[ée]o/i.test(c.title)) ?? true} />
+      </SkyBand>
 
       {episode.applied && episode.applied.length > 0 && (
         <section className="applied" aria-labelledby="applied-h">
