@@ -9,9 +9,12 @@
   --ink-2: #57536b;
   --ink-3: #67637c;
   --line: #dfdbe8;
-  --accent: #b23a0a;
+  /* Accent : le rose de l'horizon, assombri pour la lecture ; les fonds doux viennent du violet de l'aube. */
+  --accent: #93503f;
   --accent-ink: #ffffff;
-  --accent-soft: #fbe6da;
+  --accent-soft: #ebe7f1;
+  --night: #141a3a;
+  --switch-on: #141a3a;
   --good: #166534;
   --good-soft: #dcf2e3;
   --bad: #b42318;
@@ -39,9 +42,10 @@
     --ink-2: #b9b4c9;
     --ink-3: #9d98b3;
     --line: #2a2f52;
-    --accent: #fb8a4e;
-    --accent-ink: #1f0d03;
-    --accent-soft: #3a2533;
+    --accent: #ffd796;
+    --accent-ink: #141a3a;
+    --accent-soft: #262a52;
+    --switch-on: #f2b84b;
     --good: #5fd08a;
     --good-soft: #17301f;
     --bad: #ff7a8a;
@@ -140,7 +144,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 /* Interrupteur (case à cocher stylée) */
 .switch { appearance: none; -webkit-appearance: none; width: 51px !important; height: 31px !important; border-radius: 999px; background: var(--surface-2); position: relative; cursor: pointer; transition: background 200ms ease-out; border: 1px solid var(--line); }
 .switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 25px; height: 25px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform 200ms cubic-bezier(.2,.8,.2,1); }
-.switch:checked { background: var(--ink-3); border-color: var(--ink-3); }
+.switch:checked { background: var(--switch-on); border-color: var(--switch-on); }
 .switch:checked::after { transform: translateX(20px); }
 
 /* ---------- Boutons ---------- */
@@ -493,62 +497,55 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 
 /* ---------- Le ciel (bandeau de chaque onglet) ---------- */
 .sky {
-  --strip: 64px;
+  --sea: 40px;
   position: relative; overflow: hidden; isolation: isolate;
-  margin: -24px -16px 24px; padding: calc(28px + env(safe-area-inset-top)) 20px calc(var(--strip) + 6px);
+  margin: -24px -16px 24px; padding: calc(28px + env(safe-area-inset-top)) 20px calc(var(--sea) + 22px);
   color: var(--cream);
-  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 62%, var(--sky-horizon) 100%);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 60%, var(--sky-horizon) 100%);
   transition: background 1s linear;
 }
-.sky.tall { --strip: 76px; padding-top: calc(36px + env(safe-area-inset-top)); }
-@media (min-width: 641px) { .sky { border-radius: 0 0 24px 24px; } }
+.sky.tall { padding-top: calc(36px + env(safe-area-inset-top)); padding-bottom: calc(var(--sea) + 28px); }
+@media (min-width: 641px) { .sky { margin: -24px 0 24px; border-radius: 0 0 24px 24px; } }
+/* Le texte laisse la place au soleil, qui se lève à droite. */
+.sky-content { position: relative; z-index: 3; padding-right: 72px; }
 .sky h1 { color: var(--cream); font-size: 2rem; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance; }
-.sky.tall h1 { font-size: 1.875rem; }
+.sky.tall h1 { font-size: 1.75rem; }
 .sky-meta { margin-top: 8px; color: var(--cream); font-size: 0.9375rem; line-height: 1.45; max-width: 56ch; }
 .sky .sky-meta .num { font-weight: 700; }
+/* N° d'édition : les deux graisses de la pochette (« La » fin, « Matinale » noir) */
+.edition { font-family: var(--display); font-size: 1.0625rem; letter-spacing: -0.01em; }
+.edition .thin { font-weight: 300; }
+.edition b { font-weight: 800; }
 .sky .btn.primary { margin-top: 16px; background: var(--sun-gold); color: #1b1206; }
-.sky-content { position: relative; z-index: 2; }
-.sky-stars {
-  position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none;
-  background-image:
-    radial-gradient(1.4px 1.4px at 12% 18%, #fff 50%, transparent 52%),
-    radial-gradient(1px 1px at 27% 42%, #fff 50%, transparent 52%),
-    radial-gradient(1.6px 1.6px at 46% 12%, #fff 50%, transparent 52%),
-    radial-gradient(1px 1px at 61% 33%, #fff 50%, transparent 52%),
-    radial-gradient(1.3px 1.3px at 74% 9%, #fff 50%, transparent 52%),
-    radial-gradient(1px 1px at 88% 26%, #fff 50%, transparent 52%),
-    radial-gradient(1.2px 1.2px at 93% 52%, #fff 50%, transparent 52%),
-    radial-gradient(1px 1px at 6% 58%, #fff 50%, transparent 52%),
-    radial-gradient(1.5px 1.5px at 36% 66%, #fff 50%, transparent 52%),
-    radial-gradient(1px 1px at 55% 58%, #fff 50%, transparent 52%);
-  transition: opacity 1s linear;
-}
-/* La bande du bas : le soleil monte de la mer selon l'heure, ses reflets dorés sur l'eau. */
-.sky-horizon { position: absolute; left: 0; right: 0; bottom: 0; height: var(--strip); z-index: 1; pointer-events: none; }
+.sky-stars { position: absolute; inset: 0; z-index: 0; opacity: var(--stars); pointer-events: none; transition: opacity 1s linear; }
+/* Le soleil monte de la mer selon l'heure réelle de Genève ; couché, il passe sous l'eau. */
 .sky-sun {
-  position: absolute; left: 50%; width: 64px; height: 64px; margin-left: -32px; border-radius: 50%;
+  position: absolute; z-index: 1; right: 22px; width: 56px; height: 56px; border-radius: 50%;
   background: var(--sun-gold);
-  /* --rise 0 : posé sur la mer comme sur la pochette ; 1 : haut de la bande ; < 0 : couché */
-  bottom: calc(-14px + var(--rise) * (var(--strip) - 50px));
-  box-shadow: 0 10px 40px rgba(255, 196, 120, 0.35);
+  bottom: calc(var(--sea) - 28px + var(--rise) * (100% - var(--sea) - 84px));
   transition: bottom 1s linear;
 }
-.sky-sea {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 18px;
-  background: #141a3a; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+.sky-sun::before {
+  content: ""; position: absolute; inset: -46px; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, rgba(255, 210, 140, 0.42) 0%, rgba(255, 190, 120, 0.16) 45%, transparent 70%);
 }
-.sky-sea i { display: block; height: 2px; border-radius: 2px; background: #f6c27e; opacity: var(--glints); }
-.sky-sea i:nth-child(1) { width: 96px; }
-.sky-sea i:nth-child(2) { width: 76px; }
-.sky-sea i:nth-child(3) { width: 58px; }
-.sky-sea i:nth-child(4) { width: 40px; }
-.sky-sea i:nth-child(5) { width: 22px; }
-@media (prefers-reduced-motion: reduce) { .sky, .sky-sun, .sky-stars { transition: none; } }
+.sky-sea {
+  position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: var(--sea);
+  background: #141a3a; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-evenly;
+  padding: 3px 0;
+}
+/* Les reflets dorés, centrés sous le soleil (centre à 22 + 28 px du bord droit) */
+.sky-sea i { display: block; height: 3px; border-radius: 3px; background: #f6c27e; opacity: var(--glints); transition: opacity 1s linear; }
+.sky-sea i:nth-child(1) { width: 84px; margin-right: calc(50px - 42px); }
+.sky-sea i:nth-child(2) { width: 72px; margin-right: calc(50px - 36px); }
+.sky-sea i:nth-child(3) { width: 60px; margin-right: calc(50px - 30px); }
+.sky-sea i:nth-child(4) { width: 48px; margin-right: calc(50px - 24px); }
+.sky-sea i:nth-child(5) { width: 36px; margin-right: calc(50px - 18px); }
+.sky-sea i:nth-child(6) { width: 24px; margin-right: calc(50px - 12px); }
+.sky-sea i:nth-child(7) { width: 14px; margin-right: calc(50px - 7px); background: #e8955a; }
+@media (prefers-reduced-motion: reduce) { .sky, .sky-sun, .sky-stars, .sky-sea i { transition: none; } }
 
 /* Les voix */
-.cast { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 0.875rem; font-weight: 600; }
-.cast li { display: inline-flex; align-items: center; gap: 6px; }
-.sky .cast { color: var(--cream); }
 .voice-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18); }
 .voice-dot.lea { background: var(--lea); }
 .voice-dot.hugo { background: var(--hugo); }
@@ -564,7 +561,22 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .tabs a { position: relative; }
 .tabs a[aria-current="page"]::before {
   content: ""; position: absolute; top: 0; left: 50%; width: 22px; height: 6px; margin-left: -11px;
-  background: linear-gradient(var(--accent), var(--accent)) top center / 22px 2px no-repeat,
-              linear-gradient(var(--accent), var(--accent)) bottom center / 12px 2px no-repeat;
+  background: linear-gradient(var(--lea), var(--lea)) top center / 22px 3px no-repeat,
+              linear-gradient(var(--hugo), var(--hugo)) bottom center / 12px 2px no-repeat;
 }
 .sk.sk-sky { background: rgba(255, 248, 238, 0.16); }
+
+/* Le bouton lecture : la nuit de la pochette et son soleil (en sombre : le soleil, et la nuit dessus) */
+.playbtn { background: var(--night); color: var(--sun-gold); box-shadow: 0 8px 22px rgba(20, 26, 58, 0.28); }
+.scrub::-webkit-slider-thumb { background: var(--night); }
+.scrub::-moz-range-thumb { background: var(--night); }
+.scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--night) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
+.scrub::-moz-range-progress { background: var(--night); }
+@media (prefers-color-scheme: dark) {
+  .playbtn { background: var(--sun-gold); color: var(--night); }
+  .scrub::-webkit-slider-thumb { background: var(--sun-gold); }
+  .scrub::-moz-range-thumb { background: var(--sun-gold); }
+  .scrub::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--sun-gold) var(--p, 0%), var(--surface-2) var(--p, 0%)); }
+  .scrub::-moz-range-progress { background: var(--sun-gold); }
+}
+.mini-progress { background: var(--lea); }

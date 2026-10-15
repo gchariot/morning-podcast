@@ -6,6 +6,12 @@
 import { useEffect, useState } from 'react';
 import { skyAt, untilWriting, zurichMinutes } from '@/lib/sky';
 
+// Ciel étoilé fixe (positions pseudo-aléatoires mais stables), comme sur la pochette.
+const STARS = Array.from({ length: 46 }, (_, i) => {
+  const x = (i * 37.7 + 11) % 100, y = (i * 53.3 + 7) % 78, r = 0.8 + ((i * 7) % 5) * 0.25;
+  return `radial-gradient(${r}px ${r}px at ${x.toFixed(1)}% ${y.toFixed(1)}%, #fff 60%, transparent 100%)`;
+}).join(',');
+
 export function SkyBand({ minutes: initial, tall = false, children }: {
   minutes: number; tall?: boolean; children: React.ReactNode;
 }) {
@@ -17,22 +23,19 @@ export function SkyBand({ minutes: initial, tall = false, children }: {
     return () => clearInterval(id);
   }, []);
   const s = skyAt(m);
+  // Hauteur du soleil : 0 posé sur la mer (comme sur la pochette), 1 en haut du ciel, négatif = couché.
+  const rise = s.sun <= 1 ? 1 - s.sun : -(s.sun - 1) * 12;
   const vars = {
     '--sky-top': s.top, '--sky-mid': s.mid, '--sky-horizon': s.horizon,
-    // --sun : hauteur du soleil (un nombre), pas sa couleur.
-    '--sun': s.sun.toFixed(3), '--stars': s.stars.toFixed(2),
-    // Lever : 0 sur l'horizon, 1 en haut de la bande ; négatif = sous la mer (nuit).
-    '--rise': (s.sun <= 1 ? 1 - s.sun : -(s.sun - 1) * 8).toFixed(3),
-    '--glints': Math.max(0, Math.min(1, 1.15 - s.sun)).toFixed(2),
+    '--rise': rise.toFixed(3), '--stars': s.stars.toFixed(2),
+    '--glints': (s.sun < 1 ? 0.9 : Math.max(0, 0.9 - (s.sun - 1) * 30)).toFixed(2),
   } as React.CSSProperties;
   return (
     <header className={`sky${tall ? ' tall' : ''}`} style={vars}>
-      <div className="sky-stars" aria-hidden />
+      <div className="sky-stars" style={{ backgroundImage: STARS }} aria-hidden />
+      <span className="sky-sun" aria-hidden />
+      <span className="sky-sea" aria-hidden><i /><i /><i /><i /><i /><i /><i /></span>
       <div className="sky-content">{children}</div>
-      <div className="sky-horizon" aria-hidden>
-        <span className="sky-sun" />
-        <span className="sky-sea"><i /><i /><i /><i /><i /></span>
-      </div>
     </header>
   );
 }
@@ -47,15 +50,4 @@ export function NextWriting({ minutes: initial }: { minutes: number }) {
     return () => clearInterval(id);
   }, []);
   return <>Prochaine rédaction {untilWriting(m)}</>;
-}
-
-/** Les trois voix de l'émission, chacune avec sa couleur. */
-export function Cast({ withZoe = true }: { withZoe?: boolean }) {
-  return (
-    <ul className="cast" aria-label="Les voix de l'épisode">
-      <li><span className="voice-dot lea" aria-hidden />Léa</li>
-      <li><span className="voice-dot hugo" aria-hidden />Hugo</li>
-      {withZoe && <li><span className="voice-dot zoe" aria-hidden />Zoé, la météo</li>}
-    </ul>
-  );
 }

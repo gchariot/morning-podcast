@@ -2,7 +2,7 @@ import { passwordEnabled } from '@/lib/auth';
 import { loadConfig } from '@/lib/config';
 import { SettingsEditor } from '@/components/SettingsEditor';
 import { zurichMinutes } from '@/lib/sky';
-import { Cast, SkyBand } from '@/components/Sky';
+import { NextWriting, SkyBand } from '@/components/Sky';
 import { Icon } from '@/components/Icon';
 import { logout } from '../actions';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
@@ -20,7 +20,7 @@ export default async function ReglagesPage() {
     <>
       <SkyBand minutes={zurichMinutes()}>
         <h1>Réglages</h1>
-        <p className="sky-meta">Le format de l&apos;émission, jour par jour.</p>
+        <p className="sky-meta">Le format de l&apos;émission, jour par jour. <NextWriting minutes={zurichMinutes()} />.</p>
       </SkyBand>
 
       <SettingsEditor initial={{
@@ -58,7 +58,7 @@ export default async function ReglagesPage() {
 
         <details className="group" style={{ marginTop: 12 }}>
           <summary className="item">
-            <span className="grow"><span style={{ fontWeight: 600, display: 'block' }}>Changer les voix</span><Cast /></span>
+            <span className="grow"><span style={{ fontWeight: 600, display: 'block' }}>Changer les voix</span><span className="meta">Léa, Hugo et Zoé (la météo)</span></span>
             <Icon name="chevron-right" className="chev" />
           </summary>
           <p className="pad small muted">Pour comparer d&apos;autres voix, lance « 0 · Test de voix » dans GitHub Actions, écoute les extraits, puis change les variables VOICE_LEA et VOICE_HUGO du dépôt.</p>

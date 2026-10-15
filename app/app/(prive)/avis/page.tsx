@@ -41,12 +41,12 @@ export default async function AvisPage() {
         <h1>Mon avis</h1>
         <p className="sky-meta">
           {last ? <>Sur l&apos;épisode {isToday ? 'd’aujourd’hui' : `du ${formatDate(last.date)}`}. </> : null}
-          Ton avis change celui de demain.
+          Ton avis change celui de demain. <NextWriting minutes={zurichMinutes()} />.
         </p>
       </SkyBand>
 
       <section className="tomorrow" aria-labelledby="tomorrow-h">
-        <h2 id="tomorrow-h"><NextWriting minutes={zurichMinutes()} /> ({tomorrow.when})</h2>
+        <h2 id="tomorrow-h">Ce que la rédaction appliquera {tomorrow.when}</h2>
         {mine.length || tomorrow.items.length
           ? <ul>
               {mine.length > 0 && <li>Ton avis sur {mine.length} {mine.length > 1 ? 'sujets' : 'sujet'} de l&apos;épisode</li>}

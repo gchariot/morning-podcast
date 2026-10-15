@@ -9,7 +9,7 @@ import { loadSamedi } from '@/lib/samedi';
 import { isRevealed, loadAnswers, quizStats } from '@/lib/quiz';
 import { loadConfig } from '@/lib/config';
 import { editionNumber, zurichMinutes } from '@/lib/sky';
-import { Cast, SkyBand } from '@/components/Sky';
+import { SkyBand } from '@/components/Sky';
 
 async function coverUrl(): Promise<string> {
   try {
@@ -62,11 +62,10 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       <SkyBand minutes={now} tall>
         <h1>{episode.title}</h1>
         <p className="sky-meta">
-          {edition ? <><span className="num">N° {edition}</span> · </> : null}
+          {edition ? <><span className="edition"><span className="thin">N°</span> <b className="num">{edition}</b></span> · </> : null}
           {isToday ? `aujourd’hui, ${formatDate(episode.date)}` : formatDate(episode.date)}
           {' · '}<span className="num">{minutes(episode.seconds)}</span>
         </p>
-        <Cast withZoe={episode.chapters?.some(c => /m[ée]t[ée]o/i.test(c.title)) ?? true} />
       </SkyBand>
 
       {episode.applied && episode.applied.length > 0 && (
