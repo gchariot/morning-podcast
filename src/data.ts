@@ -192,11 +192,11 @@ async function sorties(date: string) {
     'timings[gte]': start.toISOString(), 'timings[lte]': end.toISOString(),
     'geo[northEast][lat]': String(z.nordEst.lat), 'geo[northEast][lng]': String(z.nordEst.lng),
     'geo[southWest][lat]': String(z.sudOuest.lat), 'geo[southWest][lng]': String(z.sudOuest.lng),
-    size: '40', detailed: '1', monolingual: 'fr',
+    size: '100', detailed: '1', monolingual: 'fr',
   });
   const seen = new Set<string>();
   const events: any[] = [];
-  for (const [uid, agendaTitle] of [...uids].slice(0, 40)) {
+  for (const [uid, agendaTitle] of [...uids].slice(0, 120)) {
     const r = await fetch(`${api}/agendas/${uid}/events?${qs}`, { headers });
     if (!r.ok) { errors.push(`agenda ${uid} : ${r.status}`); continue; }
     const j: any = await r.json();
@@ -216,8 +216,18 @@ async function sorties(date: string) {
       });
     }
   }
-  events.sort((a, b) => String(a.horaires[0]?.debut ?? '').localeCompare(String(b.horaires[0]?.debut ?? '')));
-  return { source: 'OpenAgenda', agendas: uids.size, evenements: events.slice(0, 60), ...(errors.length ? { erreurs: errors.slice(0, 10) } : {}) };
+  // Sans doublons (même titre), puis équilibré entre samedi et dimanche (45 max par jour).
+  const byTitle = new Map<string, any>();
+  for (const e of events) { const k = String(e.titre).toLowerCase().trim(); if (!byTitle.has(k)) byTitle.set(k, e); }
+  const unique = [...byTitle.values()].sort((a, b) => String(a.horaires[0]?.debut ?? '').localeCompare(String(b.horaires[0]?.debut ?? '')));
+  const sunday = shiftDate(date, 1);
+  const dayOf = (e: any) => (String(e.horaires[0]?.debut ?? '').slice(0, 10) === sunday ? 'dimanche' : 'samedi');
+  const picked = [...unique.filter(e => dayOf(e) === 'samedi').slice(0, 45), ...unique.filter(e => dayOf(e) === 'dimanche').slice(0, 45)];
+  return {
+    source: 'OpenAgenda', agendas: uids.size, trouves: unique.length,
+    evenements: picked.map(e => ({ jour: dayOf(e), ...e })),
+    ...(errors.length ? { erreurs: errors.slice(0, 10) } : {}),
+  };
 }
 
 const date = dateFromArgs();
