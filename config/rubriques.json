@@ -105,7 +105,7 @@
     {
       "id": "ia",
       "title": "Nouveautés IA",
-      "minutes": 3,
+      "minutes": 2,
       "brief": "Sorties de modèles, d'outils et d'API des dernières 24 h. Ce qui change concrètement pour un développeur full-stack (Next.js, Supabase, Claude Code).",
       "domains": [
         "anthropic.com",
