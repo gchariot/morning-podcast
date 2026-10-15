@@ -76,8 +76,11 @@ export function Player({ track, feedbackSent = false }: { track: Track; feedback
             {feedbackSent
               ? <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Ton avis est déjà parti pour demain.</span>
                   <Link href="/avis" className="btn small">Modifier</Link></>
-              : <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Deux pouces et la rédaction ajuste demain.</span>
-                  <Link href="/avis" className="btn small primary">Donner mon avis</Link></>}
+              : <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Un ressenti ?</span>
+                  <span className="ended-actions">
+                    <Link href="/avis" className="btn small">Pouces</Link>
+                    <Link href="/avis?dis" className="btn small primary"><Icon name="mic" size={18} /> Dis-le</Link>
+                  </span></>}
           </div>
         )}
         {!live && audio.track && audio.playing && (

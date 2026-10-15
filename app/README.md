@@ -5,7 +5,7 @@ Petite appli web privée pour piloter l'émission depuis le téléphone :
 | Écran | Rôle | Fichier modifié dans le dépôt |
 |---|---|---|
 | 🎧 **Écouter** | Lecteur (chapitres, −15 s / +30 s, vitesse, reprise), quiz du jour, jeu et face-à-face du samedi, sources, épisodes précédents. Le son continue d'un onglet à l'autre grâce au mini-lecteur. | `quiz.json`, `samedi.json` |
-| 💬 **Mon avis** | Pouce par thème entendu, pastilles toutes prêtes, un mot si besoin, « Déjà envoyé » avec retrait, consignes permanentes | `retours.md` |
+| 💬 **Mon avis** | « Dis-le » : un ressenti à voix haute (reconnaissance vocale de Chrome, épisode en pause pendant la dictée) ou au clavier, interprété par la rédaction ; pouce par thème, pastilles, consignes permanentes | `retours.md` |
 | 🧩 **Thèmes** | Ordre par glisser-déposer (appui long), modifier, mettre en pause, supprimer, créer ; la météo reste en dernier | `config/rubriques.json` |
 | ⚙️ **Réglages** | Durée en semaine, grande édition du samedi, documentaire du dimanche (durée, sujet souhaité), coût estimé du mois | `config/rubriques.json` |
 

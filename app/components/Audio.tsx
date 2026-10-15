@@ -28,6 +28,9 @@ type AudioState = {
   failed: boolean;
   /** Lecture demandée mais le son attend des données (tunnel, saut hors de la partie chargée). */
   buffering: boolean;
+  /** L'épisode est mis en pause le temps d'une dictée (« Dis-le »). */
+  held: boolean;
+  setHeld: (v: boolean) => void;
   rate: number;
   /** Index du chapitre en cours (-1 avant le début). */
   chapter: number;
@@ -64,6 +67,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [ended, setEnded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [buffering, setBuffering] = useState(false);
+  const [held, setHeld] = useState(false);
   // Un échec de lecture est dit, jamais silencieux.
   const start = useCallback((a: HTMLAudioElement) => {
     setFailed(false);
@@ -207,7 +211,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Ctx.Provider value={{ track, now, duration, playing, ended, failed, buffering, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
+    <Ctx.Provider value={{ track, now, duration, playing, ended, failed, buffering, held, setHeld, rate, chapter, shown, setShown, prepare, play, toggle, seek, skip, nextRate }}>
       <audio
         ref={el} preload="metadata"
         onTimeUpdate={onTime} onPlay={() => { setPlaying(true); setEnded(false); syncPosition(); }} onPause={() => { setPlaying(false); setBuffering(false); syncPosition(); }}
@@ -229,7 +233,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
 /** Barre au-dessus des onglets, visible dès qu'un épisode a été lancé, sauf sur sa propre page. */
 function MiniPlayer() {
-  const { track, now, duration, playing, ended, buffering, shown, toggle, skip } = useAudio();
+  const { track, now, duration, playing, ended, buffering, held, shown, toggle, skip } = useAudio();
   const path = usePathname();
   const [started, setStarted] = useState(false);
   useEffect(() => { if (playing) setStarted(true); }, [playing]);
@@ -244,7 +248,7 @@ function MiniPlayer() {
         <img src={track.cover} alt="" width={40} height={40} />
         <span className="grow">
           <span className="mini-title">{track.title}</span>
-          <span className="mini-meta num">{ended ? 'Terminé' : buffering ? 'En attente du réseau…' : `${left} min restantes`}</span>
+          <span className="mini-meta num">{ended ? 'Terminé' : held ? 'En pause pendant que tu parles' : buffering ? 'En attente du réseau…' : `${left} min restantes`}</span>
         </span>
       </Link>
       {ended

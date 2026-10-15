@@ -602,3 +602,49 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .times .buffering { color: var(--sun-gold); font-size: 0.8125rem; font-weight: 600; animation: breathe 1.6s ease-in-out infinite; }
 @keyframes breathe { 50% { opacity: 0.55; } }
 @media (prefers-reduced-motion: reduce) { .times .buffering { animation: none; } }
+
+/* ---------- Dis-le : l'avis à voix haute ---------- */
+.say { margin-bottom: 20px; }
+.say > * + * { border-top: 0; }
+.say-row { display: flex; align-items: center; gap: 10px; padding: 14px 14px 14px 16px; min-height: 92px; }
+.say-row .grow { flex: 1; min-width: 0; }
+.say-title { display: flex; align-items: baseline; gap: 8px; font-weight: 650; font-size: 1.0625rem; letter-spacing: -0.01em; }
+.say-title time { font-size: 0.875rem; font-weight: 600; color: var(--sun-gold); }
+.say-title .pill { align-self: center; }
+.say-hint { display: block; margin-top: 2px; color: var(--ink-2); font-size: 0.875rem; line-height: 1.4; }
+.say-hint.err { color: var(--bad); }
+/* Le micro est le pendant du bouton lecture : le soleil, la nuit dessus, ses reflets dessous. */
+.mic-wrap { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 64px; }
+.mic { width: 56px; height: 56px; border-radius: 50%; border: 0; display: grid; place-items: center; cursor: pointer;
+  background: var(--sun-gold); color: var(--night); box-shadow: 0 6px 18px rgba(0,0,0,.45); transition: transform 120ms ease-out; }
+.mic:active { transform: scale(0.94); }
+.mic:disabled { background: var(--surface-2); color: var(--ink-3); box-shadow: none; cursor: default; }
+.mic-glints { display: flex; flex-direction: column; align-items: center; gap: 2px; height: 12px; }
+.mic-glints i { display: block; height: 2px; border-radius: 2px; background: #f6c27e; }
+.mic-glints i:last-child { background: #e8955a; }
+/* Au repos : une seule braise, comme avant le lever du soleil */
+.say:not(.listening) .mic-glints i { display: none; }
+.say:not(.listening) .mic-glints i:last-child { display: block; width: 18px; }
+.say .mic:disabled + .mic-glints i { opacity: 0; }
+/* À l'écoute : les reflets ondulent */
+.say.listening .mic-glints { height: 22px; }
+.say.listening .mic-glints i { animation: glint 900ms ease-in-out infinite alternate; }
+.say.listening .mic-glints i:nth-child(1) { width: 52px; }
+.say.listening .mic-glints i:nth-child(2) { width: 40px; animation-delay: -300ms; }
+.say.listening .mic-glints i:nth-child(3) { width: 30px; animation-delay: -600ms; }
+.say.listening .mic-glints i:nth-child(4) { width: 20px; animation-delay: -150ms; }
+.say.listening .mic-glints i:nth-child(5) { width: 12px; animation-delay: -450ms; }
+@keyframes glint { from { transform: scaleX(.55); opacity: .55; } }
+.say.listening { box-shadow: var(--shadow), 0 0 0 1.5px color-mix(in srgb, var(--sun-gold) 55%, transparent); }
+.say-live { padding: 0 16px 16px; min-height: 96px; font-size: 1.0625rem; line-height: 1.5; color: var(--ink); }
+.say-live .interim { color: var(--ink-3); }
+.say-live .caret { display: inline-block; width: 2px; height: 1.1em; margin-left: 2px; vertical-align: -3px; background: var(--sun-gold); animation: breathe 1s steps(2) infinite; }
+@media (prefers-reduced-motion: reduce) { .say.listening .mic-glints i, .say-live .caret { animation: none; } }
+.say-body { padding: 0 16px 14px; }
+.say-body textarea { min-height: 156px; font-size: 1rem; }
+.say-actions { margin-top: 8px; gap: 4px; align-items: center; }
+.say-actions .count { margin-left: auto; color: var(--ink-3); font-size: 0.8125rem; }
+.say-quote { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 4px; color: var(--ink-2); font-size: 0.9375rem; line-height: 1.45; }
+.say-sent { padding: 0 4px 6px; gap: 0; }
+.ended .ended-actions { flex: none; display: flex; gap: 6px; }
+

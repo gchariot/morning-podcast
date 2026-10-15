@@ -12,7 +12,8 @@ import { NextWriting, SkyBand } from '@/components/Sky';
 // Chapitres qui ne sont pas des thèmes (on ne note pas l'ouverture ni le générique).
 const NOT_A_TOPIC = /^(ouverture|introduction|intro|générique|fin|au revoir|conclusion)$/i;
 
-export default async function AvisPage() {
+export default async function AvisPage({ searchParams }: { searchParams: Promise<{ dis?: string }> }) {
+  const listen = (await searchParams).dis !== undefined;
   const [{ config }, retours, episodes, tomorrow] = await Promise.all([
     loadConfig(), loadRetours(), loadEpisodes().catch(() => []), loadTomorrow(),
   ]);
@@ -61,14 +62,14 @@ export default async function AvisPage() {
                   {liked > 0 && <>{toFix.length ? ' ; ' : ' : '}{liked} gardé{liked > 1 ? 's' : ''} ou renforcé{liked > 1 ? 's' : ''}</>}
                 </li>
               )}
-              {general && <li><strong>Sur l&apos;ensemble</strong> : « {general} »</li>}
+              {general && <li><strong>Tes mots</strong> : « {general.length > 140 ? `${general.slice(0, 140)}…` : general} »</li>}
               {tomorrow.items.map(i => <li key={i}>{i}</li>)}
             </ul>
-          : <p>Rien de nouveau pour l&apos;instant : ce que tu changes ici, dans Thèmes ou dans Réglages s&apos;affichera ici.</p>}
+          : <p>Rien de nouveau pour l&apos;instant.</p>}
       </section>
 
       {last
-        ? <FeedbackForm episode={last.date} topics={topics} saved={saved} savedGeneral={general} />
+        ? <FeedbackForm episode={last.date} topics={topics} saved={saved} savedGeneral={general} listen={listen} />
         : <p className="muted">Pas encore d&apos;épisode à commenter : le premier arrive vers 6 h.</p>}
 
       <section className="section">

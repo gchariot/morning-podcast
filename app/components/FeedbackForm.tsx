@@ -10,6 +10,7 @@ import { useOnline } from './Connectivity';
 import { Icon } from './Icon';
 import { useAudio } from './Audio';
 import { useSnack } from './Snack';
+import { VoiceNote } from './VoiceNote';
 import { saveFeedback } from '@/app/(prive)/actions';
 import { CHIPS, parseLine, type Saved } from '@/lib/feedback';
 import { OFFLINE, safeCall } from '@/lib/safe';
@@ -22,8 +23,8 @@ const same = (a: Saved, b: Saved) =>
   a.vote === b.vote && a.note.trim() === b.note.trim() && [...a.chips].sort().join() === [...b.chips].sort().join();
 const isEmpty = (e: Saved) => !e.vote && !e.chips.length && !e.note.trim();
 
-export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }: {
-  episode: string; topics: string[]; saved: Record<string, Saved>; savedGeneral: string;
+export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral, listen = false }: {
+  episode: string; topics: string[]; saved: Record<string, Saved>; savedGeneral: string; listen?: boolean;
 }) {
   const draftKey = `matinale_avis_${episode}`;
   const [saved, setSaved] = useState(savedInit);
@@ -104,6 +105,9 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
 
   return (
     <div>
+      {/* « Dis-le » : le ressenti libre, à voix haute ou au clavier (remplace « Sur l'ensemble »). */}
+      <VoiceNote value={general} sent={sentGeneral} onChange={setGeneral} autoListen={listen} />
+
       <div className="group">
         {topics.map(t => {
           const e = get(t);
@@ -163,23 +167,6 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
         })}
       </div>
 
-      <details className="group" style={{ marginTop: 16 }} open={general ? true : undefined}>
-        <summary className="item">
-          <span className="grow">
-            <span className="row" style={{ gap: 8 }}>
-              <span style={{ fontWeight: 600 }}>Sur l&apos;ensemble</span>
-              {sentGeneral && !generalChanged && <span className="pill sent">Envoyé</span>}
-            </span>
-            <span className="meta">Ton, voix, durée, ordre…</span>
-          </span>
-          <Icon name="chevron-right" className="chev" />
-        </summary>
-        <div className="pad">
-          <label htmlFor="avis-general" className="sr">Avis sur l&apos;ensemble</label>
-          <textarea id="avis-general" value={general} onChange={e => setGeneral(e.target.value)} maxLength={600}
-            placeholder="Ex. : Hugo parle trop vite, finir par le foot." />
-        </div>
-      </details>
 
       {count > 0
         ? <SendBar count={count} sending={sending} onSend={send} />
