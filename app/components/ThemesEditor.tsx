@@ -182,10 +182,10 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
             </div>
           : over
           ? <p className="run-note">
-              Un peu plus que visé (+{fmtMin(total - target)} min) : la rédaction resserrera légèrement.
+              +{fmtMin(total - target)} min au-delà de la cible : la rédaction resserrera.
               {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
             </p>
-          : <p className="run-note">{total < target - 0.5 ? `Il reste ${fmtMin(target - total)} min : la rédaction développera un peu plus. ` : ''}Heures de départ indicatives pour une édition de semaine.</p>}
+          : total < target - 0.5 && <p className="run-note">Il reste {fmtMin(target - total)} min : la rédaction développera.</p>}
       </div>
 
       <div className="group" style={{ marginTop: 16 }} onClickCapture={e => { if (justDragged.current) { e.preventDefault(); e.stopPropagation(); } }}>
@@ -197,7 +197,7 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
         </DndContext>
         {pinned && <Row {...rowProps(pinned)} pinned />}
       </div>
-      <p className="field-hint">Pour changer l&apos;ordre, maintiens un thème appuyé puis glisse-le. La météo reste toujours en dernier.</p>
+      <p className="field-hint">Maintiens un thème appuyé puis glisse-le pour changer l&apos;ordre.</p>
 
       <NewTheme busy={busy > 0} onCreate={input => send(() => saveTheme(input), { quiet: true })} />
 

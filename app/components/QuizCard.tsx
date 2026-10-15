@@ -52,7 +52,7 @@ export function QuizCard({ date, question, choices, myChoice, savedAt: savedAtIn
   const hhmm = (iso?: string) => (iso ? new Intl.DateTimeFormat('fr-CH', { hour: 'numeric', minute: '2-digit', timeZone: 'Europe/Zurich' }).format(new Date(iso)).replace(':', ' h ') : '');
   const saved = !revealed && choice !== null && !pending && !err;
   let verdict: string;
-  if (!revealed) verdict = choice === null ? 'Réponds ici : la réponse sera donnée demain matin dans la Matinale.' : 'Tu peux encore changer d’avis jusqu’à demain matin.';
+  if (!revealed) verdict = choice === null ? 'La réponse sera donnée demain dans la Matinale.' : 'Modifiable jusqu’à demain matin.';
   else if (choice === null) verdict = 'Tu n’avais pas répondu.';
   else verdict = choice === answer ? 'Bonne réponse, bravo !' : `Raté : c’était ${LETTERS[answer!]}.`;
 

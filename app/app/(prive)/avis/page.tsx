@@ -46,7 +46,7 @@ export default async function AvisPage() {
         <h1>Mon avis</h1>
         <p className="sky-meta">
           {last ? <>Sur l&apos;épisode {isToday ? 'd’aujourd’hui' : `du ${formatDate(last.date)}`}. </> : null}
-          Ton avis change celui de demain. <NextWriting minutes={zurichMinutes()} />.
+          <NextWriting minutes={zurichMinutes()} />.
         </p>
       </SkyBand>
 

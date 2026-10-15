@@ -56,7 +56,7 @@ export function RulesEditor({ initial }: { initial: string[] }) {
         <span className="grow">
           <span style={{ fontWeight: 600, display: 'block' }}>Consignes permanentes</span>
           <span className="meta">
-            {n ? `${n} consigne${n > 1 ? 's' : ''} appliquée${n > 1 ? 's' : ''} à chaque épisode` : 'Appliquées à chaque épisode, jusqu’à ce que tu les retires'}
+            {n ? `${n} consigne${n > 1 ? 's' : ''} appliquée${n > 1 ? 's' : ''} à chaque épisode` : 'Appliquées à chaque épisode'}
           </span>
         </span>
         <Icon name="chevron-right" className="chev" />

@@ -68,11 +68,10 @@ export function SettingsEditor({ initial }: { initial: Record<Key, number> & { s
             <label htmlFor="dimanche_sujet">Sujet souhaité (facultatif)</label>
             <input id="dimanche_sujet" type="text" maxLength={200} value={sujet} onChange={e => setSujet(e.target.value)} onBlur={() => void saveSujet()}
               placeholder="Ex. : le percement du tunnel du Gothard" enterKeyHint="done" />
-            <p className="field-hint">Vide : la rédaction choisit. Un sujet déjà traité un dimanche précédent n&apos;est pas refait.</p>
+            <p className="field-hint">Vide : la rédaction choisit, sans refaire un sujet déjà traité.</p>
           </form>
         </div>
       </section>
-      <p className="field-hint" style={{ marginTop: 12 }}>Chaque réglage s&apos;enregistre tout seul et vaut dès le prochain épisode.</p>
     </>
   );
 }

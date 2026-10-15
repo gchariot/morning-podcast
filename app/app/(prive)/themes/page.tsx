@@ -9,7 +9,7 @@ export default async function ThemesPage() {
     <>
       <SkyBand minutes={zurichMinutes()}>
         <h1>Thèmes</h1>
-        <p className="sky-meta">Le conducteur de l&apos;épisode, dans l&apos;ordre. <NextWriting minutes={zurichMinutes()} /> : chaque changement compte dès demain.</p>
+        <p className="sky-meta">Le conducteur de l&apos;épisode. <NextWriting minutes={zurichMinutes()} />.</p>
       </SkyBand>
       <ThemesEditor initial={config.rubriques} target={config.show.targetMinutes} />
     </>

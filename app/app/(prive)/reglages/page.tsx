@@ -6,7 +6,7 @@ import { NextWriting, SkyBand } from '@/components/Sky';
 import { Icon } from '@/components/Icon';
 import { logout } from '../actions';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
-import { monthCost, pricePerMillion, usd } from '@/lib/costs';
+import { monthCost, usd } from '@/lib/costs';
 
 export default async function ReglagesPage() {
   const [{ config }, episodes] = await Promise.all([loadConfig(), loadEpisodes().catch(() => [])]);
@@ -20,7 +20,7 @@ export default async function ReglagesPage() {
     <>
       <SkyBand minutes={zurichMinutes()}>
         <h1>Réglages</h1>
-        <p className="sky-meta">Le format de l&apos;émission, jour par jour. <NextWriting minutes={zurichMinutes()} />.</p>
+        <p className="sky-meta"><NextWriting minutes={zurichMinutes()} />.</p>
       </SkyBand>
 
       <SettingsEditor initial={{
@@ -40,7 +40,6 @@ export default async function ReglagesPage() {
             </span>
             <Icon name="chevron-right" className="chev" />
           </summary>
-          <p className="pad small muted" style={{ paddingBottom: 0 }}>Estimation à partir de la durée de voix générée et du tarif Gemini. La facture exacte est sur Google AI Studio.</p>
           <div className="item">
             <span className="grow">Voix Gemini en {monthName}<span className="meta" style={{ display: 'block' }}>{cost.count} épisode{cost.count > 1 ? 's' : ''} · {Math.round(cost.minutes)} min de voix</span></span>
             <strong className="num">{usd(cost.total)}</strong>
@@ -50,10 +49,10 @@ export default async function ReglagesPage() {
             <strong className="num">{cost.count ? usd(cost.projection30) : '—'}</strong>
           </div>
           <div className="item">
-            <span className="grow">Le reste<span className="meta" style={{ display: 'block' }}>Rédaction : incluse dans Claude Pro. Hébergement (Vercel, Cloudflare R2, GitHub Actions) et données (football-data, Open-Meteo, Wikipédia) : offres gratuites.</span></span>
+            <span className="grow">Le reste<span className="meta" style={{ display: 'block' }}>Rédaction incluse dans Claude Pro ; hébergement et données gratuits.</span></span>
             <strong className="num">0 $</strong>
           </div>
-          <p className="pad field-hint" style={{ marginTop: 0 }}>Tarif de la voix : {pricePerMillion(todayInZurich())} $ par million de jetons audio (environ 25 jetons par seconde de voix){todayInZurich() < '2027-01-01' ? ' (tarif de lancement, il double au 1er janvier 2027)' : ''}.</p>
+          <p className="pad field-hint" style={{ marginTop: 0 }}>Estimation au tarif Gemini{todayInZurich() < '2027-01-01' ? ', qui double au 1er janvier 2027' : ''}. Facture exacte : Google AI Studio.</p>
         </details>
 
         <details className="group" style={{ marginTop: 12 }}>

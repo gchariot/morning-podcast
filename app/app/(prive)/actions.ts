@@ -89,7 +89,7 @@ export async function saveFeedback(episode: string, rawItems: unknown[], general
     if (!topics.length) throw new Error('Rien à envoyer : touche un pouce ou écris un mot.');
     const sent = await replaceEpisodeFeedback(tag, topics, lines, todayInZurich());
     const message = lines.length
-      ? 'Envoyé : la rédaction le lit à 5 h 37 pour l’épisode de demain.'
+      ? 'Avis envoyé.'
       : 'Avis retiré.';
     return { ok: true, message, sent };
   });
@@ -105,7 +105,7 @@ export async function addRule(rule: string): Promise<RulesResult> {
     if (permanent.includes(r)) return { ok: true, message: 'Cette consigne existe déjà.', permanent };
     const next = [...permanent, r];
     await setPermanent(next);
-    return { ok: true, message: 'Consigne ajoutée : appliquée dès demain, à chaque épisode.', permanent: next };
+    return { ok: true, message: 'Consigne ajoutée.', permanent: next };
   });
 }
 
@@ -168,7 +168,7 @@ export async function saveSettings(raw: z.input<typeof SettingsPatch>): Promise<
     await saveConfig(config, sha, `réglages: ${what} (app)`);
     const message = patch.sujet !== undefined
       ? (patch.sujet.trim() ? 'Sujet enregistré pour dimanche.' : 'Sujet retiré : la rédaction choisira.')
-      : `Enregistré (${what}) : effet dès le prochain épisode.`;
+      : `Enregistré : ${patch.targetMinutes !== undefined ? `semaine, ${target} min` : patch.samedi !== undefined ? `samedi, ${sm} min` : `dimanche, ${dm} min`}.`;
     return { ok: true, message, targetMinutes: target };
   });
 }
@@ -224,12 +224,12 @@ export async function saveTheme(raw: z.input<typeof ThemeInput>): Promise<ThemeR
       const i = config.rubriques.findIndex(r => r.id === input.id);
       if (i < 0) throw new Error('Ce thème n’existe plus : recharge la page.');
       config.rubriques[i] = Rubrique.parse({ ...config.rubriques[i], ...fields });
-      return { commit: `thèmes: « ${fields.title} » modifié (app)`, message: 'Enregistré : effet dès l’épisode de demain.' };
+      return { commit: `thèmes: « ${fields.title} » modifié (app)`, message: `« ${fields.title} » enregistré.` };
     }
     let id = slugify(fields.title);
     while (config.rubriques.some(r => r.id === id)) id = `${id.slice(0, 27)}-${Math.floor(Math.random() * 90 + 10)}`;
     config.rubriques.push(Rubrique.parse({ id, ...fields, enabled: true }));
-    return { commit: `thèmes: nouveau thème « ${fields.title} » (app)`, message: `« ${fields.title} » ajouté : il sera dans l’épisode de demain.` };
+    return { commit: `thèmes: nouveau thème « ${fields.title} » (app)`, message: `« ${fields.title} » ajouté.` };
   });
 }
 
@@ -241,7 +241,7 @@ export async function setThemeEnabled(id: string, enabled: boolean): Promise<The
     if (!config.rubriques.some(x => x.enabled !== false)) throw new Error('Il faut garder au moins un thème actif.');
     return {
       commit: `thèmes: « ${r.title} » ${enabled ? 'réactivé' : 'mis en pause'} (app)`,
-      message: enabled ? `« ${r.title} » revient demain.` : `« ${r.title} » en pause à partir de demain.`,
+      message: enabled ? `« ${r.title} » réactivé.` : `« ${r.title} » en pause.`,
     };
   });
 }
@@ -276,7 +276,7 @@ export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
       throw new Error('La liste a changé entre-temps : recharge la page.');
     }
     config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
-    return { commit: 'thèmes: ordre modifié (app)', message: 'Ordre enregistré : effet dès demain.' };
+    return { commit: 'thèmes: ordre modifié (app)', message: 'Ordre enregistré.' };
   });
 }
 
@@ -294,7 +294,7 @@ export async function answerQuiz(date: string, choice: number): Promise<{ ok: bo
     await saveAnswer(date, choice);
     updateTag(REPO_TAG);
     revalidatePath('/');
-    return { ok: true, message: 'Réponse enregistrée : verdict demain matin dans la Matinale.' };
+    return { ok: true, message: 'Réponse enregistrée.' };
   } catch (err) {
     return { ok: false, message: err instanceof Error ? err.message : String(err) };
   }

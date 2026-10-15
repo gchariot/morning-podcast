@@ -183,9 +183,9 @@ export function FeedbackForm({ episode, topics, saved: savedInit, savedGeneral }
 
       {count > 0
         ? <SendBar count={count} sending={sending} onSend={send} />
-        : <p className="field-hint" style={{ textAlign: 'center', marginTop: 16 }}>
-            {Object.keys(saved).length || sentGeneral ? 'Ton avis est envoyé. Touche un pouce pour le modifier.' : 'Touche un pouce : les précisions viennent ensuite.'}
-          </p>}
+        : !Object.keys(saved).length && !sentGeneral && (
+            <p className="field-hint" style={{ textAlign: 'center', marginTop: 16 }}>Un pouce par thème, les précisions ensuite.</p>
+          )}
     </div>
   );
 }
