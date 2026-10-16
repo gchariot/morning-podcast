@@ -37,7 +37,7 @@
     {
       "id": "foot",
       "title": "Football",
-      "minutes": 4,
+      "minutes": 3,
       "brief": "L'OL d'abord, puis le Real Madrid : leur résultat ou leur prochain match, avec ce que ça change. Ensuite seulement les deux ou trois affiches qui comptent (grosses équipes : PSG, OM, Monaco, Lille, Lens ; Barça, Atlético ; Manchester City, Arsenal, Liverpool, Chelsea, Manchester United ; Bayern, Inter, Milan, Juventus…), racontées comme une affiche (« PSG contre Manchester City : … ») avec l'enjeu et le fait marquant, jamais une liste de scores. Les autres matchs ne sont pas cités. Une info de mercato ou de blessure si elle compte. Les scores viennent UNIQUEMENT du fichier de données.",
       "domains": [
         "lequipe.fr",
