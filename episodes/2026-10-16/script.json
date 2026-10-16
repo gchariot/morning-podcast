@@ -1,0 +1,638 @@
+{
+  "date": "2026-10-16",
+  "title": "L'OL tient face à Palace, Amaudruz vise Berne, GTA VI dernier trailer",
+  "summary": "L'OL bat Crystal Palace en Ligue Europa au terme d'une fin de match sous tension, avant de recevoir Nice dimanche. À l'Assemblée, les députés rejettent le rabot de l'abattement des retraités ; la Genevoise Céline Amaudruz brigue le Conseil fédéral ; le sommet européen bute sur l'énergie et le budget. Puis le dernier trailer de GTA VI, VisionQuest, le modèle ouvert de Meta, et la naissance de Disney un 16 octobre.",
+  "segments": [
+    {
+      "rubrique": "ouverture",
+      "titre": "Ouverture",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Bonjour Huxxley, nous sommes le vendredi seize octobre, et c'est La Matinale ! Au programme : l'OL qui bat Crystal Palace en se faisant quelques frayeurs, une Genevoise candidate au Conseil fédéral, et le tout dernier trailer de GTA Six.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "On parlera aussi du budget, avec un vote qui fait plaisir aux retraités, du sommet européen à Bruxelles, d'un modèle d'IA géant qui tourne sur deux Mac, et de Vision qui revient chez Marvel. En culture générale, un contrat signé un seize octobre qui a donné naissance à un empire. Et le Mont-Blanc a changé de taille.",
+          "style": "malicieux"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "rubrique": "foot",
+      "titre": "Football",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "On commence par l'OL, qui recevait Crystal Palace hier soir en Ligue Europa. Et c'est une victoire, Hugo, mais pas une victoire tranquille.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Alors non, pas du tout tranquille. Pourtant tout commence comme dans un rêve : huitième minute, corner mal repoussé, et Corentin Tolisso place une tête. Juste avant la pause, Ernest Nuamah reprend un centre de Nakamura, et Lyon rentre au vestiaire avec deux buts d'avance.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et c'est là que ça se complique."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Cinq minutes après la reprise, Yeremy Pino profite d'une combinaison sur corner et Palace revient à un but. Lyon repousse l'écart à la soixante-seizième grâce à Pavel Šulc, d'une talonnade, sur une déviation de Nakamura. Joli geste. Mais à la quatre-vingt-unième, Daichi Kamada profite d'erreurs défensives lyonnaises, et Palace revient encore à un but."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Fin de match sous tension, donc."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Très. Dans le temps additionnel, le gardien lyonnais Greif sort une parade décisive sur une tête de Richards. Sans lui, c'était le nul. Petit clin d'œil au passage : sur le banc anglais, il y avait Pierre Sage, l'ancien entraîneur de l'OL, qui revenait au Groupama Stadium. Il repart les mains vides.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ce que ça change pour Lyon ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux matchs, deux victoires en Ligue Europa, après le succès à Anderlecht. Lyon se retrouvait sur le podium provisoire de la phase de ligue à l'issue des matchs de dix-huit heures quarante-cinq. Et c'est d'autant plus précieux qu'on rappelle que Loïs Openda est blessé jusqu'à mi-novembre : Paulo Fonseca doit trouver d'autres solutions devant, et hier, ce sont Nuamah et Šulc qui ont répondu présent."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et qui a brillé côté lyonnais ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le Japonais Nakamura, clairement : impliqué sur le deuxième et le troisième but, il récolte avec Nuamah les meilleures notes de la soirée chez Foot Mercato. Et Tolisso, encore buteur, confirme qu'il reste un des patrons de ce vestiaire. Le revers de la médaille, ce sont ces deux buts encaissés sur des moments faibles, dont un sur coup de pied arrêté : Fonseca aura de quoi travailler à la vidéo avant Nice.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et maintenant, le championnat."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Dimanche soir, vingt heures quarante-cinq, l'OL reçoit Nice. En Ligue 1, Lyon est quatrième avec onze points après six journées, et c'est Monaco qui mène avec quatorze points, devant Lille et Rennes. Attention : le dernier match de championnat, c'était une défaite deux à un à Lens. Il faut donc relancer la machine.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Passons au Real Madrid. On vous racontait hier la folle remontée à Rome."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, et on a désormais le score officiel : quatre à trois pour le Real à l'Olimpico, avec trois buts dans les toutes dernières minutes. Prochaine étape, la Liga : le Real reçoit Séville dimanche à vingt et une heures. Et dans un coin de la tête de tout le monde à Madrid, le Clásico au Camp Nou, le vingt-cinq octobre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ce match à Rome, il dit quoi de ce Real ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Qu'il ne lâche jamais rien, puisque le but de la victoire est venu dans les dernières minutes. Mais aussi qu'il encaisse beaucoup : trois buts à Rome, c'est rare pour le Real. Contre Séville, il faudra retrouver de la solidité, parce que derrière, il y a ce Clásico qui peut déjà peser lourd dans la course au titre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un mot sur les autres clubs français hier soir ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Soirée contrastée. Rennes s'est imposé contre l'OFI Crète. En revanche, l'OM a perdu au Vélodrome contre l'Olympiakos, sur un but de Santiago Hezze. Ailleurs en Europe, gros succès de l'AC Milan à Salzbourg avec un triplé d'Alphadjo Cissé, et la Juventus s'en sort à Vigo grâce à un but de Randal Kolo Muani dans le temps additionnel."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et ce week-end, quelles affiches faut-il cocher ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux grosses. Samedi à dix-sept heures quinze, Strasbourg reçoit le PSG : le Racing face au champion d'Europe, après la démonstration parisienne à Manchester mardi. Et samedi soir, dix-huit heures trente, Betis Séville contre le FC Barcelone, un déplacement toujours piégeux pour le Barça avant le Clásico."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et pour suivre la tête de la Ligue 1 ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Samedi soir, vingt heures quarante-cinq, Lille, deuxième, reçoit Brest, et Lens va à Troyes. Avec Lyon à trois points du leader, chaque résultat compte."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ce soir, rien de très gros : Le Mans contre Toulouse en ouverture de la journée de Ligue 1. Gardez votre énergie pour dimanche !",
+          "style": "enjouée"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Résultat Lyon - Crystal Palace, Europa League, 15/10",
+          "url": "https://www.footmercato.net/live/7756942525687806259-lyon-vs-crystal-palace"
+        },
+        {
+          "title": "EL : Pas Sage avec Crystal Palace, l'OL enchaîne en Europa (Foot01)",
+          "url": "https://www.foot01.com/ol/el-pas-sage-avec-crystal-palace-lol-enchaine-en-europa"
+        },
+        {
+          "title": "Europa League Matchday 2 round-up (UEFA)",
+          "url": "https://www.uefa.com/uefaeuropaleague/news/02aa-21d5fae639b5-76054eaabd62-1000--europa-league-matchday-2-round-up-benfica-and-bournemouth/"
+        }
+      ]
+    },
+    {
+      "rubrique": "politique",
+      "titre": "Politique",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Place à la politique, avec trois volets comme chaque matin. En France d'abord, le budget deux mille vingt-sept, et un vote hier à l'Assemblée qui concerne directement les retraités.",
+          "style": "posée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui. Le gouvernement voulait abaisser le plafond de l'abattement fiscal de dix pour cent dont bénéficient les retraités sur l'impôt sur le revenu : de quatre mille quatre cent trente-neuf euros à trois mille euros. Gain attendu pour l'État : un virgule quatre milliard. Les députés ont rejeté la mesure, par cent seize voix contre trente.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Qui a voté quoi ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Selon LCP, seuls les députés du bloc macroniste ont voté contre les amendements de suppression. Le RN, les socialistes, les communistes et le groupe LIOT les ont soutenus. Kévin Mauvieux, pour le RN, a dénoncé une mesure qui « tond » les Français. La socialiste Estelle Mercier estime qu'elle touche des retraités modestes, et parle de quatre millions six cent mille foyers concernés. Charles de Courson, de LIOT, la juge injuste pour les couples."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et côté gouvernement ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le ministre des Comptes publics, David Amiel, défend un effort demandé aux retraités, qui représentent selon lui vingt-cinq pour cent de la population, et assure ne pas les stigmatiser. Jean-Paul Matteï, du groupe Les Démocrates, chiffre l'effort à une trentaine d'euros par mois pour un retraité imposable, et estime qu'on est « loin de massacrer les retraités ». Attention, ce vote ne tranche rien définitivement : c'est le texte final qui décidera. Les députés ont aussi adopté hier la contribution de la France au budget européen, trente virgule neuf milliards d'euros."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Autre dossier, le mouvement lycéen, dont on vous parlait hier. Sébastien Lecornu a durci le ton."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui. Hier après-midi, le Premier ministre a estimé que le mouvement ne ressemblait plus à un mouvement lycéen, mais à un « mouvement de violences urbaines », en citant des tirs de mortier et des intrusions dans des lycées. Il dit redouter des violences samedi lors des manifestations contre la vie chère, et vise des groupes d'ultragauche, parfois d'ultradroite. Il a aussi parlé d'une « fatigue » du pays, et accusé certains partis de vouloir en faire un « carburant électoral », une allusion à La France insoumise."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Que répond La France insoumise ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Depuis le début du mouvement, Jean-Luc Mélenchon accuse l'exécutif d'avoir ordonné la répression, et des élus insoumis jugent les revendications des lycéens légitimes : profs non remplacés, classes chargées, bâtiments, Parcoursup. L'exécutif, lui, accuse LFI de récupération politique. Le bras de fer continue."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Direction la Suisse romande, et une annonce qui concerne Genève.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui : la conseillère nationale genevoise Céline Amaudruz est candidate à la succession de Guy Parmelin au Conseil fédéral. Elle a quarante-sept ans, elle est vice-présidente de l'UDC Suisse et siège à Berne depuis deux mille onze. Si elle était élue, elle serait la sixième Genevoise ou Genevois de l'histoire au gouvernement fédéral. Elle dit avoir pris une décision « mûrement réfléchie »."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Elle a des concurrents ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Les candidatures UDC sont ouvertes jusqu'au vingt-trois octobre, et l'élection par l'Assemblée fédérale est prévue le neuf décembre. Le Vaudois Yvan Pahud et le Fribourgeois Nicolas Kolly réfléchissent, la Zurichoise Natalie Rickli est présentée comme favorite, et Esther Friedli vient de renoncer. Côté critiques, Roger Köppel parle d'une « erreur de casting ». Amaudruz, elle, met en avant les Bilatérales trois, qu'elle se dit prête à défendre devant le peuple, et rappelle qu'elle a parfois voté contre la ligne de son parti. Et l'alliance des sociétés féminines, alliance F, demande un ticket entièrement féminin."
+        },
+        {
+          "speaker": "Léa",
+          "text": "D'autres nouvelles romandes ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Dans le canton de Vaud, la sécheresse persiste : la RTS évoque des restrictions d'eau inédites pour un automne. Et à Genève, le Conseil d'État a présenté un projet de loi pour renforcer les droits et l'égalité des personnes en situation de handicap."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Enfin, le monde, avec le sommet européen à Bruxelles."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Les vingt-sept dirigeants sont réunis depuis hier, et ça frotte. Sur le budget européen, contributeurs nets comme l'Allemagne et pays bénéficiaires restent éloignés ; Friedrich Merz parle de discussions « très, très difficiles ». Sur les prix de l'énergie, la Tchéquie et l'Italie veulent assouplir, voire suspendre le marché du carbone, tandis que la Finlande, la Suède et le Danemark s'y opposent par écrit. Et sur la Chine, les dirigeants discutent de nouveaux outils de défense commerciale, ce que Pékin qualifie de protectionnisme."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et aujourd'hui, l'Ukraine au menu."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, Volodymyr Zelensky est attendu à Bruxelles pour parler du financement de l'Ukraine en deux mille vingt-sept. Sur les avoirs russes gelés, Washington propose d'en transférer une partie vers un fonds supervisé par les États-Unis ; Merz répond qu'ils doivent rester gelés en Europe. Et petit suivi d'hier : un conseiller de Zelensky affirme que Starlink a de nouveau été restreint en Ukraine dans la nuit, Elon Musk suggérant que Washington serait derrière. À suivre aujourd'hui."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Budget 2027 : les députés rejettent la réduction de l'abattement fiscal de 10 % sur les retraites (LCP)",
+          "url": "https://lcp.fr/actualites/budget-2027-les-deputes-rejettent-la-reduction-de-l-abattement-fiscal-de-10-sur-les"
+        },
+        {
+          "title": "Budget 2027 : une contribution de 30,9 milliards d'euros en faveur de l'UE adoptée (CNews)",
+          "url": "https://www.cnews.fr/france/2026-10-15/budget-2027-une-contribution-de-309-milliards-deuros-en-faveur-de-lue-adoptee-par"
+        },
+        {
+          "title": "Lecornu dénonce un « mouvement de violences urbaines » (La Libre / AFP)",
+          "url": "https://www.lalibre.be/international/europe/2026/10/15/sebastien-lecornu-denonce-la-transformation-du-mouvement-lyceen-en-un-mouvement-de-violences-urbaines-4IRLYS55DBCEBEFDLOTAOH233M/"
+        },
+        {
+          "title": "Blocus des lycées : bras de fer entre LFI et le gouvernement (Sud Radio)",
+          "url": "https://www.sudradio.fr/societe/blocus-des-lycees-nunez-denonce-des-violences-urbaines-bras-de-fer-entre-lfi-et-le-gouvernement"
+        },
+        {
+          "title": "Céline Amaudruz se lance dans la course au Conseil fédéral (watson)",
+          "url": "https://www.watson.ch/fr/suisse/conseil-federal/506150255-celine-amaudruz-est-candidate-au-conseil-federal"
+        },
+        {
+          "title": "Info Vaud, journal du 15 octobre 2026 (La Télé)",
+          "url": "https://latele.ch/emissions/info-vaud/info-vaud-s-2026-e-154?s=1"
+        },
+        {
+          "title": "Sécheresse dans Vaud : restrictions d'eau inédites en automne (RTS)",
+          "url": "https://www.rts.ch/info/regions/vaud/2026/article/secheresse-dans-vaud-restrictions-d-eau-inedites-en-automne-29386089.html"
+        },
+        {
+          "title": "Toute l'actu en bref (swissinfo)",
+          "url": "https://www.swissinfo.ch/fre/toute-l-actu-en-bref/"
+        },
+        {
+          "title": "EU leaders kick off summit with wrangles over high energy prices and spending (Cyprus Mail / Reuters)",
+          "url": "https://cyprus-mail.com/2026/10/15/eu-leaders-kick-off-summit-with-wrangles-over-high-energy-prices-and-spending"
+        },
+        {
+          "title": "Latest news bulletin, October 15th 2026, evening (Euronews)",
+          "url": "https://www.euronews.com/video/2026/10/15/latest-news-bulletin-october-15th-2026-evening"
+        }
+      ]
+    },
+    {
+      "rubrique": "jeux",
+      "titre": "Jeux vidéo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Les jeux vidéo maintenant, et forcément, on commence par le monstre : GTA Six a eu droit à sa toute dernière bande-annonce.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le trailer de lancement, oui. Environ quatre-vingt-dix secondes, à Vice City, centrées sur Jason et Lucia, capturées sur PlayStation cinq. Pas de grosse révélation d'histoire : on sait juste qu'un braquage tourne mal et entraîne le duo dans une conspiration plus large, dans l'État fictif de Leonida. C'est du spectacle pur.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et la musique ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Un titre inédit, « Flower in a Hurricane », signé Justice, avec Tame Impala, SZA et King Gizzard and the Lizard Wizard. Rien que ça. Ce qui est sûr, c'est la date : le dix-neuf novembre, sur PlayStation cinq et Xbox Series. Et toujours aucune date pour la version PC. Les joueurs PC peuvent donc continuer à regarder le trailer en boucle.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Plus que cinq semaines, donc. Autre info, du côté d'Epic Games."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, rapportée par Game Informer : Epic repousse son jeu de tir non annoncé, qui mêle Marvel et Star Wars, parce que l'entreprise mise désormais tout sur le développement assisté par l'IA. Et ironie de l'histoire, Epic a sorti un lanceur dont le code est en partie généré par IA : il se lancerait plus vite que Steam, mais fonctionnerait mal. Avantage vitesse, inconvénient… le reste.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Des annonces de dates aussi ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Côté français, Nacon a fixé au trois décembre la sortie d'Edge of Memories, un jeu d'action-RPG développé par le studio Midgar, sur PC, PS cinq et Xbox, avec une démo remaniée sur Steam en novembre. Amplitude, autre studio français, a montré sept minutes de gameplay de Humankind deux : on suit l'Égypte antique depuis les bords du Nil, avec soixante-dix cultures jouables, pour une sortie en deux mille vingt-sept sur PC."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et un retard qui fait sourire, il paraît."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Cat Secretary, un jeu où l'on incarne un chat en costume dans une méga-entreprise qui veut remplacer ses humains par des robots IA. Il glisse au vingt janvier deux mille vingt-sept, et le studio précise qu'il veut éviter le « crunch » à son équipe. Un chat qui refuse les heures sup, c'est cohérent.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et côté Nintendo, un remake très attendu."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le remake de Zelda Ocarina of Time. Game Informer a pu y jouer plus d'une heure, sur trois passages du jeu, et parle d'un « beau retour dans le temps ». Pour ceux qui ont découvert la série sur Nintendo soixante-quatre, c'est la madeleine de l'automne. Et dans un registre plus nerveux, El Paso, Elsewhere deux, un jeu de tir avec des vampires, propose une démo jouable dès maintenant, avec gargouilles et animatroniques possédés au programme."
+        },
+        {
+          "speaker": "Léa",
+          "text": "On termine par les sorties récentes ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Peak, le petit jeu d'escalade en coopération qui a cartonné sur PC, arrive sur consoles d'ici la fin du mois, avec toutes ses mises à jour. Et pour les amateurs de pilotage, Ace Combat huit, sorti début octobre, a dépassé le million d'exemplaires vendus plus vite que n'importe quel épisode de la série, avec un quatre-vingt-sept sur Metacritic sur PS cinq."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GTA 6 : Rockstar lâche son ultime bande-annonce (Clubic)",
+          "url": "https://www.clubic.com/actualite-634390-gta-6-rockstar-lache-son-ultime-bande-annonce-et-l-attente-devient-insoutenable.html"
+        },
+        {
+          "title": "Game Informer (titres du 14 et 15 octobre)",
+          "url": "https://gameinformer.com/"
+        },
+        {
+          "title": "Today in Gaming News, October 15, 2026 (Simulation Daily)",
+          "url": "https://simulationdaily.com/news/today-in-gaming-news-october-15-2026/"
+        },
+        {
+          "title": "Ace Combat 8 réalise le meilleur lancement de la série (Xboxygen)",
+          "url": "https://www.xboxygen.com/?p=370571"
+        }
+      ]
+    },
+    {
+      "rubrique": "cinema",
+      "titre": "Cinéma et séries",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Cinéma et séries maintenant. Mercredi, on vous présentait les sorties de la semaine, et on a les premiers chiffres.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui, et c'est Les Misérables de Fred Cavayé qui prend la tête des nouveautés le premier jour : soixante-treize mille entrées, dont près de la moitié en avant-premières, sur six cent soixante et une copies. Pour rappel, Vincent Lindon joue Jean Valjean, Tahar Rahim est Javert, Noémie Merlant incarne Fantine, et Camille Cottin et Benjamin Lavernhe forment le couple Thénardier.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un film de presque trois heures quand même."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Presque trois heures, oui : prévoyez le pop-corn grand format. Derrière, Le Corset, de Louis Clichy, fait cinquante-trois mille entrées, puis le film d'horreur Malfaisante, avec Jessica Chastain, à trente-sept mille. Street Fighter, lui, démarre en dessous de l'adaptation de mille neuf cent quatre-vingt-quatorze. Pas de coup spécial pour lui ce coup-ci.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Côté séries, Marvel revient avec un personnage qu'on aime bien."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Vision. La série s'appelle VisionQuest, sur Disney Plus, et c'est le dernier volet d'une trilogie commencée avec WandaVision, puis Agatha All Along. Paul Bettany reprend le rôle, dans une version blanche du personnage, qui cherche son but dans un monde marqué par l'absence de Wanda. Et James Spader revient en Ultron, le créateur de Vision."
+        },
+        {
+          "speaker": "Léa",
+          "text": "D'autres têtes connues ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Todd Stashwick, qu'on avait vu dans Picard, joue un chasseur de primes lancé aux trousses de Vision, Ruaridh Mollica retrouve le rôle de Tommy Maximoff, et T'Nia Miller incarne Jocasta. Et une rumeur insistante parle d'une apparition de Star-Lord, mais rien n'est confirmé, donc on reste prudents."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Comment ça se regarde ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Huit épisodes, chacun inspiré d'un genre de film différent. Les deux premiers sont déjà en ligne, puis deux par semaine, avec un final prévu le dix novembre. Aux commandes, Terry Matalas, connu pour Star Trek Picard. Pour les amateurs de MCU qui avaient aimé l'audace de WandaVision, c'est le rendez-vous de l'automne."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et sur Netflix, ce week-end ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux propositions. Adieu Monsieur Haffmann, le drame historique de Fred Cavayé, encore lui, avec Daniel Auteuil, Gilles Lellouche et Sara Giraudeau. Et une mini-série allemande en six épisodes, Le Piège : une autrice recluse croit avoir identifié le meurtrier de sa sœur. Je n'en dis pas plus."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Promis, pas de spoiler. Et un bon plan pour finir ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le festival de la VOD, jusqu'au vingt et un octobre sur huit plateformes françaises : des nouveautés et des classiques en location dès deux euros, à l'achat dès cinq. Pas de grosse sortie Blu-ray ou 4K à signaler cette semaine, en revanche."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Box-office France : top cumul premier jour du mercredi 14 octobre 2026 (Zickma)",
+          "url": "https://www.zickma.fr/box-office-france-top-cumul-premier-jour-du-mercredi-14-octobre-2026/"
+        },
+        {
+          "title": "Les Misérables : Vincent Lindon and Tahar Rahim star in the teaser (Sortiraparis)",
+          "url": "https://www.sortiraparis.com/en/what-to-do-in-paris/cinema-series/articles/328498-les-miserables-vincent-lindon-and-tahar-rahim-in-the-teaser"
+        },
+        {
+          "title": "VisionQuest Sets October 2026 Disney+ Release Date (Empire)",
+          "url": "https://empireonline.com/movies/news/visionquest-sets-october-2026-disney-release-date"
+        },
+        {
+          "title": "What Time Is ‘VisionQuest’ on Disney+? (TheWrap)",
+          "url": "https://www.thewrap.com/media-platforms/tv/what-time-is-visionquest-on-disney-plus/"
+        },
+        {
+          "title": "5 streaming premieres to catch this weekend, October 16–18, 2026 (Sortiraparis)",
+          "url": "https://www.sortiraparis.com/en/what-to-do-in-paris/cinema-series/guides/313146-5-streaming-premieres-to-catch-this-weekend-october-16-18-2026"
+        }
+      ]
+    },
+    {
+      "rubrique": "ia",
+      "titre": "Nouveautés IA",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Les nouveautés de l'IA, en version courte comme tu l'aimes. Meta frappe fort dans l'open source.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Meta publie Muse Spark Open, un modèle à poids ouverts qu'il présente comme le plus capable jamais sorti aux États-Unis. Huit cent seize milliards de paramètres, dont quarante-deux actifs par token, un contexte d'un million de tokens, multimodal, pensé pour le code et les agents. La licence est maison, avec des conditions commerciales limitées.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et il tourne vraiment sur un Mac ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Sur deux Mac Studio M5 Ultra reliés, avec le framework MLX d'Apple. Pour toi, le plus concret, c'est l'accès : poids sur Hugging Face, et API chez OpenRouter, Groq, Together ou Fireworks. Si tu veux le tester sur un projet Next.js sans acheter deux Mac, OpenRouter suffit. Comme d'habitude, les scores de performance sont ceux annoncés par Meta."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Pas de nouvelle du côté de l'API Claude ou de Supabase ce matin ; on garde un œil dessus."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Meta launches an open-weight AI model that runs on Macs (TechCrunch)",
+          "url": "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/"
+        },
+        {
+          "title": "Introducing Muse Spark Open (Meta)",
+          "url": "https://research.meta.ai/blog/muse-spark-open"
+        }
+      ]
+    },
+    {
+      "rubrique": "culture",
+      "titre": "Culture générale",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "La culture générale, et d'abord la réponse au quiz d'hier. La question : en quelle année la Russie a-t-elle adopté le calendrier grégorien ?",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La bonne réponse était C : mille neuf cent dix-huit. La Russie bolchevique adopte le calendrier grégorien en mille neuf cent dix-huit, et c'est pour ça que la révolution d'Octobre mille neuf cent dix-sept a eu lieu… en novembre selon notre calendrier. Tu avais dit C : bravo, Huxxley !",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Avant l'histoire du jour, une petite info toute fraîche, à deux pas de chez toi : le Mont-Blanc a changé de taille."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Les géomètres-experts de Haute-Savoie, qui le mesurent depuis deux mille un, ont annoncé mercredi une hauteur de quatre mille huit cent sept mètres et quarante-sept centimètres. C'est un mètre trente de moins que l'an dernier, mais près de deux mètres de plus qu'en deux mille vingt-trois. La raison : ce qu'on mesure, c'est la calotte de neige et de glace au sommet, qui bouge avec le vent et les précipitations. Cette année, pour la première fois, un drone a modélisé cette calotte, et l'IGN a mesuré la gravité au sommet, pour savoir si les variations viennent de la glace ou de la roche.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un sommet qui respire, en somme. Et maintenant, l'histoire du jour, qui commence un seize octobre mille neuf cent vingt-trois, à Los Angeles."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Ce jour-là, dans la maison de son oncle Robert, au quatre mille quatre cent six Kingswell Avenue, un jeune homme de vingt et un ans signe un contrat de quatre pages. Il s'appelle Walt Disney. En face, une distributrice new-yorkaise, Margaret Winkler, l'une des toutes premières femmes à distribuer des films aux États-Unis. Elle distribue déjà les dessins animés de Max Fleischer et elle a relancé Félix le Chat."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et qu'est-ce qu'elle achète, à ce gamin de vingt et un ans ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Une série de courts métrages muets, les Alice Comedies : une vraie petite fille, jouée par Virginia Davis, plongée dans un monde de dessins animés. Le contrat exige des films faits « de manière distinguée » et « satisfaisants pour le distributeur ». Pour l'honorer, Walt convainc son frère Roy de quitter la banque, et ils fondent le Disney Brothers Cartoon Studio. C'est cette date du seize octobre que l'entreprise Disney considère aujourd'hui comme sa naissance."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Le studio des frères Disney. Ça sonne modeste."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Très modeste. Détail savoureux : l'employée la mieux payée du studio, c'est la petite Virginia, à cent dollars par mois. Mais l'histoire prend un virage. Un mois après la signature, Margaret Winkler épouse Charles Mintz, qui reprend les affaires, réclame plus de films pour moins cher, et met la pression sur Walt."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et ça finit mal ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Ça finit par un coup de théâtre. En mille neuf cent vingt-sept, Walt et son dessinateur Ub Iwerks créent un personnage qui marche très bien : Oswald le lapin chanceux. Début mille neuf cent vingt-huit, Walt va à New York pour demander une rallonge. Mintz refuse, lui annonce qu'il a débauché la plupart de ses animateurs, et lui rappelle que, d'après le contrat, Oswald appartient à Universal. Walt rentre en Californie sans contrat, sans équipe et sans son lapin."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Pas si chanceux, le lapin.",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Pas pour Walt, en tout cas. La légende veut qu'il ait imaginé une souris dans le train du retour. Ce qui est établi, c'est qu'avec Ub Iwerks et Roy, il met au point un nouveau personnage : Mickey naît quelques mois plus tard, et on connaît la suite. Oswald, lui, continue sa carrière chez Universal, puis tombe dans l'oubli. Certains de ses courts métrages ont même disparu : l'un d'eux a été retrouvé au Japon, chez un historien de l'animation qui avait acheté la bobine adolescent sur un marché d'Osaka, avec une étiquette erronée."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et ce pauvre Oswald n'est jamais revenu chez Disney ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Si ! En deux mille six, soixante-dix-huit ans après l'avoir perdu, Disney récupère enfin les droits d'Oswald. Et la manière dont l'affaire s'est conclue est assez incroyable. C'est justement la question du jour.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors voici le quiz : en deux mille six, en échange de quoi Disney a-t-il récupéré les droits d'Oswald le lapin chanceux ? A, les droits de Félix le Chat ; B, un commentateur sportif de télévision ; C, une part du parc Universal Studios ; D, un chèque d'un dollar symbolique. Réponds dans l'appli, et la réponse, c'est demain !",
+          "style": "enjouée"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Disney100 : le contrat du 16 octobre 1923 (The Walt Disney Company)",
+          "url": "https://thewaltdisneycompany.com/news/disney100-anniversary-disney-contract/"
+        },
+        {
+          "title": "Margaret Winkler: First Female Film Distributor (Walt Disney Family Museum)",
+          "url": "https://www.waltdisney.org/blog/margaret-winkler-first-female-film-distributor"
+        },
+        {
+          "title": "What happened to Oswald the Lucky Rabbit (Inverse)",
+          "url": "https://www.inverse.com/article/12582-walt-disney-s-weird-buddy-what-happened-to-oswald-the-lucky-rabbit"
+        },
+        {
+          "title": "Missing Disney Cartoon From 1928 Discovered in Japan (Smithsonian)",
+          "url": "https://www.smithsonianmag.com/smart-news/missing-disney-cartoon-1928-discovered-japan-180970842/"
+        },
+        {
+          "title": "Le mont Blanc culmine à 4 807,47 mètres (Le Faucigny)",
+          "url": "https://www.lefaucigny.fr/2026/10/le-mont-blanc-culmine-a-4-807-47-metres-une-mesure-qui-evolue-au-fil-du-temps/"
+        },
+        {
+          "title": "Wikipédia, éphéméride du 16 octobre : Walt Disney",
+          "url": "https://fr.wikipedia.org/wiki/Walt_Disney"
+        }
+      ]
+    },
+    {
+      "rubrique": "meteo",
+      "titre": "Météo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Et pour finir, la météo avec Zoé.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Zoé",
+          "text": "Bonjour Huxxley ! Ce vendredi, on regarde Ferney-Voltaire. Au réveil, c'est le brouillard : dix degrés vers sept heures, à peine plus à neuf heures, alors prudence sur la route. Le ciel reste couvert à midi, autour de quinze degrés, et l'après-midi devient franchement douce, jusqu'à vingt et un degrés vers quinze heures.",
+          "style": "souriante"
+        },
+        {
+          "speaker": "Zoé",
+          "text": "Aucune pluie prévue de la journée, et presque pas de vent. Le soleil se couche à dix-huit heures quarante-sept, et le ciel se dégage en soirée, avec encore quatorze degrés vers vingt et une heures. Mon conseil : une veste le matin, que tu pourras laisser au bureau l'après-midi. Le parapluie, lui, peut faire la grasse matinée !",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Merci Zoé ! Bonne journée Huxxley, bon week-end, et allez l'OL dimanche contre Nice. À demain pour la grande édition du samedi !",
+          "style": "chaleureuse"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Open-Meteo (data/2026-10-16.json)",
+          "url": "https://open-meteo.com/"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "question": "En 2006, en échange de quoi Disney a-t-il récupéré les droits d'Oswald le lapin chanceux ?",
+    "choices": [
+      "Les droits de Félix le Chat",
+      "Un commentateur sportif de télévision",
+      "Une part du parc Universal Studios",
+      "Un chèque d'un dollar symbolique"
+    ],
+    "answer": 1,
+    "explanation": "Bob Iger a laissé le commentateur Al Michaels quitter ESPN pour NBC (groupe propriétaire d'Universal) ; en échange, Disney a récupéré Oswald, 78 ans après l'avoir perdu."
+  },
+  "applied": [
+    "Culture générale un peu plus riche, comme tu l'as demandé (« Plus de ça »).",
+    "Football gardé tel quel, tu as aimé.",
+    "Toujours une pointe d'humour en jeux vidéo et ciné, tu as trouvé ça drôle.",
+    "Nouveautés IA toujours courtes, suite à ton « Trop long »."
+  ]
+}
