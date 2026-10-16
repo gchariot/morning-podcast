@@ -50,7 +50,8 @@
         "uefa.com"
       ],
       "minutesParJour": {
-        "lun": 4
+        "lun": 4,
+        "mar": 4
       }
     },
     {
