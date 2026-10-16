@@ -31,7 +31,8 @@ export const Config = z.object({
     title: z.string(),
     description: z.string(),
     language: z.string(),
-    hosts: z.array(z.object({ name: z.string(), role: z.string() })),
+    // Voix : Léa, Hugo, Zoé et les chroniqueurs (`voice` Gemini, `rubriques` où ils parlent).
+    hosts: z.array(z.object({ name: z.string(), role: z.string(), voice: z.string().optional(), rubriques: z.array(z.string()).optional() }).passthrough()),
     targetMinutes: z.number().min(3).max(40),
     wordsPerMinute: z.number().min(100).max(260),
   }).passthrough(),

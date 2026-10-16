@@ -11,7 +11,8 @@ const hms = (s: number) => {
 };
 
 /** Commandes de l'épisode affiché. Le son lui-même vit dans <AudioProvider> et continue entre les onglets. */
-export function Player({ track, feedbackSent = false }: { track: Track; feedbackSent?: boolean }) {
+/** `voices` : titre de chapitre → voix invitée qui le porte (Zoé pour la météo, les chroniqueurs pour leurs thèmes). */
+export function Player({ track, feedbackSent = false, voices = {} }: { track: Track; feedbackSent?: boolean; voices?: Record<string, string> }) {
   const audio = useAudio();
   const { prepare, setShown } = audio;
   useEffect(() => { prepare(track); }, [prepare, track]);
@@ -96,7 +97,7 @@ export function Player({ track, feedbackSent = false }: { track: Track; feedback
               <li key={c.title + c.startSec}>
                 <button type="button" aria-current={i === current ? 'true' : undefined} onClick={() => jump(c.startSec)}>
                   <span className="dot" aria-hidden />
-                  <span className="grow">{c.title}{/m[ée]t[ée]o/i.test(c.title) && <> <span className="voice zoe"><span className="voice-dot zoe" aria-hidden />Zoé</span></>}</span>
+                  <span className="grow">{c.title}{voiceOf(c.title, voices) && <> <VoiceTag name={voiceOf(c.title, voices)!} /></>}</span>
                   <time>{hms(c.startSec)}</time>
                 </button>
               </li>
@@ -115,3 +116,12 @@ export function Player({ track, feedbackSent = false }: { track: Track; feedback
     </>
   );
 }
+
+const voiceOf = (title: string, voices: Record<string, string>) =>
+  voices[title] ?? (/m[ée]t[ée]o/i.test(title) ? 'Zoé' : undefined);
+
+function VoiceTag({ name }: { name: string }) {
+  const cls = name === 'Zoé' ? 'zoe' : 'guest';
+  return <span className={`voice ${cls}`}><span className={`voice-dot ${cls}`} aria-hidden />{name}</span>;
+}
+

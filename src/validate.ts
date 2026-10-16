@@ -18,13 +18,22 @@ export function loadScript(date: string, strict = false) {
   const { show } = loadConfig();
   const hosts = new Set(show.hosts.map(h => h.name));
   const problems: string[] = [];
-  // La voix météo ne parle que dans la rubrique météo.
+  // La voix météo et les chroniqueurs ne parlent que dans leurs rubriques.
   const meteoHost: string | undefined = (loadConfig() as { meteo?: { host?: string } }).meteo?.host;
+  const only = new Map(show.hosts.filter(h => h.rubriques?.length).map(h => [h.name, h.rubriques!]));
+  if (meteoHost && !only.has(meteoHost)) only.set(meteoHost, ['meteo']);
   for (const seg of script.segments) {
     for (const t of seg.turns) {
       if (!hosts.has(t.speaker)) throw new Error(`Locuteur inconnu « ${t.speaker} » (attendu : ${[...hosts].join(', ')})`);
-      if (meteoHost && t.speaker === meteoHost && seg.rubrique !== 'meteo') {
-        problems.push(`${meteoHost} ne parle que dans la rubrique « meteo » (trouvée dans « ${seg.rubrique} »).`);
+      const allowed = only.get(t.speaker);
+      if (allowed && !allowed.includes(seg.rubrique)) {
+        problems.push(`${t.speaker} ne parle que dans ${allowed.map(r => `« ${r} »`).join(', ')} (trouvé dans « ${seg.rubrique} »).`);
+      }
+    }
+    // Une rubrique qui a son chroniqueur le fait parler.
+    for (const [name, rubs] of only) {
+      if (rubs.includes(seg.rubrique) && !seg.turns.some(t => t.speaker === name)) {
+        problems.push(`La rubrique « ${seg.rubrique} » se fait avec ${name} : fais-le parler.`);
       }
     }
   }

@@ -8,13 +8,16 @@
  */
 import { writeFileSync } from 'node:fs';
 import type { Turn } from '../schema.js';
-import { requireEnv } from '../lib.js';
+import { loadConfig, requireEnv } from '../lib.js';
 import { chunkTurns } from './index.js';
 
 const MODEL = process.env.GEMINI_TTS_MODEL || 'gemini-3.8-flash-tts';
 
 /** Voix par animateur ; à changer après l'écoute comparative. */
+// Voix des chroniqueurs déclarées dans config/rubriques.json (show.hosts[].voice) ; Léa, Hugo et Zoé
+// se règlent par les variables VOICE_* (prioritaires).
 const VOICES: Record<string, string> = {
+  ...Object.fromEntries(loadConfig().show.hosts.filter(h => h.voice).map(h => [h.name, h.voice!])),
   'Léa': process.env.VOICE_LEA || 'Kore',
   'Hugo': process.env.VOICE_HUGO || 'Puck',
   'Zoé': process.env.VOICE_ZOE || 'Zephyr',

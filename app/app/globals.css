@@ -26,6 +26,7 @@
   --lea: #f2b84b;
   --hugo: #e07a6b;
   --zoe: #6fa8e6;
+  --guest: #8fd6b4; /* chroniqueurs invités : le vert d'eau du petit matin */
   --sun-gold: #ffd796;
   --cream: #fff8ee;
   --display: "Figtree Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -543,8 +544,10 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .voice-dot.lea { background: var(--lea); }
 .voice-dot.hugo { background: var(--hugo); }
 .voice-dot.zoe { background: var(--zoe); }
+.voice-dot.guest { background: var(--guest); }
 .voice { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; }
 .voice.zoe { color: var(--zoe-ink); }
+.voice.guest { color: var(--guest); }
 .quiz-letter.lea { background: var(--lea); color: #1b1206; }
 .quiz-letter.hugo { background: var(--hugo); color: #1b1206; }
 .debate-name.lea { color: var(--lea-ink); }

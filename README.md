@@ -137,6 +137,7 @@ Le flux est privé : son adresse contient une clé secrète (`FEED_SECRET`) et n
 | Changer la zone des sorties du samedi | `sorties` dans [`config/rubriques.json`](config/rubriques.json) |
 | Changer de jingle ou de pochette | Remplacer [`assets/jingle.mp3`](assets/) (5 à 6 s) ou `assets/cover.jpg` |
 | Changer une voix | Variables GitHub `VOICE_LEA`, `VOICE_HUGO`, `VOICE_ZOE` (Gemini : Kore, Aoede, Leda, Zephyr, Puck, Charon, Orus, Fenrir…) |
+| Chroniqueurs (Max, Inès…) | `config/rubriques.json` → `show.hosts` : `voice` (voix Gemini) et `rubriques` (thèmes où ils parlent, avec Léa) |
 | Régler le silence entre les répliques | Variable `TTS_TURN_GAP_MS` (350 par défaut) ; `TTS_PER_TURN=0` pour l'ancien mode |
 | Comparer Gemini et ElevenLabs | Actions → **0 · Test de voix** → « comparaison » (secret `ELEVENLABS_API_KEY` requis) |
 | Ajouter une équipe suivie | `football.favouriteTeamIds` dans la config (ID football-data.org) |

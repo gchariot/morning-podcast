@@ -14,7 +14,26 @@
       },
       {
         "name": "Zoé",
-        "role": "présente la météo, uniquement dans la rubrique météo"
+        "role": "présente la météo, uniquement dans la rubrique météo",
+        "rubriques": [
+          "meteo"
+        ]
+      },
+      {
+        "name": "Max",
+        "role": "chroniqueur des nouvelles technologies : explique simplement, concret, enthousiaste sans être vendeur",
+        "voice": "Charon",
+        "rubriques": [
+          "nouvelles-technologies"
+        ]
+      },
+      {
+        "name": "Inès",
+        "role": "chroniqueuse sciences et découvertes : raconte la découverte comme une petite enquête, précise et curieuse",
+        "voice": "Aoede",
+        "rubriques": [
+          "sciences-et-decouvertes"
+        ]
       }
     ],
     "targetMinutes": 20,

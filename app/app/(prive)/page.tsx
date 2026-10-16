@@ -32,14 +32,23 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover, { answers }, { data: samedi }, firstEdition, recent] = await Promise.all([
+  const [episodes, cover, { answers }, { data: samedi }, config, recent] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
     loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
     loadSamedi().catch(() => ({ data: {} as Awaited<ReturnType<typeof loadSamedi>>['data'] })),
-    loadConfig().then(c => (c.config.show as { firstEdition?: string }).firstEdition).catch(() => undefined),
+    loadConfig().then(c => c.config).catch(() => undefined),
     loadRetours().then(r => r.recent).catch(() => [] as string[]),
   ]);
+  const firstEdition = (config?.show as { firstEdition?: string } | undefined)?.firstEdition;
+  // Chapitre → voix invitée : les chroniqueurs dans leurs thèmes (titre du thème = titre du chapitre).
+  const voices: Record<string, string> = {};
+  for (const h of (config?.show.hosts ?? []) as { name: string; rubriques?: string[] }[]) {
+    for (const id of h.rubriques ?? []) {
+      const r = config?.rubriques.find(x => x.id === id);
+      if (r) voices[r.title] = h.name;
+    }
+  }
   const now = zurichMinutes();
   const episode = episodes.find(e => e.date === date) ?? episodes[0];
   const isToday = episode?.date === todayInZurich();
@@ -84,7 +93,7 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       <Player track={{
         date: episode.date, src: episode.url, title: episode.title, cover,
         seconds: episode.seconds, chapters: episode.chapters ?? [],
-      }} feedbackSent={sent} />
+      }} feedbackSent={sent} voices={voices} />
 
       {isLatest && <FeedbackCta date={episode.date} sent={sent} />}
 

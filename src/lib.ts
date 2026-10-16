@@ -22,7 +22,8 @@ export type Config = {
     title: string;
     description: string;
     language: string;
-    hosts: { name: string; role: string }[];
+    /** `voice` : voix Gemini (sinon variables VOICE_*) ; `rubriques` : seules rubriques où cette voix parle. */
+    hosts: { name: string; role: string; voice?: string; rubriques?: string[] }[];
     targetMinutes: number;
     wordsPerMinute: number;
   };
