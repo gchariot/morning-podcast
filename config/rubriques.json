@@ -113,6 +113,17 @@
       ]
     },
     {
+      "id": "portrait",
+      "title": "Portrait",
+      "minutes": 2,
+      "brief": "Le portrait d’une personnalité célèbre, vivante ou historique : qui elle est, le moment qui a tout changé, une anecdote peu connue, et pourquoi en parler maintenant (anniversaire, actualité) si c’est le cas. Varie les domaines d’une semaine à l’autre (sport, science, arts, entreprise, histoire, exploration) et ne refais jamais un portrait déjà diffusé. Uniquement des faits sourcés : pas de rumeurs ni de vie privée. Personnalités politiques vivantes : seulement des faits, sans jugement.",
+      "domains": [],
+      "enabled": true,
+      "jours": [
+        "ven"
+      ]
+    },
+    {
       "id": "jeux",
       "title": "Jeux vidéo",
       "minutes": 3,
@@ -153,17 +164,6 @@
       "minutesParJour": {
         "lun": 4
       }
-    },
-    {
-      "id": "portrait",
-      "title": "Portrait",
-      "minutes": 2,
-      "brief": "Le portrait d’une personnalité célèbre, vivante ou historique : qui elle est, le moment qui a tout changé, une anecdote peu connue, et pourquoi en parler maintenant (anniversaire, actualité) si c’est le cas. Varie les domaines d’une semaine à l’autre (sport, science, arts, entreprise, histoire, exploration) et ne refais jamais un portrait déjà diffusé. Uniquement des faits sourcés : pas de rumeurs ni de vie privée. Personnalités politiques vivantes : seulement des faits, sans jugement.",
-      "domains": [],
-      "enabled": true,
-      "jours": [
-        "ven"
-      ]
     },
     {
       "id": "meteo",
