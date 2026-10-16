@@ -206,6 +206,16 @@
       "culture",
       "environnement",
       "portrait"
+    ],
+    "jeu": [
+      "foot",
+      "politique",
+      "ia",
+      "environnement",
+      "jeux",
+      "cinema",
+      "culture",
+      "portrait"
     ]
   },
   "football": {
