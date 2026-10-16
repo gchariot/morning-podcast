@@ -46,6 +46,9 @@ class RetryableError extends Error {}
 async function callModel(model: string, turns: Turn[], attempts: number): Promise<Buffer> {
   const key = requireEnv('GEMINI_API_KEY');
   const speakers = [...new Set(turns.map(t => t.speaker))];
+  // L'API exige exactement 2 voix déclarées, même pour une réplique seule :
+  // on complète avec une deuxième voix (qui ne parle pas dans ce lot).
+  if (speakers.length === 1) speakers.push(Object.keys(VOICES).find(v => v !== speakers[0]) ?? 'Hugo');
   const body = {
     model,
     input: [
@@ -137,14 +140,16 @@ async function pool<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]>
   return out;
 }
 
-const PER_TURN = process.env.TTS_PER_TURN !== '0';
+// Réplique par réplique : à activer avec TTS_PER_TURN=1. Par défaut, mode groupé : c'est celui qui a produit
+// tous les épisodes jusqu'ici (le mode réplique était refusé par l'API, faute de 2 voix déclarées), et il fait
+// ~5× moins d'appels, donc moins de refus de quota (429).
+const PER_TURN = process.env.TTS_PER_TURN === '1';
 const GAP_MS = Number(process.env.TTS_TURN_GAP_MS || 350);
 
 /**
  * Écrit les WAV d'une rubrique et renvoie leurs chemins, dans l'ordre.
- * Par défaut une réplique par appel, avec un court silence (≈ 0,35 s, légèrement variable) à chaque
- * changement de voix : sinon le modèle enchaîne les deux voix sans respirer. TTS_PER_TURN=0 revient
- * à l'ancien mode (plusieurs répliques par appel). Si l'API refuse le mode réplique par réplique,
+ * Avec TTS_PER_TURN=1, une réplique par appel, avec un court silence (≈ 0,35 s, légèrement variable) à chaque
+ * changement de voix. Sinon (défaut), plusieurs répliques par appel. Si l'API refuse le mode réplique par réplique,
  * on bascule automatiquement sur l'ancien mode pour la rubrique.
  */
 export async function geminiSegment(turns: Turn[], outBase: string): Promise<string[]> {
