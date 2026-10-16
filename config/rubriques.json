@@ -93,7 +93,7 @@
       "id": "cinema",
       "title": "Cinéma et séries",
       "minutes": 3,
-      "brief": "Le mercredi : les sorties en salle. Les autres jours : la série ou le film dont on parle, une annonce de sortie physique (Blu-ray, 4K) si elle existe. Jamais de spoiler.",
+      "brief": "Le mercredi : les sorties en salle, puis les sorties Blu-ray et 4K de la semaine. Les autres jours : la série ou le film dont on parle, sans rubrique « sorties physiques ». Si rien n'est à signaler, n'en parle pas du tout : ne dis jamais qu'il n'y a pas de sortie. Jamais de spoiler.",
       "domains": [
         "allocine.fr",
         "premiere.fr",
