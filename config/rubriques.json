@@ -84,19 +84,6 @@
       }
     },
     {
-      "id": "jeux",
-      "title": "Jeux vidéo",
-      "minutes": 3,
-      "brief": "Sorties de la semaine, annonces, tests marquants, rumeurs sérieuses seulement si elles sont présentées comme telles.",
-      "domains": [
-        "gamekult.com",
-        "jeuxvideo.com",
-        "gameblog.fr",
-        "ign.com",
-        "eurogamer.net"
-      ]
-    },
-    {
       "id": "ia",
       "title": "Nouveautés IA",
       "minutes": 2,
@@ -123,6 +110,19 @@
       "enabled": true,
       "jours": [
         "lun"
+      ]
+    },
+    {
+      "id": "jeux",
+      "title": "Jeux vidéo",
+      "minutes": 3,
+      "brief": "Sorties de la semaine, annonces, tests marquants, rumeurs sérieuses seulement si elles sont présentées comme telles.",
+      "domains": [
+        "gamekult.com",
+        "jeuxvideo.com",
+        "gameblog.fr",
+        "ign.com",
+        "eurogamer.net"
       ]
     },
     {
