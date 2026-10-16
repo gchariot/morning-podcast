@@ -123,7 +123,10 @@
         "gameblog.fr",
         "ign.com",
         "eurogamer.net"
-      ]
+      ],
+      "minutesParJour": {
+        "lun": 2
+      }
     },
     {
       "id": "cinema",
