@@ -238,13 +238,15 @@ function MiniPlayer() {
   const [started, setStarted] = useState(false);
   useEffect(() => { if (playing) setStarted(true); }, [playing]);
   if (!track || !started) return null;
-  if (path === '/' && shown === track.date) return null;
+  const english = track.date.startsWith('en-');
+  // Inutile de doubler le lecteur de la page qui affiche déjà cet épisode.
+  if (path === (english ? '/english' : '/') && shown === track.date) return null;
   const pct = duration ? Math.min(100, (now / duration) * 100) : 0;
   const left = Math.max(0, Math.round((duration - now) / 60));
   return (
     <div className="mini" role="region" aria-label="Lecture en cours">
       <i className="mini-progress" style={{ width: `${pct}%` }} aria-hidden />
-      <Link href={`/?date=${track.date}`} className="mini-info">
+      <Link href={english ? '/english' : `/?date=${track.date}`} className="mini-info">
         <img src={track.cover} alt="" width={40} height={40} />
         <span className="grow">
           <span className="mini-title">{track.title}</span>
@@ -252,7 +254,9 @@ function MiniPlayer() {
         </span>
       </Link>
       {ended
-        ? <Link href="/avis" className="btn small primary" style={{ flex: 'none' }}>Ton avis ?</Link>
+        ? english
+          ? <Link href="/english#talk" className="btn small primary" style={{ flex: 'none' }}>Parler avec Nora</Link>
+          : <Link href="/avis" className="btn small primary" style={{ flex: 'none' }}>Ton avis ?</Link>
         : <>
             <button type="button" className="mini-btn skipper" onClick={() => skip(-15)} aria-label="Reculer de 15 secondes">
               <Icon name="back" size={22} /><span aria-hidden>15</span>

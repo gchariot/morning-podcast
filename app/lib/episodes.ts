@@ -29,6 +29,27 @@ export async function loadEpisodes(): Promise<Episode[]> {
   return (await res.json()) as Episode[];
 }
 
+/** Épisode English du matin (index à part, english.json). */
+export type EnglishEpisode = {
+  date: string;
+  title: string;
+  summary: string;
+  url: string;
+  seconds: number;
+  scenario: string;
+  phrases: { en: string; fr: string }[];
+  chapters: { title: string; startSec: number }[];
+};
+
+export async function loadEnglishEpisodes(): Promise<EnglishEpisode[]> {
+  const base = process.env.PUBLIC_BASE_URL?.replace(/\/$/, '');
+  const secret = process.env.FEED_SECRET;
+  if (!base || !secret) return [];
+  const res = await fetch(`${base}/${secret}/english.json`, { next: { revalidate: 300 } });
+  if (!res.ok) return []; // pas encore d'épisode English
+  return (await res.json()) as EnglishEpisode[];
+}
+
 /** Date du jour à Genève (YYYY-MM-DD). */
 export function todayInZurich(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Zurich' }).format(new Date());

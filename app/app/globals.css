@@ -741,3 +741,10 @@ body:has(.dock) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom
 .actions { display: flex; gap: 8px; margin-top: 20px; }
 .actions .btn { flex: 1; }
 .en-talk .field-hint.err { color: var(--bad); }
+.round.gold { background: var(--sun-gold); color: var(--night); }
+a.ended.next { color: inherit; text-decoration: none; background: var(--nora-soft); }
+.ended.next + .ended { margin-top: 8px; }
+.en-ep-player { margin-top: 4px; }
+.en-ep-player + .en-day { margin-top: 24px; }
+/* Pendant la séance et son récap, l’épisode du matin s’efface : la conversation prend la page. */
+body:has(.dock) .en-ep-player, body:has(.en-recap) .en-ep-player { display: none; }

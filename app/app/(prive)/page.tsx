@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { formatDate, loadEpisodes, todayInZurich } from '@/lib/episodes';
+import { formatDate, loadEnglishEpisodes, loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { Player } from '@/components/Player';
 import { Icon } from '@/components/Icon';
 import { QuizCard } from '@/components/QuizCard';
@@ -32,13 +32,14 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const { date } = await searchParams;
   // Index des épisodes et pochette en parallèle.
   let error = false;
-  const [episodes, cover, { answers }, { data: samedi }, config, recent] = await Promise.all([
+  const [episodes, cover, { answers }, { data: samedi }, config, recent, english] = await Promise.all([
     loadEpisodes().catch(() => { error = true; return [] as Awaited<ReturnType<typeof loadEpisodes>>; }),
     coverUrl(),
     loadAnswers().catch(() => ({ answers: {} as Awaited<ReturnType<typeof loadAnswers>>['answers'] })),
     loadSamedi().catch(() => ({ data: {} as Awaited<ReturnType<typeof loadSamedi>>['data'] })),
     loadConfig().then(c => c.config).catch(() => undefined),
     loadRetours().then(r => r.recent).catch(() => [] as string[]),
+    loadEnglishEpisodes().catch(() => []),
   ]);
   const firstEdition = (config?.show as { firstEdition?: string } | undefined)?.firstEdition;
   // Chapitre → voix invitée : les chroniqueurs dans leurs thèmes (titre du thème = titre du chapitre).
@@ -71,6 +72,8 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
   const isLatest = episode.date === episodes[0]?.date;
   const edition = editionNumber(episode.date, firstEdition);
   const sent = recent.some(l => l.endsWith(`(épisode du ${episode.date})`));
+  // En fin de Matinale : l'épisode English du même jour, à enchaîner.
+  const en = english.find(e => e.date === episode.date && e.date === todayInZurich());
 
   return (
     <>
@@ -93,7 +96,8 @@ export default async function EcouterPage({ searchParams }: { searchParams: Prom
       <Player track={{
         date: episode.date, src: episode.url, title: episode.title, cover,
         seconds: episode.seconds, chapters: episode.chapters ?? [],
-      }} feedbackSent={sent} voices={voices} />
+      }} feedbackSent={sent} voices={voices}
+        next={en ? { href: '/english?play', label: 'English', meta: `${Math.round(en.seconds / 60)} min` } : undefined} />
 
       {isLatest && <FeedbackCta date={episode.date} sent={sent} />}
 

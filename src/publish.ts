@@ -32,7 +32,23 @@ export type EpisodeEntry = {
   ttsSeconds?: number;
 };
 
+/** Épisode English du matin : index à part (english.json), mais dans le même flux que la Matinale. */
+export type EnglishEntry = {
+  date: string;
+  title: string;
+  summary: string;
+  url: string;
+  bytes: number;
+  seconds: number;
+  scenario: string;
+  phrases: { en: string; fr: string }[];
+  chapters: { title: string; startSec: number }[];
+  chaptersUrl?: string;
+  ttsSeconds?: number;
+};
+
 const KEEP = 30; // épisodes conservés dans le flux
+const KEEP_ENGLISH = 20;
 
 /** Pochette : nom versionné par son contenu, pour que les applis rechargent l'image quand elle change. */
 function coverAsset(): { key: string; body: Buffer } | null {
@@ -60,19 +76,27 @@ function hms(sec: number) {
   return [h, m, r].map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export function buildFeed(episodes: EpisodeEntry[], base: string, coverUrl: string | null): string {
+type FeedItem = EpisodeEntry & { guid: string; pubDate: string };
+
+export function buildFeed(episodes: EpisodeEntry[], base: string, coverUrl: string | null, english: EnglishEntry[] = []): string {
   const { show } = loadConfig();
-  const items = episodes
+  // English publié « à 4 h 59 » : dans les applis de podcast, il se range juste sous la Matinale du jour.
+  const all: FeedItem[] = [
+    ...episodes.map(e => ({ ...e, guid: `matinale-${e.date}`, pubDate: `${e.date}T05:00:00+02:00` })),
+    ...english.map(e => ({ ...e, sources: [], guid: `english-${e.date}`, pubDate: `${e.date}T04:59:00+02:00` })),
+  ].sort((a, b) => Date.parse(b.pubDate) - Date.parse(a.pubDate));
+  const items = all
     .map(e => {
       const toc = e.chapters?.length
         ? `<br/><br/>Au programme :<br/>${e.chapters.map(c => `${hms(c.startSec)} ${esc(c.title)}`).join('<br/>')}`
         : '';
-      const notes = `${esc(e.summary)}${toc}<br/><br/>Sources :<br/>${e.sources.map(s => `<a href="${esc(s.url)}">${esc(s.title)}</a>`).join('<br/>')}`;
+      const links = e.sources.length ? `<br/><br/>Sources :<br/>${e.sources.map(s => `<a href="${esc(s.url)}">${esc(s.title)}</a>`).join('<br/>')}` : '';
+      const notes = `${esc(e.summary)}${toc}${links}`;
       return `    <item>
       <title>${esc(e.title)}</title>
       <description><![CDATA[${notes}]]></description>
-      <pubDate>${new Date(`${e.date}T05:00:00+02:00`).toUTCString()}</pubDate>
-      <guid isPermaLink="false">matinale-${e.date}</guid>
+      <pubDate>${new Date(e.pubDate).toUTCString()}</pubDate>
+      <guid isPermaLink="false">${e.guid}</guid>
       <enclosure url="${esc(e.url)}" length="${e.bytes}" type="audio/mpeg"/>
       <itunes:duration>${hms(e.seconds)}</itunes:duration>${coverUrl ? `
       <itunes:image href="${esc(coverUrl)}"/>` : ''}${e.chaptersUrl ? `
@@ -104,6 +128,15 @@ ${items}
 `;
 }
 
+async function readIndex<T>(s3: S3Client, Bucket: string, Key: string): Promise<T[]> {
+  try {
+    const got = await s3.send(new GetObjectCommand({ Bucket, Key }));
+    return JSON.parse(await got.Body!.transformToString());
+  } catch {
+    return []; // pas encore d'index
+  }
+}
+
 export async function publish(date: string, mp3: string, seconds: number, script: Script, chapters: Chapter[] = [], ttsSeconds?: number) {
   const s3 = client();
   const Bucket = requireEnv('S3_BUCKET');
@@ -130,13 +163,8 @@ export async function publish(date: string, mp3: string, seconds: number, script
     coverUrl = `${base}/${cover.key}`;
   }
 
-  let episodes: EpisodeEntry[] = [];
-  try {
-    const got = await s3.send(new GetObjectCommand({ Bucket, Key: `${prefix}/episodes.json` }));
-    episodes = JSON.parse(await got.Body!.transformToString());
-  } catch {
-    // premier épisode : pas encore d'index
-  }
+  let episodes = await readIndex<EpisodeEntry>(s3, Bucket, `${prefix}/episodes.json`);
+  const english = await readIndex<EnglishEntry>(s3, Bucket, `${prefix}/english.json`);
   const entry: EpisodeEntry = {
     date,
     title: script.title,
@@ -156,8 +184,36 @@ export async function publish(date: string, mp3: string, seconds: number, script
   episodes = [entry, ...episodes.filter(e => e.date !== date)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, KEEP);
 
   await put('episodes.json', JSON.stringify(episodes, null, 2), 'application/json');
-  await put('feed.xml', buildFeed(episodes, base, coverUrl), 'application/rss+xml; charset=utf-8', 'max-age=300');
+  await put('feed.xml', buildFeed(episodes, base, coverUrl, english), 'application/rss+xml; charset=utf-8', 'max-age=300');
   return { feedUrl: `${base}/feed.xml`, episodeUrl: entry.url };
+}
+
+/** Publie l'épisode English du jour : MP3, chapitres, english.json, et le flux commun refait. */
+export async function publishEnglish(date: string, mp3: string, seconds: number,
+  meta: Pick<EnglishEntry, 'title' | 'summary' | 'scenario' | 'phrases' | 'chapters' | 'ttsSeconds'>) {
+  const s3 = client();
+  const Bucket = requireEnv('S3_BUCKET');
+  const prefix = requireEnv('FEED_SECRET');
+  const base = `${requireEnv('PUBLIC_BASE_URL').replace(/\/$/, '')}/${prefix}`;
+  const put = (Key: string, Body: Buffer | string, ContentType: string, CacheControl?: string) =>
+    s3.send(new PutObjectCommand({ Bucket, Key: `${prefix}/${Key}`, Body, ContentType, CacheControl }));
+
+  await put(`english/${date}.mp3`, readFileSync(mp3), 'audio/mpeg');
+  const json = { version: '1.2.0', chapters: meta.chapters.map(c => ({ startTime: Math.round(c.startSec), title: c.title })) };
+  await put(`english/${date}.chapters.json`, JSON.stringify(json, null, 2), 'application/json+chapters');
+
+  const entry: EnglishEntry = {
+    date, ...meta, url: `${base}/english/${date}.mp3`, bytes: statSync(mp3).size, seconds,
+    chaptersUrl: `${base}/english/${date}.chapters.json`,
+  };
+  const english = [entry, ...(await readIndex<EnglishEntry>(s3, Bucket, `${prefix}/english.json`)).filter(e => e.date !== date)]
+    .sort((a, b) => b.date.localeCompare(a.date)).slice(0, KEEP_ENGLISH);
+  const episodes = await readIndex<EpisodeEntry>(s3, Bucket, `${prefix}/episodes.json`);
+  const cover = coverAsset();
+  const coverUrl = cover ? `${base}/${cover.key}` : null;
+  await put('english.json', JSON.stringify(english, null, 2), 'application/json');
+  await put('feed.xml', buildFeed(episodes, base, coverUrl, english), 'application/rss+xml; charset=utf-8', 'max-age=300');
+  return { episodeUrl: entry.url };
 }
 
 /** Régénère feed.xml à partir de episodes.json, sans refaire l'audio (après un changement de format du flux). */
@@ -168,6 +224,7 @@ export async function regenerateFeed() {
   const base = `${requireEnv('PUBLIC_BASE_URL').replace(/\/$/, '')}/${prefix}`;
   const got = await s3.send(new GetObjectCommand({ Bucket, Key: `${prefix}/episodes.json` }));
   const episodes: EpisodeEntry[] = JSON.parse(await got.Body!.transformToString());
+  const english = await readIndex<EnglishEntry>(s3, Bucket, `${prefix}/english.json`);
   const cover = coverAsset();
   let coverUrl: string | null = null;
   if (cover) {
@@ -175,7 +232,7 @@ export async function regenerateFeed() {
     coverUrl = `${base}/${cover.key}`;
   }
   await s3.send(new PutObjectCommand({
-    Bucket, Key: `${prefix}/feed.xml`, Body: buildFeed(episodes, base, coverUrl),
+    Bucket, Key: `${prefix}/feed.xml`, Body: buildFeed(episodes, base, coverUrl, english),
     ContentType: 'application/rss+xml; charset=utf-8', CacheControl: 'max-age=300',
   }));
   return { feedUrl: `${base}/feed.xml`, count: episodes.length };

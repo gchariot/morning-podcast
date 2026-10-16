@@ -21,6 +21,9 @@ const VOICES: Record<string, string> = {
   'Léa': process.env.VOICE_LEA || 'Kore',
   'Hugo': process.env.VOICE_HUGO || 'Puck',
   'Zoé': process.env.VOICE_ZOE || 'Zephyr',
+  // Épisode English : Nora (la même voix que dans l'appli) et Sam, son collègue dans les scènes.
+  'Nora': process.env.ENGLISH_VOICE || 'Erinome',
+  'Sam': process.env.ENGLISH_PARTNER_VOICE || 'Iapetus',
 };
 
 function findAudioBase64(node: unknown): string | null {

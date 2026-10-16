@@ -18,7 +18,7 @@ concurrency:
 jobs:
   episode:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
         with:
@@ -58,6 +58,38 @@ jobs:
           S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
           PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
           FEED_SECRET: ${{ secrets.FEED_SECRET }}
+      # L'épisode English du matin (en semaine) : après la Matinale, et sans jamais la faire échouer.
+      - name: Épisode English
+        id: english
+        if: always() && steps.when.outputs.date != ''
+        continue-on-error: true
+        run: |
+          # Le carnet d'erreurs le plus récent (écrit par l'appli après chaque séance avec Nora).
+          git fetch -q --depth=1 origin main && git checkout -q FETCH_HEAD -- english/ 2>/dev/null || true
+          npm run english -- --date=${{ steps.when.outputs.date }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ENGLISH_VOICE: ${{ vars.ENGLISH_VOICE }}
+          ENGLISH_PARTNER_VOICE: ${{ vars.ENGLISH_PARTNER_VOICE }}
+          VOICE_LEA: ${{ vars.VOICE_LEA }}
+          VOICE_HUGO: ${{ vars.VOICE_HUGO }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ vars.S3_REGION || 'auto' }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
+          FEED_SECRET: ${{ secrets.FEED_SECRET }}
+      - name: Notification si l'épisode English échoue
+        if: always() && steps.english.outcome == 'failure'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          curl -fsS -H "Title: English - episode non publie" -H "Tags: warning" \
+            -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            -d "Episode English ${{ steps.when.outputs.date }} : souci de script, de voix ou de publication." \
+            "https://ntfy.sh/$NTFY_TOPIC"
       - name: Notification push en cas d'échec
         if: failure()
         env:

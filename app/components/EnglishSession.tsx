@@ -51,6 +51,7 @@ export function EnglishSession({ scenario, role, brief, children }: {
   const router = useRouter();
   const online = useOnline();
   const audio = useAudio();
+  const { setHeld } = audio; // stable : ne relance pas les effets à chaque seconde de lecture
   const [phase, setPhase] = useState<Phase>('idle');
   const [error, setError] = useState('');
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -113,8 +114,8 @@ export function EnglishSession({ scenario, role, brief, children }: {
     void micCtx.current?.close().catch(() => {});
     void outCtx.current?.close().catch(() => {});
     micCtx.current = null; outCtx.current = null;
-    audio.setHeld(false);
-  }, [stopPlayback, audio]);
+    setHeld(false);
+  }, [stopPlayback, setHeld]);
 
   const onMessage = useCallback((m: LiveServerMessage) => {
     const sc = m.serverContent;
@@ -238,7 +239,9 @@ export function EnglishSession({ scenario, role, brief, children }: {
   }, [phase, finish]);
 
   // Quitter la page coupe proprement la séance.
-  useEffect(() => () => { ending.current = true; teardown(); }, [teardown]);
+  const teardownRef = useRef(teardown);
+  teardownRef.current = teardown;
+  useEffect(() => () => { ending.current = true; teardownRef.current(); }, []);
 
   const togglePause = () => {
     const p = !pausedRef.current;
@@ -302,7 +305,7 @@ export function EnglishSession({ scenario, role, brief, children }: {
 
   if (phase === 'recap') {
     return (
-      <section aria-label="Récap de la séance">
+      <section aria-label="Récap de la séance" className="en-recap">
         <h2>{recap.length ? 'À corriger' : 'Séance terminée'}</h2>
         {recap.length
           ? <div className="group fixes" style={{ marginTop: 12 }} lang="en">
@@ -335,7 +338,7 @@ export function EnglishSession({ scenario, role, brief, children }: {
   const blocked = !online;
   return (
     <>
-      <div className="group en-day">
+      <div className="group en-day" id="talk">
         <div className="en-talk">
           <div className="en-who"><span className="voice-dot nora" aria-hidden /><span><b>Nora</b> joue {role}</span></div>
           <p className="en-brief">{brief}</p>

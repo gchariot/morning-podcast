@@ -12,7 +12,11 @@ const hms = (s: number) => {
 
 /** Commandes de l'épisode affiché. Le son lui-même vit dans <AudioProvider> et continue entre les onglets. */
 /** `voices` : titre de chapitre → voix invitée qui le porte (Zoé pour la météo, les chroniqueurs pour leurs thèmes). */
-export function Player({ track, feedbackSent = false, voices = {} }: { track: Track; feedbackSent?: boolean; voices?: Record<string, string> }) {
+/** `next` : l'épisode à enchaîner (English après la Matinale) ; `endCard` remplace la carte de fin (avis). */
+export function Player({ track, feedbackSent = false, voices = {}, next, endCard }: {
+  track: Track; feedbackSent?: boolean; voices?: Record<string, string>;
+  next?: { href: string; label: string; meta: string }; endCard?: React.ReactNode;
+}) {
   const audio = useAudio();
   const { prepare, setShown } = audio;
   useEffect(() => { prepare(track); }, [prepare, track]);
@@ -72,7 +76,14 @@ export function Player({ track, feedbackSent = false, voices = {} }: { track: Tr
             <button type="button" className="btn small primary" onClick={() => audio.toggle()}>Réessayer</button>
           </div>
         )}
-        {finished && (
+        {finished && next && (
+          <Link href={next.href} className="ended next">
+            <span className="grow"><strong>On enchaîne ?</strong> {next.label} <span className="muted">· {next.meta}</span></span>
+            <span className="round gold" aria-hidden><Icon name="play" size={18} /></span>
+          </Link>
+        )}
+        {finished && endCard}
+        {finished && !endCard && (
           <div className="ended" role="status">
             {feedbackSent
               ? <><span className="grow"><strong>C&apos;est fini pour aujourd&apos;hui.</strong> Ton avis est déjà parti pour demain.</span>

@@ -184,6 +184,10 @@ Pour relancer la **rédaction** hors horaire, déclenche la tâche planifiée «
 | `NTFY_TOPIC` | Sujet ntfy privé pour les alertes push (facultatif) |
 | `ELEVENLABS_API_KEY` | Seulement pour le test de voix « comparaison » (facultatif) |
 
+Variables facultatives de l'épisode English (onglet Variables) : `ENGLISH_VOICE` (Nora, `Erinome`), `ENGLISH_PARTNER_VOICE` (Sam, `Iapetus`).
+
+**Épisode English** : en semaine, juste après la Matinale, la même tâche écrit (Gemini, `src/english.ts`) et enregistre un épisode d'environ 10 min sur la situation du jour, nourri par le carnet d'erreurs (`english/carnet.json`). Il est publié dans le même flux (`english.json` à part) ; s'il échoue, la Matinale n'est pas touchée et une alerte ntfy part.
+
 L'app a ses propres variables sur Vercel : voir [`app/README.md`](app/README.md).
 
 </details>

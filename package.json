@@ -9,6 +9,7 @@
     "data": "tsx src/data.ts",
     "validate": "tsx src/validate.ts",
     "episode": "tsx src/episode.ts",
+    "english": "tsx src/english.ts",
     "feed": "tsx src/feed.ts",
     "tts:test": "tsx src/tts-test.ts",
     "typecheck": "tsc --noEmit"
