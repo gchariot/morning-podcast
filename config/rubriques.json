@@ -34,6 +34,22 @@
         "rubriques": [
           "sciences-et-decouvertes"
         ]
+      },
+      {
+        "name": "Victor",
+        "role": "conteur du portrait : raconte une vie comme une chronique radio, voix grave et posée, le sens du détail qui fait image",
+        "voice": "Algenib",
+        "rubriques": [
+          "portrait"
+        ]
+      },
+      {
+        "name": "Noé",
+        "role": "chroniqueur des bonnes nouvelles de l'environnement : calme, concret, une note positive pour ouvrir la semaine",
+        "voice": "Algieba",
+        "rubriques": [
+          "environnement"
+        ]
       }
     ],
     "targetMinutes": 20,
