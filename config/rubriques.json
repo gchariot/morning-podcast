@@ -190,6 +190,23 @@
       ]
     },
     {
+      "id": "sciences-et-decouvertes",
+      "title": "Sciences et découvertes",
+      "minutes": 2,
+      "brief": "Une découverte scientifique de la semaine (santé, espace, climat, archéologie, biologie), expliquée simplement : ce qu’on a trouvé, comment, et pourquoi c’est important. Priorité aux travaux suisses (EPFL, Université de Genève, CERN) quand il y en a. Uniquement des études publiées ou annoncées par l’institution, jamais un simple titre de presse.",
+      "domains": [
+        "epfl.ch",
+        "unige.ch",
+        "home.cern",
+        "nature.com",
+        "sciencesetavenir.fr"
+      ],
+      "enabled": true,
+      "jours": [
+        "jeu"
+      ]
+    },
+    {
       "id": "meteo",
       "title": "Météo",
       "minutes": 1,
