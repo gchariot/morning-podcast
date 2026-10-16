@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "generatedAt": "2026-10-16T03:38:28.580Z",
+  "generatedAt": "2026-10-16T07:10:25.033Z",
   "football": {
     "window": {
       "from": "2026-10-15",
@@ -140,13 +140,13 @@
     "source": "Open-Meteo (open-meteo.com)",
     "journee": {
       "ciel": "brouillard",
-      "temperatureMin": 9.6,
-      "temperatureMax": 20.5,
+      "temperatureMin": 8.8,
+      "temperatureMax": 20.1,
       "risquePluieMax": 0,
       "pluieTotaleMm": 0,
-      "ventMaxKmh": 4.7,
-      "rafalesMaxKmh": 8.3,
-      "indiceUV": 3.65,
+      "ventMaxKmh": 5.1,
+      "rafalesMaxKmh": 9.4,
+      "indiceUV": 3.5,
       "leverSoleil": "07:53",
       "coucherSoleil": "18:47",
       "heuresProbablementPluvieuses": []
@@ -154,57 +154,57 @@
     "creneaux": [
       {
         "heure": "7 h",
-        "temperature": 9.8,
-        "ressenti": 9.3,
+        "temperature": 9.2,
+        "ressenti": 8.7,
         "ciel": "brouillard",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 2.1
+        "ventKmh": 2.3
       },
       {
         "heure": "9 h",
-        "temperature": 10.2,
-        "ressenti": 9.8,
+        "temperature": 9.7,
+        "ressenti": 9.2,
         "ciel": "brouillard",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 3.2
+        "ventKmh": 2.9
       },
       {
         "heure": "12 h",
-        "temperature": 15,
-        "ressenti": 15.7,
+        "temperature": 14.9,
+        "ressenti": 15.5,
         "ciel": "couvert",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 2.1
+        "ventKmh": 1
       },
       {
         "heure": "15 h",
-        "temperature": 19.7,
+        "temperature": 19.6,
         "ressenti": 20.3,
         "ciel": "couvert",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 2.5
+        "ventKmh": 1.6
       },
       {
         "heure": "18 h",
-        "temperature": 19.5,
-        "ressenti": 19.7,
+        "temperature": 19.2,
+        "ressenti": 19.4,
         "ciel": "couvert",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 4.1
+        "ventKmh": 3.1
       },
       {
         "heure": "21 h",
-        "temperature": 14.1,
-        "ressenti": 14,
+        "temperature": 13.2,
+        "ressenti": 12.8,
         "ciel": "ciel dégagé",
         "risquePluie": 0,
         "pluieMm": 0,
-        "ventKmh": 4.3
+        "ventKmh": 5.1
       }
     ]
   }
