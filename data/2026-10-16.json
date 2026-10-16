@@ -1,0 +1,211 @@
+{
+  "date": "2026-10-16",
+  "generatedAt": "2026-10-16T03:38:28.580Z",
+  "football": {
+    "window": {
+      "from": "2026-10-15",
+      "to": "2026-10-17"
+    },
+    "matches": [
+      {
+        "competition": "Ligue 1",
+        "date": "2026-10-16T18:45:00Z",
+        "status": "TIMED",
+        "home": "Le Mans FC",
+        "away": "Toulouse FC",
+        "score": null,
+        "matchday": 7
+      },
+      {
+        "competition": "Primera Division",
+        "date": "2026-10-16T19:00:00Z",
+        "status": "TIMED",
+        "home": "RC Deportivo La Coruña",
+        "away": "Levante UD",
+        "score": null,
+        "matchday": 9
+      }
+    ],
+    "ligue1Standings": [
+      {
+        "position": 1,
+        "team": "AS Monaco FC",
+        "points": 14,
+        "played": 6
+      },
+      {
+        "position": 2,
+        "team": "Lille OSC",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 3,
+        "team": "Stade Rennais FC 1901",
+        "points": 13,
+        "played": 6
+      },
+      {
+        "position": 4,
+        "team": "Olympique Lyonnais",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 5,
+        "team": "Paris FC",
+        "points": 11,
+        "played": 6
+      },
+      {
+        "position": 6,
+        "team": "Paris Saint-Germain FC",
+        "points": 11,
+        "played": 6
+      }
+    ],
+    "favouriteTeams": {
+      "Olympique Lyonnais": {
+        "lastMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-09T18:45:00Z",
+          "home": "Racing Club de Lens",
+          "away": "Olympique Lyonnais",
+          "score": "2-1"
+        },
+        "nextMatch": {
+          "competition": "Ligue 1",
+          "date": "2026-10-18T18:45:00Z",
+          "home": "Olympique Lyonnais",
+          "away": "OGC Nice",
+          "score": null
+        }
+      },
+      "Real Madrid CF": {
+        "lastMatch": {
+          "competition": "UEFA Champions League",
+          "date": "2026-10-14T19:00:00Z",
+          "home": "AS Roma",
+          "away": "Real Madrid CF",
+          "score": "3-4"
+        },
+        "nextMatch": {
+          "competition": "Primera Division",
+          "date": "2026-10-18T19:00:00Z",
+          "home": "Real Madrid CF",
+          "away": "Sevilla FC",
+          "score": null
+        }
+      }
+    }
+  },
+  "wikipedia": {
+    "articleDuJour": null,
+    "ephemeride": [
+      {
+        "year": 1978,
+        "text": "élection du pape Jean-Paul II.",
+        "url": "https://fr.wikipedia.org/wiki/Conclave_d'octobre_1978"
+      },
+      {
+        "year": 1964,
+        "text": "la Chine fait exploser sa première bombe atomique.",
+        "url": "https://fr.wikipedia.org/wiki/Chine"
+      },
+      {
+        "year": 1925,
+        "text": "signature des accords de Locarno entre différents États européens concernant les frontières de l'Allemagne.",
+        "url": "https://fr.wikipedia.org/wiki/Accords_de_Locarno"
+      },
+      {
+        "year": 1923,
+        "text": "Walt Disney crée The Walt Disney Company.",
+        "url": "https://fr.wikipedia.org/wiki/Walt_Disney"
+      },
+      {
+        "year": 1879,
+        "text": "publication initiale du roman Nana d'Émile Zola sous forme de feuilleton dans Le Voltaire.",
+        "url": "https://fr.wikipedia.org/wiki/Nana_(roman)"
+      },
+      {
+        "year": 1793,
+        "text": "exécution publique de la reine Marie-Antoinette (gravure).",
+        "url": "https://fr.wikipedia.org/wiki/Ex%C3%A9cution_de_Marie-Antoinette"
+      }
+    ]
+  },
+  "meteo": {
+    "jour": "vendredi",
+    "ville": "Ferney-Voltaire",
+    "source": "Open-Meteo (open-meteo.com)",
+    "journee": {
+      "ciel": "brouillard",
+      "temperatureMin": 9.6,
+      "temperatureMax": 20.5,
+      "risquePluieMax": 0,
+      "pluieTotaleMm": 0,
+      "ventMaxKmh": 4.7,
+      "rafalesMaxKmh": 8.3,
+      "indiceUV": 3.65,
+      "leverSoleil": "07:53",
+      "coucherSoleil": "18:47",
+      "heuresProbablementPluvieuses": []
+    },
+    "creneaux": [
+      {
+        "heure": "7 h",
+        "temperature": 9.8,
+        "ressenti": 9.3,
+        "ciel": "brouillard",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 2.1
+      },
+      {
+        "heure": "9 h",
+        "temperature": 10.2,
+        "ressenti": 9.8,
+        "ciel": "brouillard",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 3.2
+      },
+      {
+        "heure": "12 h",
+        "temperature": 15,
+        "ressenti": 15.7,
+        "ciel": "couvert",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 2.1
+      },
+      {
+        "heure": "15 h",
+        "temperature": 19.7,
+        "ressenti": 20.3,
+        "ciel": "couvert",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 2.5
+      },
+      {
+        "heure": "18 h",
+        "temperature": 19.5,
+        "ressenti": 19.7,
+        "ciel": "couvert",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 4.1
+      },
+      {
+        "heure": "21 h",
+        "temperature": 14.1,
+        "ressenti": 14,
+        "ciel": "ciel dégagé",
+        "risquePluie": 0,
+        "pluieMm": 0,
+        "ventKmh": 4.3
+      }
+    ]
+  }
+}
