@@ -149,7 +149,10 @@
       "domains": [
         "fr.wikipedia.org"
       ],
-      "enabled": true
+      "enabled": true,
+      "minutesParJour": {
+        "lun": 4
+      }
     },
     {
       "id": "meteo",
