@@ -48,7 +48,10 @@
         "realmadrid.com",
         "bbc.com",
         "uefa.com"
-      ]
+      ],
+      "minutesParJour": {
+        "lun": 4
+      }
     },
     {
       "id": "politique",
