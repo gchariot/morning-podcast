@@ -6,6 +6,13 @@ Modifiable depuis le téléphone : github.com → ce fichier → icône crayon �
 ## Consignes permanentes
 
 ## Retours récents
+- 2026-10-16 : [Football] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-16)
+- 2026-10-16 : [Politique] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-16)
+- 2026-10-16 : [Jeux vidéo] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-16)
+- 2026-10-16 : [Cinéma et séries] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-16)
+- 2026-10-16 : [Nouveautés IA] 👍 Parfait comme ça, Bien expliqué (épisode du 2026-10-16)
+- 2026-10-16 : [Culture générale] 👍 Bien expliqué, Parfait comme ça (épisode du 2026-10-16)
+- 2026-10-16 : [Météo] 👍 Bien expliqué (épisode du 2026-10-16)
 - 2026-10-15 : [Culture générale] 👍 Parfait comme ça, Plus de ça, Bien expliqué (épisode du 2026-10-15)
 - 2026-10-15 : [Football] 👍 Parfait comme ça (épisode du 2026-10-15)
 - 2026-10-15 : [Politique] 👍 Bien expliqué (épisode du 2026-10-15)
