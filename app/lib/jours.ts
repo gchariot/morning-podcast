@@ -40,3 +40,19 @@ export function nextWeekdayEpisode(now = new Date()): Jour {
   if (Number(parts.hour) * 60 + Number(parts.minute) >= 5 * 60 + 37) i = (i + 1) % 7;
   return i >= 5 ? 'lun' : JOURS[i];
 }
+
+/** Durée d'un thème un jour donné : la durée propre à ce jour si elle existe, sinon la durée habituelle. */
+export function minutesFor(r: { minutes: number; minutesParJour?: Partial<Record<Jour, number>> }, day: Jour): number {
+  return r.minutesParJour?.[day] ?? r.minutes;
+}
+
+/**
+ * Range les durées par jour : celles égales à la durée habituelle disparaissent ; si tous les jours ont
+ * la même durée propre, elle devient la durée habituelle.
+ */
+export function normalizeMinutes(minutes: number, parJour: Partial<Record<Jour, number>> | undefined): { minutes: number; minutesParJour?: Partial<Record<Jour, number>> } {
+  const all = JOURS.map(d => parJour?.[d] ?? minutes);
+  const base = all.every(v => v === all[0]) ? all[0] : minutes;
+  const rest = Object.fromEntries(JOURS.filter(d => all[JOURS.indexOf(d)] !== base).map(d => [d, all[JOURS.indexOf(d)]]));
+  return Object.keys(rest).length ? { minutes: base, minutesParJour: rest } : { minutes: base };
+}

@@ -13,6 +13,8 @@ export type Rubrique = {
   enabled?: boolean;
   /** Jours de diffusion en semaine (lun…ven) ; absent = tous les jours. */
   jours?: string[];
+  /** Durée propre à certains jours de semaine ({ lun: 3 }) ; sinon `minutes`. */
+  minutesParJour?: Record<string, number>;
 };
 
 export type Config = {

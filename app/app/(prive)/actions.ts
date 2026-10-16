@@ -8,7 +8,7 @@ import { loadConfig, parseDomains, Rubrique, saveConfig, slugify } from '@/lib/c
 import { loadRetours, replaceEpisodeFeedback, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
-import { normalizeJours } from '@/lib/jours';
+import { JOURS, normalizeJours, normalizeMinutes } from '@/lib/jours';
 import { loadSamedi, updateSamedi } from '@/lib/samedi';
 
 
@@ -209,6 +209,10 @@ const ThemeInput = z.object({
   brief: Text(5000),
   domains: z.array(Text(300)).max(50).default([]),
   jours: z.array(z.string()).max(5).optional(),
+  /** Jour de semaine auquel s'applique `minutes` (éditeur ouvert depuis le conducteur de ce jour). */
+  day: z.enum(JOURS).optional(),
+  /** `minutes` vaut pour tous les jours (efface les durées propres). */
+  allDays: z.boolean().optional(),
 });
 
 /** La météo clôt toujours l'épisode. */
@@ -247,8 +251,16 @@ export async function saveTheme(raw: z.input<typeof ThemeInput>): Promise<ThemeR
     if (input.id) {
       const i = config.rubriques.findIndex(r => r.id === input.id);
       if (i < 0) throw new Error('Ce thème n’existe plus : recharge la page.');
+      const cur = config.rubriques[i];
+      // Durée : celle du jour réglé seulement, sauf « tous les jours » (le week-end garde la durée habituelle).
+      const durations = input.day && !input.allDays
+        ? normalizeMinutes(cur.minutes, { ...cur.minutesParJour, [input.day]: input.minutes })
+        : { minutes: input.minutes, minutesParJour: undefined };
       // jours absent = tous les jours (la météo passe toujours).
-      config.rubriques[i] = Rubrique.parse({ ...config.rubriques[i], ...fields, jours: input.id === 'meteo' ? undefined : fields.jours });
+      config.rubriques[i] = Rubrique.parse({
+        ...cur, ...fields, ...durations, minutesParJour: durations.minutesParJour,
+        jours: input.id === 'meteo' ? undefined : fields.jours,
+      });
       return { commit: `thèmes: « ${fields.title} » modifié (app)`, message: `« ${fields.title} » enregistré.` };
     }
     let id = slugify(fields.title);

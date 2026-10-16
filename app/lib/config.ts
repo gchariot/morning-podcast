@@ -15,6 +15,8 @@ export const Rubrique = z.object({
   enabled: z.boolean().optional(),
   /** Jours de diffusion en semaine ; absent = tous les jours. */
   jours: z.array(z.enum(JOURS)).min(1).max(5).optional(),
+  /** Durée propre à certains jours de semaine (sinon `minutes`). */
+  minutesParJour: z.object(Object.fromEntries(JOURS.map(j => [j, z.number().min(0.5).max(10).optional()])) as Record<(typeof JOURS)[number], z.ZodOptional<z.ZodNumber>>).strict().optional(),
 });
 export type Rubrique = z.infer<typeof Rubrique>;
 
