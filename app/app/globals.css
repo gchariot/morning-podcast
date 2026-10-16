@@ -648,3 +648,17 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .say-sent { padding: 0 4px 6px; gap: 0; }
 .ended .ended-actions { flex: none; display: flex; gap: 6px; }
 
+/* ---------- Jours de diffusion ---------- */
+.days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: var(--surface-2); border-radius: 12px; padding: 3px; margin-bottom: 16px; }
+.days button { min-height: 52px; border: 0; border-radius: 10px; background: none; color: var(--ink-2); display: flex; flex-direction: column; align-items: center; justify-content: center; font: inherit; cursor: pointer; line-height: 1.25; }
+.days button b { font-size: 0.9375rem; font-weight: 650; color: var(--ink); }
+.days button span { font-size: 0.75rem; font-weight: 500; }
+.days button[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); }
+.days button[aria-checked="true"] b { color: var(--accent-ink); }
+.days button.over span::after { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; margin-left: 3px; vertical-align: 2px; }
+.theme.absent .row-name { color: var(--ink-2); }
+.theme.absent .cue, .theme.absent .row-meta { color: var(--ink-3); }
+.jours { display: flex; gap: 6px; }
+.jours .pick { flex: 1; justify-content: center; padding: 8px 0; min-width: 44px; min-height: 44px; font-weight: 600; }
+.jours .pick[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+

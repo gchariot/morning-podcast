@@ -32,7 +32,7 @@ function describe(message: string): { key: string; label: string | null } | null
   let x: RegExpMatchArray | null;
   if ((x = m.match(/^thèmes: « (.+) » mis en pause$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » en pause` };
   if ((x = m.match(/^thèmes: « (.+) » réactivé$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » revient` };
-  if ((x = m.match(/^thèmes: « (.+) » modifié$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » modifié (durée, consigne ou sites)` };
+  if ((x = m.match(/^thèmes: « (.+) » modifié$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » modifié (durée, jours, consigne ou sites)` };
   if ((x = m.match(/^thèmes: nouveau thème « (.+) »$/))) return { key: `t:${x[1]}`, label: `Nouveau thème : « ${x[1]} »` };
   if ((x = m.match(/^thèmes: « (.+) » supprimé$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » supprimé` };
   if ((x = m.match(/^thèmes: « (.+) » (rétabli|déjà présent)$/))) return { key: `t:${x[1]}`, label: null };

@@ -20,6 +20,7 @@ import {
   deleteTheme, reorderRubriques, restoreTheme, saveSettings, saveTheme, setThemeEnabled, type ThemeResult,
 } from '@/app/(prive)/actions';
 import type { Rubrique } from '@/lib/config';
+import { JOURS, JOUR_COURT, JOUR_LONG, joursLabel, normalizeJours, passes, type Jour } from '@/lib/jours';
 
 const PINNED = 'meteo';
 const MAX_DOMAINS = 25;
@@ -43,15 +44,17 @@ function cleanDomain(raw: string): string {
     .replace(/[?#].*$/, '').replace(/\/+$/, '');
 }
 
-type Draft = { minutes: number; dirty: boolean };
+type Draft = { minutes: number; dirty: boolean; jours: Jour[] };
 
 /* ---------------------------------------------------------------- */
 
-export function ThemesEditor({ initial, target: targetInit }: { initial: Rubrique[]; target: number }) {
+export function ThemesEditor({ initial, target: targetInit, defaultDay }: { initial: Rubrique[]; target: number; defaultDay: Jour }) {
   const [list, setList] = useState(initial);
   const [open, setOpen] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [target, setTarget] = useState(targetInit);
+  // Le conducteur se lit pour un jour de semaine (par défaut, le prochain épisode).
+  const [day, setDay] = useState<Jour>(defaultDay);
   const { show } = useSnack();
   const [busy, setBusy] = useState(0);
 
@@ -84,29 +87,35 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
     }, 700);
   };
   const setDraft = useCallback((id: string, d: Draft) => {
-    setDrafts(prev => (prev[id]?.minutes === d.minutes && prev[id]?.dirty === d.dirty ? prev : { ...prev, [id]: d }));
+    setDrafts(prev => (prev[id]?.minutes === d.minutes && prev[id]?.dirty === d.dirty && prev[id]?.jours.join() === d.jours.join() ? prev : { ...prev, [id]: d }));
   }, []);
 
-  /* Conducteur : heure de départ de chaque thème, durées en cours de saisie comprises. */
+  /* Conducteur du jour choisi : heure de départ de chaque thème, saisies en cours comprises. */
   const minutesOf = useCallback((r: Rubrique) => drafts[r.id]?.minutes ?? r.minutes, [drafts]);
-  const active = list.filter(r => r.enabled !== false);
-  const total = active.reduce((s, r) => s + minutesOf(r), 0);
+  const joursOf = useCallback((r: Rubrique): Jour[] | undefined => normalizeJours(drafts[r.id]?.jours ?? r.jours), [drafts]);
+  const airs = useCallback((r: Rubrique, d: Jour) => r.enabled !== false && (r.id === PINNED || passes(joursOf(r), d)), [joursOf]);
+  const totals = Object.fromEntries(JOURS.map(d => [d, list.filter(r => airs(r, d)).reduce((n, r) => n + minutesOf(r), 0)])) as Record<Jour, number>;
+  const active = list.filter(r => airs(r, day));
+  const total = totals[day];
   const scale = total > target ? target / total : 1;
   const cues = useMemo(() => {
     const out: Record<string, number> = {};
     let t = 0;
     for (const r of list) {
-      if (r.enabled === false) continue;
+      if (!airs(r, day)) continue;
       out[r.id] = t;
       t += minutesOf(r) * scale;
     }
     return out;
-  }, [list, minutesOf, scale]);
+  }, [list, minutesOf, scale, airs, day]);
   const over = total > target + 0.01;
   // Une petite marge est normale : rouge seulement quand ça déborde vraiment.
   const severe = total - target > Math.max(2, target * 0.1);
   const cut = Math.round((1 - target / total) * 100);
-  const fit = Math.min(40, Math.ceil(total));
+  // « Viser N min » seulement si toute la semaine dépasse : la cible vaut pour les cinq jours.
+  const allOver = JOURS.every(d => totals[d] > target + 0.01);
+  const fit = Math.min(40, Math.ceil(Math.min(...JOURS.map(d => totals[d]))));
+  const onlyMeteo = !active.some(r => r.id !== PINNED);
 
   const sortable = list.filter(r => r.id !== PINNED);
   const pinned = list.find(r => r.id === PINNED);
@@ -143,6 +152,9 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
 
   const rowProps = (r: Rubrique) => ({
     r,
+    day,
+    jours: r.id === PINNED ? undefined : joursOf(r),
+    absent: r.enabled !== false && !airs(r, day),
     cue: cues[r.id],
     minutes: minutesOf(r),
     dirty: drafts[r.id]?.dirty ?? false,
@@ -161,8 +173,9 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
   return (
     <>
       <div className="group pad run-card">
-        <div className="run-head">
-          <span className="run-total num">{fmtMin(total)} <small>min de thèmes · {active.length} actif{active.length > 1 ? 's' : ''}</small></span>
+        <DayPicker day={day} onChange={setDay} totals={totals} target={target} />
+        <div className="run-head" aria-live="polite">
+          <span className="run-total num">{fmtMin(total)} <small>min le {JOUR_LONG[day]} · {active.length} thème{active.length > 1 ? 's' : ''}</small></span>
         </div>
         <div className={`meter${severe ? ' over' : over ? ' mild' : ''}`} aria-hidden>
           <i style={{ width: `${Math.min(100, (Math.min(total, target) / Math.max(total, target)) * 100)}%` }} />
@@ -177,14 +190,16 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
               <Icon name="alert" size={18} />
               <span>
                 <strong>{fmtMin(total - target)} min de trop.</strong> La rédaction raccourcira chaque thème d&apos;environ {cut} % (les heures en tiennent compte).
-                {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
+                {allOver && fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
               </span>
             </div>
           : over
           ? <p className="run-note">
               +{fmtMin(total - target)} min au-delà de la cible : la rédaction resserrera.
-              {fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
+              {allOver && fit > target && <> <button type="button" className="linkish" onClick={() => changeTarget(fit)}>Viser {fit} min</button></>}
             </p>
+          : onlyMeteo
+          ? <p className="run-note">Le {JOUR_LONG[day]}, seulement la météo.</p>
           : total < target - 0.5 && <p className="run-note">Il reste {fmtMin(target - total)} min : la rédaction développera.</p>}
       </div>
 
@@ -206,12 +221,12 @@ export function ThemesEditor({ initial, target: targetInit }: { initial: Rubriqu
 }
 
 /** Clé du formulaire : il repart des valeurs enregistrées quand le contenu change, pas sur une simple pause. */
-const formKey = (r: Rubrique) => JSON.stringify([r.id, r.title, r.minutes, r.brief, r.domains]);
+const formKey = (r: Rubrique) => JSON.stringify([r.id, r.title, r.minutes, r.brief, r.domains, r.jours ?? null]);
 
 /* ---------------------------------------------------------------- */
 
 type RowProps = {
-  r: Rubrique; cue?: number; minutes: number; dirty: boolean; expanded: boolean;
+  r: Rubrique; day: Jour; jours?: Jour[]; absent: boolean; cue?: number; minutes: number; dirty: boolean; expanded: boolean;
   onExpand: () => void; onToggle: (v: boolean) => void; editor: React.ReactNode;
 };
 
@@ -237,7 +252,7 @@ function SortableRow(props: RowProps & { locked: boolean }) {
 }
 
 function Row({
-  r, cue, minutes, dirty, expanded, onExpand, onToggle, editor, pinned, rootRef, rootProps, dragging, keyboardHandle,
+  r, day, jours, absent, cue, minutes, dirty, expanded, onExpand, onToggle, editor, pinned, rootRef, rootProps, dragging, keyboardHandle,
 }: RowProps & {
   pinned?: boolean; rootRef?: (el: HTMLElement | null) => void; rootProps?: React.HTMLAttributes<HTMLDivElement>;
   dragging?: boolean; keyboardHandle?: React.ReactNode;
@@ -245,9 +260,11 @@ function Row({
   const id = useId();
   const on = r.enabled !== false;
   const sites = r.domains.length ? r.domains.slice(0, 2).join(', ') + (r.domains.length > 2 ? ` +${r.domains.length - 2}` : '') : 'sans site imposé';
-  const meta = pinned ? `${fmtMin(minutes)} min · toujours en dernier` : `${fmtMin(minutes)} min · ${sites}`;
+  // Un thème à jours fixes dit quand il passe (plus utile que ses sites dans le conducteur).
+  const when = joursLabel(jours);
+  const meta = pinned ? `${fmtMin(minutes)} min · toujours en dernier` : when ? `${fmtMin(minutes)} min · ${when}` : `${fmtMin(minutes)} min · ${sites}`;
   return (
-    <div ref={rootRef} {...rootProps} className={`theme${pinned ? '' : ' sortable-theme'}${on ? '' : ' off'}${dragging ? ' dragging' : ''}`}>
+    <div ref={rootRef} {...rootProps} className={`theme${pinned ? '' : ' sortable-theme'}${on ? '' : ' off'}${absent ? ' absent' : ''}${dragging ? ' dragging' : ''}`}>
       <div className="theme-line">
         {pinned
           ? <span className="lock" title="Toujours en dernier"><Icon name="lock" size={16} /></span>
@@ -267,6 +284,7 @@ function Row({
             {dirty && <span className="pill">Non enregistré</span>}{dirty ? ' ' : ''}
             {on ? meta : 'En pause : absent des prochains épisodes'}
             {on && cue !== undefined && <span className="sr">, commence vers {cueLabel(cue)}</span>}
+            {absent && <span className="sr">, absent le {JOUR_LONG[day]}</span>}
           </span>
         </button>
         <label className="switch-hit">
@@ -281,7 +299,7 @@ function Row({
 
 /* ---------------------------------------------------------------- */
 
-type Input = { title: string; minutes: number; brief: string; domains: string[] };
+type Input = { title: string; minutes: number; brief: string; domains: string[]; jours?: Jour[] };
 
 function ThemeForm({
   r, busy, onDraft, onSave, onDelete, submitLabel = 'Enregistrer',
@@ -294,14 +312,16 @@ function ThemeForm({
   const [minutes, setMinutes] = useState(r?.minutes ?? 3);
   const [brief, setBrief] = useState(r?.brief ?? '');
   const [domains, setDomains] = useState<string[]>(r?.domains ?? []);
+  const [jours, setJours] = useState<Jour[]>(r?.jours ?? [...JOURS]);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   const dirty = !r
     ? Boolean(title || brief || domains.length)
-    : title !== r.title || minutes !== r.minutes || brief !== r.brief || domains.join() !== r.domains.join();
+    : title !== r.title || minutes !== r.minutes || brief !== r.brief || domains.join() !== r.domains.join()
+      || jours.join() !== (r.jours ?? JOURS).join();
 
-  useEffect(() => { if (r) onDraft?.(r.id, { minutes, dirty }); }, [r, minutes, dirty, onDraft]);
+  useEffect(() => { if (r) onDraft?.(r.id, { minutes, dirty, jours }); }, [r, minutes, dirty, jours, onDraft]);
 
   // Brouillon gardé sur le téléphone : une interruption (onglet, appel, tunnel) ne fait rien perdre.
   const draftKey = `matinale_theme_${r?.id ?? 'nouveau'}`;
@@ -311,14 +331,15 @@ function ThemeForm({
       const d = JSON.parse(localStorage.getItem(draftKey) ?? 'null') as (Input & { base: string }) | null;
       if (!d || d.base !== base) return;
       setTitle(d.title); setMinutes(d.minutes); setBrief(d.brief); setDomains(d.domains);
+      if (d.jours?.length) setJours(d.jours);
     } catch { /* stockage indisponible */ }
   }, [draftKey, base]);
   useEffect(() => {
     try {
-      if (dirty) localStorage.setItem(draftKey, JSON.stringify({ base, title, minutes, brief, domains }));
+      if (dirty) localStorage.setItem(draftKey, JSON.stringify({ base, title, minutes, brief, domains, jours }));
       else localStorage.removeItem(draftKey);
     } catch { /* ignoré */ }
-  }, [draftKey, base, dirty, title, minutes, brief, domains]);
+  }, [draftKey, base, dirty, title, minutes, brief, domains, jours]);
 
   // La consigne s'affiche en entier : pas de défilement à l'intérieur du champ (jusqu'à la moitié de l'écran).
   const briefRef = useRef<HTMLTextAreaElement>(null);
@@ -352,7 +373,7 @@ function ThemeForm({
     setFieldErr(fe);
     if (fe.title || fe.brief) return;
     setSaving(true);
-    const res = await onSave({ title, minutes, brief, domains });
+    const res = await onSave({ title, minutes, brief, domains, jours });
     setSaving(false);
     if (!res.ok) setError(res.message);
     else try { localStorage.removeItem(draftKey); } catch { /* ignoré */ }
@@ -371,6 +392,8 @@ function ThemeForm({
         <span className="label" id={`${uid}m`}>Durée</span>
         <Stepper value={minutes} min={0.5} max={10} step={0.5} onChange={setMinutes} labelledBy={`${uid}m`} />
       </div>
+
+      {r?.id !== PINNED && <JoursField value={jours} onChange={setJours} />}
 
       <div className="field">
         <label htmlFor={`${uid}b`}>Consigne pour la rédaction</label>
@@ -408,6 +431,61 @@ function ThemeForm({
 }
 
 /* ---------------------------------------------------------------- */
+
+/** Jours de diffusion : au moins un ; le week-end a ses propres éditions. */
+function JoursField({ value, onChange }: { value: Jour[]; onChange: (v: Jour[]) => void }) {
+  const uid = useId();
+  const [warn, setWarn] = useState(false);
+  const toggle = (d: Jour) => {
+    if (value.includes(d)) {
+      if (value.length === 1) { setWarn(true); return; }
+      onChange(value.filter(x => x !== d));
+    } else onChange(JOURS.filter(x => x === d || value.includes(x)));
+    setWarn(false);
+  };
+  return (
+    <div className="field">
+      <span className="label" id={`${uid}l`}>Jours</span>
+      <div className="jours" role="group" aria-labelledby={`${uid}l`} aria-describedby={`${uid}h`}>
+        {JOURS.map(d => (
+          <button key={d} type="button" className="pick" aria-pressed={value.includes(d)} aria-label={JOUR_LONG[d][0].toUpperCase() + JOUR_LONG[d].slice(1)} onClick={() => toggle(d)}>
+            {JOUR_COURT[d]}
+          </button>
+        ))}
+      </div>
+      <p className="field-hint" id={`${uid}h`} role={warn ? 'status' : undefined}>
+        {warn ? 'Au moins un jour. Pour l’arrêter partout, coupe « Diffusé ».' : 'Le week-end se règle dans Réglages.'}
+      </p>
+    </div>
+  );
+}
+
+/** Choix du jour lu dans le conducteur, avec la durée de chaque jour (un point si elle dépasse la cible). */
+function DayPicker({ day, onChange, totals, target }: { day: Jour; onChange: (d: Jour) => void; totals: Record<Jour, number>; target: number }) {
+  const refs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const onKey = (e: React.KeyboardEvent) => {
+    const dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    const next = JOURS[(JOURS.indexOf(day) + dir + JOURS.length) % JOURS.length];
+    onChange(next);
+    refs.current[next]?.focus();
+  };
+  return (
+    <div className="days" role="radiogroup" aria-label="Conducteur du" onKeyDown={onKey}>
+      {JOURS.map(d => {
+        const over = totals[d] > target + 0.01;
+        return (
+          <button key={d} ref={el => { refs.current[d] = el; }} type="button" role="radio" aria-checked={d === day} tabIndex={d === day ? 0 : -1}
+            className={over ? 'over' : undefined} onClick={() => onChange(d)}
+            aria-label={`${JOUR_LONG[d][0].toUpperCase() + JOUR_LONG[d].slice(1)}, ${fmtMin(totals[d])} min${over ? ', au-delà de la cible' : ''}`}>
+            <b>{JOUR_COURT[d]}</b><span className="num">{fmtMin(totals[d])} min</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 const FOLDED_DOMAINS = 6;
 

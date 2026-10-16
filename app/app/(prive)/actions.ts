@@ -8,6 +8,7 @@ import { loadConfig, parseDomains, Rubrique, saveConfig, slugify } from '@/lib/c
 import { loadRetours, replaceEpisodeFeedback, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
+import { normalizeJours } from '@/lib/jours';
 import { loadSamedi, updateSamedi } from '@/lib/samedi';
 
 
@@ -207,6 +208,7 @@ const ThemeInput = z.object({
   minutes: z.number(),
   brief: Text(5000),
   domains: z.array(Text(300)).max(50).default([]),
+  jours: z.array(z.string()).max(5).optional(),
 });
 
 /** La météo clôt toujours l'épisode. */
@@ -240,11 +242,13 @@ export async function saveTheme(raw: z.input<typeof ThemeInput>): Promise<ThemeR
       minutes: input.minutes,
       brief: input.brief.trim(),
       domains: parseDomains(input.domains.join(' ')),
+      jours: normalizeJours(input.jours),
     };
     if (input.id) {
       const i = config.rubriques.findIndex(r => r.id === input.id);
       if (i < 0) throw new Error('Ce thème n’existe plus : recharge la page.');
-      config.rubriques[i] = Rubrique.parse({ ...config.rubriques[i], ...fields });
+      // jours absent = tous les jours (la météo passe toujours).
+      config.rubriques[i] = Rubrique.parse({ ...config.rubriques[i], ...fields, jours: input.id === 'meteo' ? undefined : fields.jours });
       return { commit: `thèmes: « ${fields.title} » modifié (app)`, message: `« ${fields.title} » enregistré.` };
     }
     let id = slugify(fields.title);

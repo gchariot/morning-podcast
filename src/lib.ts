@@ -10,6 +10,9 @@ export type Rubrique = {
   minutes: number;
   brief: string;
   domains: string[];
+  enabled?: boolean;
+  /** Jours de diffusion en semaine (lun…ven) ; absent = tous les jours. */
+  jours?: string[];
 };
 
 export type Config = {

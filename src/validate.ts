@@ -34,6 +34,15 @@ export function loadScript(date: string, strict = false) {
   const saturday = new Date(`${date}T12:00:00Z`).getUTCDay() === 6;
   if (saturday && (!script.game || script.game.questions.length !== 8)) problems.push('Le samedi : remplis `game` avec exactement 8 questions (celles lues dans la partie « jeu »).');
   if (saturday && !script.debate) problems.push('Le samedi : remplis `debate` (sujet du face-à-face et les deux positions).');
+  // Jours de diffusion : en semaine, un thème hors de ses jours ne doit pas apparaître.
+  const weekday = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'][new Date(`${date}T12:00:00Z`).getUTCDay()];
+  if (weekday !== 'sam' && weekday !== 'dim') {
+    for (const r of loadConfig().rubriques) {
+      if (r.jours?.length && !r.jours.includes(weekday) && script.segments.some(sg => sg.rubrique === r.id)) {
+        problems.push(`« ${r.title} » ne passe que ${r.jours.join(', ')} : retire ce segment de l'épisode du ${weekday}.`);
+      }
+    }
+  }
   const meteoIdx = script.segments.findIndex(sg => sg.rubrique === 'meteo');
   if (meteoIdx >= 0 && meteoIdx !== script.segments.length - 1) {
     problems.push('La rubrique « meteo » doit être la dernière de l\'épisode (Léa dit au revoir à la fin de la météo).');

@@ -1,6 +1,7 @@
 import 'server-only';
 import { z } from 'zod';
 import { readFile, writeFile } from './github';
+import { JOURS } from './jours';
 
 const CONFIG_PATH = 'config/rubriques.json';
 
@@ -12,6 +13,8 @@ export const Rubrique = z.object({
   brief: z.string().trim().min(10).max(1200),
   domains: z.array(z.string().trim().regex(/^[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i, 'domaine invalide')).max(25),
   enabled: z.boolean().optional(),
+  /** Jours de diffusion en semaine ; absent = tous les jours. */
+  jours: z.array(z.enum(JOURS)).min(1).max(5).optional(),
 });
 export type Rubrique = z.infer<typeof Rubrique>;
 
