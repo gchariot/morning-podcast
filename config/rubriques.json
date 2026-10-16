@@ -77,7 +77,10 @@
         "apnews.com",
         "bbc.com",
         "aljazeera.com"
-      ]
+      ],
+      "minutesParJour": {
+        "lun": 3
+      }
     },
     {
       "id": "jeux",
