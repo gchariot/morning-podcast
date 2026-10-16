@@ -56,3 +56,19 @@ export function normalizeMinutes(minutes: number, parJour: Partial<Record<Jour, 
   const rest = Object.fromEntries(JOURS.filter(d => all[JOURS.indexOf(d)] !== base).map(d => [d, all[JOURS.indexOf(d)]]));
   return Object.keys(rest).length ? { minutes: base, minutesParJour: rest } : { minutes: base };
 }
+
+export type OrdreParJour = Partial<Record<Jour, string[]>>;
+
+/**
+ * Ordre des thèmes un jour donné : l'ordre propre à ce jour s'il existe (les thèmes ajoutés depuis
+ * se placent ensuite, dans l'ordre habituel), sinon l'ordre habituel. La météo reste toujours en dernier.
+ */
+export function orderFor<T extends { id: string }>(list: T[], ordre: OrdreParJour | undefined, day: Jour): T[] {
+  const ids = ordre?.[day];
+  if (!ids?.length) return list;
+  const byId = new Map(list.map(r => [r.id, r]));
+  const head = ids.map(id => byId.get(id)).filter((r): r is T => Boolean(r) && r!.id !== 'meteo');
+  const rest = list.filter(r => !ids.includes(r.id) && r.id !== 'meteo');
+  const meteo = list.filter(r => r.id === 'meteo');
+  return [...head, ...rest, ...meteo];
+}

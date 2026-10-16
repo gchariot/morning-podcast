@@ -37,6 +37,8 @@ export const Config = z.object({
   }).passthrough(),
   editions: z.record(z.string(), Edition).optional(),
   rubriques: z.array(Rubrique).min(1),
+  /** Ordre propre à certains jours de semaine (identifiants de thèmes) ; sinon l'ordre de `rubriques`. */
+  ordreParJour: z.object(Object.fromEntries(JOURS.map(j => [j, z.array(z.string()).optional()])) as Record<(typeof JOURS)[number], z.ZodOptional<z.ZodArray<z.ZodString>>>).strict().optional(),
   football: z.unknown(),
 }).passthrough();
 export type Config = z.infer<typeof Config>;

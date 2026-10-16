@@ -37,6 +37,7 @@ function describe(message: string): { key: string; label: string | null } | null
   if ((x = m.match(/^thèmes: « (.+) » supprimé$/))) return { key: `t:${x[1]}`, label: `« ${x[1]} » supprimé` };
   if ((x = m.match(/^thèmes: « (.+) » (rétabli|déjà présent)$/))) return { key: `t:${x[1]}`, label: null };
   if (m === 'thèmes: ordre modifié') return { key: 'ordre', label: 'Nouvel ordre des thèmes' };
+  if ((x = m.match(/^thèmes: ordre du (\S+) modifié$/))) return { key: `ordre:${x[1]}`, label: `Nouvel ordre du ${x[1]}` };
   if ((x = m.match(/^réglages: (durée en semaine|samedi|dimanche) : (\d+) min$/))) {
     const what = x[1] === 'durée en semaine' ? 'Durée en semaine' : x[1] === 'samedi' ? 'Samedi' : 'Dimanche';
     return { key: `r:${x[1]}`, label: `${what} : ${x[2]} min` };

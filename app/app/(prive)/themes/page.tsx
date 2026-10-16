@@ -12,7 +12,7 @@ export default async function ThemesPage() {
         <h1>Thèmes</h1>
         <p className="sky-meta">Le conducteur de l&apos;épisode. <NextWriting minutes={zurichMinutes()} />.</p>
       </SkyBand>
-      <ThemesEditor initial={config.rubriques} target={config.show.targetMinutes} defaultDay={nextWeekdayEpisode()} />
+      <ThemesEditor initial={config.rubriques} ordre={config.ordreParJour} target={config.show.targetMinutes} defaultDay={nextWeekdayEpisode()} />
     </>
   );
 }

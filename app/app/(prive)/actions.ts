@@ -8,7 +8,7 @@ import { loadConfig, parseDomains, Rubrique, saveConfig, slugify } from '@/lib/c
 import { loadRetours, replaceEpisodeFeedback, setPermanent } from '@/lib/retours';
 import { loadEpisodes, todayInZurich } from '@/lib/episodes';
 import { isRevealed, saveAnswer } from '@/lib/quiz';
-import { JOURS, normalizeJours, normalizeMinutes } from '@/lib/jours';
+import { JOURS, JOUR_LONG, normalizeJours, normalizeMinutes, type Jour, type OrdreParJour } from '@/lib/jours';
 import { loadSamedi, updateSamedi } from '@/lib/samedi';
 
 
@@ -200,7 +200,7 @@ export async function saveSettings(raw: z.input<typeof SettingsPatch>): Promise<
    Chaque action renvoie un résultat (pas de redirection) : la page reste en place,
    ce qui est en cours de saisie n'est jamais perdu, et la liste renvoyée resynchronise l'écran. */
 
-export type ThemeResult = { ok: boolean; message: string; rubriques?: Rubrique[] };
+export type ThemeResult = { ok: boolean; message: string; rubriques?: Rubrique[]; ordre?: OrdreParJour };
 
 const ThemeInput = z.object({
   id: Id.optional(),
@@ -231,7 +231,7 @@ async function themeOp(fn: (config: Awaited<ReturnType<typeof loadConfig>>['conf
     updateTag(REPO_TAG);
     revalidatePath('/themes');
     revalidatePath('/avis');
-    return { ok: true, message, rubriques: config.rubriques };
+    return { ok: true, message, rubriques: config.rubriques, ordre: config.ordreParJour ?? {} };
   } catch (err) {
     return { ok: false, message: publicMessage(err) };
   }
@@ -292,6 +292,7 @@ export async function deleteTheme(id: string): Promise<ThemeResult> {
     if (!r) throw new Error('Ce thème n’existe plus : recharge la page.');
     if (r.id === 'meteo') throw new Error('La météo ne se supprime pas : mets-la en pause si besoin.');
     config.rubriques = config.rubriques.filter(x => x.id !== id);
+    if (config.ordreParJour) for (const d of JOURS) config.ordreParJour[d] = config.ordreParJour[d]?.filter(x => x !== id);
     if (!config.rubriques.some(x => x.enabled !== false)) throw new Error('Il faut garder au moins un thème actif.');
     return { commit: `thèmes: « ${r.title} » supprimé (app)`, message: `« ${r.title} » supprimé.` };
   });
@@ -309,15 +310,21 @@ export async function restoreTheme(raw: Rubrique, index: number): Promise<ThemeR
 }
 
 /** Nouvel ordre complet des thèmes (glisser-déposer). */
-export async function reorderRubriques(ids: string[]): Promise<ThemeResult> {
+/** Nouvel ordre des thèmes (glisser-déposer) pour un jour de semaine ; les autres jours ne bougent pas. */
+export async function reorderRubriques(ids: string[], day: Jour): Promise<ThemeResult> {
   return themeOp(config => {
-    z.array(Id).max(50).parse(ids);
+    z.array(Id).max(50).parse(ids); z.enum(JOURS).parse(day);
     const current = config.rubriques.map(r => r.id);
     if (ids.length !== current.length || [...ids].sort().join() !== [...current].sort().join()) {
       throw new Error('La liste a changé entre-temps : recharge la page.');
     }
-    config.rubriques = ids.map(id => config.rubriques.find(r => r.id === id)!);
-    return { commit: 'thèmes: ordre modifié (app)', message: 'Ordre enregistré.' };
+    const ordre: OrdreParJour = { ...config.ordreParJour };
+    const clean = ids.filter(id => id !== 'meteo');
+    // Identique à l'ordre habituel : pas besoin d'un ordre propre à ce jour.
+    if (clean.join() === current.filter(id => id !== 'meteo').join()) delete ordre[day];
+    else ordre[day] = clean;
+    config.ordreParJour = Object.keys(ordre).length ? ordre : undefined;
+    return { commit: `thèmes: ordre du ${JOUR_LONG[day]} modifié (app)`, message: `Ordre du ${JOUR_LONG[day]} enregistré.` };
   });
 }
 

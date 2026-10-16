@@ -20,7 +20,7 @@ import {
   deleteTheme, reorderRubriques, restoreTheme, saveSettings, saveTheme, setThemeEnabled, type ThemeResult,
 } from '@/app/(prive)/actions';
 import type { Rubrique } from '@/lib/config';
-import { JOURS, JOUR_COURT, JOUR_LONG, joursLabel, minutesFor, normalizeJours, passes, type Jour } from '@/lib/jours';
+import { JOURS, JOUR_COURT, JOUR_LONG, joursLabel, minutesFor, normalizeJours, orderFor, passes, type Jour, type OrdreParJour } from '@/lib/jours';
 
 const PINNED = 'meteo';
 const MAX_DOMAINS = 25;
@@ -48,13 +48,16 @@ type Draft = { minutes: number; dirty: boolean; jours: Jour[]; day?: Jour; allDa
 
 /* ---------------------------------------------------------------- */
 
-export function ThemesEditor({ initial, target: targetInit, defaultDay }: { initial: Rubrique[]; target: number; defaultDay: Jour }) {
-  const [list, setList] = useState(initial);
+export function ThemesEditor({ initial, ordre: ordreInit, target: targetInit, defaultDay }: { initial: Rubrique[]; ordre?: OrdreParJour; target: number; defaultDay: Jour }) {
+  const [base, setList] = useState(initial);
+  // Chaque jour de semaine peut avoir son propre ordre ; la liste affichée est celle du jour choisi.
+  const [ordre, setOrdre] = useState<OrdreParJour>(ordreInit ?? {});
   const [open, setOpen] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [target, setTarget] = useState(targetInit);
   // Le conducteur se lit pour un jour de semaine (par défaut, le prochain épisode).
   const [day, setDay] = useState<Jour>(defaultDay);
+  const list = useMemo(() => orderFor(base, ordre, day), [base, ordre, day]);
   const { show } = useSnack();
   const [busy, setBusy] = useState(0);
 
@@ -68,6 +71,7 @@ export function ThemesEditor({ initial, target: targetInit, defaultDay }: { init
     return p.then(res => {
       setBusy(b => b - 1);
       if (res.ok && res.rubriques) setList(res.rubriques);
+      if (res.ok && res.ordre) setOrdre(res.ordre);
       if (res.ok || !opts.quiet) show({ message: res.message, ok: res.ok, undo: res.ok ? opts.undo : undefined });
       return res;
     });
@@ -139,21 +143,22 @@ export function ThemesEditor({ initial, target: targetInit, defaultDay }: { init
     justDragged.current = true;
     setTimeout(() => { justDragged.current = false; }, 60);
     if (!o || a.id === o.id) return;
-    const before = list;
+    const before = ordre;
     const moved = arrayMove(sortable, sortable.findIndex(r => r.id === a.id), sortable.findIndex(r => r.id === o.id));
-    const next = pinned ? [...moved, pinned] : moved;
-    setList(next);
-    send(() => reorderRubriques(next.map(r => r.id))).then(res => { if (!res.ok) setList(before); });
+    const ids = moved.map(r => r.id);
+    const d = day;
+    setOrdre({ ...ordre, [d]: ids });
+    send(() => reorderRubriques(pinned ? [...ids, pinned.id] : ids, d)).then(res => { if (!res.ok) setOrdre(before); });
   };
 
   const toggle = (r: Rubrique, enabled: boolean) => {
-    const before = list;
-    setList(list.map(x => (x.id === r.id ? { ...x, enabled } : x)));
+    const before = base;
+    setList(base.map(x => (x.id === r.id ? { ...x, enabled } : x)));
     send(() => setThemeEnabled(r.id, enabled)).then(res => { if (!res.ok) setList(before); });
   };
 
   const remove = (r: Rubrique) => {
-    const index = list.findIndex(x => x.id === r.id);
+    const index = base.findIndex(x => x.id === r.id);
     setOpen(null);
     send(() => deleteTheme(r.id), { undo: () => send(() => restoreTheme(r, index)) });
   };
@@ -221,7 +226,7 @@ export function ThemesEditor({ initial, target: targetInit, defaultDay }: { init
         </DndContext>
         {pinned && <Row {...rowProps(pinned)} pinned />}
       </div>
-      <p className="field-hint">Maintiens un thème appuyé puis glisse-le pour changer l&apos;ordre.</p>
+      <p className="field-hint">Maintiens un thème appuyé puis glisse-le pour changer l&apos;ordre du {JOUR_LONG[day]}.</p>
 
       <NewTheme busy={busy > 0} onCreate={input => send(() => saveTheme(input), { quiet: true })} />
 
