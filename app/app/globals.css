@@ -665,3 +665,79 @@ body:has(.sendbar) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bot
 .jours .pick { flex: 1; justify-content: center; padding: 8px 0; min-width: 44px; min-height: 44px; font-weight: 600; }
 .jours .pick[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
 
+
+/* ---------- English : la séance avec Nora ---------- */
+:root { --nora: #b9a7f2; --nora-soft: #2a2550; }
+.voice-dot.nora { background: var(--nora); }
+.voice.nora { color: var(--nora); }
+.round { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 0; cursor: pointer; background: var(--surface-2); color: var(--ink); }
+.round:disabled { opacity: .5; cursor: default; }
+
+.en-talk { padding: 18px 16px 16px; }
+.en-who { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 600; color: var(--ink-2); }
+.en-who b { color: var(--nora); font-weight: 700; }
+.en-brief { margin-top: 8px; font-size: 1.0625rem; line-height: 1.45; font-weight: 500; text-wrap: pretty; }
+.en-talk .btn.primary { margin-top: 16px; min-height: 56px; font-size: 1rem; box-shadow: 0 8px 22px rgba(0,0,0,.45); }
+.en-talk .btn .num { font-weight: 500; opacity: .75; margin-left: 2px; }
+.en-talk .field-hint { text-align: center; margin-top: 10px; }
+
+.phrase { display: flex; flex-direction: column; padding: 12px 16px; min-height: 60px; justify-content: center; }
+.phrase q { quotes: none; display: block; font-weight: 600; line-height: 1.35; }
+.phrase .meta { display: block; margin-top: 2px; color: var(--ink-2); font-size: 0.8125rem; }
+
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding: 16px 12px 14px; margin: 0; }
+.week li { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: var(--ink-3); border-radius: 10px; padding: 8px 0 10px; }
+.week .mark { display: block; width: 20px; height: 3px; border-radius: 3px; background: var(--surface-2); }
+.week .spoke .mark { background: var(--nora); }
+.week .today { background: var(--surface-2); color: var(--ink); }
+.week .today .mark:not(.on) { background: var(--line); }
+.week .future { opacity: .5; }
+.stat { font-weight: 650; font-variant-numeric: tabular-nums; flex: none; }
+
+.talk-status { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 0.875rem; color: var(--ink-2); }
+.talk-status time { font-weight: 700; color: var(--ink); font-size: 1rem; }
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--bad); margin-right: 6px; vertical-align: 1px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 25%, transparent); }
+.log { display: flex; flex-direction: column; gap: 14px; min-height: 120px; }
+.turn .who { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; color: var(--ink-2); margin-bottom: 4px; }
+.turn .who.nora, .fix .who { color: var(--nora); }
+.turn p { font-size: 1.0625rem; line-height: 1.45; }
+.turn.past { opacity: .62; }
+.turn.past p { font-size: 0.9375rem; }
+.turn.nora-line p { font-size: 1.25rem; line-height: 1.4; font-weight: 600; letter-spacing: -0.005em; }
+.turn .caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 3px; vertical-align: -3px; background: var(--sun-gold); }
+.fix { border-radius: 12px; background: var(--nora-soft); padding: 12px 14px; }
+.fix .who { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
+.fix .now { margin-top: 2px; font-size: 1.0625rem; font-weight: 650; color: var(--ink); }
+.fix .why { margin-top: 4px; font-size: 0.8125rem; color: var(--ink-2); }
+
+.dock {
+  position: fixed; z-index: 11; left: 8px; right: 8px; max-width: 624px; margin: 0 auto;
+  bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 8px);
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+  padding: 10px 12px; background: var(--surface); border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.35), 0 0 0 1px var(--line);
+}
+.dock .side { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.75rem; font-weight: 600; color: var(--ink-2); }
+.dock .side .round { width: 52px; height: 52px; }
+.dock .end .round { background: var(--bad-soft); color: var(--bad); }
+.orb-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.orb { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--sun-gold); color: var(--night); box-shadow: 0 6px 18px rgba(0,0,0,.45); transition: background .2s; }
+.orb.nora { background: var(--nora); }
+.orb-label { font-size: 0.875rem; font-weight: 700; color: var(--sun-gold); }
+body:has(.dock) .mini { display: none; }
+body:has(.dock) .wrap { padding-bottom: calc(var(--tabbar) + 170px + env(safe-area-inset-bottom)); }
+body:has(.dock) .snack { bottom: calc(var(--tabbar) + env(safe-area-inset-bottom) + 140px); }
+
+.fixes > * + * { border-top: 1px solid var(--line); }
+.fx { display: flex; gap: 12px; align-items: center; padding: 12px 16px; min-height: 64px; }
+.fx .grow { flex: 1; min-width: 0; }
+.fx .was { display: block; color: var(--ink-3); text-decoration: line-through; font-size: 0.875rem; }
+.fx .now { display: block; font-weight: 650; line-height: 1.35; margin-top: 1px; }
+.fx .why { display: block; color: var(--ink-2); font-size: 0.8125rem; margin-top: 3px; }
+.count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); font-size: 0.75rem; font-weight: 700; margin-left: 6px; vertical-align: 1px; }
+.tomorrow-en { margin-top: 28px; padding: 14px 16px 16px; border-radius: var(--radius); background: var(--accent-soft); }
+.tomorrow-en h2 { display: flex; align-items: center; gap: 6px; font-size: 0.9375rem; font-weight: 700; }
+.tomorrow-en h2 svg { color: var(--accent); }
+.actions { display: flex; gap: 8px; margin-top: 20px; }
+.actions .btn { flex: 1; }
+.en-talk .field-hint.err { color: var(--bad); }

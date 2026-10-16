@@ -8,6 +8,7 @@ import { useAudio } from './Audio';
 
 const TABS: { href: string; icon: IconName; label: string }[] = [
   { href: '/', icon: 'headphones', label: 'Écouter' },
+  { href: '/english', icon: 'languages', label: 'English' },
   { href: '/avis', icon: 'message', label: 'Mon avis' },
   { href: '/themes', icon: 'layers', label: 'Thèmes' },
   { href: '/reglages', icon: 'settings', label: 'Réglages' },

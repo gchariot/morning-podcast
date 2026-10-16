@@ -12,7 +12,8 @@ const CSP = [
   `img-src 'self' data: blob: https: ${storage}`,
   `media-src 'self' https: ${storage}`,
   "font-src 'self' data:",
-  "connect-src 'self'",
+  // Séance avec Nora : connexion directe du téléphone à Gemini Live (jeton à usage unique).
+  "connect-src 'self' wss://generativelanguage.googleapis.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -24,7 +25,8 @@ const SECURITY_HEADERS = [
   { key: 'X-Frame-Options', value: 'DENY' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'same-origin' },
-  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
+  // Micro : « Dis-le » et la séance avec Nora, sur l'appli elle-même seulement.
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=(), payment=(), usb=()' },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
   { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
 ];

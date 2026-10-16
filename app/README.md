@@ -28,6 +28,8 @@ Chaque modification est un commit sur `main`, validé avant écriture (relecture
 | `GITHUB_REPO` | `gchariot/morning-podcast` |
 | `GITHUB_BRANCH` | `main` |
 | `PUBLIC_BASE_URL` / `FEED_SECRET` | Les mêmes valeurs que les secrets GitHub Actions |
+| `GEMINI_API_KEY` | Pour l'onglet English (séance orale avec Nora). Reste sur le serveur : le téléphone ne reçoit qu'un jeton à usage unique (8 par jour au plus). Même clé que le secret GitHub |
+| `ENGLISH_VOICE` / `ENGLISH_LIVE_MODEL` | *Facultatifs.* Voix de Nora (`Erinome`) et modèle Gemini Live (`gemini-3.8-live`) |
 
 ## Développement
 
