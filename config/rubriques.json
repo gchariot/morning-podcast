@@ -173,6 +173,23 @@
       }
     },
     {
+      "id": "nouvelles-technologies",
+      "title": "Nouvelles technologies",
+      "minutes": 2,
+      "brief": "Les nouveautés tech de la semaine hors intelligence artificielle (déjà traitée ailleurs) : smartphones et objets connectés, voitures électriques et énergie, espace, grandes annonces des géants du numérique, cybersécurité qui touche le grand public. Une ou deux infos expliquées simplement : ce que ça change concrètement et quand ça arrive en Suisse ou en France. Pas de rumeurs, pas de publicité déguisée.",
+      "domains": [
+        "numerama.com",
+        "lesnumeriques.com",
+        "theverge.com",
+        "heidi.news",
+        "frandroid.com"
+      ],
+      "enabled": true,
+      "jours": [
+        "mar"
+      ]
+    },
+    {
       "id": "meteo",
       "title": "Météo",
       "minutes": 1,
