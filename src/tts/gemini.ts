@@ -66,15 +66,28 @@ async function callModel(model: string, turns: Turn[], attempts: number): Promis
 
   let last = '';
   for (let attempt = 1; attempt <= attempts; attempt++) {
-    const res = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-      body: JSON.stringify(body),
-    });
+    let res: Response;
+    try {
+      res = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      // Coupure réseau passagère : on réessaie comme pour un 5xx.
+      last = `réseau : ${(err as Error).message}`;
+      console.warn(`  Gemini ${model} ${last}, nouvel essai dans ${5 * attempt} s (${attempt}/${attempts})`);
+      await new Promise(r => setTimeout(r, 5000 * attempt));
+      continue;
+    }
     if (res.ok) {
-      const audio = findAudioBase64(await res.json());
-      if (!audio) throw new Error('Réponse Gemini sans audio : vérifier le format de requête.');
-      return Buffer.from(audio, 'base64');
+      const audio = findAudioBase64(await res.json().catch(() => null));
+      if (audio) return Buffer.from(audio, 'base64');
+      // Il arrive que le modèle réponde sans audio (texte seul, arrêt prématuré) : c'est passager, on réessaie.
+      last = 'réponse sans audio';
+      console.warn(`  Gemini ${model} ${last}, nouvel essai dans ${5 * attempt} s (${attempt}/${attempts})`);
+      await new Promise(r => setTimeout(r, 5000 * attempt));
+      continue;
     }
     last = `${res.status} : ${await res.text()}`;
     if (res.status < 500 && res.status !== 429) throw new Error(`Gemini TTS (${model}) ${last}`);

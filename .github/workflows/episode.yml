@@ -64,9 +64,11 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
           [ -n "$NTFY_TOPIC" ] || exit 0
+          F="out/${{ steps.when.outputs.date }}/manquantes.txt"
+          if [ -f "$F" ]; then MSG="publie sans : $(head -c 600 "$F")"; else MSG="la voix ou la publication a echoue (episode non publie)."; fi
           curl -fsS -H "Title: La Matinale - souci de voix ou de publication" -H "Tags: warning" \
             -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            -d "Episode ${{ steps.when.outputs.date }} : une rubrique a pu etre sautee ou la publication a echoue." \
+            -d "Episode ${{ steps.when.outputs.date }} : $MSG" \
             "https://ntfy.sh/$NTFY_TOPIC"
       # Seulement si la publication a échoué : sur un dépôt public, un artefact est téléchargeable par tout compte GitHub.
       - name: Garder le MP3 en artefact si la publication échoue (3 jours)
