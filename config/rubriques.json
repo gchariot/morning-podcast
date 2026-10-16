@@ -153,7 +153,10 @@
         "ecranlarge.com",
         "lesinrocks.com",
         "variety.com"
-      ]
+      ],
+      "minutesParJour": {
+        "mer": 3
+      }
     },
     {
       "id": "culture",
