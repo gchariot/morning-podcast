@@ -221,6 +221,16 @@
       "culture",
       "portrait",
       "environnement"
+    ],
+    "ven": [
+      "foot",
+      "politique",
+      "portrait",
+      "ia",
+      "jeux",
+      "cinema",
+      "culture",
+      "environnement"
     ]
   },
   "football": {
