@@ -136,7 +136,10 @@
       "minutes": 2,
       "brief": "Les bonnes nouvelles qui concernent l'environnement sur la semaine passée, seulement le lundi : une note positive pour commencer la semaine. Des faits concrets et sourcés (chiffres, décisions, projets aboutis), pas de « greenwashing » ni d'annonces vagues. Les autres jours, ne mentionne pas ce thème du tout.",
       "domains": [],
-      "enabled": true
+      "enabled": true,
+      "jours": [
+        "lun"
+      ]
     },
     {
       "id": "meteo",
