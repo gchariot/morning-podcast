@@ -195,6 +195,16 @@
       "culture",
       "environnement",
       "portrait"
+    ],
+    "mer": [
+      "foot",
+      "politique",
+      "portrait",
+      "ia",
+      "jeux",
+      "cinema",
+      "culture",
+      "environnement"
     ]
   },
   "football": {
