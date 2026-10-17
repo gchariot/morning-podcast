@@ -1,9 +1,17 @@
 {
-  "regions": ["fra1"],
-  "functions": { "api/index.py": { "maxDuration": 60 } },
+  "regions": [
+    "fra1"
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
-    { "source": "/status", "destination": "/api/index?status=1" },
-    { "source": "/(.*)", "destination": "/api/index" }
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    }
   ],
   "ignoreCommand": "P=\"${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}\"; if git cat-file -e \"$P^{commit}\" 2>/dev/null && git diff --quiet \"$P\" HEAD -- .; then exit 0; else exit 1; fi"
 }

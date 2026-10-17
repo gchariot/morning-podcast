@@ -329,8 +329,9 @@ async def app(scope, receive, send):
                 return
     if scope["type"] != "http":
         return
-    path = scope.get("path", "")
-    if path.rstrip("/").endswith("/status") or b"status=1" in scope.get("query_string", b""):
+    # Diagnostic : toute lecture simple (GET) sans jeton, ex. https://<projet>.vercel.app/status dans le navigateur.
+    # (Vercel réécrit l'adresse vers /api/index : on ne peut pas se fier au chemin.) Claude, lui, envoie des POST avec jeton.
+    if scope.get("method") == "GET" and not authorized(scope):
         tok = (os.environ.get("GARMIN_MCP_TOKEN") or "").strip()
         return await respond(send, 200, {
             "GARMIN_EMAIL": "ok" if os.environ.get("GARMIN_EMAIL") else "absent",
