@@ -128,20 +128,21 @@ def main():
     last_monday = monday - timedelta(days=7)
     km_semaine_passee = round(sum(s["km"] for s in sorties if last_monday.isoformat() <= s["date"] < monday.isoformat()), 1)
 
-    # Forme : sommeil de la nuit, Body Battery, VFC, disposition à l'entraînement.
-    sleep = safe(errors, "sommeil", lambda: g.get_sleep_data(iso)) or {}
-    dto = sleep.get("dailySleepDTO") or {}
-    # Le podcast est écrit vers 5 h 30 : si la montre n'a pas encore synchronisé la nuit, ces valeurs sont absentes.
-    sommeil = {
-        "nuitSynchronisee": bool(dto.get("sleepTimeSeconds")),
-        "heures": round(dto["sleepTimeSeconds"] / 3600, 1) if dto.get("sleepTimeSeconds") else None,
-        "score": ((dto.get("sleepScores") or {}).get("overall") or {}).get("value"),
+    # Tendance de forme : uniquement des indicateurs déjà calculés la veille (la nuit en cours n'est pas
+    # encore synchronisée à l'heure où le podcast est écrit). Statut VFC sur 7 jours, statut et charge d'entraînement, VO2max.
+    veille = (day - timedelta(days=1)).isoformat()
+    hrv = (safe(errors, "VFC", lambda: g.get_hrv_data(veille)) or {}).get("hrvSummary") or {}
+    ts = safe(errors, "statut d'entraînement", lambda: g.get_training_status(veille)) or {}
+    latest = ((ts.get("mostRecentTrainingStatus") or {}).get("latestTrainingStatusData") or {})
+    dev = next(iter(latest.values()), {}) if isinstance(latest, dict) else {}
+    load = dev.get("acuteTrainingLoadDTO") or {}
+    vo2 = (((ts.get("mostRecentVO2Max") or {}).get("generic")) or {})
+    tendance = {
+        "vfc": {"statut": hrv.get("status"), "moyenne7j": hrv.get("weeklyAvg"), "plageNormale": [(hrv.get("baseline") or {}).get("balancedLow"), (hrv.get("baseline") or {}).get("balancedUpper")]} if hrv else None,
+        "statutEntrainement": dev.get("trainingStatusFeedbackPhrase") or dev.get("trainingStatus"),
+        "charge": {"aigue": load.get("dailyTrainingLoadAcute"), "chronique": load.get("dailyTrainingLoadChronic"), "ratio": load.get("dailyAcuteChronicWorkloadRatio"), "etat": load.get("acwrStatus")} if load else None,
+        "vo2max": vo2.get("vo2MaxPreciseValue") or vo2.get("vo2MaxValue"),
     }
-    bb = safe(errors, "body battery", lambda: g.get_body_battery(iso)) or []
-    values = [v[1] for d in bb for v in (d.get("bodyBatteryValuesArray") or []) if v and len(v) > 1 and v[1] is not None]
-    hrv = (safe(errors, "VFC", lambda: g.get_hrv_data(iso)) or {}).get("hrvSummary") or {}
-    tr = safe(errors, "disposition", lambda: g.get_training_readiness(iso)) or []
-    tr = tr[0] if isinstance(tr, list) and tr else (tr if isinstance(tr, dict) else {})
 
     write({
         "date": iso,
@@ -150,12 +151,7 @@ def main():
         "dernieresSorties": sorties[:5],
         "kmSemaineEnCours": km_semaine,
         "kmSemainePassee": km_semaine_passee,
-        "forme": {
-            "sommeil": sommeil,
-            "bodyBatteryDerniere": values[-1] if values else None,
-            "vfc": {"statut": hrv.get("status"), "nuit": hrv.get("lastNightAvg"), "moyenne7j": hrv.get("weeklyAvg")} if hrv else None,
-            "disposition": {"score": tr.get("score"), "niveau": tr.get("level")} if tr else None,
-        },
+        "tendance": tendance,
         **({"manques": errors} if errors else {}),
     })
 
