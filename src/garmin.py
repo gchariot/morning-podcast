@@ -119,8 +119,8 @@ def main():
         "dureeMin": round((a.get("duration") or 0) / 60),
         "allure": pace(a.get("distance"), a.get("duration")),
         "fcMoy": a.get("averageHR"),
-        "effetAerobie": a.get("aerobicTrainingEffect"),
-        "effetAnaerobie": a.get("anaerobicTrainingEffect"),
+        "effetAerobie": round(a["aerobicTrainingEffect"], 1) if a.get("aerobicTrainingEffect") is not None else None,
+        "effetAnaerobie": round(a["anaerobicTrainingEffect"], 1) if a.get("anaerobicTrainingEffect") is not None else None,
     } for a in acts]
     sorties.sort(key=lambda s: s["date"], reverse=True)
     monday = day - timedelta(days=day.weekday())
