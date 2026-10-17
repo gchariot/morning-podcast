@@ -1,0 +1,2 @@
+garminconnect==0.3.19
+mcp==2.3.0
