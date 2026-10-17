@@ -1,0 +1,741 @@
+{
+  "date": "2026-10-17",
+  "title": "Face-à-face : la musique IA, le jeu de la semaine, OL–Nice",
+  "summary": "La grande édition du samedi : la semaine en trois minutes (mobilisation lycéenne du jour, budget 2027 à l'Assemblée, rebond de l'OL), puis un face-à-face entre Léa et Hugo sur la musique entièrement générée par IA et les recommandations des plateformes. Ensuite le jeu de la semaine en huit questions, le guide du week-end entre Ferney et Genève avec OL–Nice dimanche, les réponses du jeu et la météo pluvieuse de Zoé.",
+  "segments": [
+    {
+      "rubrique": "ouverture",
+      "titre": "Ouverture",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Bonjour Huxxley, nous sommes le samedi dix-sept octobre, et c'est la grande édition du samedi de La Matinale ! Pour ce premier samedi, on prend notre temps : la semaine en trois minutes, un face-à-face entre Hugo et moi, un jeu de huit questions, ton guide du week-end, et la météo de Zoé.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et le face-à-face du jour porte sur une question qui fait du bruit dans tes écouteurs : faut-il tenir la musique cent pour cent fabriquée par l'IA à l'écart des recommandations des plateformes ? Léa et moi, on ne sera pas d'accord, et c'est toi qui trancheras dans l'appli.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Mais d'abord, la réponse au quiz d'hier. En deux mille six, en échange de quoi Disney a-t-il récupéré les droits d'Oswald le lapin chanceux ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "La bonne réponse était B : un commentateur sportif de télévision. Bob Iger a laissé Al Michaels quitter ESPN pour NBC, la maison d'Universal, et en échange Disney a récupéré Oswald, soixante-dix-huit ans après l'avoir perdu. Tu avais dit B : bravo, Huxxley, deux sur deux cette semaine !",
+          "style": "amusé"
+        }
+      ],
+      "sources": [
+        {
+          "title": "What happened to Oswald the Lucky Rabbit (Inverse)",
+          "url": "https://www.inverse.com/article/12582-walt-disney-s-weird-buddy-what-happened-to-oswald-the-lucky-rabbit"
+        }
+      ]
+    },
+    {
+      "rubrique": "semaine",
+      "titre": "La semaine en 3 minutes",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "La semaine en trois minutes. Trois histoires qui ont bougé du lundi au vendredi. La première se joue aujourd'hui même dans la rue : le mouvement lycéen.",
+          "style": "posée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Où on en était : le mouvement est né mi-septembre en région parisienne, avec des blocus de lycées. Les élèves réclament des remplaçants pour les profs absents, des classes moins chargées, des bâtiments rénovés, et une réforme, voire la fin, de Parcoursup. Début octobre, des centaines d'établissements étaient bloqués, avec des incidents et des blessés."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et cette semaine ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Mercredi, au Sénat, Sébastien Lecornu a donné un bilan : neuf cent trente-sept policiers et gendarmes blessés, et deux cent quarante-huit élèves. Jeudi, le Premier ministre a parlé d'un mouvement transformé en « violences urbaines », et a dit redouter des violences ce samedi. Côté gouvernement, le ministre délégué Bregeon assure que deux mille des trois mille remplaçants promis sont affectés, et des décisions sur Parcoursup sont annoncées pour fin octobre. Le ministre de l'Éducation, Édouard Geffray, a aussi ouvert une plateforme en ligne où les lycéens peuvent déposer leurs demandes, jusqu'au vingt-trois octobre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Les deux camps ne racontent pas la même histoire."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Non. Le gouvernement met en avant les violences et accuse une partie de la gauche radicale d'attiser le mouvement. Les syndicats lycéens, eux, parlent de manque de moyens accumulé depuis des années, et la gauche dénonce une réponse trop répressive. Ce qui est sûr, c'est que le mouvement a dépassé les lycées : des universités ont été perturbées cette semaine."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et donc aujourd'hui, une grande journée de mobilisation."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Exactement. Les lycéens appellent à la « convergence des luttes » avec des syndicats, dont la CGT de Sophie Binet, des gilets jaunes, des soignants, des pompiers. Une carte participative recensait plus de six cents actions prévues, dont près de quatre cents manifestations. Olivier Faure, pour le PS, dit être « aux côtés » des mobilisés ; Fabien Roussel, pour le PCF, appelle à une mobilisation comparable à deux mille dix-huit ; le ministre de l'Intérieur Laurent Nuñez, lui, dit craindre des dégradations. Si tu passes la frontière aujourd'hui, garde un œil sur l'info."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Deuxième histoire, liée à la première : le budget deux mille vingt-sept à l'Assemblée."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Où on en était : un budget présenté comme un « budget de sauvegarde », avec environ quarante-trois milliards d'économies supplémentaires et un déficit visé à cinq pour cent du PIB. Mardi, la motion de rejet des socialistes a été repoussée, deux cent trente-six voix contre cent quarante-neuf, grâce aux votes du RN et du bloc central. Le texte a donc pu être débattu."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et là, les députés ont détricoté une mesure phare."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Oui : jeudi, ils ont refusé de raboter l'abattement fiscal de dix pour cent des retraités, une économie d'un virgule quatre milliard prévue par le gouvernement. Cent seize voix contre trente. Le macroniste Guillaume Kasbarian a lancé aux autres groupes : « Vous aurez honte ». La contribution française au budget de l'Union, trente virgule neuf milliards, est passée malgré l'opposition de LFI et du RN. Et en commission, les députés ont adopté l'idée d'une « génération sans tabac », qui interdirait à vie la vente de tabac à certaines générations. Où on en est : le volet recettes se discute jusqu'à lundi, et le gouvernement répète qu'il lui faut un budget d'ici la fin de l'année."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Troisième histoire, plus près de ton cœur de supporter : l'OL."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Où on en était : l'OL avait perdu à Lens le neuf octobre, et dans la foulée on apprenait la blessure de Loïs Openda, fissure du péroné, absent au moins un mois. Paulo Fonseca disait lui-même n'avoir aucun autre joueur comme lui."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et pourtant, la réaction est venue en Europe."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Jeudi, en Ligue Europa, l'OL a battu Crystal Palace, l'équipe entraînée par un certain Pierre Sage, au terme d'un match spectaculaire, avec une belle frayeur dans le temps additionnel et un arrêt décisif de Greif. Deux matchs, deux victoires en Europe. Où on en est : l'OL est quatrième de Ligue un avec onze points, à trois longueurs de Monaco, et reçoit Nice demain soir. On en reparle dans le guide."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Acte III de la mobilisation lycéenne (Public Sénat)",
+          "url": "https://www.publicsenat.fr/actualites/politique/acte-iii-de-la-mobilisation-lyceenne-le-point-sur-les-premieres-manifestations-sous-tres-haute-surveillance"
+        },
+        {
+          "title": "Manifestations du 17 octobre : vers une convergence des luttes (Sud Radio)",
+          "url": "https://www.sudradio.fr/sud-radio/manifestations-du-17-octobre-vers-une-convergence-des-luttes-massive-et-une-mobilisation-generale"
+        },
+        {
+          "title": "Sébastien Lecornu dénonce la transformation du mouvement lycéen (La Libre/AFP)",
+          "url": "https://www.lalibre.be/international/europe/2026/10/15/sebastien-lecornu-denonce-la-transformation-du-mouvement-lyceen-en-un-mouvement-de-violences-urbaines-4IRLYS55DBCEBEFDLOTAOH233M/"
+        },
+        {
+          "title": "Blocus des lycées : 149 personnels blessés (stephanelarue.com)",
+          "url": "https://stephanelarue.com/blocus-des-lycees-149-personnels-blesses-contre-85-au-6-octobre-selon-lecornu/"
+        },
+        {
+          "title": "Budget 2027 (dossier LCP)",
+          "url": "https://lcp.fr/dossiers/budget-2027-440523"
+        },
+        {
+          "title": "Les députés rejettent la réduction de l'abattement de 10 % (LCP)",
+          "url": "https://lcp.fr/actualites/budget-2027-les-deputes-rejettent-la-reduction-de-l-abattement-fiscal-de-10-sur-les"
+        },
+        {
+          "title": "La motion de rejet des socialistes n'ayant pas été adoptée (LCP)",
+          "url": "https://lcp.fr/actualites/la-motion-de-rejet-des-socialistes-n-ayant-pas-ete-adoptee-l-examen-du-budget-2027-aura"
+        },
+        {
+          "title": "OL : fissure du péroné pour Loïs Openda (Lyonfoot)",
+          "url": "https://www.lyonfoot.com/article/14464/ol-fissure-du-perone-pour-lois-openda-le-joueur-indisponible-au-moins-un-mois"
+        },
+        {
+          "title": "Lyon – Crystal Palace (Foot Mercato)",
+          "url": "https://www.footmercato.net/live/7756942525687806259-lyon-vs-crystal-palace"
+        }
+      ]
+    },
+    {
+      "rubrique": "face-a-face",
+      "titre": "Le face-à-face : la musique IA hors des recommandations ?",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Place au face-à-face ! C'est le tout premier, donc pas de résultat de vote à t'annoncer : c'est toi qui ouvres le compteur aujourd'hui. Le sujet : faut-il tenir la musique cent pour cent fabriquée par l'IA à l'écart des recommandations des plateformes ?",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Pourquoi maintenant ? Parce que mercredi, YouTube Music a commencé à afficher une étiquette sur les morceaux où l'IA générative a joué un rôle important, par exemple quand la composition et la voix sont créées par un modèle. Et Deezer a annoncé cette semaine un bouton pour filtrer la musique IA, avant la fin de l'année. Les plateformes bougent, chacune à sa manière."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ma position est claire : étiqueter, c'est bien, mais ça ne suffit pas. La musique entièrement générée par IA doit sortir des recommandations par défaut. On peut l'écouter si on la cherche, mais l'algorithme ne doit pas nous la servir sans qu'on l'ait demandée.",
+          "style": "convaincue"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et moi je défends l'inverse : on étiquette clairement, on donne à chacun un bouton pour filtrer, et ensuite on laisse l'auditeur choisir. Une étiquette, oui ; une mise à l'écart automatique, non.",
+          "style": "posé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors je commence par les chiffres, parce qu'ils donnent le vertige. Deezer reçoit environ quatre-vingt-dix mille titres entièrement générés par IA chaque jour. Les jours de pointe, c'est plus de la moitié de tout ce qui est livré à la plateforme. Une moitié ! Les recommandations, c'est la vitrine d'un magasin : elle n'est pas extensible. Si on laisse cette marée y entrer, ce sont les artistes humains qu'on pousse dehors."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Sauf que regarde l'autre chiffre de Deezer : ces titres représentent seulement un à trois pour cent des écoutes. Donc ils arrivent en masse, mais les gens ne les écoutent presque pas. La marée est dans l'entrepôt, pas dans tes oreilles."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Justement, regarde qui les écoute. Selon Deezer, en deux mille vingt-cinq, jusqu'à quatre-vingt-cinq pour cent des écoutes de ces titres étaient frauduleuses : des fermes de robots qui font tourner des morceaux pour toucher des droits. Sur l'ensemble du catalogue, la fraude, c'est huit pour cent. La musique IA en masse, c'est d'abord un outil de fraude, et la mettre dans les recommandations, c'est lui ouvrir la porte."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Mais ça, c'est un problème de fraude, pas de musique. Et Deezer le traite déjà : les écoutes frauduleuses sont exclues du calcul des droits. On punit le tricheur, pas l'outil. Personne n'interdit la guitare électrique parce que des gens l'utilisent pour faire du bruit à trois heures du matin."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Joli, mais l'enjeu économique est réel. Une étude de la CISAC, la confédération des sociétés d'auteurs, menée avec le cabinet PMP Strategy, estime que près d'un quart des revenus des créateurs pourrait être menacé d'ici deux mille vingt-huit, jusqu'à quatre milliards d'euros. Quand l'algorithme pousse un morceau IA, chaque écoute est une écoute qui ne va pas à un musicien."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et maintenant, mon argument préféré. Deezer a fait réaliser un sondage par Ipsos, neuf mille personnes dans huit pays. Résultat : quatre-vingt-dix-sept pour cent des gens n'arrivent pas à distinguer à l'aveugle une musique IA d'une musique humaine. Si l'oreille ne fait pas la différence, le vrai sujet, c'est la transparence, pas l'exclusion. Dis-moi ce que j'écoute, et laisse-moi décider.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Mais le même sondage dit autre chose ! Quatre-vingts pour cent veulent que la musique IA soit clairement identifiée, soixante-treize pour cent veulent savoir si un service leur recommande de la musique IA, et cinquante-deux pour cent ne veulent pas de ces titres dans les classements principaux. Les auditeurs eux-mêmes demandent une frontière."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Une frontière, oui, mais où la tracer ? YouTube distingue déjà les morceaux entièrement IA de ceux faits en partie avec l'IA. Prends Xania Monet : c'est une chanteuse virtuelle dont la voix est produite avec Suno, mais les paroles sont écrites par une poétesse du Mississippi, Telisha Nikki Jones. Elle a signé un contrat de plusieurs millions avec le label Hallwood Media, et c'est la première artiste IA connue à entrer dans un classement radio de Billboard. Son manager le dit : « l'IA ne remplace pas l'artiste ». Tu la mets à l'écart, elle aussi ?"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Bonne question, et je te réponds avec ta propre source. Deezer détecte ces titres depuis janvier deux mille vingt-cinq, avec un outil maison sur lequel il a même déposé deux brevets, et il vend désormais cette technologie à d'autres acteurs du secteur. La détection existe, elle marche à grande échelle : quatorze millions d'albums IA identifiés. Donc la frontière n'est pas impossible à tracer.",
+          "style": "piquée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Détecter, oui. Mais un détecteur se trompe parfois, et quand il se trompe, c'est un musicien en chair et en os qui disparaît des recommandations sans comprendre pourquoi. Spotify l'a bien compris : un artiste étiqueté est prévenu et peut faire appel. Ça prouve bien que l'erreur est possible."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Ma position vise le cent pour cent IA, pas l'artiste qui se sert d'un outil. Et note que même chez les artistes, ça divise : la chanteuse Kehlani a dit que rien ni personne ne pourrait jamais lui justifier l'IA. Et regarde Spotify : depuis septembre, les profils d'artistes qui semblent générés par IA portent un badge, « AI Persona », et ils sont exclus par défaut des playlists éditoriales et des recommandations. Mais si tu suis l'artiste, ses titres te sont proposés. C'est exactement mon modèle : rien n'est interdit, mais c'est toi qui fais le premier pas."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et Deezer, lui, a déjà retiré quarante-deux millions de titres IA de ses recommandations depuis janvier deux mille vingt-cinq. Mais remarque ce qu'il ajoute cette année : un bouton que l'auditeur peut activer ou désactiver quand il veut. Ça, c'est mon modèle : le choix est dans ta main, pas dans celle de la plateforme. Et un algorithme qui décide seul de ce qui mérite d'être recommandé, ça s'appelle un gardien qu'on n'a pas élu."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Un gardien, il y en a déjà un : l'algorithme de recommandation lui-même ! Il choisit déjà pour toi. La question, c'est seulement de savoir s'il doit mettre sur le même plan un titre composé en dix secondes, envoyé à des milliers d'exemplaires, et une chanson sur laquelle quelqu'un a passé des mois."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et ma réponse, c'est : qu'il le dise, et que je choisisse. Si demain un morceau IA me touche, je veux pouvoir tomber dessus. La musique a toujours avancé avec des machines : le synthé, la boîte à rythmes, l'Auto-Tune, tous accusés en leur temps de tuer la musique."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Alors résumons. Moi, je dis : la musique cent pour cent IA doit être étiquetée et sortie des recommandations par défaut, pour protéger les artistes et limiter la fraude, tout en restant accessible à qui la cherche.",
+          "style": "posée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et moi : on l'étiquette clairement, on donne un bouton pour la filtrer, et on laisse l'auditeur décider, sans mise à l'écart automatique. On ne tranche pas, c'est ton rôle.",
+          "style": "souriant"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Exactement : vote dans l'appli, pour ma position ou pour celle de Hugo. Le résultat sera annoncé samedi prochain."
+        }
+      ],
+      "sources": [
+        {
+          "title": "YouTube Music : étiquettes IA (YouTube Blog)",
+          "url": "https://blog.youtube/news-and-events/youtube-music-ai-labels/"
+        },
+        {
+          "title": "Deezer permettra d'exclure la musique générée par IA d'ici fin 2026 (The Media Leader FR)",
+          "url": "https://fr.themedialeader.com/?p=220426"
+        },
+        {
+          "title": "AI music exceeds 50% of daily uploads (Deezer Newsroom)",
+          "url": "https://newsroom-deezer.com/2026/07/ai-music-exceeds-50-percent-daily-uploads-deezer/"
+        },
+        {
+          "title": "Spotify will stop recommending AI songs by default (ProPakistani)",
+          "url": "https://propakistani.pk/2026/08/12/spotify-will-stop-recommending-ai-songs-by-default/"
+        },
+        {
+          "title": "Xania Monet, first AI-powered artist on a Billboard airplay chart (CP24)",
+          "url": "https://www.cp24.com/news/entertainment/2025/11/01/xania-monet-is-the-first-ai-powered-artist-to-debut-on-a-billboard-airplay-chart-but-she-likely-wont-be-the-last/"
+        }
+      ]
+    },
+    {
+      "rubrique": "jeu",
+      "titre": "Le jeu de la semaine",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Place au jeu de la semaine ! Huit questions sur l'actualité des sept derniers jours, de la plus facile à la plus difficile. Tu réponds dans l'appli, et les réponses arrivent après le guide du week-end. Hugo est là pour glisser quelques indices… plus ou moins utiles.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Je garantis au moins un indice utile. Peut-être.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question une. Quel jeu vidéo a publié sa toute dernière bande-annonce cette semaine, avant sa sortie le dix-neuf novembre ? A, GTA Six ; B, Red Dead Redemption Trois ; C, Half-Life Trois."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : l'une de ces trois réponses est attendue depuis si longtemps qu'elle est devenue une blague. Ce n'est pas celle qui sort en novembre. Autre indice : la bande-annonce dure à peine une minute et demie, elle se passe sous le soleil de Floride, et la chanson qui l'accompagne réunit Justice, Tame Impala et SZA.",
+          "style": "malicieux"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Celle-là, c'était l'échauffement. On monte d'un cran, avec le foot."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question deux. Quel club anglais l'OL a-t-il battu jeudi en Ligue Europa ? A, Aston Villa ; B, Crystal Palace ; C, Nottingham Forest."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : un palais, et sur le banc d'en face, un entraîneur que les supporters lyonnais connaissent très bien. Le match a été fou, avec des buts de Corentin Tolisso et de Tomáš Šulc côté lyonnais, et un arrêt décisif du gardien Greif dans le temps additionnel. J'en ai trop dit.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Beaucoup trop. On file en Suisse, pour une question qui intéresse toute la Romandie."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question trois. Quelle élue genevoise s'est portée candidate cette semaine à la succession de Guy Parmelin au Conseil fédéral ? A, Natalie Rickli ; B, Esther Friedli ; C, Céline Amaudruz."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : deux de ces trois noms viennent de Suisse alémanique, une Zurichoise et une Saint-Galloise. Et l'une d'elles a déjà renoncé. Pour info, les candidatures sont ouvertes jusqu'au vingt-trois octobre à midi, et l'Assemblée fédérale élira le successeur de Guy Parmelin le neuf décembre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question suivante, avec vue sur ta fenêtre, ou presque."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question quatre. Quelle nouvelle hauteur du Mont-Blanc a été annoncée mercredi ? A, quatre mille huit cent cinq mètres cinquante-neuf ; B, quatre mille huit cent sept mètres quarante-sept ; C, quatre mille huit cent dix mètres quatre-vingt-dix."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : il a perdu un peu plus d'un mètre par rapport à l'an dernier. Et rassure-toi, il va très bien, c'est juste son bonnet de neige qui bouge. Petit piège : l'une des mauvaises réponses est une vraie mesure… mais d'une autre année."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question cinq, retour au foot, et au Real. Combien de buts au total ont été marqués lors de Roma contre Real Madrid, mercredi, en Ligue des champions ? A, cinq ; B, six ; C, sept."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : José Mourinho retrouvait le Stadio Olimpico, Donyell Malen a marqué deux fois pour la Roma, et le Real a renversé le match dans les toutes dernières minutes. Compte bien, il y en a eu pour tout le monde."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question six. Quelle contribution de la France au budget de l'Union européenne pour deux mille vingt-sept les députés ont-ils votée ? A, vingt virgule neuf milliards d'euros ; B, trente virgule neuf milliards ; C, quarante virgule neuf milliards."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : c'est le même chiffre après la virgule pour les trois. Ça ne t'aide pas du tout, je sais. Vrai indice : c'est un peu moins que l'économie de quarante-trois milliards que cherche le gouvernement dans ce budget.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "On repasse côté manettes pour la question sept."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question sept. Le nouveau Castlevania, Belmont's Curse, sorti jeudi, est co-développé par le studio d'un autre jeu culte. Lequel ? A, Hollow Knight ; B, Dead Cells ; C, Celeste."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : un studio français, et un jeu où l'on meurt beaucoup, et où l'on recommence toujours un peu différemment. Dans ce Castlevania, on incarne Rose Belmont, et le jeu est vendu autour de trente dollars. GameSpot lui a même donné dix sur dix."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Il reste la plus corsée, pour les développeurs qui nous écoutent. Enfin, pour toi."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et question huit, la plus difficile. Le grand modèle d'IA à poids ouverts de Meta, Muse Spark Open, sorti jeudi, peut tourner sur combien de Mac Studio ? A, deux ; B, huit ; C, trente-deux."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Indice : moins que ce que tu crois. Mais bien plus que ce que contient ton sac à dos. Le modèle est énorme, plus de huit cents milliards de paramètres, mais seule une petite partie travaille à chaque mot, ce qui le rend bien plus léger à faire tourner qu'on ne l'imagine."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Voilà, huit questions. Réponds dans l'appli, et les réponses, c'est juste après le guide du week-end !"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "rubrique": "guide",
+      "titre": "Le guide du week-end",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Le guide du week-end ! Et un conseil d'abord : la pluie arrive cet après-midi et revient dimanche, donc on a choisi surtout des sorties à l'abri.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et on commence tout près de chez toi, au château de Voltaire, à Ferney. Ouvert samedi et dimanche en journée, avec une exposition consacrée à Sergio Toppi, « Toppi, Il Maestro ». Toppi, c'est un dessinateur italien de bande dessinée, un grand maître encore méconnu du neuvième art, au trait incroyablement fin. Et dans le même château, « Destinées de Candide », pour redécouvrir le conte que Voltaire a écrit en mille sept cent cinquante-neuf, à Genève."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Candide écrit à Genève, et exposé à Ferney. Ça boucle bien la boucle."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Et c'est tout le sujet de l'exposition : ce que ce conte a encore à nous apprendre aujourd'hui. Il y a aussi de quoi occuper les plus jeunes ce week-end : un atelier bande dessinée avec l'association BD en Pays de Gex, et une nouvelle édition de « Monument jeu d'enfant », qui propose aux familles de découvrir le château en s'amusant. C'est à quelques minutes à pied du centre de Ferney, et ça se visite très bien entre deux averses."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Deuxième idée, pour samedi soir, ambiance très différente."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Madame Loyal, la fête foraine électronique, fait son retour en Suisse à Palexpo, dans le cadre du Festival du Soir, samedi et dimanche. Le principe : des manèges, et de la musique électronique. Comptons quarante-huit francs l'entrée avant vingt et une heures. C'est à dix minutes de Ferney, et sous un toit, ce qui ne gâche rien ce week-end.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et si les manèges ne te tentent pas ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le Festival du Soir s'étale sur trois week-ends à Palexpo, avec plusieurs univers sous le même toit, ce qui permet de choisir son ambiance. Les prix varient selon les soirées, il faut regarder la billetterie. Mais si tu préfères le calme…"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Troisième idée, pour les amateurs de beaux objets."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Le musée Ariana, le musée suisse de la céramique et du verre, à deux pas de l'ONU, présente « Le verre, au-delà de la matière », une rétrospective des collections du CIRVA, le centre de recherche sur le verre et les arts plastiques de Marseille. De dix heures à dix-sept heures, douze francs, et entrée libre jusqu'à vingt-cinq ans."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et si tu es en Vieille-Ville ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Alors pousse la porte du Musée international de la Réforme, à côté de la cathédrale Saint-Pierre : il consacre une exposition à Ferdinand Hodler, « Profession de foi ». Hodler, c'est le grand peintre suisse des paysages lémaniques et des montagnes. Ouvert de dix heures à dix-sept heures, treize francs, huit en tarif réduit. Et dimanche à onze heures, les Balades théâtralisées proposent « De la haute-ville aux bas-fonds » : une visite guidée de Genève jouée par des comédiens, qui raconte des histoires insolites dans les vrais décors de la ville. Vingt francs pour un adulte, et deux heures de balade, parapluie conseillé."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le reste de dimanche ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Deux idées. Au Jardin botanique de Genève, à Chambésy, « Graines en fête » pour les vingt-cinq ans de sa banque de semences : de midi à dix-huit heures, gratuit, pour découvrir comment on préserve la diversité des plantes. Et à dix-sept heures, au Victoria Hall, le Brass Band Arquebuse de Genève donne un concert de bienfaisance. Des cuivres au Victoria Hall, sous la pluie, c'est une bonne affaire."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Maintenant le foot du week-end, en commençant par le plus important pour toi."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Dimanche, vingt heures quarante-cinq, au Groupama Stadium : OL contre Nice, en Ligue un, sur DAZN en France. Sans Openda, mais avec la confiance retrouvée après la victoire contre Crystal Palace. Une victoire, et l'OL peut regarder le podium dans les yeux, surtout si les autres trébuchent samedi."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Justement, samedi, il y a du monde en piste."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Dix-sept heures quinze, Strasbourg reçoit le PSG, qui est sixième avec le même nombre de points que l'OL, onze, quelques jours après sa victoire à Manchester City. À vingt heures quarante-cinq, Lille, deuxième à un point de Monaco, reçoit Brest, et Lens se déplace à Troyes. Autrement dit, samedi soir, tu sauras exactement ce que l'OL doit faire dimanche."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et à l'étranger ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "En Espagne, à dix-huit heures trente, le Betis reçoit le Barça, une semaine avant le Clásico. En Angleterre, Manchester City, qui avait gagné ses six premiers matchs de Premier League, reçoit Ipswich à seize heures, à la même heure que Brentford contre Liverpool. Et à dix-huit heures trente, Newcastle reçoit Aston Villa."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et le Real ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Dimanche, vingt et une heures, le Real Madrid reçoit Séville au Bernabéu, après sa folle remontée de Rome. Dernier match avant le Clásico du vingt-cinq octobre au Camp Nou : José Mourinho n'aura pas le droit à l'erreur."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Enfin, l'écran du week-end."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Au cinéma, Les Misérables de Fred Cavayé, avec Vincent Lindon, Tahar Rahim et Camille Cottin : soixante-treize mille entrées en France le premier jour, le meilleur démarrage de la semaine. En série, VisionQuest sur Disney Plus, le retour de Vision chez Marvel, avec un épisode chaque semaine jusqu'au dix novembre. Et côté manette, Castlevania, Belmont's Curse, très bien accueilli par la critique, parfait pour un dimanche pluvieux. Mais attention, il ne pardonne pas."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Toppi, Il Maestro (OpenAgenda, château de Voltaire)",
+          "url": "https://openagenda.com/agendas/99541834/events/sergio-toppi"
+        },
+        {
+          "title": "Destinées de Candide (OpenAgenda, château de Voltaire)",
+          "url": "https://openagenda.com/agendas/99541834/events/jai-descendu-dans-mon-jardin-destinees-de-candide"
+        },
+        {
+          "title": "Madame Loyal Genève by Festival du Soir (OpenAgenda)",
+          "url": "https://openagenda.com/agendas/17821345/events/madame-loyal-geneve-by-festival-du-soir"
+        },
+        {
+          "title": "Le verre, au-delà de la matière (OpenAgenda, musée Ariana)",
+          "url": "https://openagenda.com/agendas/17821345/events/le-verre-au-dela-de-la-matiere"
+        },
+        {
+          "title": "Ferdinand Hodler. Profession de foi (OpenAgenda, Musée international de la Réforme)",
+          "url": "https://openagenda.com/agendas/17821345/events/ferdinand-hodler-profession-of-faith"
+        },
+        {
+          "title": "Balades théâtralisées – De la haute-ville aux bas-fonds (OpenAgenda)",
+          "url": "https://openagenda.com/agendas/17821345/events/balades-theatralisees-de-la-haute-ville-aux-bas-fonds-3993461"
+        },
+        {
+          "title": "Graines en fête ! (OpenAgenda, Jardin botanique)",
+          "url": "https://openagenda.com/agendas/17821345/events/seeds-in-celebration"
+        },
+        {
+          "title": "Brass Band Arquebuse Genève (OpenAgenda)",
+          "url": "https://openagenda.com/agendas/17821345/events/brass-band-arquebuse-geneve-2574305"
+        },
+        {
+          "title": "Olympique Lyonnais – OGC Nice (Sport Flash)",
+          "url": "https://www.sport-flash.com/sports/football/fr/events/ligue-1-2026-2027/olympique-lyonnais-ogc-nice"
+        },
+        {
+          "title": "Où voir les prochains matchs de Lyon (Goal)",
+          "url": "https://www.goal.com/fr/news/ou-voir-les-prochains-matches-de-lyon-chaines-tv-streaming-et-calendrier-complet/blt060e516eac13de55"
+        },
+        {
+          "title": "Box-office France premier jour du 14 octobre 2026 (Zickma)",
+          "url": "https://www.zickma.fr/box-office-france-top-cumul-premier-jour-du-mercredi-14-octobre-2026/"
+        },
+        {
+          "title": "VisionQuest sets October 2026 Disney+ release date (Empire)",
+          "url": "https://empireonline.com/movies/news/visionquest-sets-october-2026-disney-release-date"
+        },
+        {
+          "title": "Castlevania : Belmont's Curse, les tests (Nintendo Life)",
+          "url": "https://www.nintendolife.com/news/2026/10/round-up-the-reviews-for-castlevania-belmonts-curse-are-in"
+        }
+      ]
+    },
+    {
+      "rubrique": "jeu-reponses",
+      "titre": "Les réponses du jeu",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Les réponses du jeu de la semaine ! Compte tes points.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Question une : A, GTA Six, dont l'ultime bande-annonce est sortie jeudi, avant la sortie le dix-neuf novembre sur PS5 et Xbox Series. Et toujours pas de version PC annoncée. Half-Life Trois, lui, reste une légende."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question deux ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "B, Crystal Palace, battu par l'OL jeudi en Ligue Europa, avec Pierre Sage, l'ancien entraîneur lyonnais, sur le banc anglais. Deux matchs, deux victoires pour l'OL en Europe. Question trois : C, Céline Amaudruz, conseillère nationale UDC genevoise. Natalie Rickli est conseillère d'État zurichoise, et la Saint-Galloise Esther Friedli a renoncé. L'élection aura lieu le neuf décembre."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Question quatre, le Mont-Blanc."
+        },
+        {
+          "speaker": "Hugo",
+          "text": "B : quatre mille huit cent sept mètres quarante-sept, un mètre trente de moins que l'an dernier. Et le piège, c'était la réponse A : quatre mille huit cent cinq mètres cinquante-neuf, c'était la mesure de deux mille vingt-trois. Question cinq : C, sept buts, avec la victoire du Real quatre à trois à Rome, arrachée dans les dernières minutes. Question six : B, trente virgule neuf milliards d'euros, votés malgré l'opposition de LFI et du RN."
+        },
+        {
+          "speaker": "Léa",
+          "text": "Et les deux dernières ?"
+        },
+        {
+          "speaker": "Hugo",
+          "text": "Question sept : B, Dead Cells. Castlevania Belmont's Curse est co-développé par Motion Twin, le studio français de Dead Cells, avec Evil Empire, et édité par Konami. Et question huit : A, deux Mac Studio M5 Ultra suffisent pour faire tourner Muse Spark Open, un modèle de huit cent seize milliards de paramètres, dont quarante-deux milliards seulement sont actifs à chaque étape.",
+          "style": "amusé"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Huit sur huit ? Tu as gagné le droit de te vanter jusqu'à lundi."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GTA 6 : l'ultime bande-annonce (Clubic)",
+          "url": "https://www.clubic.com/actualite-634390-gta-6-rockstar-lache-son-ultime-bande-annonce-et-l-attente-devient-insoutenable.html"
+        },
+        {
+          "title": "Lyon – Crystal Palace (Foot Mercato)",
+          "url": "https://www.footmercato.net/live/7756942525687806259-lyon-vs-crystal-palace"
+        },
+        {
+          "title": "Céline Amaudruz est candidate au Conseil fédéral (watson)",
+          "url": "https://www.watson.ch/fr/suisse/conseil-federal/506150255-celine-amaudruz-est-candidate-au-conseil-federal"
+        },
+        {
+          "title": "Le Mont-Blanc culmine à 4 807,47 mètres (Le Faucigny)",
+          "url": "https://www.lefaucigny.fr/2026/10/le-mont-blanc-culmine-a-4-807-47-metres-une-mesure-qui-evolue-au-fil-du-temps/"
+        },
+        {
+          "title": "Rome – Real Madrid en direct (Eurosport)",
+          "url": "https://www.eurosport.fr/football/ligue-des-champions/2026-2027/live-as-rome-real-madrid_mtc21878530/live-commentary.shtml"
+        },
+        {
+          "title": "Contribution française au budget de l'UE (LCP)",
+          "url": "https://lcp.fr/actualites/l-assemblee-nationale-valide-la-contribution-francaise-au-budget-de-l-ue-malgre-l"
+        },
+        {
+          "title": "First review for Castlevania: Belmont's Curse (Nintendo Life)",
+          "url": "https://www.nintendolife.com/news/2026/10/the-first-review-for-castlevania-belmonts-curse-is-in"
+        },
+        {
+          "title": "Meta launches an open-weight model that runs on Macs (TechCrunch)",
+          "url": "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/"
+        }
+      ]
+    },
+    {
+      "rubrique": "meteo",
+      "titre": "Météo",
+      "turns": [
+        {
+          "speaker": "Léa",
+          "text": "Et pour finir, la météo du week-end avec Zoé.",
+          "style": "enjouée"
+        },
+        {
+          "speaker": "Zoé",
+          "text": "Bonjour Huxxley ! Ce week-end, on regarde Ferney-Voltaire. Ce samedi commence sous un ciel couvert mais sec : douze degrés vers sept heures, treize à neuf heures, et quinze degrés vers midi. Profite de la matinée pour sortir, car ça se gâte ensuite.",
+          "style": "souriante"
+        },
+        {
+          "speaker": "Zoé",
+          "text": "La pluie arrive vers quinze heures et s'installe de seize heures à vingt-deux heures environ, avec jusqu'à sept chances sur dix d'être mouillé et une quinzaine de millimètres sur la journée. Le vent se lève en soirée, avec des rafales jusqu'à quarante kilomètres-heure. Il fera encore treize degrés à vingt et une heures, mais le ressenti tombe à dix. Le soleil, que tu ne verras pas beaucoup, se couche à dix-huit heures quarante-cinq."
+        },
+        {
+          "speaker": "Zoé",
+          "text": "Dimanche, pas mieux : pluie faible par moments, des températures entre dix et douze degrés seulement, près de six chances sur dix de pluie et encore des rafales autour de quarante kilomètres-heure. Mon conseil : parapluie solide et veste imperméable, et pour le reste, le château de Voltaire et le canapé devant l'OL sont d'excellents abris !",
+          "style": "amusée"
+        },
+        {
+          "speaker": "Léa",
+          "text": "Merci Zoé ! Bon week-end Huxxley, n'oublie pas de voter et de jouer dans l'appli, et allez l'OL demain soir. À demain pour le documentaire du dimanche !",
+          "style": "chaleureuse"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Open-Meteo",
+          "url": "https://open-meteo.com"
+        }
+      ]
+    }
+  ],
+  "game": {
+    "questions": [
+      {
+        "question": "Quel jeu vidéo a publié sa toute dernière bande-annonce cette semaine, avant sa sortie le 19 novembre ?",
+        "choices": [
+          "GTA VI",
+          "Red Dead Redemption 3",
+          "Half-Life 3"
+        ],
+        "answer": 0,
+        "explanation": "Rockstar a publié jeudi l'ultime trailer de GTA VI, attendu le 19 novembre sur PS5 et Xbox Series."
+      },
+      {
+        "question": "Quel club anglais l'OL a-t-il battu jeudi en Ligue Europa ?",
+        "choices": [
+          "Aston Villa",
+          "Crystal Palace",
+          "Nottingham Forest"
+        ],
+        "answer": 1,
+        "explanation": "L'OL a battu Crystal Palace, entraîné par Pierre Sage, lors de la 2e journée de Ligue Europa."
+      },
+      {
+        "question": "Quelle élue genevoise s'est portée candidate à la succession de Guy Parmelin au Conseil fédéral ?",
+        "choices": [
+          "Natalie Rickli",
+          "Esther Friedli",
+          "Céline Amaudruz"
+        ],
+        "answer": 2,
+        "explanation": "La conseillère nationale UDC genevoise Céline Amaudruz est candidate ; l'élection a lieu le 9 décembre."
+      },
+      {
+        "question": "Quelle nouvelle hauteur du Mont-Blanc a été annoncée mercredi ?",
+        "choices": [
+          "4 805,59 m",
+          "4 807,47 m",
+          "4 810,90 m"
+        ],
+        "answer": 1,
+        "explanation": "4 807,47 m, soit environ 1,30 m de moins qu'en 2025 : la calotte de neige et de glace bouge d'une année à l'autre."
+      },
+      {
+        "question": "Combien de buts au total ont été marqués lors de Roma–Real Madrid en Ligue des champions ?",
+        "choices": [
+          "Cinq",
+          "Six",
+          "Sept"
+        ],
+        "answer": 2,
+        "explanation": "Sept buts : le Real s'est imposé 4-3 à Rome grâce à une remontée en fin de match."
+      },
+      {
+        "question": "Quelle contribution de la France au budget de l'UE pour 2027 les députés ont-ils votée ?",
+        "choices": [
+          "20,9 milliards d'euros",
+          "30,9 milliards d'euros",
+          "40,9 milliards d'euros"
+        ],
+        "answer": 1,
+        "explanation": "30,9 milliards d'euros, adoptés malgré l'opposition de LFI et du RN."
+      },
+      {
+        "question": "Castlevania : Belmont's Curse est co-développé par le studio de quel autre jeu culte ?",
+        "choices": [
+          "Hollow Knight",
+          "Dead Cells",
+          "Celeste"
+        ],
+        "answer": 1,
+        "explanation": "Motion Twin, le studio de Dead Cells, le co-développe avec Evil Empire, pour Konami."
+      },
+      {
+        "question": "Sur combien de Mac Studio peut tourner Muse Spark Open, le modèle ouvert de Meta ?",
+        "choices": [
+          "Deux",
+          "Huit",
+          "Trente-deux"
+        ],
+        "answer": 0,
+        "explanation": "Deux Mac Studio M5 Ultra suffisent pour ce modèle de 816 milliards de paramètres, dont 42 milliards actifs."
+      }
+    ]
+  },
+  "debate": {
+    "topic": "Faut-il tenir la musique 100 % IA à l'écart des recommandations des plateformes ?",
+    "sides": [
+      "Oui : on l'étiquette et on la sort des recommandations par défaut, pour protéger les artistes et limiter la fraude.",
+      "Non : on l'étiquette et on offre un filtre, mais c'est l'auditeur qui choisit, sans mise à l'écart automatique."
+    ]
+  },
+  "applied": [
+    "Des indices drôles dans le jeu, toi qui as trouvé jeux vidéo et ciné drôles.",
+    "L'OL raconté d'abord et sans liste de scores, comme le foot que tu as aimé."
+  ]
+}
