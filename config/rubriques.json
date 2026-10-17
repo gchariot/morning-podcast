@@ -50,6 +50,14 @@
         "rubriques": [
           "environnement"
         ]
+      },
+      {
+        "name": "Théo",
+        "role": "coach running : direct, bienveillant, concret ; parle comme un entraîneur au bord de la piste, jamais de jargon sans l'expliquer",
+        "voice": "Orus",
+        "rubriques": [
+          "course"
+        ]
       }
     ],
     "targetMinutes": 20,
@@ -246,6 +254,14 @@
       "title": "Météo",
       "minutes": 1,
       "brief": "Présentée par Zoé, toujours en fin d'épisode (après la culture générale, juste avant l'au revoir) : Léa lui passe la parole en une phrase, Zoé donne la météo du jour pour la ville prévue (Ferney-Voltaire ou Lausanne selon le jour) à partir de data/<DATE>.json uniquement : ciel, températures du matin et maximales, pluie (probabilité et heures), vent s'il est notable, un conseil pratique (parapluie, veste, route glissante). Pas de chiffre inventé. Une touche de légèreté, 30 à 60 secondes.",
+      "domains": [],
+      "enabled": true
+    },
+    {
+      "id": "course",
+      "title": "Ta course du jour",
+      "minutes": 1,
+      "brief": "Le point entraînement marathon, tous les jours, toujours juste avant la météo, à partir de data/<DATE>.json → course (Garmin, où arrivent les séances du plan Campus Coach). Dans l'ordre : 1) la séance du jour (seanceDuJour) dite simplement et à l'oreille : « échauffement vingt minutes, puis trois fois deux kilomètres à quatre minutes vingt-quatre-trente du kilomètre, deux minutes de récupération, retour au calme dix minutes » ; sans séance prévue, c'est un jour de repos, dis-le en une phrase et cite la prochaine séance (prochainesSeances) ; 2) un mot sur la dernière sortie si elle date d'hier ou d'avant-hier (distance, allure, ressenti d'après l'effet aérobie) ; 3) les kilomètres de la semaine (kmSemaineEnCours, comparés à kmSemainePassee le lundi) ; 4) la forme, seulement si forme.sommeil.nuitSynchronisee est vrai : sommeil, Body Battery, variabilité cardiaque, disposition ; si les signaux sont mauvais (sommeil court, VFC basse ou « UNBALANCED », disposition basse) avec une séance dure prévue, Théo conseille de lever le pied, sans dramatiser. Si la nuit n'est pas synchronisée, ne parle pas de forme et ne dis pas pourquoi. Jamais de conseil médical. Pour une séance à faire le jour même, rappelle la météo du créneau du soir ou du midi en une demi-phrase (data → meteo.creneaux). Si course est absent ou contient error, la rubrique n'existe pas ce jour-là : pas de segment, aucune mention, et note-le dans le journal des trous. Nombres dits comme on les dit, allures en « quatre minutes trente au kilomètre ».",
       "domains": [],
       "enabled": true
     }

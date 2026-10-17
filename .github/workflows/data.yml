@@ -33,6 +33,16 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q garminconnect==0.3.19
+      # Jetons Garmin gardés d'un jour à l'autre : on ne se reconnecte avec le mot de passe que s'ils ont expiré.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.garminconnect
+          key: garmin-${{ github.run_id }}
+          restore-keys: garmin-
       - name: Date demandée
         id: d
         run: |
@@ -41,6 +51,13 @@ jobs:
             D=$(ls requests/ 2>/dev/null | sed -n 's#^data-\([0-9-]*\)$#\1#p' | sort | tail -1)
           fi
           echo "date=$D" >> "$GITHUB_OUTPUT"
+      - name: Entraînement course (Garmin)
+        run: python3 src/garmin.py ${{ steps.d.outputs.date || '' }}
+        continue-on-error: true
+        env:
+          GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          TZ: Europe/Zurich
       - run: npm run data -- ${{ steps.d.outputs.date && format('--date={0}', steps.d.outputs.date) || '' }}
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}

@@ -4,7 +4,7 @@
  * - Wikimedia : éphéméride et article du jour (fr)
  * Sortie : data/YYYY-MM-DD.json, lu ensuite par la tâche planifiée Claude.
  */
-import { writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ROOT, dateFromArgs, ensureDir, loadConfig, shiftDate } from './lib.js';
 
@@ -236,7 +236,16 @@ const [foot, wiki, meteo, sortiesWe] = await Promise.all([
   football(date), wikimedia(date), weather(date).catch(e => ({ error: String(e) })),
   isSaturday ? sorties(date).catch(e => ({ error: String(e) })) : Promise.resolve(undefined),
 ]);
-const out = { date, generatedAt: new Date().toISOString(), football: foot, wikipedia: wiki, meteo, ...(sortiesWe ? { sorties: sortiesWe } : {}) };
+// L'entraînement course (src/garmin.py, lancé juste avant dans le workflow) : seulement s'il concerne ce jour.
+const garminFile = resolve(ROOT, 'out/garmin.json');
+let course: unknown;
+if (existsSync(garminFile)) {
+  try {
+    const g = JSON.parse(readFileSync(garminFile, 'utf8'));
+    course = g.error || g.date === date ? g : { error: `données Garmin d'un autre jour (${g.date})` };
+  } catch (e) { course = { error: `out/garmin.json illisible : ${e}` }; }
+}
+const out = { date, generatedAt: new Date().toISOString(), football: foot, wikipedia: wiki, meteo, ...(sortiesWe ? { sorties: sortiesWe } : {}), ...(course ? { course } : {}) };
 
 ensureDir(resolve(ROOT, 'data'));
 const file = resolve(ROOT, `data/${date}.json`);
