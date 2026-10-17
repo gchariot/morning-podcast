@@ -1,6 +1,6 @@
 {
   "date": "2026-10-17",
-  "generatedAt": "2026-10-17T16:32:12.849Z",
+  "generatedAt": "2026-10-17T16:52:38.981Z",
   "football": {
     "window": {
       "from": "2026-10-16",
@@ -85,25 +85,25 @@
         "status": "IN_PLAY",
         "home": "RC Strasbourg Alsace",
         "away": "Paris Saint-Germain FC",
-        "score": "1-0",
+        "score": "1-1",
         "matchday": 7
       },
       {
         "competition": "Premier League",
         "date": "2026-10-17T16:30:00Z",
-        "status": "TIMED",
+        "status": "IN_PLAY",
         "home": "Newcastle United FC",
         "away": "Aston Villa FC",
-        "score": null,
+        "score": "0-0",
         "matchday": 7
       },
       {
         "competition": "Primera Division",
         "date": "2026-10-17T16:30:00Z",
-        "status": "TIMED",
+        "status": "IN_PLAY",
         "home": "Real Betis Balompié",
         "away": "FC Barcelona",
-        "score": null,
+        "score": "0-1",
         "matchday": 9
       },
       {
@@ -1761,7 +1761,7 @@
         "allure": "7:09",
         "fcMoy": 170,
         "effetAerobie": 5,
-        "effetAnaerobie": 0.8999999761581421
+        "effetAnaerobie": 0.9
       }
     ],
     "kmSemaineEnCours": 0,
@@ -1783,6 +1783,35 @@
         "etat": "LOW"
       },
       "vo2max": 43.7
+    },
+    "bilanSemainePassee": {
+      "du": "2026-10-05",
+      "au": "2026-10-11",
+      "km": 0,
+      "sorties": 0,
+      "seancesPrevues": []
+    },
+    "objectifs": [
+      {
+        "date": "2027-04-14",
+        "nom": "10km annecy",
+        "type": "event",
+        "dansJours": 179
+      }
+    ],
+    "predictions": {
+      "maintenant": {
+        "5km": "0:27:34",
+        "10km": "0:58:51",
+        "semi": "2:12:34",
+        "marathon": "4:50:24"
+      },
+      "ilYa30Jours": {
+        "5km": "0:28:00",
+        "10km": "0:59:37",
+        "semi": "2:13:31",
+        "marathon": "4:49:47"
+      }
     }
   }
 }
