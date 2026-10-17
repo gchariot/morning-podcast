@@ -340,6 +340,15 @@ async def app(scope, receive, send):
             "serveur": "ok",
         })
     if not authorized(scope):
+        # Diagnostic sans rien révéler : en-têtes reçus et longueurs (jamais les valeurs).
+        h = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
+        got = (h.get("authorization") or h.get("x-api-key") or "").strip()
+        if got.lower().startswith("bearer "):
+            got = got[7:].strip()
+        print("[garmin-mcp] 401", json.dumps({
+            "entetes": sorted(k for k in h if not k.startswith(("x-vercel", "x-forwarded", "x-real"))),
+            "longueurRecue": len(got), "longueurAttendue": len((os.environ.get("GARMIN_MCP_TOKEN") or "").strip()),
+        }), flush=True)
         return await respond(send, 401, {"jsonrpc": "2.0", "error": {"code": -32001, "message": "Jeton manquant ou invalide"}, "id": None})
     server = build()
     inner = server.streamable_http_app(
