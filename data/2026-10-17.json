@@ -1,6 +1,6 @@
 {
   "date": "2026-10-17",
-  "generatedAt": "2026-10-15T08:36:34.399Z",
+  "generatedAt": "2026-10-17T06:58:23.787Z",
   "football": {
     "window": {
       "from": "2026-10-16",
@@ -10,19 +10,19 @@
       {
         "competition": "Ligue 1",
         "date": "2026-10-16T18:45:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Le Mans FC",
         "away": "Toulouse FC",
-        "score": null,
+        "score": "0-3",
         "matchday": 7
       },
       {
         "competition": "Primera Division",
         "date": "2026-10-16T19:00:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "RC Deportivo La Coruña",
         "away": "Levante UD",
-        "score": null,
+        "score": "1-1",
         "matchday": 9
       },
       {
@@ -257,18 +257,18 @@
     "ville": "Ferney-Voltaire",
     "source": "Open-Meteo (open-meteo.com)",
     "journee": {
-      "ciel": "averses faibles",
-      "temperatureMin": 10.1,
-      "temperatureMax": 15.2,
-      "risquePluieMax": 70,
-      "pluieTotaleMm": 15.5,
-      "ventMaxKmh": 24.5,
-      "rafalesMaxKmh": 40,
-      "indiceUV": 0.8,
+      "ciel": "pluie faible",
+      "temperatureMin": 8.9,
+      "temperatureMax": 16.1,
+      "risquePluieMax": 78,
+      "pluieTotaleMm": 5.3,
+      "ventMaxKmh": 16.1,
+      "rafalesMaxKmh": 29.9,
+      "indiceUV": 0.9,
       "leverSoleil": "07:55",
       "coucherSoleil": "18:45",
       "heuresProbablementPluvieuses": [
-        "16 h",
+        "10 h",
         "17 h",
         "18 h",
         "19 h",
@@ -280,99 +280,74 @@
     "creneaux": [
       {
         "heure": "7 h",
-        "temperature": 12.1,
-        "ressenti": 11.9,
-        "ciel": "couvert",
+        "temperature": 10,
+        "ressenti": 9.8,
+        "ciel": "brouillard",
         "risquePluie": 8,
         "pluieMm": 0,
-        "ventKmh": 2.9
+        "ventKmh": 1.9
       },
       {
         "heure": "9 h",
-        "temperature": 12.9,
-        "ressenti": 13,
-        "ciel": "couvert",
-        "risquePluie": 18,
-        "pluieMm": 0.1,
-        "ventKmh": 1.5
+        "temperature": 11,
+        "ressenti": 11,
+        "ciel": "brouillard",
+        "risquePluie": 40,
+        "pluieMm": 0,
+        "ventKmh": 2.4
       },
       {
         "heure": "12 h",
-        "temperature": 15,
-        "ressenti": 15,
+        "temperature": 15.6,
+        "ressenti": 15.9,
         "ciel": "couvert",
-        "risquePluie": 32,
-        "pluieMm": 0.1,
-        "ventKmh": 4.7
+        "risquePluie": 45,
+        "pluieMm": 0,
+        "ventKmh": 3.6
       },
       {
         "heure": "15 h",
-        "temperature": 15.2,
-        "ressenti": 15.2,
+        "temperature": 15.1,
+        "ressenti": 14.5,
         "ciel": "pluie faible",
-        "risquePluie": 47,
-        "pluieMm": 1.1,
-        "ventKmh": 6.7
+        "risquePluie": 30,
+        "pluieMm": 0.4,
+        "ventKmh": 6.2
       },
       {
         "heure": "18 h",
-        "temperature": 14.8,
-        "ressenti": 13.8,
+        "temperature": 13.4,
+        "ressenti": 12.2,
         "ciel": "pluie faible",
-        "risquePluie": 67,
-        "pluieMm": 2.3,
-        "ventKmh": 12.1
+        "risquePluie": 63,
+        "pluieMm": 0.7,
+        "ventKmh": 8.6
       },
       {
         "heure": "21 h",
-        "temperature": 13.1,
-        "ressenti": 10.3,
+        "temperature": 12.2,
+        "ressenti": 10,
         "ciel": "pluie faible",
-        "risquePluie": 67,
-        "pluieMm": 0.7,
-        "ventKmh": 20.7
+        "risquePluie": 78,
+        "pluieMm": 0.2,
+        "ventKmh": 14
       }
     ],
     "dimanche": {
       "ciel": "pluie faible",
-      "temperatureMin": 10.2,
-      "temperatureMax": 12.3,
+      "temperatureMin": 9.9,
+      "temperatureMax": 11.4,
       "risquePluieMax": 58,
-      "pluieTotaleMm": 13.7,
-      "ventMaxKmh": 24.3,
-      "rafalesMaxKmh": 42.1
+      "pluieTotaleMm": 15.1,
+      "ventMaxKmh": 14.5,
+      "rafalesMaxKmh": 27.7
     }
   },
   "sorties": {
     "source": "OpenAgenda",
-    "agendas": 165,
-    "trouves": 118,
+    "agendas": 166,
+    "trouves": 123,
     "evenements": [
-      {
-        "jour": "samedi",
-        "titre": "FESTIVAL DU SOIR - Palexpo",
-        "resume": "TROIS WEEKENDS · PLUSIEURS UNIVERS · UNE SEULE ADRESSE",
-        "lieu": "Palexpo",
-        "ville": "Le Grand-Saconnex",
-        "adresse": "Route François-PEYROT 30, 1218 Le Grand-Saconnex",
-        "horaires": [
-          {
-            "debut": "2026-10-17T00:00:00+02:00",
-            "fin": "2026-10-17T06:00:00+02:00"
-          },
-          {
-            "debut": "2026-10-17T19:00:00+02:00",
-            "fin": "2026-10-17T23:59:00+02:00"
-          },
-          {
-            "debut": "2026-10-18T00:00:00+02:00",
-            "fin": "2026-10-18T06:00:00+02:00"
-          }
-        ],
-        "prix": "Les prix varient selon les événements. Consultez les pages de billetterie pour les informations détaillées.",
-        "url": "https://openagenda.com/agendas/17821345/events/festival-du-soir-palexpo",
-        "agenda": "Ville de Genève"
-      },
       {
         "jour": "samedi",
         "titre": "Madame Loyal Genève by Festival du Soir",
@@ -425,36 +400,27 @@
       },
       {
         "jour": "samedi",
-        "titre": "ELECTRON CLUB TOUR",
-        "resume": "Trois clubs, une nuit, une même trajectoire dédiée à la fête, le partage et la découverte.",
-        "lieu": "Autre lieu",
-        "ville": "Genève",
-        "adresse": "Genève",
+        "titre": "FESTIVAL DU SOIR - Palexpo",
+        "resume": "TROIS WEEKENDS · PLUSIEURS UNIVERS · UNE SEULE ADRESSE",
+        "lieu": "Palexpo",
+        "ville": "Le Grand-Saconnex",
+        "adresse": "Route François-PEYROT 30, 1218 Le Grand-Saconnex",
         "horaires": [
           {
             "debut": "2026-10-17T00:00:00+02:00",
             "fin": "2026-10-17T06:00:00+02:00"
-          }
-        ],
-        "prix": "Early Bird CHF 20.- , Prélocation CHF 29.- , 20 ans 20 francs CHF 10.- , jeunes CHF 15.-",
-        "url": "https://openagenda.com/agendas/17821345/events/electron-club-tour",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Fête lesbienne queer féministe",
-        "resume": "Cabarets et dj sets, soirée durant le Festival Everybody's Perfect, au Groove",
-        "lieu": "Le Groove",
-        "ville": "Genève",
-        "adresse": "rue des Gazomètres 9",
-        "horaires": [
+          },
           {
-            "debut": "2026-10-17T00:00:00+02:00",
-            "fin": "2026-10-17T04:00:00+02:00"
+            "debut": "2026-10-17T19:00:00+02:00",
+            "fin": "2026-10-17T23:59:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T00:00:00+02:00",
+            "fin": "2026-10-18T06:00:00+02:00"
           }
         ],
-        "prix": "Différents tarifs selon l'heure d'arrivée et options",
-        "url": "https://openagenda.com/agendas/17821345/events/lesbian-queer-feminist-party",
+        "prix": "Les prix varient selon les événements. Consultez les pages de billetterie pour les informations détaillées.",
+        "url": "https://openagenda.com/agendas/17821345/events/festival-du-soir-palexpo",
         "agenda": "Ville de Genève"
       },
       {
@@ -476,6 +442,23 @@
         ],
         "url": "https://openagenda.com/agendas/35777956/events/palestine",
         "agenda": "La Palestine à l'Affiche"
+      },
+      {
+        "jour": "samedi",
+        "titre": "ELECTRON CLUB TOUR",
+        "resume": "Trois clubs, une nuit, une même trajectoire dédiée à la fête, le partage et la découverte.",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T00:00:00+02:00",
+            "fin": "2026-10-17T06:00:00+02:00"
+          }
+        ],
+        "prix": "Early Bird CHF 20.- , Prélocation CHF 29.- , 20 ans 20 francs CHF 10.- , jeunes CHF 15.-",
+        "url": "https://openagenda.com/agendas/95186839/events/electron-club-tour",
+        "agenda": "Coolturalia"
       },
       {
         "jour": "samedi",
@@ -964,6 +947,23 @@
       },
       {
         "jour": "samedi",
+        "titre": "Ballet pour adultes - Tous Niveaux",
+        "resume": "Ballet pour adultes - Tous Niveaux",
+        "lieu": "Bureau culturel",
+        "ville": "Genève",
+        "adresse": "Rue de Berne 63",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T11:00:00+02:00"
+          }
+        ],
+        "prix": "15frs contribution",
+        "url": "https://openagenda.com/agendas/17821345/events/ballet-pour-adultes-tous-niveaux-7710096",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
         "titre": "« en attendant »",
         "resume": "de Abdul Rahman Katanani avec Analix Forever. Curator : Barbara Polla",
         "lieu": "Librairie L'Olivier - ICAM",
@@ -1036,26 +1036,6 @@
           }
         ],
         "url": "https://openagenda.com/agendas/99541834/events/monument-jeu-denfant-2796240",
-        "agenda": "Château de Voltaire à Ferney"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Atelier bande dessinée avec l'association BD en Pays de Gex",
-        "resume": "Des histoires à dessiner au château de Voltaire !",
-        "lieu": "Château de Voltaire à Ferney",
-        "ville": "Ferney-Voltaire",
-        "adresse": "1, allée du Château 01210 Ferney-Voltaire",
-        "horaires": [
-          {
-            "debut": "2026-10-17T10:00:00Z",
-            "fin": "2026-10-17T10:30:00Z"
-          },
-          {
-            "debut": "2026-10-18T10:00:00Z",
-            "fin": "2026-10-18T10:30:00Z"
-          }
-        ],
-        "url": "https://openagenda.com/agendas/99541834/events/atelier-bande-dessinee-avec-lassociation-bd-en-pays-de-gex",
         "agenda": "Château de Voltaire à Ferney"
       },
       {
@@ -1156,6 +1136,40 @@
       },
       {
         "jour": "samedi",
+        "titre": "Telluric Silhouettes",
+        "resume": "‘Telluric Silhouettes’ brings together works by Reinata Sadimba (Mozambique, ceramics) and Tiemar Teguene (Ethiopia, monoprints). It runs from 29 October 2026 to 19 December 2026 at Gallery Brulhart.",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T12:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/telluric-silhouettes",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
+        "titre": "Cours Tango Argentin niv. debutant",
+        "resume": "Cours Tango Argentin",
+        "lieu": "Bureau culturel",
+        "ville": "Genève",
+        "adresse": "Rue de Berne 63",
+        "horaires": [
+          {
+            "debut": "2026-10-17T12:00:00+02:00",
+            "fin": "2026-10-17T13:00:00+02:00"
+          }
+        ],
+        "prix": "15frs contribution",
+        "url": "https://openagenda.com/agendas/17821345/events/cours-tango-argentin-niv-debutant-7803943",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
         "titre": "Journée Mondiale du refus de la misère",
         "resume": "Un repas partagé, des ateliers et des prises de parole : rejoignez-nous le 17 octobre au Centre de Quartier des Libellules pour une journée placée sous le signe de la dignité et de la solidarité.",
         "lieu": "Centre de quartier des Libellules",
@@ -1234,20 +1248,20 @@
         "agenda": "Association des communes genevoises"
       },
       {
-        "jour": "samedi",
-        "titre": "Que cachent vos objets numériques?",
-        "resume": "Exposition itinérante",
+        "jour": "dimanche",
+        "titre": "Entreprendre sur le terrain : les leçons d’un parcours entrepreneurial",
+        "resume": "De Procter & Gamble à la création et à la vente de sa propre marque, Francesco Urso partage ses leçons sur l’entrepreneuriat, la construction d’une marque et la persévérance.",
         "lieu": "Autre lieu",
         "ville": "Genève",
         "adresse": "Genève",
         "horaires": [
           {
-            "debut": "2026-10-17T13:30:00+02:00",
-            "fin": "2026-10-17T17:30:00+02:00"
+            "debut": "2026-10-18T03:30:00+02:00",
+            "fin": "2026-10-18T04:00:00+02:00"
           }
         ],
-        "prix": "Gratuit",
-        "url": "https://openagenda.com/agendas/17821345/events/que-cachent-vos-objets-numeriques",
+        "prix": "Inscription préalable obligatoire. Places limitées. Billets à partir de CHF 20, comprenant une boisson de bienvenue et des collations servies après la conférenc",
+        "url": "https://openagenda.com/agendas/17821345/events/the-marketing-meetup-geneva-building-ventures-in-the-wild",
         "agenda": "Ville de Genève"
       },
       {
@@ -1316,6 +1330,26 @@
         "prix": "gratuit",
         "url": "https://openagenda.com/agendas/17821345/events/geneve-suisse-randonnees-pedestres-gratuites-au-saleve-2702803",
         "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "dimanche",
+        "titre": "Monument Jeu d'Enfant : Histoire de jouer !",
+        "resume": "A l’occasion de Monument Jeu d’Enfant, découvrez en famille le château grâce à un jeu de l’oie grandeur nature.",
+        "lieu": "Château de Voltaire à Ferney",
+        "ville": "Ferney-Voltaire",
+        "adresse": "1, allée du Château 01210 Ferney-Voltaire",
+        "horaires": [
+          {
+            "debut": "2026-10-18T10:30:00Z",
+            "fin": "2026-10-18T12:30:00Z"
+          },
+          {
+            "debut": "2026-10-18T13:30:00Z",
+            "fin": "2026-10-18T16:00:00Z"
+          }
+        ],
+        "url": "https://openagenda.com/agendas/99541834/events/monument-jeu-denfant-histoire-de-jouer",
+        "agenda": "Château de Voltaire à Ferney"
       },
       {
         "jour": "dimanche",
@@ -1637,8 +1671,8 @@
           }
         ],
         "prix": "Différents tarifs de CHF 6.- à CHF 17.-",
-        "url": "https://openagenda.com/agendas/17821345/events/bearcave-arkoydotrypa",
-        "agenda": "Ville de Genève"
+        "url": "https://openagenda.com/agendas/95186839/events/bearcave-arkoydotrypa",
+        "agenda": "Coolturalia"
       },
       {
         "jour": "dimanche",
@@ -1654,8 +1688,8 @@
           }
         ],
         "prix": "Différents tarifs de CHF 6.- à CHF 17.-",
-        "url": "https://openagenda.com/agendas/17821345/events/sixth-shades-of-gays-six-nuances-de-gays",
-        "agenda": "Ville de Genève"
+        "url": "https://openagenda.com/agendas/95186839/events/sixth-shades-of-gays-six-nuances-de-gays",
+        "agenda": "Coolturalia"
       },
       {
         "jour": "dimanche",
