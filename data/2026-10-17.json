@@ -1,6 +1,6 @@
 {
   "date": "2026-10-17",
-  "generatedAt": "2026-10-17T06:58:23.787Z",
+  "generatedAt": "2026-10-17T16:32:12.849Z",
   "football": {
     "window": {
       "from": "2026-10-16",
@@ -28,64 +28,64 @@
       {
         "competition": "Premier League",
         "date": "2026-10-17T11:30:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Everton FC",
         "away": "Chelsea FC",
-        "score": null,
+        "score": "0-2",
         "matchday": 7
       },
       {
         "competition": "Primera Division",
         "date": "2026-10-17T12:00:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "RCD Espanyol de Barcelona",
         "away": "Club Atlético de Madrid",
-        "score": null,
+        "score": "0-1",
         "matchday": 9
       },
       {
         "competition": "Premier League",
         "date": "2026-10-17T14:00:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Brentford FC",
         "away": "Liverpool FC",
-        "score": null,
+        "score": "1-2",
         "matchday": 7
       },
       {
         "competition": "Premier League",
         "date": "2026-10-17T14:00:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Fulham FC",
         "away": "Hull City AFC",
-        "score": null,
+        "score": "1-0",
         "matchday": 7
       },
       {
         "competition": "Premier League",
         "date": "2026-10-17T14:00:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Manchester City FC",
         "away": "Ipswich Town FC",
-        "score": null,
+        "score": "3-2",
         "matchday": 7
       },
       {
         "competition": "Primera Division",
         "date": "2026-10-17T14:15:00Z",
-        "status": "TIMED",
+        "status": "FINISHED",
         "home": "Villarreal CF",
         "away": "Elche CF",
-        "score": null,
+        "score": "0-0",
         "matchday": 9
       },
       {
         "competition": "Ligue 1",
         "date": "2026-10-17T15:15:00Z",
-        "status": "TIMED",
+        "status": "IN_PLAY",
         "home": "RC Strasbourg Alsace",
         "away": "Paris Saint-Germain FC",
-        "score": null,
+        "score": "1-0",
         "matchday": 7
       },
       {
@@ -169,7 +169,7 @@
         "position": 6,
         "team": "Paris Saint-Germain FC",
         "points": 11,
-        "played": 6
+        "played": 7
       }
     ],
     "favouriteTeams": {
@@ -259,16 +259,21 @@
     "journee": {
       "ciel": "pluie faible",
       "temperatureMin": 8.9,
-      "temperatureMax": 16.1,
-      "risquePluieMax": 78,
-      "pluieTotaleMm": 5.3,
-      "ventMaxKmh": 16.1,
-      "rafalesMaxKmh": 29.9,
-      "indiceUV": 0.9,
+      "temperatureMax": 15.1,
+      "risquePluieMax": 100,
+      "pluieTotaleMm": 1.6,
+      "ventMaxKmh": 19.4,
+      "rafalesMaxKmh": 34.9,
+      "indiceUV": 0.8,
       "leverSoleil": "07:55",
       "coucherSoleil": "18:45",
       "heuresProbablementPluvieuses": [
+        "9 h",
         "10 h",
+        "11 h",
+        "12 h",
+        "15 h",
+        "16 h",
         "17 h",
         "18 h",
         "19 h",
@@ -289,64 +294,64 @@
       },
       {
         "heure": "9 h",
-        "temperature": 11,
+        "temperature": 11.1,
         "ressenti": 11,
         "ciel": "brouillard",
-        "risquePluie": 40,
+        "risquePluie": 58,
         "pluieMm": 0,
-        "ventKmh": 2.4
+        "ventKmh": 3.2
       },
       {
         "heure": "12 h",
-        "temperature": 15.6,
-        "ressenti": 15.9,
+        "temperature": 13.6,
+        "ressenti": 13.5,
         "ciel": "couvert",
-        "risquePluie": 45,
+        "risquePluie": 50,
         "pluieMm": 0,
-        "ventKmh": 3.6
+        "ventKmh": 3.7
       },
       {
         "heure": "15 h",
-        "temperature": 15.1,
-        "ressenti": 14.5,
+        "temperature": 14.9,
+        "ressenti": 14.9,
         "ciel": "pluie faible",
-        "risquePluie": 30,
-        "pluieMm": 0.4,
-        "ventKmh": 6.2
+        "risquePluie": 88,
+        "pluieMm": 0.1,
+        "ventKmh": 5.8
       },
       {
         "heure": "18 h",
-        "temperature": 13.4,
-        "ressenti": 12.2,
+        "temperature": 13.8,
+        "ressenti": 12.3,
         "ciel": "pluie faible",
-        "risquePluie": 63,
-        "pluieMm": 0.7,
-        "ventKmh": 8.6
+        "risquePluie": 93,
+        "pluieMm": 0.3,
+        "ventKmh": 11.8
       },
       {
         "heure": "21 h",
-        "temperature": 12.2,
-        "ressenti": 10,
+        "temperature": 12.4,
+        "ressenti": 9.1,
         "ciel": "pluie faible",
-        "risquePluie": 78,
-        "pluieMm": 0.2,
-        "ventKmh": 14
+        "risquePluie": 98,
+        "pluieMm": 0.1,
+        "ventKmh": 19.4
       }
     ],
     "dimanche": {
       "ciel": "pluie faible",
-      "temperatureMin": 9.9,
+      "temperatureMin": 8.7,
       "temperatureMax": 11.4,
-      "risquePluieMax": 58,
-      "pluieTotaleMm": 15.1,
-      "ventMaxKmh": 14.5,
-      "rafalesMaxKmh": 27.7
+      "risquePluieMax": 80,
+      "pluieTotaleMm": 13.1,
+      "ventMaxKmh": 17.1,
+      "rafalesMaxKmh": 30.2
     }
   },
   "sorties": {
     "source": "OpenAgenda",
     "agendas": 166,
-    "trouves": 123,
+    "trouves": 122,
     "evenements": [
       {
         "jour": "samedi",
@@ -479,27 +484,6 @@
       },
       {
         "jour": "samedi",
-        "titre": "Enquêter sur la violence aux frontières, favoriser la «justice de la mobilité»",
-        "resume": "Exposition audiovisuelle à Uni Mail présentant des vidéos de l'association Border Forensics qui mène des enquêtes avec et en soutien aux communautés exposées à la violence frontalière.",
-        "lieu": "Uni Mail",
-        "ville": "Genève",
-        "adresse": "Boulevard du Pont-d'Arve 40",
-        "horaires": [
-          {
-            "debut": "2026-10-17T08:00:00+02:00",
-            "fin": "2026-10-17T18:00:00+02:00"
-          },
-          {
-            "debut": "2026-10-18T09:00:00+02:00",
-            "fin": "2026-10-18T18:00:00+02:00"
-          }
-        ],
-        "prix": "Gratuit",
-        "url": "https://openagenda.com/agendas/17821345/events/enqueter-sur-la-violence-aux-frontieres-favoriser-la-justice-de-la-mobilite",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
         "titre": "Hortus Botanicus Helveticus - 30 ans, 30 jardins, 30 espèces emblématiques",
         "resume": "Pour les 30 ans d’Hortus Botanicus Helveticus, cette exposition invite à découvrir, à travers 30 voiles, la diversité et l’engagement des jardins botaniques suisses pour la préservation du vivant.",
         "lieu": "Jardin Botanique de Genève",
@@ -521,6 +505,27 @@
       },
       {
         "jour": "samedi",
+        "titre": "Enquêter sur la violence aux frontières, favoriser la «justice de la mobilité»",
+        "resume": "Exposition audiovisuelle à Uni Mail présentant des vidéos de l'association Border Forensics qui mène des enquêtes avec et en soutien aux communautés exposées à la violence frontalière.",
+        "lieu": "Uni Mail",
+        "ville": "Genève",
+        "adresse": "Boulevard du Pont-d'Arve 40",
+        "horaires": [
+          {
+            "debut": "2026-10-17T08:00:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/enqueter-sur-la-violence-aux-frontieres-favoriser-la-justice-de-la-mobilite",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
         "titre": "Permanence Numérique - Rive droite",
         "resume": "L'espace de conseil et d'échange accueille la population les lundis, mercredis, vendredis et samedis pour répondre à ses questions sur l’informatique et le web gratuitement et sans rendez-vous à OSEO.",
         "lieu": "OSEO Genève siège social",
@@ -534,40 +539,6 @@
         ],
         "prix": "Gratuit",
         "url": "https://openagenda.com/agendas/17821345/events/permanence-numerique-rive-droite",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Médiation sensible, méditation intérieure",
-        "resume": "Visite guidée et atelier de méditation",
-        "lieu": "Musée international de la Réforme",
-        "ville": "Genève",
-        "adresse": "Cour de Saint-Pierre 10",
-        "horaires": [
-          {
-            "debut": "2026-10-17T09:00:00+02:00",
-            "fin": "2026-10-17T10:00:00+02:00"
-          }
-        ],
-        "prix": "CHF 15.- (normal) ; CHF 10.- (réduit)",
-        "url": "https://openagenda.com/agendas/17821345/events/mindful-meditation-inner-meditation",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Cafés genevois: la vie même",
-        "resume": "A l’orée des années 1980, la photographe Dany Gignoux (1944-2025) et le poète Georges Haldas (1917-2010) ont saisi la vie des cafés genevois.",
-        "lieu": "Bibliothèque de Genève",
-        "ville": "Genève",
-        "adresse": "Promenade des Bastions 8, 1205 Genève",
-        "horaires": [
-          {
-            "debut": "2026-10-17T09:00:00+02:00",
-            "fin": "2026-10-17T12:00:00+02:00"
-          }
-        ],
-        "prix": "CHF 0",
-        "url": "https://openagenda.com/agendas/17821345/events/cafes-genevois-la-vie-meme",
         "agenda": "Ville de Genève"
       },
       {
@@ -635,19 +606,36 @@
       },
       {
         "jour": "samedi",
-        "titre": "Le Cabinet d’Émerveille s’invite au MEG",
-        "resume": "Art, jeu libre et exploration sensorielle pour les tout-e-s petit-e-s (0 à 8 ans) au cœur du musée. Auditorium. Samedi 17 octobre de 9h à 18h",
-        "lieu": "MEG",
+        "titre": "Cafés genevois: la vie même",
+        "resume": "A l’orée des années 1980, la photographe Dany Gignoux (1944-2025) et le poète Georges Haldas (1917-2010) ont saisi la vie des cafés genevois.",
+        "lieu": "Bibliothèque de Genève",
         "ville": "Genève",
-        "adresse": "Boulevard Carl-VOGT 65, 1205 Genève",
+        "adresse": "Promenade des Bastions 8, 1205 Genève",
         "horaires": [
           {
             "debut": "2026-10-17T09:00:00+02:00",
-            "fin": "2026-10-17T18:00:00+02:00"
+            "fin": "2026-10-17T12:00:00+02:00"
           }
         ],
-        "prix": "CHF 0.-",
-        "url": "https://openagenda.com/agendas/17821345/events/le-cabinet-demerveille-sinvite-au-meg-6661642",
+        "prix": "CHF 0",
+        "url": "https://openagenda.com/agendas/17821345/events/cafes-genevois-la-vie-meme",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
+        "titre": "Médiation sensible, méditation intérieure",
+        "resume": "Visite guidée et atelier de méditation",
+        "lieu": "Musée international de la Réforme",
+        "ville": "Genève",
+        "adresse": "Cour de Saint-Pierre 10",
+        "horaires": [
+          {
+            "debut": "2026-10-17T09:00:00+02:00",
+            "fin": "2026-10-17T10:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 15.- (normal) ; CHF 10.- (réduit)",
+        "url": "https://openagenda.com/agendas/17821345/events/mindful-meditation-inner-meditation",
         "agenda": "Ville de Genève"
       },
       {
@@ -703,23 +691,6 @@
         ],
         "prix": "Entrée : CHF 15.-, tarif réduit : CHF 10.-",
         "url": "https://openagenda.com/agendas/17821345/events/humanitarian-by-design",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Bonjour, ça va ? petites histoires pour créer du lien",
-        "resume": "Exposition à la Bibliothèque de la Cité",
-        "lieu": "Bibliothèque de la Cité",
-        "ville": "Genève",
-        "adresse": "Place des Trois-Perdrix 5, 1204 Genève",
-        "horaires": [
-          {
-            "debut": "2026-10-17T10:00:00+02:00",
-            "fin": "2026-10-17T17:00:00+02:00"
-          }
-        ],
-        "prix": "Gratuit",
-        "url": "https://openagenda.com/agendas/17821345/events/bonjour-ca-va-petites-histoires-pour-creer-du-lien",
         "agenda": "Ville de Genève"
       },
       {
@@ -850,6 +821,23 @@
       },
       {
         "jour": "samedi",
+        "titre": "Bonjour, ça va ? petites histoires pour créer du lien",
+        "resume": "Exposition à la Bibliothèque de la Cité",
+        "lieu": "Bibliothèque de la Cité",
+        "ville": "Genève",
+        "adresse": "Place des Trois-Perdrix 5, 1204 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T10:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/bonjour-ca-va-petites-histoires-pour-creer-du-lien",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
         "titre": "L'Afrique au coeur de l'assiette - une journée festive autour de notre souveraineté alimentaire!",
         "resume": "Au programme : marché de produits de saison, rencontres avec des acteurs de la coopération, ateliers culinaires, animations pour petits et grands, découvertes et moments conviviaux.",
         "lieu": "Ferme de Budé",
@@ -913,23 +901,6 @@
       },
       {
         "jour": "samedi",
-        "titre": "Lecture du paysage et histoire du Léman en balade au bord du lac",
-        "resume": "Dans le cadre de l’exposition “Léman être vivant”, cette animation d’Hydromondes vous invite à découvrir le Léman, son histoire, son fonctionnement et ses menaces depuis ses rives.",
-        "lieu": "Baby-Plage",
-        "ville": "Genève",
-        "adresse": "quai gustave-ador",
-        "horaires": [
-          {
-            "debut": "2026-10-17T10:00:00+02:00",
-            "fin": "2026-10-17T12:00:00+02:00"
-          }
-        ],
-        "prix": "Prix libre",
-        "url": "https://openagenda.com/agendas/17821345/events/lecture-du-paysage-et-histoire-du-leman-en-balade-au-bord-du-lac",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
         "titre": "Éveil sensoriel. Le futur, c’est quoi ?",
         "resume": "Une première découverte du musée par les sens. Exposition temporaire. Samedi 17 octobre de 10h à 11h.",
         "lieu": "MEG",
@@ -942,25 +913,8 @@
           }
         ],
         "prix": "CHF 0.- / réservation obligatoire",
-        "url": "https://openagenda.com/agendas/17821345/events/eveil-sensoriel-le-futur-cest-quoi-2486255",
-        "agenda": "Ville de Genève"
-      },
-      {
-        "jour": "samedi",
-        "titre": "Ballet pour adultes - Tous Niveaux",
-        "resume": "Ballet pour adultes - Tous Niveaux",
-        "lieu": "Bureau culturel",
-        "ville": "Genève",
-        "adresse": "Rue de Berne 63",
-        "horaires": [
-          {
-            "debut": "2026-10-17T10:00:00+02:00",
-            "fin": "2026-10-17T11:00:00+02:00"
-          }
-        ],
-        "prix": "15frs contribution",
-        "url": "https://openagenda.com/agendas/17821345/events/ballet-pour-adultes-tous-niveaux-7710096",
-        "agenda": "Ville de Genève"
+        "url": "https://openagenda.com/agendas/96959970/events/eveil-sensoriel-le-futur-cest-quoi-2486255",
+        "agenda": "Musées de Genève"
       },
       {
         "jour": "samedi",
@@ -1248,6 +1202,64 @@
         "agenda": "Association des communes genevoises"
       },
       {
+        "jour": "samedi",
+        "titre": "Que cachent vos objets numériques?",
+        "resume": "Exposition itinérante",
+        "lieu": "Autre lieu",
+        "ville": "Genève",
+        "adresse": "Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-17T13:30:00+02:00",
+            "fin": "2026-10-17T17:30:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/que-cachent-vos-objets-numeriques",
+        "agenda": "Ville de Genève"
+      },
+      {
+        "jour": "samedi",
+        "titre": "ANNULE - Marché artisanal salle du Vélodrome",
+        "resume": "ANNULE - Marché artisanal avec près de 25 artisanes et artisans",
+        "lieu": "Espace Vélodrome",
+        "ville": "Plan-les-Ouates",
+        "adresse": "Chemin de la Mère-Voie 62, 1228 Plan-les-Ouates",
+        "horaires": [
+          {
+            "debut": "2026-10-17T13:30:00+02:00",
+            "fin": "2026-10-17T18:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T10:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "url": "https://openagenda.com/agendas/52853891/events/marche-artisanal-salle-du-velodrome",
+        "agenda": "Association des communes genevoises"
+      },
+      {
+        "jour": "samedi",
+        "titre": "L'espace médiation du Jardin botanique",
+        "resume": "Vous êtes curieux? Vous voulez en apprendre plus sur le monde végétal et fongique, mais ne savez pas par où commencer? Nous sommes là pour répondre à vos questions et vous proposer des activités!",
+        "lieu": "Jardin Botanique de Genève",
+        "ville": "Chambésy",
+        "adresse": "Chemin de l'Impératrice 1, 1292 Chambésy",
+        "horaires": [
+          {
+            "debut": "2026-10-17T14:00:00+02:00",
+            "fin": "2026-10-17T17:00:00+02:00"
+          },
+          {
+            "debut": "2026-10-18T12:00:00+02:00",
+            "fin": "2026-10-18T17:00:00+02:00"
+          }
+        ],
+        "prix": "Gratuit",
+        "url": "https://openagenda.com/agendas/17821345/events/lespace-mediation-du-jardin-botanique",
+        "agenda": "Ville de Genève"
+      },
+      {
         "jour": "dimanche",
         "titre": "Entreprendre sur le terrain : les leçons d’un parcours entrepreneurial",
         "resume": "De Procter & Gamble à la création et à la vente de sa propre marque, Francesco Urso partage ses leçons sur l’entrepreneuriat, la construction d’une marque et la persévérance.",
@@ -1297,6 +1309,23 @@
         "prix": "Adulte : CHF 10.- / Enfant : CHF 5.-",
         "url": "https://openagenda.com/agendas/52853891/events/balade-au-fil-de-la-versoix-ge",
         "agenda": "Association des communes genevoises"
+      },
+      {
+        "jour": "dimanche",
+        "titre": "Le Cabinet d’Émerveille s’invite au MEG",
+        "resume": "Art, jeu libre et exploration sensorielle pour les tout-e-s petit-e-s (0 à 8 ans) au cœur du musée. Auditorium. Dimanche 18 octobre de 9h à 18h",
+        "lieu": "MEG",
+        "ville": "Genève",
+        "adresse": "Boulevard Carl-VOGT 65, 1205 Genève",
+        "horaires": [
+          {
+            "debut": "2026-10-18T09:00:00+02:00",
+            "fin": "2026-10-18T18:00:00+02:00"
+          }
+        ],
+        "prix": "CHF 0.-",
+        "url": "https://openagenda.com/agendas/17821345/events/le-cabinet-demerveille-sinvite-au-meg-3883038",
+        "agenda": "Ville de Genève"
       },
       {
         "jour": "dimanche",
@@ -1671,8 +1700,8 @@
           }
         ],
         "prix": "Différents tarifs de CHF 6.- à CHF 17.-",
-        "url": "https://openagenda.com/agendas/95186839/events/bearcave-arkoydotrypa",
-        "agenda": "Coolturalia"
+        "url": "https://openagenda.com/agendas/17821345/events/bearcave-arkoydotrypa",
+        "agenda": "Ville de Genève"
       },
       {
         "jour": "dimanche",
@@ -1688,8 +1717,8 @@
           }
         ],
         "prix": "Différents tarifs de CHF 6.- à CHF 17.-",
-        "url": "https://openagenda.com/agendas/95186839/events/sixth-shades-of-gays-six-nuances-de-gays",
-        "agenda": "Coolturalia"
+        "url": "https://openagenda.com/agendas/17821345/events/sixth-shades-of-gays-six-nuances-de-gays",
+        "agenda": "Ville de Genève"
       },
       {
         "jour": "dimanche",
@@ -1705,9 +1734,55 @@
           }
         ],
         "prix": "différents tarifs de CHF 6.- à CHF 17.-",
-        "url": "https://openagenda.com/agendas/95186839/events/strange-journeythe-story-of-rocky-horror",
-        "agenda": "Coolturalia"
+        "url": "https://openagenda.com/agendas/17821345/events/strange-journeythe-story-of-rocky-horror",
+        "agenda": "Ville de Genève"
       }
     ]
+  },
+  "course": {
+    "date": "2026-10-17",
+    "seanceDuJour": null,
+    "prochainesSeances": [
+      {
+        "date": "2026-10-21",
+        "nom": "S19.10-1-Endurance Fondamentale"
+      },
+      {
+        "date": "2026-10-23",
+        "nom": "S19.10-2-Récupération active"
+      }
+    ],
+    "dernieresSorties": [
+      {
+        "date": "2026-10-04",
+        "nom": "Lyon - Run in Lyon by Harmonie Mutuelle (Marathon)",
+        "km": 42.37,
+        "dureeMin": 303,
+        "allure": "7:09",
+        "fcMoy": 170,
+        "effetAerobie": 5,
+        "effetAnaerobie": 0.8999999761581421
+      }
+    ],
+    "kmSemaineEnCours": 0,
+    "kmSemainePassee": 0,
+    "tendance": {
+      "vfc": {
+        "statut": "BALANCED",
+        "moyenne7j": 68,
+        "plageNormale": [
+          54,
+          85
+        ]
+      },
+      "statutEntrainement": "DETRAINING",
+      "charge": {
+        "aigue": 0,
+        "chronique": 204,
+        "ratio": 0,
+        "etat": "LOW"
+      },
+      "vo2max": 43.7
+    }
   }
 }
