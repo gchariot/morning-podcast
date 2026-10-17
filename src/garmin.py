@@ -39,6 +39,21 @@ def pace(meters, seconds):
     return f"{int(s // 60)}:{int(round(s % 60)):02d}"
 
 
+def date_month(d):
+    return (d.year, d.month)
+
+
+def race_times(p):
+    """Prédictions Garmin (secondes) → « h:mm:ss » par distance."""
+    if isinstance(p, list):
+        p = p[-1] if p else {}
+    if not isinstance(p, dict):
+        return None
+    fmt = lambda s: f"{int(s // 3600)}:{int(s % 3600 // 60):02d}:{int(s % 60):02d}" if s else None
+    out = {k: fmt(p.get(f)) for k, f in (("5km", "time5K"), ("10km", "time10K"), ("semi", "timeHalfMarathon"), ("marathon", "timeMarathon"))}
+    return out if any(out.values()) else None
+
+
 def workout_summary(w):
     """Une séance prévue, réduite à ce qu'on dit à l'oral (échauffement, blocs, récup)."""
     if not w:
@@ -94,12 +109,16 @@ def main():
     errors = []
     iso = day.isoformat()
 
-    # Séances prévues : aujourd'hui et les 6 jours suivants (le calendrier est par mois).
-    months = {(day.year, day.month), ((day + timedelta(days=6)).year, (day + timedelta(days=6)).month)}
+    # Calendrier Garmin (séances Campus, courses à venir) : de la semaine dernière à six mois devant.
+    months, cur = [], date_month(day - timedelta(days=7))
+    while cur <= date_month(day + timedelta(days=180)):
+        months.append(cur)
+        cur = (cur[0] + (cur[1] == 12), cur[1] % 12 + 1)
     items = []
     for y, m in months:
-        cal = safe(errors, "calendrier", lambda: g.get_scheduled_workouts(y, m)) or {}
+        cal = safe(errors, "calendrier", lambda y=y, m=m: g.get_scheduled_workouts(y, m)) or {}
         items += cal.get("calendarItems", [])
+    items = list({(i.get("itemType"), i.get("date"), i.get("title"), i.get("id")): i for i in items}.values())
     window = {(day + timedelta(days=i)).isoformat() for i in range(7)}
     planned = sorted(
         (i for i in items if i.get("itemType") == "workout" and i.get("date") in window),
@@ -128,6 +147,30 @@ def main():
     last_monday = monday - timedelta(days=7)
     km_semaine_passee = round(sum(s["km"] for s in sorties if last_monday.isoformat() <= s["date"] < monday.isoformat()), 1)
 
+    # Bilan de la semaine passée (lundi → dimanche) : séances du plan faites ou non, kilomètres.
+    run_days = {s["date"] for s in sorties}
+    planned_last = sorted((i for i in items if i.get("itemType") == "workout"
+                           and last_monday.isoformat() <= (i.get("date") or "") < monday.isoformat()), key=lambda i: i["date"])
+    bilan = {
+        "du": last_monday.isoformat(), "au": (monday - timedelta(days=1)).isoformat(),
+        "km": km_semaine_passee,
+        "sorties": sum(1 for s in sorties if last_monday.isoformat() <= s["date"] < monday.isoformat()),
+        "seancesPrevues": [{"date": i["date"], "nom": i.get("title"), "faite": i["date"] in run_days} for i in planned_last],
+    }
+
+    # Objectifs : les courses inscrites dans le calendrier Garmin (tout ce qui n'est ni séance ni activité).
+    objectifs = sorted(({"date": i.get("date"), "nom": i.get("title"), "type": i.get("itemType"),
+                         "dansJours": (Date.fromisoformat(i["date"]) - day).days}
+                        for i in items if i.get("itemType") not in ("workout", "activity", None)
+                        and (i.get("date") or "") >= iso), key=lambda o: o["date"])[:3]
+
+    # Prédictions de temps Garmin : aujourd'hui et il y a 30 jours, pour voir la progression.
+    il_y_a_30 = (day - timedelta(days=30)).isoformat()
+    predictions = {
+        "maintenant": race_times(safe(errors, "prédictions", lambda: g.get_race_predictions())),
+        "ilYa30Jours": race_times(safe(errors, "prédictions passées", lambda: g.get_race_predictions(il_y_a_30, il_y_a_30, "daily"))),
+    }
+
     # Tendance de forme : uniquement des indicateurs déjà calculés la veille (la nuit en cours n'est pas
     # encore synchronisée à l'heure où le podcast est écrit). Statut VFC sur 7 jours, statut et charge d'entraînement, VO2max.
     veille = (day - timedelta(days=1)).isoformat()
@@ -152,6 +195,9 @@ def main():
         "kmSemaineEnCours": km_semaine,
         "kmSemainePassee": km_semaine_passee,
         "tendance": tendance,
+        "bilanSemainePassee": bilan,
+        "objectifs": objectifs,
+        "predictions": predictions,
         **({"manques": errors} if errors else {}),
     })
 
